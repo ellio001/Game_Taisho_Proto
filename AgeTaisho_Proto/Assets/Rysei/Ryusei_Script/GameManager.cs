@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public int score_num = 0; // スコア変数
     public GameObject score_object = null; // Textオブジェクト
 
-    private void Awake()
+    private void Awake()    //スタートよりも最初に呼ばれる
     {
         if (instance == null)
         {

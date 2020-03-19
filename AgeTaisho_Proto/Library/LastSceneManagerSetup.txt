@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Rysei/Camera.unity
+- path: Assets/Rysei/Ryusei_Scene.unity
   isLoaded: 1
   isActive: 1
