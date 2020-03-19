@@ -75,23 +75,23 @@ public class GuestMove : MonoBehaviour {
         {
             case 0:
                 ItemScore = 100;
-                ItemString = "ItemTenpura"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                 break;
             case 1:
                 ItemScore = 100;
-                ItemString = "ItemTenpura"; // * 後々魚フライをいれる
+                ItemString = "ItemSara(Tenpura)"; // * 後々魚フライをいれる
                 break;
             case 2:
                 ItemScore = 100;
-                ItemString = "ItemTenpura"; // * 後々ポテトフライをいれる
+                ItemString = "ItemSara(Tenpura)"; // * 後々ポテトフライをいれる
                 break;
             case 3:
                 ItemScore = 100;
-                ItemString = "ItemFriedchicken";
+                ItemString = "ItemSara(Chicken)";
                 break;
             case 4:
                 ItemScore = 100;
-                ItemString = "ItemQuailFry";
+                ItemString = "ItemSara(Quail)";
                 break;
         }
         switch(MyNumber)
