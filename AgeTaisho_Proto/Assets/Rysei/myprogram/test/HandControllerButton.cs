@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandControllerButton : MonoBehaviour
+public class HandControllerButton_S : MonoBehaviour
 {
     //このスクリプトはControllerMouseClickと共存しない
     //このスクリプトはhandにいれる
