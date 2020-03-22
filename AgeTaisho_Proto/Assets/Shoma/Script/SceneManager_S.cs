@@ -10,8 +10,7 @@ public class SceneManager_S : MonoBehaviour {
     //private bool beRay = false;
     //private Vector3 moveTo;
 
-    public GameObject clickedGameObject;
-    public GameObject Resource;
+
     GameObject ClickObj;
     float handspeed = 0.1f;
 
@@ -34,15 +33,6 @@ public class SceneManager_S : MonoBehaviour {
     // Update is called once per frame  
     void Update() {
         
-        Ray ray = new Ray();
-        RaycastHit hit = new RaycastHit();
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        //Rayを飛ばし、オブジェクトがあればtrue 
-        if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f)){
-            
-
-        }
         //if (Input.GetButtonUp("〇") || Input.GetKeyUp(KeyCode.Space))
         //{
         //    clickedGameObject = null;   //対象を入れる箱を初期化

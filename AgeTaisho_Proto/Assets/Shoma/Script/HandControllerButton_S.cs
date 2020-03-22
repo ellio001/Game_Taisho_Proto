@@ -24,28 +24,14 @@ public class HandControllerButton : MonoBehaviour
 
     void Update()
     {
-        ////右スティック
-        //if (Input.GetAxisRaw("R_Vertical") < 0 || Input.GetKey(KeyCode.W))
-        //{
-        //    this.transform.Translate(Vector3.forward * handspeed);
-        //    Debug.Log("R上");
-        //}
-        //else if (0 < Input.GetAxisRaw("R_Vertical") || Input.GetKey(KeyCode.S))
-        //{
-        //    this.transform.Translate(Vector3.forward * -handspeed);
-        //    Debug.Log("R下");
-        //}
-        //else
-        //{
-        //    //上下方向には傾いていない
-        //}
 
         Ray ray = new Ray();
         RaycastHit hit = new RaycastHit();
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.Log("R下");
 
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f)){
-                if (Input.GetButtonDown("〇") || Input.GetKeyDown(KeyCode.Space)){
+        if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f)){
+                if (Input.GetKeyDown(KeyCode.Space)){
                     if (HoldingFlg != true)
                     {
                         if (hit.collider.gameObject.tag == "Box"){

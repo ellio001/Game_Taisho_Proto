@@ -44,10 +44,6 @@ public class ControlButton : MonoBehaviour {
             //上下方向には傾いていない
         }
 
-        if (Input.GetButton("〇"))
-        {
-            //Debug.Log("〇");
-        }
 
         if (Input.GetKey(KeyCode.UpArrow))
         {

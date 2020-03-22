@@ -83,7 +83,6 @@ public class Camera_2 : MonoBehaviour {
                 CameraCursor();
             }
 
-            //Debug.Log(cursor);
         }
     }
 
