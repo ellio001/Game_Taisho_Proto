@@ -98,17 +98,15 @@ public class GuestMove : MonoBehaviour
             }
 
             if (GuestNowPosition.x < GuestPosition[MyNumber].x) GuestNowPosition.x += GuestSpeed;   //目的地よりz座標が小さければ-
-            else if (GuestNowPosition.x >= GuestPosition[MyNumber].x) GuestNowPosition.x -= GuestSpeed; //目的地よりz座標が大きければ+
+            else if (GuestNowPosition.x > GuestPosition[MyNumber].x) GuestNowPosition.x -= GuestSpeed; //目的地よりz座標が大きければ+
             if (GuestNowPosition.z < GuestPosition[MyNumber].z) GuestNowPosition.z += GuestSpeed;   //目的地よりx座標が小さければ-
-            else if (GuestNowPosition.z >= GuestPosition[MyNumber].z) GuestNowPosition.z -= GuestSpeed; //目的地よりx座標が大きければ+
+            else if (GuestNowPosition.z > GuestPosition[MyNumber].z) GuestNowPosition.z -= GuestSpeed; //目的地よりx座標が大きければ+
         }
 
         this.gameObject.transform.position = GuestNowPosition;  //現在の位置を更新
 
         if (GuestNowPosition.z >= -2 && Order == false)  //席に着いたら処理
         {
-            //ReturnCount = Time.deltaTime;
-            //Invoke("GuestReturn", 15); //10秒後にGuestReturnの処理が実行される
 
             Order = true;
 
@@ -116,16 +114,15 @@ public class GuestMove : MonoBehaviour
             {
                 case 0:
                     ItemScore = 100;
-                    //ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
-                    ItemString = "ItemTenpura";
+                    ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     break;
                 case 1:
                     ItemScore = 100;
-                    ItemString = "ItemTenpura"; // * 後々魚フライをいれる
+                    ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
                     break;
                 case 2:
                     ItemScore = 100;
-                    ItemString = "ItemTenpura"; // * 後々ポテトフライをいれる
+                    ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
                     break;
                 case 3:
                     ItemScore = 100;
@@ -161,52 +158,4 @@ public class GuestMove : MonoBehaviour
         if(OneProces == false) Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
         OneProces = true;   //上の処理が2回目以降通らないようにする
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-
-    //    Collider = true;
-
-    //    switch (flooredIntrandom)
-    //    {
-    //        case 0:
-    //            ItemScore = 100;
-    //            ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
-    //            break;
-    //        case 1:
-    //            ItemScore = 100;
-    //            ItemString = "ItemSara(Tenpura)"; // * 後々魚フライをいれる
-    //            break;
-    //        case 2:
-    //            ItemScore = 100;
-    //            ItemString = "ItemSara(Tenpura)"; // * 後々ポテトフライをいれる
-    //            break;
-    //        case 3:
-    //            ItemScore = 100;
-    //            ItemString = "ItemSara(Chicken)";
-    //            break;
-    //        case 4:
-    //            ItemScore = 100;
-    //            ItemString = "ItemSara(Quail)";
-    //            break;
-    //    }
-    //    switch(MyNumber)
-    //    {
-    //        case 0:
-    //            NumberString = "左";
-    //            break;
-    //        case 1:
-    //            NumberString = "真ん中";
-    //            break;
-    //        case 2:
-    //            NumberString = "右";
-    //            break;
-    //    }
-    //    Debug.Log(NumberString + "の席に" +ItemString + "の注文が入った");
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    Collider = false;
-    //}
 }
