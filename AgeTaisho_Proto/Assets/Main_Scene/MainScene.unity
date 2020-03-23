@@ -693,7 +693,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickedGameObject: {fileID: 0}
   Resource: {fileID: 0}
-  ClickObj2: {fileID: 0}
 --- !u!65 &487089445
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1091,7 +1090,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8e4bc88cc4a9154aaf701e888ffdab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FiverFlag: 0
   score_num: 0
   score_object: {fileID: 866419772}
 --- !u!4 &855320299
@@ -1102,7 +1100,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855320297}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 89.700005, y: 229.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

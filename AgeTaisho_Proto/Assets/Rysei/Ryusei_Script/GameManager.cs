@@ -6,13 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-    float time;                 //ゲーム開始の時間
-    float GameFinishTime;       //ゲームのプレイ最大時間
-    float FiverTime;            //フィーバーの時間です
-    float FiverEvacuation;      //フィーバーの退避エリア
-    float FiverFinishTime;      //フィーバータイム最大時間
-    int FiverFlag;              //フィーバーのフラグ
-    bool TestSceneFlag;         //シーンを飛ぶ用のフラグ
+
+    public float GameTime;             //ゲーム開始の時間
+    float GameFinishTime;              //ゲームのプレイ最大時間
+    public float FiverTime;            //フィーバーの時間です
+    public float FiverEvacuation;      //フィーバーの退避エリア
+    float FiverFinishTime;             //フィーバータイム最大時間
+    public int FiverNumber;            //スイッチ文で使うフィーバーフラグ
+    public int FiverCountFlag = 0;     //何回目のフィーバーか判定フラグ
+    public bool FiverFlag;             //フィーバーかどうかの判定フラグ
+    public bool TestSceneFlag;         //シーンを飛ぶ用のフラグ
 
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
@@ -30,50 +33,102 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Start() {
-        //GameTime = 0f;
         GameFinishTime = 180f;
-        //FiverTime = 0f;
-        FiverFlag = 0;
-        TestSceneFlag = true;
         FiverFinishTime = 30f;
+        FiverNumber = 3;
+        FiverFlag = false;
+        TestSceneFlag = true;
     }
 
     private void Update() {
 
-        time += Time.deltaTime;
+        GameTime += Time.deltaTime;
 
         if (TestSceneFlag) {
             // オブジェクトからTextコンポーネントを取得
             Text score_text = score_object.GetComponent<Text>();
             // テキストの表示を入れ替える
             score_text.text = "Score:" + score_num;
-
-            Addition();
+            
+            //判定
             Judgment();
         }
-        //Debug.Log("経過時間(秒)" + Time.time);
-        //print("経過時間(秒)" + Time.time);
     }
 
     public void Addition() {
         //ゲーム時間を加算
-        //time = Time.deltaTime;
+        //GameTime = Time.deltaTime;
         //Debug.Log("GameTime:" + GameTime);
     }
 
-    public void Judgment() { 
+    public void Judgment() {
         //ゲーム時間を判定
-        if (time >= GameFinishTime) {
+        if (GameTime >= GameFinishTime) {
             Debug.Log("ゲーム終了！");
             //Scene読込
             ReadScene();
         }
-        switch (FiverFlag) {
+
+
+        if (FiverFlag == false) {
+            switch (FiverCountFlag) {
+                case 0:
+                    //1回目のフィーバー
+                    if (GameTime >= GameFinishTime - 120f) {
+                        print("1回目のフィーバー");
+                        FiverNumber = 0;
+                        FiverFlag = true;
+                        Initial();
+                        FiverCountFlag++;
+                    }
+                    break;
+                case 1:
+                    //２回目のフィーバー
+                    if (GameTime >= GameFinishTime - 60f) {
+                        print("2回目のフィーバー");
+                        FiverNumber = 1;
+                        FiverFlag = true;
+                        Initial();
+                        FiverCountFlag++;
+                    }
+                    break;
+            }
+
+        }
+        switch (FiverNumber) {
+            //1回目のフィーバー
             case 0:
+                if (FiverFlag == false) {
+                    //変数初期化
+                    Initial();
+                }
+                if (FiverFlag) {
+                    FiverTime += Time.deltaTime;
+                    //フィーバータイム終了
+                    if (FiverTime >= FiverEvacuation) {
+                        FiverFlag = false;
+                        FiverNumber = 3;
+                        Debug.Log("フィーバータイム終了！");
+                    }
+                }
                 break;
+            //２回目のフィーバー
             case 1:
+                if (FiverFlag == false) {
+                    //変数初期化
+                    Initial();
+                }
+                if (FiverFlag) {
+                    FiverTime += Time.deltaTime;
+                    //フィーバータイム終了
+                    if (FiverTime >= FiverEvacuation) {
+                        FiverFlag = false;
+                        FiverNumber = 3;
+                        Debug.Log("フィーバータイム終了！");
+                    }
+                }
                 break;
-            case 2:
+            case 3:
                 break;
         }
         ////Fiverかどうか判定
@@ -89,7 +144,7 @@ public class GameManager : MonoBehaviour {
         //    //FiverTime++;
         //    //フィーバータイム終了
         //    if (FiverTime >= FiverEvacuation) {
-        //        FiverFlag = false;
+        //        FiverNumber = false;
         //        Debug.Log("フィーバータイム終了！");
         //    }
         //}
@@ -99,6 +154,7 @@ public class GameManager : MonoBehaviour {
     public void Initial() {
         FiverTime = Time.deltaTime;
         FiverEvacuation = FiverTime + FiverFinishTime;
+        FiverFlag = true;
     }
 
     public void ReadScene() {
