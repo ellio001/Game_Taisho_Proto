@@ -7,12 +7,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     float time;                 //ゲーム開始の時間
-    float GameFinishTime;       //ゲームのプレイ最大時間3分は10,800フレーム
+    float GameFinishTime;       //ゲームのプレイ最大時間
     float FiverTime;            //フィーバーの時間です
     float FiverEvacuation;      //フィーバーの退避エリア
     float FiverFinishTime;      //フィーバータイム最大時間
-    public bool FiverFlag;      //フィーバーのフラグ
-    bool TestSceneFlag;         //デバッグ用のフラグ
+    int FiverFlag;              //フィーバーのフラグ
+    bool TestSceneFlag;         //シーンを飛ぶ用のフラグ
 
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
         //GameTime = 0f;
         GameFinishTime = 180f;
         //FiverTime = 0f;
-        FiverFlag = false;
+        FiverFlag = 0;
         TestSceneFlag = true;
         FiverFinishTime = 30f;
     }
@@ -61,30 +61,38 @@ public class GameManager : MonoBehaviour {
         //Debug.Log("GameTime:" + GameTime);
     }
 
-    public void Judgment() {
+    public void Judgment() { 
         //ゲーム時間を判定
         if (time >= GameFinishTime) {
             Debug.Log("ゲーム終了！");
             //Scene読込
             ReadScene();
         }
-        //Fiverかどうか判定
-        if (FiverFlag == false) {
-            //FiverTime初期化
-            Initial();
-            //FiverFlag = true;
+        switch (FiverFlag) {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
         }
-        else if (FiverFlag) {
-            FiverTime += Time.deltaTime;
-            print(FiverTime);
-            print(FiverEvacuation);
-            //FiverTime++;
-            //フィーバータイム終了
-            if (FiverTime >= FiverEvacuation) {
-                FiverFlag = false;
-                Debug.Log("フィーバータイム終了！");
-            }
-        }
+        ////Fiverかどうか判定
+        //if (FiverFlag == false) {
+        //    //FiverTime初期化
+        //    Initial();
+        //    //FiverFlag = true;
+        //}
+        //else if (FiverFlag) {
+        //    FiverTime += Time.deltaTime;
+        //    print(FiverTime);
+        //    print(FiverEvacuation);
+        //    //FiverTime++;
+        //    //フィーバータイム終了
+        //    if (FiverTime >= FiverEvacuation) {
+        //        FiverFlag = false;
+        //        Debug.Log("フィーバータイム終了！");
+        //    }
+        //}
     }
 
     //変数を初期化するための関数
