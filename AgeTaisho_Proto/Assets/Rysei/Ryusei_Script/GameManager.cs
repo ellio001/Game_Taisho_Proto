@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     float FiverTime;            //フィーバーの時間です
     float FiverEvacuation;      //フィーバーの退避エリア
     float FiverFinishTime;      //フィーバータイム最大時間
-    public int FiverFlag;       //フィーバーのフラグ
+    int FiverFlag;              //フィーバーのフラグ
     bool TestSceneFlag;         //シーンを飛ぶ用のフラグ
 
     public static GameManager instance = null;
@@ -63,13 +63,17 @@ public class GameManager : MonoBehaviour {
 
     public void Judgment() { 
         //ゲーム時間を判定
-        else if (time >= GameFinishTime) {
+        if (time >= GameFinishTime) {
             Debug.Log("ゲーム終了！");
             //Scene読込
             ReadScene();
         }
         switch (FiverFlag) {
             case 0:
+                break;
+            case 1:
+                break;
+            case 2:
                 break;
         }
         ////Fiverかどうか判定
