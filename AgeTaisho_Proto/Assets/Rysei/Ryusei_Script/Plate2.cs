@@ -23,28 +23,22 @@ public class Plate2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Number.counter[2] == true)
+        if (Number.Guest[2] != null)    //常に2の席に誰がいるかみる
         {
             Guest = Number.Guest[2];
             script = Guest.GetComponent<GuestMove>();
         }
-        else if (Number.counter[2] == false)
-        {
-            provide = false;
-        }
-        if (provide == true)
-        {
-            script.pos.z -= 0.04f;    // z座標へ0.01加算
-        }
+
     }
 
     private void OnCollisionEnter(Collision other)
     {
         if (script != null && other.gameObject.name == script.ItemString)
         {
-            provide = true;
-            GameManager.instance.score_num += script.ItemScore;
+            GameManager.instance.score_num += script.ItemScore; //点数を加算する
+            script.ReturnCount = 0; //客が帰るまでのカウントを0にする
             Destroy(other.gameObject);  //客が商品を食べる
+
         }
     }
 }
