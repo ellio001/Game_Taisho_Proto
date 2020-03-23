@@ -1,8 +1,0 @@
-sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Shoma/Scenes/Camera.unity
-=======
-- path: Assets/Master_Scene/Master_Scene.unity
->>>>>>> master
-  isLoaded: 1
-  isActive: 1
