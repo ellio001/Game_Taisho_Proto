@@ -10,8 +10,6 @@ public class Plate0 : MonoBehaviour
     GuestMove script;
     GuestGenerator Number;
 
-    bool provide;
-
     // Use this for initialization
     void Start()
     {
@@ -23,27 +21,20 @@ public class Plate0 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Number.counter[0] == true)
+        if (Number.Guest[0] != null)    //常に0の席に誰がいるかみる
         {
             Guest = Number.Guest[0];
             script = Guest.GetComponent<GuestMove>();
         }
-        else if (Number.counter[0] == false)
-        {
-            provide = false;
-        }
-        if (provide == true)
-        {
-            script.pos.z -= 0.04f;    // z座標へ0.01加算
-        }
+
     }
 
     private void OnCollisionEnter(Collision other)
     {
         if (script != null && other.gameObject.name == script.ItemString)
         {
-            provide = true;
-            GameManager.instance.score_num += script.ItemScore;
+            GameManager.instance.score_num += script.ItemScore; //点数を加算する
+            script.ReturnCount = 0; //客が帰るまでのカウントを0にする
             Destroy(other.gameObject);  //客が商品を食べる
         }
     }

@@ -779,16 +779,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Trainnumber: 0
   Positionnumber: 0
-  Train:
+  GuestType:
   - {fileID: 1765017471589500, guid: bf804bcd94e422347b3908e05bce0b38, type: 3}
   - {fileID: 1216312987813446, guid: bd99ef1846c4dcf4bbb787aac683adae, type: 3}
   - {fileID: 1359249871301514, guid: 05474fd8a9002ad4cb028dbab3e21d9a, type: 3}
   Position:
-  - {x: -3, y: 5, z: -9}
+  - {x: -3, y: 5, z: -2}
+  - {x: -4.5, y: 5, z: -2}
+  - {x: -6, y: 5, z: -2}
+  - {x: -4.5, y: 5, z: -5}
+  - {x: -4.5, y: 5, z: -6}
+  - {x: -4.5, y: 5, z: -7}
+  - {x: -4.5, y: 5, z: -8}
   - {x: -4.5, y: 5, z: -9}
-  - {x: -6, y: 5, z: -9}
   counter: 000000
   Guest:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
