@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour {
 
-    private int AgeCount;
+    private float AgeCount;
     private int AgeCountMax;
     private int KogeCountMax;
     private int StockCountMax;
@@ -27,7 +27,6 @@ public class Item : MonoBehaviour {
         gameObject.name = gameObject.name.Replace("(Clone)", ""); //プレハブ生成時の(Clone)を消す
         Resource = null;            //生成するプレハブの箱を初期化
         AgeCount = 0;               //カウント初期化
-        AgeCountMax = 120;          //揚がるスピード
         KogeCountMax = 1200;        //焦げるスピード
         StockCountMax = 3000;       //ストックスピード
         kona = false;               //konaをfalseに
@@ -58,8 +57,43 @@ public class Item : MonoBehaviour {
                 }
                 break;
             case "ItemPotato":
+                AgeCountMax = 5;
+                if (kona == false)
+                {
+                    objcolor = GameObject.Find("kona");
+                }
+
+                if (other.gameObject.tag == "kona")
+                {
+                    kona = true;
+                    GetComponent<Renderer>().material.color = Color.white;
+                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
+                    objcolor = GameObject.Find("tenpuranabe");
+                }
+                else if (kona == true && other.gameObject.tag == "tenpuranabe")
+                {
+
+                    AgeCount += Time.deltaTime;
+
+                    if (AgeCount >= AgeCountMax)
+                    {
+                        objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
+                        objcolor = dummy;
+                        Resource = (GameObject)Resources.Load("ItemTenpura");   //Resourceフォルダのプレハブを読み込む
+                    }
+                }
+                else if (other.gameObject.tag != "Click")
+                {
+                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
+                    objcolor = dummy;
+                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
+
+                break;
             case "ItemFish":
             case "ItemEbi":
+                AgeCountMax = 6;
                 if (kona == false) {
                     objcolor = GameObject.Find("kona");
                 }
@@ -72,7 +106,7 @@ public class Item : MonoBehaviour {
                 }
                 else if (kona == true && other.gameObject.tag == "tenpuranabe") {
 
-                    AgeCount++;
+                    AgeCount += Time.deltaTime;
 
                     if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
@@ -114,11 +148,12 @@ public class Item : MonoBehaviour {
                 break;
 
             case "ItemChicken":
-
+                AgeCountMax = 5;
                 objcolor = GameObject.Find("karaagenabe");
 
                 if (other.gameObject.tag == "karaagenabe") {
-                    AgeCount++;
+
+                    AgeCount += Time.deltaTime;
 
                     if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
@@ -161,11 +196,12 @@ public class Item : MonoBehaviour {
                 break;
 
             case "ItemQuail":
+                AgeCountMax = 2;          //揚がるスピード
                 if (BredPowder == false) {
                     objcolor = GameObject.Find("BreadPowder");
                 }
                 if (QuailFry == true && other.gameObject.tag == "karaagenabe") {
-                    AgeCount++;
+                    AgeCount += Time.deltaTime;
 
                     if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
