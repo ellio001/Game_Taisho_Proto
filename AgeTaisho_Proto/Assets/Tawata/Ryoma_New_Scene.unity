@@ -213,7 +213,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8e4bc88cc4a9154aaf701e888ffdab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameTime: 0
+  FiverTime: 0
+  FiverEvacuation: 0
+  FiverNumber: 0
   FiverFlag: 0
+  TestSceneFlag: 0
   score_num: 0
   score_object: {fileID: 1063781478}
 --- !u!4 &31476594
@@ -224,7 +229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 31476592}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 89.700005, y: 229.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -297,7 +302,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickedGameObject: {fileID: 0}
   Resource: {fileID: 0}
-  ClickObj2: {fileID: 0}
 --- !u!65 &88140886
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1060,36 +1064,6 @@ Transform:
   m_Father: {fileID: 1313995318}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!1 &873136673
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 873136675}
-  m_Layer: 0
-  m_Name: Gamemanager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &873136675
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 873136673}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &873554279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2114,7 +2088,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1339970055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2309,7 +2283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1348044505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2962,7 +2936,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1605223736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3745,7 +3719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2100979928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3760,15 +3734,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Trainnumber: 0
   Positionnumber: 0
-  Train:
-  - {fileID: 1765017471589500, guid: bf804bcd94e422347b3908e05bce0b38, type: 3}
-  - {fileID: 1216312987813446, guid: bd99ef1846c4dcf4bbb787aac683adae, type: 3}
-  - {fileID: 1359249871301514, guid: 05474fd8a9002ad4cb028dbab3e21d9a, type: 3}
+  GuestType: []
   Position:
   - {x: -3, y: 5, z: -9}
   - {x: -4.5, y: 5, z: -9}
   - {x: -6, y: 5, z: -9}
-  counter: 000000
   Guest:
   - {fileID: 0}
   - {fileID: 0}
