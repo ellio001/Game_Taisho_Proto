@@ -7,15 +7,15 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
 
-    public float GameTime;             //ゲーム開始の時間
-    float GameFinishTime;              //ゲームのプレイ最大時間
-    public float FiverTime;            //フィーバーの時間です
-    public float FiverEvacuation;      //フィーバーの退避エリア
-    float FiverFinishTime;             //フィーバータイム最大時間
-    public int FiverNumber;            //スイッチ文で使うフィーバーフラグ
-    public int FiverCountFlag = 0;     //何回目のフィーバーか判定フラグ
-    public bool FiverFlag;             //フィーバーかどうかの判定フラグ
-    public bool TestSceneFlag;         //シーンを飛ぶ用のフラグ
+    float GameTime;             //ゲーム開始の時間
+    float GameFinishTime;       //ゲームのプレイ最大時間
+    float FiverTime;            //フィーバーの時間です
+    float FiverEvacuation;      //フィーバーの退避エリア
+    float FiverFinishTime;      //フィーバータイム最大時間
+    int FiverNumber;            //スイッチ文で使うフィーバーフラグ
+    int FiverCountFlag = 0;     //何回目のフィーバーか判定フラグ
+    bool FiverFlag;             //フィーバーかどうかの判定フラグ
+    bool TestSceneFlag;         //シーンを飛ぶ用のフラグ
 
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
@@ -71,11 +71,13 @@ public class GameManager : MonoBehaviour {
 
 
         if (FiverFlag == false) {
+            //何回目のフィーバーか判定
             switch (FiverCountFlag) {
                 case 0:
                     //1回目のフィーバー
                     if (GameTime >= GameFinishTime - 120f) {
                         print("1回目のフィーバー");
+                        //
                         FiverNumber = 0;
                         FiverFlag = true;
                         Initial();
@@ -128,26 +130,10 @@ public class GameManager : MonoBehaviour {
                     }
                 }
                 break;
+            //退避エリア(なにも入れない)
             case 3:
                 break;
         }
-        ////Fiverかどうか判定
-        //if (FiverFlag == false) {
-        //    //FiverTime初期化
-        //    Initial();
-        //    //FiverFlag = true;
-        //}
-        //else if (FiverFlag) {
-        //    FiverTime += Time.deltaTime;
-        //    print(FiverTime);
-        //    print(FiverEvacuation);
-        //    //FiverTime++;
-        //    //フィーバータイム終了
-        //    if (FiverTime >= FiverEvacuation) {
-        //        FiverNumber = false;
-        //        Debug.Log("フィーバータイム終了！");
-        //    }
-        //}
     }
 
     //変数を初期化するための関数
