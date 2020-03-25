@@ -68,3 +68,5 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /AgeTaisho_Proto/[Aa]ssets/[Ss]treamingAssets/aa.meta
 /AgeTaisho_Proto/[Aa]ssets/[Ss]treamingAssets/aa/*
+AgeTaisho_Proto/Assets/Rysei/Ryusei_Script/HandControllerButton.cs
+AgeTaisho_Proto/Assets/Rysei/Ryusei_Script/HandControllerButton.cs.meta

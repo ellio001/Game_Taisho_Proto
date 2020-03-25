@@ -28,12 +28,14 @@ public class HandControllerButton : MonoBehaviour
         Ray ray = new Ray();
         RaycastHit hit = new RaycastHit();
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.Log("R下");
 
-        if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f)){
+        Debug.Log("hit.collider.gameObject.tag");
+
+        if (Physics.Raycast(ray.origin, ray.direction, out hit, 10f)){
                 if (Input.GetKeyDown(KeyCode.Space)){
                     if (HoldingFlg != true)
                     {
+                    
                         if (hit.collider.gameObject.tag == "Box"){
                             switch (hit.collider.gameObject.name)
                             {

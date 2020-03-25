@@ -24,32 +24,18 @@ public class HandControllerButton_S2 : MonoBehaviour
 
     void Update()
     {
-        ////右スティック
-        //if (Input.GetAxisRaw("R_Vertical") < 0 || Input.GetKey(KeyCode.W))
-        //{
-        //    this.transform.Translate(Vector3.forward * handspeed);
-        //    Debug.Log("R上");
-        //}
-        //else if (0 < Input.GetAxisRaw("R_Vertical") || Input.GetKey(KeyCode.S))
-        //{
-        //    this.transform.Translate(Vector3.forward * -handspeed);
-        //    Debug.Log("R下");
-        //}
-        //else
-        //{
-        //    //上下方向には傾いていない
-        //}
 
         Ray ray = new Ray();
         RaycastHit hit = new RaycastHit();
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.Log("R下");
+
+        
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f))
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (HoldingFlg != true)
+                if (HoldingFlg != true) // 手に何も持っていない時に入る
                 {
                     if (hit.collider.gameObject.tag == "Box")
                     {
@@ -91,8 +77,7 @@ public class HandControllerButton_S2 : MonoBehaviour
                         HoldingFlg = true;
                     }
 
-                }
-                else if (hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" || clickedGameObject.name == "ItemChicken")
+                }else if (hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" || clickedGameObject.name == "ItemChicken")
                 // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                 {
                     ClickObj2.GetChild(0).gameObject.transform.position = hit.point;

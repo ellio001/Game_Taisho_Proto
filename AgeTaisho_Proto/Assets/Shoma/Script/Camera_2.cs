@@ -20,9 +20,18 @@ public class Camera_2 : MonoBehaviour {
     private GameObject cs_target_9;
     private GameObject cs_target_10;
     private GameObject cs_target_11;
+    private GameObject cs_target_12;
+    private GameObject cs_target_13;
     private GameObject cs_target_99; // ゴミ箱用番号
 
     private GameObject Garbage_can;
+    private GameObject Tableware_1; //お皿をもりつける場所(揚げ物側)
+    private GameObject Tableware_2; //お皿をもりつける場所(油もの側)
+    private GameObject StockTabl_1; //ストック場所(揚げ物側)
+    private GameObject StockTabl_2; //ストック場所(油もの側)
+
+    float speed = 120f;
+    Transform target;
 
     void Start () {
         cs_target_1 = GameObject.Find("CS_1");
@@ -36,7 +45,14 @@ public class Camera_2 : MonoBehaviour {
         cs_target_9 = GameObject.Find("CS_9");
         cs_target_10 = GameObject.Find("CS_10");
         cs_target_11 = GameObject.Find("CS_11");
+        cs_target_12 = GameObject.Find("CS_12");
+        cs_target_13 = GameObject.Find("CS_13");
         cs_target_99 = GameObject.Find("CS_gomi");
+
+        Tableware_1 = GameObject.Find("CS_sara1");
+        Tableware_2 = GameObject.Find("CS_sara2");
+        StockTabl_1 = GameObject.Find("CS_stock1");
+        StockTabl_2 = GameObject.Find("CS_stock2");
 
         Garbage_can = GameObject.Find("Garbage can");
         Garbage_can.gameObject.SetActiveRecursively(false);
@@ -44,46 +60,86 @@ public class Camera_2 : MonoBehaviour {
 	
 	void Update () {
         DownKeyCheck();
-        
 
-	}
+        float step = speed * Time.deltaTime;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, cs_target_M.rotation, step);
+    }
 
     void DownKeyCheck()
     {
         if (Input.anyKeyDown)
         {
+            // 左押したとき
             if (Input.GetKey(KeyCode.LeftArrow))
-            { // 左押したとき
+            { 
                 Garbage_can.gameObject.SetActiveRecursively(false); // ゴミ箱非表示
                 cursor += 1;
-                if (cursor > 11) cursor = 1;
-                CameraCursor();
-            }
-            if (Input.GetKey(KeyCode.RightArrow))
-            { // 右押したとき
-                Garbage_can.gameObject.SetActiveRecursively(false);
-                cursor -= 1;
-                if (cursor < 1) cursor = 11;
-                CameraCursor();
-            }
-            if (Input.GetKey(KeyCode.DownArrow))
-            { // 下押したときゴミ箱を見る
-                if (cs_target_M != cs_target_99)
-                {
-                    Garbage_can.gameObject.SetActiveRecursively(true); // ゴミ箱表示
-                    cs_target_M = cs_target_99;
-                    var aim = this.cs_target_M.transform.position - this.transform.position;
-                    var look = Quaternion.LookRotation(aim);
-                    this.transform.localRotation = look;
-                }
-            }
-            if (Input.GetKey(KeyCode.UpArrow))
-            { // 上押したときゴミ箱の選択前に戻る
-                Garbage_can.gameObject.SetActiveRecursively(false);
+                if (cursor > 13) cursor = 1;
                 CameraCursor();
             }
 
-        }
+            // 右押したとき
+            else if (Input.GetKey(KeyCode.RightArrow))
+            { 
+                Garbage_can.gameObject.SetActiveRecursively(false);
+                cursor -= 1;
+                if (cursor < 1) cursor = 13;
+                CameraCursor();
+            }
+
+            // 下押したとき
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                // ストックを見ている時に下を押したらストックの直前の場所を向く
+                if (cs_target_M == StockTabl_1 || cs_target_M == StockTabl_2)
+                {
+                    CameraCursor();
+                }else{
+                    //お皿をもりつける場所を見る(揚げ物側)
+                    if (cursor >= 3 && cursor <= 7)
+                    {
+                        cs_target_M = Tableware_1;
+                        var aim = this.cs_target_M.transform.position - this.transform.position;
+                        var look = Quaternion.LookRotation(aim);
+                        this.transform.localRotation = look;
+                    }
+                    //お皿をもりつける場所を見る(油もの側)
+                    if (cursor >= 8 && cursor <= 12)
+                    {
+                        cs_target_M = Tableware_2;
+                        var aim = this.cs_target_M.transform.position - this.transform.position;
+                        var look = Quaternion.LookRotation(aim);
+                        this.transform.localRotation = look;
+                    }
+                }
+            }
+
+            // 上押したとき
+            else if (Input.GetKey(KeyCode.UpArrow))
+            { 
+                Garbage_can.gameObject.SetActiveRecursively(false);
+                if (cs_target_M == Tableware_1 || cs_target_M == Tableware_2)
+                {
+                    CameraCursor();
+                }else{
+                    if (cursor >= 3 && cursor <= 7)
+                    {
+                        cs_target_M = StockTabl_1;
+                        var aim = this.cs_target_M.transform.position - this.transform.position;
+                        var look = Quaternion.LookRotation(aim);
+                        this.transform.localRotation = look;
+                    }
+                    if (cursor >= 8 && cursor <= 12)
+                    {
+                        cs_target_M = StockTabl_2;
+                        var aim = this.cs_target_M.transform.position - this.transform.position;
+                        var look = Quaternion.LookRotation(aim);
+                        this.transform.localRotation = look;
+                    }
+                }
+            }
+
+        }//if (Input.anyKeyDown)
     }
 
     void CameraCursor()
@@ -123,6 +179,12 @@ public class Camera_2 : MonoBehaviour {
                 break;
             case 11:
                 cs_target_M = cs_target_11;
+                break;
+            case 12:
+                cs_target_M = cs_target_12;
+                break;
+            case 13:
+                cs_target_M = cs_target_13;
                 break;
         }
         var aim = this.cs_target_M.transform.position - this.transform.position;
