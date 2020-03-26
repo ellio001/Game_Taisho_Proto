@@ -893,7 +893,7 @@ GameObject:
   m_Component:
   - component: {fileID: 275077741}
   m_Layer: 0
-  m_Name: CS_4
+  m_Name: CS_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1120,7 +1120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 326164344}
   m_Layer: 0
-  m_Name: CS_8
+  m_Name: CS_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1249,7 +1249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d00bf2b42dbde44b4597a56015a3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: 1
 --- !u!114 &383350704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1390,7 +1389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 527310875}
   m_Layer: 0
-  m_Name: CS_13
+  m_Name: CS_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1647,7 +1646,7 @@ GameObject:
   m_Component:
   - component: {fileID: 659690914}
   m_Layer: 0
-  m_Name: CS_1
+  m_Name: CS_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1768,7 +1767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 714806502}
   m_Layer: 0
-  m_Name: CS_10
+  m_Name: CS_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1798,7 +1797,7 @@ GameObject:
   m_Component:
   - component: {fileID: 730914060}
   m_Layer: 0
-  m_Name: CS_2
+  m_Name: CS_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1828,7 +1827,7 @@ GameObject:
   m_Component:
   - component: {fileID: 744568133}
   m_Layer: 0
-  m_Name: CS_12
+  m_Name: CS_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2300,7 +2299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1076953055}
   m_Layer: 0
-  m_Name: CS_9
+  m_Name: CS_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2353,7 +2352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294d5e1c8acf7044aa86bfffd61d025d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClickObj2: {fileID: 558240519}
+  ClickObj2: {fileID: 0}
 --- !u!114 &1079922594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2864,14 +2863,8 @@ MonoBehaviour:
   Trainnumber: 0
   Positionnumber: 0
   GuestType: []
-  Position:
-  - {x: -3, y: 5, z: -9}
-  - {x: -4.5, y: 5, z: -9}
-  - {x: -6, y: 5, z: -9}
-  Guest:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  Position: []
+  Guest: []
 --- !u!1 &1430097779
 GameObject:
   m_ObjectHideFlags: 0
@@ -2993,7 +2986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score_num: 0
-  score_object: {fileID: 168154114}
+  score_object: {fileID: 0}
 --- !u!4 &1440836190
 Transform:
   m_ObjectHideFlags: 0
@@ -3018,7 +3011,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1492968247}
   m_Layer: 0
-  m_Name: CS_11
+  m_Name: CS_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3280,7 +3273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1648791922}
   m_Layer: 0
-  m_Name: CS_3
+  m_Name: CS_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3969,7 +3962,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1922533299}
   m_Layer: 0
-  m_Name: CS_5
+  m_Name: CS_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4103,7 +4096,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2030843193}
   m_Layer: 0
-  m_Name: CS_7
+  m_Name: CS_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4333,7 +4326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2066215517}
   m_Layer: 0
-  m_Name: CS_6
+  m_Name: CS_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

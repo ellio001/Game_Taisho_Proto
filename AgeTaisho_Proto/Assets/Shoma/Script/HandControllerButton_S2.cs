@@ -9,13 +9,12 @@ public class HandControllerButton_S2 : MonoBehaviour
 
     public GameObject clickedGameObject;
     public GameObject Resource;
-    GameObject ClickObj;
+    private GameObject ClickObj;
     float handspeed = 0.1f;
 
     bool HoldingFlg;
     public Transform ClickObj2;
 
-    // Use this for initialization
     void Start()
     {
         ClickObj = GameObject.Find("ControllerObjClick");

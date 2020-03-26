@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Camera_2 : MonoBehaviour {
+public class Camera_2 : MonoBehaviour
+{
 
 
-    public int cursor = 1; // カーソル用
+    private int cursor = 7; // カーソル用
     int old_cursor = 0;
     private GameObject cs_target_M;
     private GameObject cs_target_1;
@@ -31,9 +32,10 @@ public class Camera_2 : MonoBehaviour {
     private GameObject StockTabl_2; //ストック場所(油もの側)
 
     float speed = 120f;
-    Transform target;
+    Quaternion target;
 
-    void Start () {
+    void Start()
+    {
         cs_target_1 = GameObject.Find("CS_1");
         cs_target_2 = GameObject.Find("CS_2");
         cs_target_3 = GameObject.Find("CS_3");
@@ -49,6 +51,13 @@ public class Camera_2 : MonoBehaviour {
         cs_target_13 = GameObject.Find("CS_13");
         cs_target_99 = GameObject.Find("CS_gomi");
 
+        /***最初に正面を向くための処理***************/
+        cs_target_M = cs_target_7;
+        var aim = this.cs_target_M.transform.position - this.transform.position;
+        var look = Quaternion.LookRotation(aim);
+        this.transform.localRotation = look; 
+        /*******************************************/
+
         Tableware_1 = GameObject.Find("CS_sara1");
         Tableware_2 = GameObject.Find("CS_sara2");
         StockTabl_1 = GameObject.Find("CS_stock1");
@@ -57,89 +66,92 @@ public class Camera_2 : MonoBehaviour {
         Garbage_can = GameObject.Find("Garbage can");
         Garbage_can.gameObject.SetActiveRecursively(false);
     }
-	
-	void Update () {
-        DownKeyCheck();
 
-        float step = speed * Time.deltaTime;
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, cs_target_M.rotation, step);
-    }
-
-    void DownKeyCheck()
+    void Update()
     {
         if (Input.anyKeyDown)
         {
-            // 左押したとき
-            if (Input.GetKey(KeyCode.LeftArrow))
-            { 
-                Garbage_can.gameObject.SetActiveRecursively(false); // ゴミ箱非表示
-                cursor += 1;
-                if (cursor > 13) cursor = 1;
-                CameraCursor();
-            }
+            DownKeyCheck();
+            
+            var aim = this.cs_target_M.transform.position - this.transform.position;
+            var look = Quaternion.LookRotation(aim);
+            target = look; // 目的座標を保存
+        }
 
-            // 右押したとき
-            else if (Input.GetKey(KeyCode.RightArrow))
-            { 
-                Garbage_can.gameObject.SetActiveRecursively(false);
-                cursor -= 1;
-                if (cursor < 1) cursor = 13;
-                CameraCursor();
-            }
+        // 移動を滑らかにする処理
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, target, speed * Time.deltaTime);
+        
+    }
 
-            // 下押したとき
-            else if (Input.GetKey(KeyCode.DownArrow))
+
+    void DownKeyCheck()
+    {
+        // 左押したとき
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            Garbage_can.gameObject.SetActiveRecursively(false); // ゴミ箱非表示
+            cursor += 1;
+            if (cursor > 13)
             {
-                // ストックを見ている時に下を押したらストックの直前の場所を向く
-                if (cs_target_M == StockTabl_1 || cs_target_M == StockTabl_2)
-                {
-                    CameraCursor();
-                }else{
-                    //お皿をもりつける場所を見る(揚げ物側)
-                    if (cursor >= 3 && cursor <= 7)
-                    {
-                        cs_target_M = Tableware_1;
-                        var aim = this.cs_target_M.transform.position - this.transform.position;
-                        var look = Quaternion.LookRotation(aim);
-                        this.transform.localRotation = look;
-                    }
-                    //お皿をもりつける場所を見る(油もの側)
-                    if (cursor >= 8 && cursor <= 12)
-                    {
-                        cs_target_M = Tableware_2;
-                        var aim = this.cs_target_M.transform.position - this.transform.position;
-                        var look = Quaternion.LookRotation(aim);
-                        this.transform.localRotation = look;
-                    }
-                }
+                cursor = 1;
+                speed = 240f;
             }
+            else speed = 120f;
+            CameraCursor();
+        }
 
-            // 上押したとき
-            else if (Input.GetKey(KeyCode.UpArrow))
-            { 
-                Garbage_can.gameObject.SetActiveRecursively(false);
-                if (cs_target_M == Tableware_1 || cs_target_M == Tableware_2)
-                {
-                    CameraCursor();
-                }else{
-                    if (cursor >= 3 && cursor <= 7)
-                    {
-                        cs_target_M = StockTabl_1;
-                        var aim = this.cs_target_M.transform.position - this.transform.position;
-                        var look = Quaternion.LookRotation(aim);
-                        this.transform.localRotation = look;
-                    }
-                    if (cursor >= 8 && cursor <= 12)
-                    {
-                        cs_target_M = StockTabl_2;
-                        var aim = this.cs_target_M.transform.position - this.transform.position;
-                        var look = Quaternion.LookRotation(aim);
-                        this.transform.localRotation = look;
-                    }
-                }
+        // 右押したとき
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            Garbage_can.gameObject.SetActiveRecursively(false);
+            cursor -= 1;
+            if (cursor < 1)
+            {
+                cursor = 13;
+                speed = 240f;
             }
+            else speed = 120f;
+            CameraCursor();
+        }
 
-        }//if (Input.anyKeyDown)
+        // 下押したとき
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            // ストックを見ている時に下を押したらストックの直前の場所を向く
+            if (cs_target_M == StockTabl_1 || cs_target_M == StockTabl_2)
+            {
+                CameraCursor();
+            }
+            else
+            {
+                //お皿をもりつける場所を見る(揚げ物側)
+                if (cursor >= 9 && cursor <= 13) cs_target_M = Tableware_1;
+               
+                //お皿をもりつける場所を見る(油もの側)
+                if (cursor >= 1 && cursor <= 5) cs_target_M = Tableware_2;
+                
+            }
+        }
+
+        // 上押したとき
+        else if (Input.GetKey(KeyCode.UpArrow))
+        {
+            Garbage_can.gameObject.SetActiveRecursively(false);
+            if (cs_target_M == Tableware_1 || cs_target_M == Tableware_2)
+            {
+                CameraCursor();
+            }
+            else
+            {
+                //ストックする場所を見る(揚げ物側)
+                if (cursor >= 9 && cursor <= 13) cs_target_M = StockTabl_1;
+
+                //ストックする場所を見る(油もの側)
+                if (cursor >= 1 && cursor <= 5)  cs_target_M = StockTabl_2;
+            }
+        }
+
+
     }
 
     void CameraCursor()
@@ -187,8 +199,6 @@ public class Camera_2 : MonoBehaviour {
                 cs_target_M = cs_target_13;
                 break;
         }
-        var aim = this.cs_target_M.transform.position - this.transform.position;
-        var look = Quaternion.LookRotation(aim);
-        this.transform.localRotation = look;
+
     }
 }
