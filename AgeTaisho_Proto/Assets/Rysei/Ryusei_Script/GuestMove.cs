@@ -25,7 +25,8 @@ public class GuestMove : MonoBehaviour
     public float GuestSpeed;   //客の移動速度をいれる箱
     public Vector3 GuestNowPosition;   //客の現在位置の仮決定をいれる箱
     bool Order = false; //注文したかどうか
-    public float ReturnCount; //客が帰るまでの時間をいれる箱
+    public float ReturnCount;   //客が帰るまでの時間をいれる箱
+    public float LineReturn;    //生成された客が帰るまでの時間をいれるはこ
     public bool OneProces = false; //自分のいた箱を1回だけ初期化する
 
     void Start()
@@ -39,7 +40,7 @@ public class GuestMove : MonoBehaviour
         GuestSpeed = 0.05f; //客の移動速度
         GuestNowPosition = this.gameObject.transform.position;
 
-        ReturnCount = 12;    //客が席に着いてから帰るまでの時間
+        ReturnCount = 14;    //客が席に着いてから帰るまでの時間
 
         //Plate1 = GameObject.Find("Plate1");
         Collider = false;
@@ -82,6 +83,7 @@ public class GuestMove : MonoBehaviour
 
                 switch (MyNumber)   //列から席へ移る処理
                 {
+         
                     case 0:
                         GuestNumber[MyNumber] = this.gameObject;    //0の番地にコピー
                         GuestNumber[3] = null;   //前いた番地に残ったコピーを初期化
@@ -105,9 +107,16 @@ public class GuestMove : MonoBehaviour
 
         this.gameObject.transform.position = GuestNowPosition;  //現在の位置を更新
 
+        if (MyNumber >= 3)
+        {
+            LineReturn += Time.deltaTime;
+            if (LineReturn >= 8) GuestReturn(); //席につかず8秒たつとGuestReturnが呼ばれる
+            //Debug.Log(LineReturn);
+        }
         if (GuestNowPosition.z >= -2 && Order == false)  //席に着いたら処理
         {
 
+            //ReturnCount = 14;    //客が席に着いてから帰るまでの時間
             Order = true;
 
             switch (flooredIntrandom)
@@ -147,7 +156,7 @@ public class GuestMove : MonoBehaviour
             }
             Debug.Log(NumberString + "の席に" + ItemString + "の注文が入った");
         }
-        else if(Order == true)  Invoke("GuestReturn", ReturnCount); //注文をしたら15秒後にGuestReturnの処理が実行される
+        else if(GuestNowPosition.z >= -2 && Order == true)  Invoke("GuestReturn", ReturnCount); //注文をしたら14秒後にGuestReturnの処理が実行される
 
         if (GuestNowPosition.z <= -13) Destroy(gameObject);   //zが-13以下になったら消える
     }
