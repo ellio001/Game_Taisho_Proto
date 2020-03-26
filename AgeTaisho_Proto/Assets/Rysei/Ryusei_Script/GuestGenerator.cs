@@ -16,8 +16,7 @@ public class GuestGenerator : MonoBehaviour {
     float time = 0f;//時間を記録する小数も入る変数
 
     void Start () {
-        //GuestSpawn = 12;
-        GuestSpawn = 3;
+        GuestSpawn = 12; //客生成の間隔　数値/秒
     }
 	
 	// Update is called once per frame
