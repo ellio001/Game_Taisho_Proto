@@ -31,7 +31,7 @@ public class Camera_2 : MonoBehaviour
     private GameObject StockTabl_1; //ストック場所(揚げ物側)
     private GameObject StockTabl_2; //ストック場所(油もの側)
 
-    float speed = 120f; // 移動の際のスピード
+    float speed = 240f; // 移動の際のスピード
     Quaternion target; // 目的地の座標変数
     private bool gomi_flg = false; // ゴミ箱を向くときに使う
 
@@ -95,9 +95,9 @@ public class Camera_2 : MonoBehaviour
             if (cursor > 13)
             {
                 cursor = 1;
-                speed = 240f;
+                speed = 360f;
             }
-            else speed = 120f;
+            else speed = 240f;
             gomi_flg = false;
             CameraCursor();
         }
@@ -110,9 +110,9 @@ public class Camera_2 : MonoBehaviour
             if (cursor < 1)
             {
                 cursor = 13;
-                speed = 240f;
+                speed = 360f;
             }
-            else speed = 120f;
+            else speed = 240f;
             gomi_flg = false;
             CameraCursor();
         }
