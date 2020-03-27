@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Item_S : MonoBehaviour {
 
-    private int agecount;
+    private float AgeCount;
+    private int AgeCountMax;
+    private int KogeCountMax;
+    private int StockCountMax;
     private bool kona;
     private bool BredPowder;
     private bool liquid;
@@ -17,13 +20,17 @@ public class Item_S : MonoBehaviour {
     GameObject Resource;
     GameObject objcolor;
     GameObject dummy;
+    GameObject GM;              //GameMa agerがオブジェクト
+    GameManager script;         //GameManagerが入る変数
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         gameobject = this.gameObject;   //このオブジェクトの情報をいれる
         gameObject.name = gameObject.name.Replace("(Clone)", ""); //プレハブ生成時の(Clone)を消す
         Resource = null;            //生成するプレハブの箱を初期化
-        agecount = 0;               //カウント初期化
+        AgeCount = 0;               //カウント初期化
+        KogeCountMax = 1200;        //焦げるスピード
+        StockCountMax = 3000;       //ストックスピード
         kona = false;               //konaをfalseに
         BredPowder = false;
         liquid = false;
@@ -32,195 +39,275 @@ public class Item_S : MonoBehaviour {
         ThirdBreadPowder = false;
         dummy = GameObject.Find("dummy");
 
+        //りょうまが作ったやつ
+        GM = GameObject.Find("GameManager");
+        script = GM.GetComponent<GameManager>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         alpha_Sin = Mathf.Sin(Time.time) / 2 + 0.5f;    //Sin波
         //Debug.Log("液"+liquid);
         //Debug.Log("粉"+BredPowder);
         //Debug.Log("揚"+QuailFry);
     }
 
-    private void OnTriggerStay(Collider other)
-    {
+    private void OnTriggerStay(Collider other) {
 
-        switch (gameobject.name)
-        {
+        switch (gameobject.name) {
             case "ItemKoge":
-                if (other.gameObject.tag == "Garbage can")
-                {
+                if (other.gameObject.tag == "Garbage can") {
+                    GameManager.instance.score_num -= 100;
                     Destroy(gameObject);
                 }
                 break;
             case "ItemPotato":
-            case "ItemFish":
-            case "ItemEbi":
-                if (kona == false)
-                {
-                   objcolor = GameObject.Find("kona");
+                if (script.FiverFlag) {
+                    AgeCountMax = 1;
+                }
+                else {
+                    AgeCountMax = 5;
+                }
+                if (kona == false) {
+                    objcolor = GameObject.Find("kona");
                 }
 
-                if (other.gameObject.tag == "kona")
-                {
+                if (other.gameObject.tag == "kona") {
                     kona = true;
                     GetComponent<Renderer>().material.color = Color.white;
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = GameObject.Find("tenpuranabe");
                 }
-                else if (kona == true && other.gameObject.tag == "tenpuranabe")
-                {
+                else if (kona == true && other.gameObject.tag == "tenpuranabe") {
 
-                    agecount++;
+                    AgeCount += Time.deltaTime;
 
-                    if (agecount >= 150)
-                    {
+                    if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                         objcolor = dummy;
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemTenpura");   //Resourceフォルダのプレハブを読み込む
-                        Debug.Log("揚がった");
+                        Resource = (GameObject)Resources.Load("ItemTenpura");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
-                else if(other.gameObject.tag != "Click")
-                {
+                else if (other.gameObject.tag != "Click") {
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
+
+                break;
+            case "ItemFish":
+            case "ItemEbi":
+                if (script.FiverFlag) {
+                    AgeCountMax = 1;
+                }
+                else {
+                    AgeCountMax = 6;
+                }
+                if (kona == false) {
+                    objcolor = GameObject.Find("kona");
+                }
+
+                if (other.gameObject.tag == "kona") {
+                    kona = true;
+                    GetComponent<Renderer>().material.color = Color.white;
+                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
+                    objcolor = GameObject.Find("tenpuranabe");
+                }
+                else if (kona == true && other.gameObject.tag == "tenpuranabe") {
+
+                    AgeCount += Time.deltaTime;
+
+                    if (AgeCount >= AgeCountMax) {
+                        objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
+                        objcolor = dummy;
+                        Resource = (GameObject)Resources.Load("ItemTenpura");   //Resourceフォルダのプレハブを読み込む
+                    }
+                }
+                else if (other.gameObject.tag != "Click") {
+                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
+                    objcolor = dummy;
+                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
+
                 break;
 
             case "ItemTenpura":
-                if (other.gameObject.tag == "tenpuranabe") agecount++;
-                if (other.gameObject.tag == "Garbage can") Destroy(gameObject);
+                if (other.gameObject.tag == "tenpuranabe") AgeCount++;
 
-                if (agecount >= 150)
-                {
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
-                    Debug.Log("焦げた");
+                //ストックされたら腐る
+                //if (other.gameObject.tag == "Stock") AgeCount++;
+                print("やばい");
+                if (other.gameObject.tag == "Sara") {
+                    print("ダイジョウブ");
+                    Resource = (GameObject)Resources.Load("ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
+                }
+
+                if (AgeCount >= KogeCountMax) {
+                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 break;
-            case "ItemChicken":
 
+            case "ItemSara(Tenpura)":
+                //ストックされたら腐る
+                if (other.gameObject.tag == "Stock") AgeCount++;
+
+                if (AgeCount >= StockCountMax) {
+                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                break;
+
+            case "ItemChicken":
+                if (script.FiverFlag) {
+                    AgeCountMax = 1;
+                }
+                else {
+                    AgeCountMax = 5;
+                }
                 objcolor = GameObject.Find("karaagenabe");
 
-                if (other.gameObject.tag == "Garbage can") Destroy(gameObject);
-                if (other.gameObject.tag == "karaagenabe")
-                {
-                    agecount++;
+                if (other.gameObject.tag == "karaagenabe") {
 
-                    if (agecount >= 150)
-                    {
+                    AgeCount += Time.deltaTime;
+
+                    if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                         objcolor = dummy;
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemFriedchicken");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("ItemFriedchicken");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
-                else if (other.gameObject.tag != "Click")
-                {
+                else if (other.gameObject.tag != "Click") {
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
                 break;
+
+
             case "ItemFriedchicken":
-                if (other.gameObject.tag == "karaagenabe") agecount++;
-                if (other.gameObject.tag == "Garbage can") Destroy(gameObject);
-                if (agecount >= 150)
-                {
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
-                    Debug.Log("焦げた");
+                if (other.gameObject.tag == "karaagenabe") AgeCount++;
+
+                //ストックされたら
+                //if (other.gameObject.tag == "Stock") AgeCount++;
+
+                if (other.gameObject.tag == "Sara") {
+                    Resource = (GameObject)Resources.Load("ItemSara(Chicken)");   //Resourceフォルダのプレハブを読み込む
+                }
+
+                if (AgeCount >= KogeCountMax) {
+                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                break;
+
+            case "ItemSara(Chicken)":
+
+                //ストックされたら
+                if (other.gameObject.tag == "Stock") AgeCount++;
+
+                if (AgeCount >= StockCountMax) {
+                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 break;
 
             case "ItemQuail":
-                if (other.gameObject.tag == "Garbage can") Destroy(gameObject);
-                if (BredPowder == false)
-                {
+                //揚がるスピード
+                if (script.FiverFlag) {
+                    AgeCountMax = 1;
+                }
+                else {
+                    AgeCountMax = 2;
+                }
+                if (BredPowder == false) {
                     objcolor = GameObject.Find("BreadPowder");
                 }
-                if (QuailFry == true && other.gameObject.tag == "karaagenabe")
-                {
-                    agecount++;
+                if (QuailFry == true && other.gameObject.tag == "karaagenabe") {
+                    AgeCount += Time.deltaTime;
 
-                    if (agecount >= 150)
-                    {
+                    if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                         objcolor = dummy;
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemQuailFry");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("ItemQuailFry");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
-                else if (other.gameObject.tag == "Bread powder" && ThirdBreadPowder == true)
-                {
+                else if (other.gameObject.tag == "Bread powder" && ThirdBreadPowder == true) {
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
-                else if (other.gameObject.tag == "liquid" && Secondliquid == true)
+                else if (other.gameObject.tag == "liquid" && Secondliquid == true)  //液２回目
                 {
                     ThirdBreadPowder = true;
                     QuailFry = true;
                     GetComponent<Renderer>().material.color = Color.blue;
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = GameObject.Find("karaagenabe");
-                    Debug.Log("液2回目");
                 }
-                else if (other.gameObject.tag == "Bread powder" && BredPowder == true && liquid == true)
+                else if (other.gameObject.tag == "Bread powder" && BredPowder == true && liquid == true)//粉２回目
                 {
                     Secondliquid = true;
                     GetComponent<Renderer>().material.color = Color.red;
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = GameObject.Find("liquid");
-                    Debug.Log("粉2回目");
                 }
-                else if (other.gameObject.tag == "Bread powder")
+                else if (other.gameObject.tag == "Bread powder") //粉１回目
                 {
                     BredPowder = true;
                     GetComponent<Renderer>().material.color = Color.red;
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = GameObject.Find("liquid");
-                    Debug.Log("粉1回目");
                 }
-                else if(BredPowder == true && other.gameObject.tag == "liquid")
+                else if (BredPowder == true && other.gameObject.tag == "liquid") //液１回目
                 {
                     //BredPowder = false;
                     liquid = true;
                     GetComponent<Renderer>().material.color = Color.blue;
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = GameObject.Find("BreadPowder");
-                    Debug.Log("液1回目");
                 }
                 else if (other.gameObject.tag != "Click") //OnCollisionStayだと1液が処理された瞬間呼ばれてしまう
                 {
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
-                    Debug.Log("失敗");
+                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
                 break;
 
             case "ItemQuailFry":
-                if (other.gameObject.tag == "Garbage can") Destroy(gameObject);
-                if (other.gameObject.tag == "karaagenabe")
-                {
-                    agecount++;
 
-                    if (agecount >= 150)
-                    {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
-                        Debug.Log("焦げた");
-                    }
+                if (other.gameObject.tag == "karaagenabe") AgeCount++;
+
+                //ストックされたら
+                //if (other.gameObject.tag == "Stock") AgeCount++;
+
+                if (other.gameObject.tag == "Sara") {
+                    Resource = (GameObject)Resources.Load("ItemSara(Quail)");   //Resourceフォルダのプレハブを読み込む
+                }
+
+                if (AgeCount >= KogeCountMax) {
+                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 break;
+
+            case "ItemSara(Quail)":
+
+                //ストックされたら
+                if (other.gameObject.tag == "Stock") AgeCount++;
+
+                if (AgeCount >= StockCountMax) {
+                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                break;
+
             default:
                 //case文にあるもの以外の場合
                 break;
 
+
         }   //switc文終了
-        if (Resource != null)
-        {
+        if (Resource != null) {
             Destroy(gameObject);    //今あるオブジェクトを消す
             gameobject = (GameObject)Instantiate(Resource, this.gameObject.transform.position, this.gameObject.transform.rotation); //焼きあがった(焦げた)オブジェクト生成
         }
