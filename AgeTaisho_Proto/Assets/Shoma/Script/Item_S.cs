@@ -22,6 +22,7 @@ public class Item_S : MonoBehaviour {
     GameObject dummy;
     GameObject GM;              //GameMa agerがオブジェクト
     GameManager script;         //GameManagerが入る変数
+    
 
     // Use this for initialization
     void Start() {
@@ -42,6 +43,7 @@ public class Item_S : MonoBehaviour {
         //りょうまが作ったやつ
         GM = GameObject.Find("GameManager");
         script = GM.GetComponent<GameManager>();
+        
     }
 
     // Update is called once per frame
