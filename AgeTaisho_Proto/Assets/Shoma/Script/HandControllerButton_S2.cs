@@ -69,6 +69,7 @@ public class HandControllerButton_S2 : MonoBehaviour
                                 break;
                         }
                     }
+
                     if (hit.collider.gameObject.tag == "Item")
                     {
                         clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
@@ -76,7 +77,9 @@ public class HandControllerButton_S2 : MonoBehaviour
                         HoldingFlg = true;
                     }
 
-                }else if (hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" || clickedGameObject.name == "ItemChicken")
+                    //ClickObj2.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
+                }
+                else if (hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" || clickedGameObject.name == "ItemChicken")
                 // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                 {
                     ClickObj2.GetChild(0).gameObject.transform.position = hit.point;
