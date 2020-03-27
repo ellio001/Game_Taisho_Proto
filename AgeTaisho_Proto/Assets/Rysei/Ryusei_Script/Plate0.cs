@@ -26,15 +26,14 @@ public class Plate0 : MonoBehaviour
             Guest = Number.Guest[0];
             script = Guest.GetComponent<GuestMove>();
         }
-
     }
 
     private void OnCollisionEnter(Collision other)
     {
         if (script != null && other.gameObject.name == script.ItemString)
         {
+            script.ReturnCount = 18;
             GameManager.instance.score_num += script.ItemScore; //点数を加算する
-            script.ReturnCount = 0; //客が帰るまでのカウントを0にする
             Destroy(other.gameObject);  //客が商品を食べる
         }
     }
