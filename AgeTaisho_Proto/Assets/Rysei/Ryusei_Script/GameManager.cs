@@ -7,14 +7,14 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
 
-    float GameTime;             //ゲーム開始の時間
+    public float GameTime;             //ゲーム開始の時間
     float GameFinishTime;       //ゲームのプレイ最大時間
-    float FiverTime;            //フィーバーの時間です
+    public float FiverTime;            //フィーバーの時間です
     float FiverEvacuation;      //フィーバーの退避エリア
     float FiverFinishTime;      //フィーバータイム最大時間
     int FiverNumber;            //スイッチ文で使うフィーバーフラグ
     int FiverCountFlag = 0;     //何回目のフィーバーか判定フラグ
-    bool FiverFlag;             //フィーバーかどうかの判定フラグ
+    public bool FiverFlag;             //フィーバーかどうかの判定フラグ
     bool TestSceneFlag;         //シーンを飛ぶ用のフラグ
 
     public static GameManager instance = null;
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour {
             Text score_text = score_object.GetComponent<Text>();
             // テキストの表示を入れ替える
             score_text.text = "Score:" + score_num;
-            
+
             //判定
             Judgment();
         }
