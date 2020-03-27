@@ -12,7 +12,7 @@ public class HandControllerButton_S2 : MonoBehaviour
     private GameObject ClickObj;
     float handspeed = 0.1f;
 
-    bool HoldingFlg;
+    public bool HoldingFlg;
     public Transform ClickObj2;
 
     void Start()
