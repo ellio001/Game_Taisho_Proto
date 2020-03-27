@@ -12,6 +12,7 @@ public class GuestGenerator : MonoBehaviour {
     public Vector3[] Position;      //席の番号(座標)
     //public bool []counter;        //席が埋まっているか判定
     public GameObject[] Guest;      //生成した客をいれる箱
+    bool FirstGuest;    //最初の客は12秒
 
     float time = 0f;                //時間を記録する小数も入る変数
 
@@ -21,6 +22,7 @@ public class GuestGenerator : MonoBehaviour {
 
     void Start() {
         GuestSpawn = 12; //客生成の間隔　数値/秒
+        FirstGuest = false;
         GM = GameObject.Find("GameManager");
         script = GM.GetComponent<GameManager>();
     }
@@ -30,14 +32,15 @@ public class GuestGenerator : MonoBehaviour {
         time += Time.deltaTime;//毎フレームの時間を加算.
 
         if (script.FiverFlag) {
-            GuestSpawn = 6;     //フィーバータイム時は6秒
+            GuestSpawn = 5;     //フィーバータイム時は5秒
         }
-        else {
-            GuestSpawn = 12;    //非フィーバー状態時は12秒
+        else if(FirstGuest == true){
+            GuestSpawn = 6;    //非フィーバー状態時は6秒
         }
 
         if (time >= GuestSpawn && Guest[Guest.Length - 1] == null)   //列の最後尾が埋まってなければGuestSpawn秒に１回処理
         {
+            FirstGuest = true;
             Trainnumber = Random.Range(0, GuestType.Length);    //客の種類をランダムにとる
             Guest[Guest.Length - 1] = Instantiate(GuestType[Trainnumber], Position[Position.Length - 1], transform.rotation);  //客生成(客番号,座標,回転)
 
