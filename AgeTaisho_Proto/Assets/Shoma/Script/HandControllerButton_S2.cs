@@ -53,43 +53,53 @@ public class HandControllerButton_S2 : MonoBehaviour
                                 clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                 HoldingFlg = true;
                                 ColliderFlag = 0;
+                                //当たり判定をを外す
+                                ColliderOut();
                                 break;
                             case "ChickenBox":
                                 Resource = (GameObject)Resources.Load("S_Resources/ItemChicken");   //Resourceフォルダのプレハブを読み込む
                                 clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                 HoldingFlg = true;
                                 ColliderFlag = 1;
+                                //当たり判定をを外す
+                                ColliderOut();
                                 break;
                             case "FishBox":
                                 Resource = (GameObject)Resources.Load("S_Resources/ItemFish");   //Resourceフォルダのプレハブを読み込む
                                 clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                 HoldingFlg = true;
                                 ColliderFlag = 2;
+                                //当たり判定をを外す
+                                ColliderOut();
                                 break;
                             case "PotatoBox":
                                 Resource = (GameObject)Resources.Load("S_Resources/ItemPotato");   //Resourceフォルダのプレハブを読み込む
                                 clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                 HoldingFlg = true;
                                 ColliderFlag = 3;
+                                //当たり判定をを外す
+                                ColliderOut();
                                 break;
                             case "QuailBox":
                                 Resource = (GameObject)Resources.Load("S_Resources/ItemQuail");   //Resourceフォルダのプレハブを読み込む
                                 clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                 HoldingFlg = true;
                                 ColliderFlag = 4;
+                                //当たり判定をを外す
+                                ColliderOut();
                                 break;
                             default:    //床や壁などをクリックしたらclickedGameObjectに何も入れない(null)
                                 break;
                         }
-                        //コライダーを外す判定
-                        ColliderOut();
                     }
 
-                    if (hit.collider.gameObject.tag == "Item")
-                    {
+                    if (hit.collider.gameObject.tag == "Item") {
                         clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                         clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                         HoldingFlg = true;
+
+                        //当たり判定をを外す
+                        ColliderOut();
                     }
 
                     //ClickObj2.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -97,9 +107,8 @@ public class HandControllerButton_S2 : MonoBehaviour
                 else if (hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" || clickedGameObject.name == "ItemChicken")
                 // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                 {
-                    print("入っている？");
                     //当たり判定を入れる
-                    CollideIn();
+                    ColliderIn();
 
                     ClickObj2.GetChild(0).gameObject.transform.position = hit.point;
                     clickedGameObject.transform.parent = null;                          //親子付けを解除
@@ -127,11 +136,13 @@ public class HandControllerButton_S2 : MonoBehaviour
 
     //当たり判定を切る関数
     void ColliderOut() {
+        print("外します");
         clickedGameObject.GetComponent<Collider>().enabled = false;
     }
 
     //当たり判定を入れる関数
-    void CollideIn() {
+    void ColliderIn() {
+        print("入れます");
         clickedGameObject.GetComponent<Collider>().enabled = true;
     }
 }
