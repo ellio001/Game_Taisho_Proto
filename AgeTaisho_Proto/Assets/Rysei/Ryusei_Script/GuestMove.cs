@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GuestMove : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class GuestMove : MonoBehaviour
     float random;   //注文のランダム変数
     int flooredIntrandom;   //ランダムの変数を整数に変えて入れる箱
     int WaitCount;  //客が帰るまでの時間
-    public string ItemString;   //アイテム名の文字列を入れる箱
+    public string ItemString;   //Resourceのアイテム名の文字列を入れる箱
+    private string OrderString; //表示するアイテム名の文字列をいれる箱
     public string NumberString;
     public int ItemScore;   //アイテムの「スコア
 
@@ -21,6 +23,7 @@ public class GuestMove : MonoBehaviour
     int MyNumber;   //列番号
     public GameObject[] GuestNumber; //列番号を入れる箱
     public Vector3[] GuestPosition; //座標番号を入れる箱
+    GameObject OrderObject;   //注文を表示するTextの箱
 
     public float GuestSpeed;   //客の移動速度をいれる箱
     public Vector3 GuestNowPosition;   //客の現在位置の仮決定をいれる箱
@@ -33,6 +36,7 @@ public class GuestMove : MonoBehaviour
     {
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
+        OrderObject = this.gameObject.transform.Find("Canvas/Text").gameObject; //子要素のtextを取得
         Number = GuestGenerator.GetComponent<GuestGenerator>();
         MyNumber = Number.Guest.Length - 1;   //自分の席番号を記憶する
         GuestNumber = Number.Guest; //GeneratorのGuestを獲得
@@ -55,6 +59,8 @@ public class GuestMove : MonoBehaviour
         }
 
         flooredIntrandom = (int)Mathf.Floor(random);        //5倍したランダムな値の小数点を切り捨てる(random自体の範囲0f~1.0f)
+
+        OrderObject.SetActive(false);   //席につくまではオーダーを表示しない
     }
 
     // Update is called once per frame
@@ -117,28 +123,34 @@ public class GuestMove : MonoBehaviour
             //ReturnCount = 14;    //客が席に着いてから帰るまでの時間
             ReturnCount = 0;
             Order = true;
+            OrderObject.SetActive(true);    //オーダーを表示する
 
             switch (flooredIntrandom)
             {
                 case 0:
                     ItemScore = 100;
                     ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    OrderString = "えびてん";
                     break;
                 case 1:
                     ItemScore = 100;
                     ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
+                    OrderString = "魚てん";
                     break;
                 case 2:
                     ItemScore = 100;
                     ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
+                    OrderString = "芋てん";
                     break;
                 case 3:
                     ItemScore = 100;
                     ItemString = "ItemSara(Chicken)";
+                    OrderString = "唐揚げ";
                     break;
                 case 4:
                     ItemScore = 100;
                     ItemString = "ItemSara(Quail)";
+                    OrderString = "うずら";
                     break;
             }
             switch (MyNumber)
@@ -154,6 +166,8 @@ public class GuestMove : MonoBehaviour
                     break;
             }
             Debug.Log(NumberString + "の席に" + ItemString + "の注文が入った");
+            Text OrderText = OrderObject.GetComponent<Text>();            // オブジェクトからTextコンポーネントを取得
+            OrderText.text = OrderString;    // テキストの表示を入れ替える
         }
         else if (Order == true)
         {
@@ -167,7 +181,11 @@ public class GuestMove : MonoBehaviour
     public void GuestReturn()  //客が帰る処理
     {
         GuestNowPosition.z -= GuestSpeed;   //-z方向に移動しつづける
-        if(OneProces == false) Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
-        OneProces = true;   //上の処理が2回目以降通らないようにする
+        if (OneProces == false)
+        {
+            Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
+            OrderObject.SetActive(false);    //オーダーを非表示にする
+            OneProces = true;   //この処理が2回目以降通らないようにする
+        }
     }
 }
