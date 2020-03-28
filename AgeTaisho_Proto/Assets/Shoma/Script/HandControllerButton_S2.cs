@@ -13,12 +13,20 @@ public class HandControllerButton_S2 : MonoBehaviour
     float handspeed = 0.1f;
 
     public bool HoldingFlg;
+    //ColliderFlagの説明
+    /* 0はEbiBox
+     * 1はChickenBox
+     * 2FishBox
+     * 3PotatoBox
+     * 4QuailBox*/
+    public int ColliderFlag;
     public Transform ClickObj2;
 
     void Start()
     {
         ClickObj = GameObject.Find("ControllerObjClick");
         HoldingFlg = false;
+        ColliderFlag = 0;
     }
 
     void Update()
@@ -44,30 +52,37 @@ public class HandControllerButton_S2 : MonoBehaviour
                                 Resource = (GameObject)Resources.Load("S_Resources/ItemEbi");   //Resourceフォルダのプレハブを読み込む
                                 clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                 HoldingFlg = true;
+                                ColliderFlag = 0;
                                 break;
                             case "ChickenBox":
                                 Resource = (GameObject)Resources.Load("S_Resources/ItemChicken");   //Resourceフォルダのプレハブを読み込む
                                 clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                 HoldingFlg = true;
+                                ColliderFlag = 1;
                                 break;
                             case "FishBox":
                                 Resource = (GameObject)Resources.Load("S_Resources/ItemFish");   //Resourceフォルダのプレハブを読み込む
                                 clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                 HoldingFlg = true;
+                                ColliderFlag = 2;
                                 break;
                             case "PotatoBox":
                                 Resource = (GameObject)Resources.Load("S_Resources/ItemPotato");   //Resourceフォルダのプレハブを読み込む
                                 clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                 HoldingFlg = true;
+                                ColliderFlag = 3;
                                 break;
                             case "QuailBox":
                                 Resource = (GameObject)Resources.Load("S_Resources/ItemQuail");   //Resourceフォルダのプレハブを読み込む
                                 clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                 HoldingFlg = true;
+                                ColliderFlag = 4;
                                 break;
                             default:    //床や壁などをクリックしたらclickedGameObjectに何も入れない(null)
                                 break;
                         }
+                        //コライダーを外す判定
+                        ColliderOut();
                     }
 
                     if (hit.collider.gameObject.tag == "Item")
@@ -82,12 +97,16 @@ public class HandControllerButton_S2 : MonoBehaviour
                 else if (hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" || clickedGameObject.name == "ItemChicken")
                 // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                 {
+                    print("入っている？");
+                    //当たり判定を入れる
+                    CollideIn();
+
                     ClickObj2.GetChild(0).gameObject.transform.position = hit.point;
                     clickedGameObject.transform.parent = null;                          //親子付けを解除
                     clickedGameObject.GetComponent<Rigidbody>().isKinematic = false;    //重力を有効
                     clickedGameObject = null;   //対象を入れる箱を初期化
                     Resource = null;            //生成するプレハブの箱を初期化
-
+                    
                     HoldingFlg = false;
                 }
                 if (clickedGameObject != null)  //nullでないとき処理
@@ -101,10 +120,19 @@ public class HandControllerButton_S2 : MonoBehaviour
             //}
             else if ((Input.GetButtonUp("〇") && clickedGameObject != null) || (Input.GetKeyUp(KeyCode.Space) && clickedGameObject != null))
             {
-
             }
         }
 
+    }
+
+    //当たり判定を切る関数
+    void ColliderOut() {
+        clickedGameObject.GetComponent<Collider>().enabled = false;
+    }
+
+    //当たり判定を入れる関数
+    void CollideIn() {
+        clickedGameObject.GetComponent<Collider>().enabled = true;
     }
 }
 
