@@ -21,6 +21,8 @@ public class HandControllerButton_S2 : MonoBehaviour
      * 4QuailBox*/
     public int ColliderFlag;
     public Transform ClickObj2;
+    private Transform TmpFood; // 手に持っている物を入れる
+    private GameObject TmpObj; // レイで当たっているObjを入れる
 
     void Start()
     {
@@ -88,8 +90,7 @@ public class HandControllerButton_S2 : MonoBehaviour
                                 //当たり判定をを外す
                                 ColliderOut();
                                 break;
-                            default:    //床や壁などをクリックしたらclickedGameObjectに何も入れない(null)
-                                break;
+
                         }
                     }
 
@@ -110,9 +111,21 @@ public class HandControllerButton_S2 : MonoBehaviour
                     //当たり判定を入れる
                     ColliderIn();
 
-                    ClickObj2.GetChild(0).gameObject.transform.position = hit.point;
-                    clickedGameObject.transform.parent = null;                          //親子付けを解除
+                    if (hit.collider.gameObject.tag != "Stock" && hit.collider.gameObject.tag != "Sara")
+                    {
+                        TmpFood = ClickObj2.GetChild(0).gameObject.transform;   // 手にもっているオブジェをコピー
+                        TmpObj = hit.collider.gameObject;                       // 見ているオブジェクトをコピー
+                        ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
+                        clickedGameObject.transform.parent = null;              //手との親子付けを解除
+                        TmpFood.transform.parent = TmpObj.transform;                      // 鍋とフードの親子付け
+                    }
+                    else
+                    {
+                        ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
+                        clickedGameObject.transform.parent = null;              //手との親子付けを解除
+                    }
                     clickedGameObject.GetComponent<Rigidbody>().isKinematic = false;    //重力を有効
+
                     clickedGameObject = null;   //対象を入れる箱を初期化
                     Resource = null;            //生成するプレハブの箱を初期化
                     
@@ -124,25 +137,17 @@ public class HandControllerButton_S2 : MonoBehaviour
                     clickedGameObject.GetComponent<Rigidbody>().isKinematic = true; //ヒットしたオブジェクトの重力を無効
                 }
             }
-            //else if (Input.GetMouseButton(0) && clickedGameObject != null)
-            //{
-            //}
-            else if ((Input.GetButtonUp("〇") && clickedGameObject != null) || (Input.GetKeyUp(KeyCode.Space) && clickedGameObject != null))
-            {
-            }
         }
 
     }
 
     //当たり判定を切る関数
     void ColliderOut() {
-        print("外します");
         clickedGameObject.GetComponent<Collider>().enabled = false;
     }
 
     //当たり判定を入れる関数
     void ColliderIn() {
-        print("入れます");
         clickedGameObject.GetComponent<Collider>().enabled = true;
     }
 }

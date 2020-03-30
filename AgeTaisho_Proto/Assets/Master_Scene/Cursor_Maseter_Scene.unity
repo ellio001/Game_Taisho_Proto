@@ -1135,7 +1135,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326164343}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6, y: 4.619, z: 2.886}
+  m_LocalPosition: {x: -6.21, y: 4.619, z: 3.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 149365713}
@@ -2004,6 +2004,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickedGameObject: {fileID: 0}
   Resource: {fileID: 0}
+  HoldingFlg: 0
+  ColliderFlag: 0
   ClickObj2: {fileID: 558240519}
 --- !u!65 &758830175
 BoxCollider:
@@ -4132,7 +4134,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2030843192}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.8, y: 4.619, z: 2.734}
+  m_LocalPosition: {x: -2.8, y: 4.619, z: 2.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 149365713}

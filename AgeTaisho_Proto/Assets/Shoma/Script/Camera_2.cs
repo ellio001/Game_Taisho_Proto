@@ -90,7 +90,6 @@ public class Camera_2 : MonoBehaviour
         // 左押したとき
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            //Garbage_can.gameObject.SetActiveRecursively(false); // ゴミ箱非表示
             cursor += 1;
             if (cursor > 13)
             {
@@ -105,7 +104,6 @@ public class Camera_2 : MonoBehaviour
         // 右押したとき
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            // Garbage_can.gameObject.SetActiveRecursively(false);
             cursor -= 1;
             if (cursor < 1)
             {
@@ -140,7 +138,6 @@ public class Camera_2 : MonoBehaviour
         // 上押したとき
         else if (Input.GetKey(KeyCode.UpArrow))
         {
-            //Garbage_can.gameObject.SetActiveRecursively(false);
             // 盛り付け場を見ている時に上を押したらストックの直前の場所を向く
             if (cs_target_M == Tableware_1 || cs_target_M == Tableware_2) CameraCursor();
 
@@ -153,12 +150,6 @@ public class Camera_2 : MonoBehaviour
                 if (cursor >= 1 && cursor <= 5) cs_target_M = StockTabl_2;
             }
             gomi_flg = false;
-        }
-
-        // ゴミ箱を出す
-        else if (Input.GetKey(KeyCode.A))
-        {
-
         }
 
     }
