@@ -87,13 +87,13 @@ public class Item_S : MonoBehaviour {
                     if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                         objcolor = dummy;
-                        Resource = (GameObject)Resources.Load("ItemTenpura");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("S_Resources/ItemTenpura");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 else if (other.gameObject.tag != "Click") {
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
-                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
 
@@ -123,13 +123,13 @@ public class Item_S : MonoBehaviour {
                     if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                         objcolor = dummy;
-                        Resource = (GameObject)Resources.Load("ItemTenpura");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("S_Resources/ItemTenpura");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 else if (other.gameObject.tag != "Click") {
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
-                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
 
@@ -143,11 +143,11 @@ public class Item_S : MonoBehaviour {
                 print("やばい");
                 if (other.gameObject.tag == "Sara") {
                     print("ダイジョウブ");
-                    Resource = (GameObject)Resources.Load("ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
                 }
 
                 if (AgeCount >= KogeCountMax) {
-                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 break;
 
@@ -156,7 +156,7 @@ public class Item_S : MonoBehaviour {
                 if (other.gameObject.tag == "Stock") AgeCount++;
 
                 if (AgeCount >= StockCountMax) {
-                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 break;
 
@@ -176,13 +176,13 @@ public class Item_S : MonoBehaviour {
                     if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                         objcolor = dummy;
-                        Resource = (GameObject)Resources.Load("ItemFriedchicken");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("S_Resources/ItemFriedchicken");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 else if (other.gameObject.tag != "Click") {
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
-                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
                 break;
@@ -195,11 +195,11 @@ public class Item_S : MonoBehaviour {
                 //if (other.gameObject.tag == "Stock") AgeCount++;
 
                 if (other.gameObject.tag == "Sara") {
-                    Resource = (GameObject)Resources.Load("ItemSara(Chicken)");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Chicken)");   //Resourceフォルダのプレハブを読み込む
                 }
 
                 if (AgeCount >= KogeCountMax) {
-                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 break;
 
@@ -209,7 +209,7 @@ public class Item_S : MonoBehaviour {
                 if (other.gameObject.tag == "Stock") AgeCount++;
 
                 if (AgeCount >= StockCountMax) {
-                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 break;
 
@@ -230,13 +230,13 @@ public class Item_S : MonoBehaviour {
                     if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                         objcolor = dummy;
-                        Resource = (GameObject)Resources.Load("ItemQuailFry");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("S_Resources/ItemQuailFry");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 else if (other.gameObject.tag == "Bread powder" && ThirdBreadPowder == true) {
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
-                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 else if (other.gameObject.tag == "liquid" && Secondliquid == true)  //液２回目
                 {
@@ -272,7 +272,7 @@ public class Item_S : MonoBehaviour {
                 {
                     objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
-                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
                 break;
@@ -285,11 +285,11 @@ public class Item_S : MonoBehaviour {
                 //if (other.gameObject.tag == "Stock") AgeCount++;
 
                 if (other.gameObject.tag == "Sara") {
-                    Resource = (GameObject)Resources.Load("ItemSara(Quail)");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Quail)");   //Resourceフォルダのプレハブを読み込む
                 }
 
                 if (AgeCount >= KogeCountMax) {
-                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 break;
 
@@ -299,7 +299,7 @@ public class Item_S : MonoBehaviour {
                 if (other.gameObject.tag == "Stock") AgeCount++;
 
                 if (AgeCount >= StockCountMax) {
-                    Resource = (GameObject)Resources.Load("ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 break;
 

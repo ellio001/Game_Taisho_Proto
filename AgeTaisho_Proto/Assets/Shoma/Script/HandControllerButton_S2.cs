@@ -111,19 +111,10 @@ public class HandControllerButton_S2 : MonoBehaviour
                     //当たり判定を入れる
                     ColliderIn();
 
-                    if (hit.collider.gameObject.tag != "Stock" && hit.collider.gameObject.tag != "Sara")
-                    {
-                        TmpFood = ClickObj2.GetChild(0).gameObject.transform;   // 手にもっているオブジェをコピー
-                        TmpObj = hit.collider.gameObject;                       // 見ているオブジェクトをコピー
+
                         ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
                         clickedGameObject.transform.parent = null;              //手との親子付けを解除
-                        TmpFood.transform.parent = TmpObj.transform;                      // 鍋とフードの親子付け
-                    }
-                    else
-                    {
-                        ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
-                        clickedGameObject.transform.parent = null;              //手との親子付けを解除
-                    }
+                    
                     clickedGameObject.GetComponent<Rigidbody>().isKinematic = false;    //重力を有効
 
                     clickedGameObject = null;   //対象を入れる箱を初期化
