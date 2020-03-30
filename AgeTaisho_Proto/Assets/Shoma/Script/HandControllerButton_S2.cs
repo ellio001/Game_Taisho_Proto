@@ -24,11 +24,17 @@ public class HandControllerButton_S2 : MonoBehaviour
     private Transform TmpFood; // 手に持っている物を入れる
     private GameObject TmpObj; // レイで当たっているObjを入れる
 
+    GameObject C2;    // Camera_2を入れる変数
+    Camera_2 C2_script; // Camera_2のscriptを入れる変数
+
     void Start()
     {
         ClickObj = GameObject.Find("ControllerObjClick");
         HoldingFlg = false;
         ColliderFlag = 0;
+
+        C2 = GameObject.Find("Main Camera");
+        C2_script = C2.GetComponent<Camera_2>();
     }
 
     void Update()
@@ -42,7 +48,8 @@ public class HandControllerButton_S2 : MonoBehaviour
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f))
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            // フラグがたっていないとボタンが聞かない
+            if (Input.GetKeyDown(KeyCode.Space) && C2_script.space_flg)
             {
                 if (HoldingFlg != true) // 手に何も持っていない時に入る
                 {
