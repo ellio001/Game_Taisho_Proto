@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Item_S : MonoBehaviour {
 
@@ -15,6 +16,8 @@ public class Item_S : MonoBehaviour {
     private bool Secondliquid;
     private bool ThirdBreadPowder;
     float alpha_Sin;    //オブジェクト発光の間隔(Sin波)
+    
+    private float Damage;   //ダメージ
 
     GameObject gameobject;
     GameObject Resource;
@@ -22,7 +25,9 @@ public class Item_S : MonoBehaviour {
     GameObject dummy;
     GameObject GM;              //GameMa agerがオブジェクト
     GameManager script;         //GameManagerが入る変数
-    
+
+    //Sliderを入れる
+    public Slider slider;
 
     // Use this for initialization
     void Start() {
@@ -38,8 +43,11 @@ public class Item_S : MonoBehaviour {
         QuailFry = false;
         Secondliquid = false;
         ThirdBreadPowder = false;
-        dummy = GameObject.Find("dummy");
+        
+        //Sliderを満タンにする。
+        slider.value = 0;
 
+        dummy = GameObject.Find("dummy");
         //りょうまが作ったやつ
         GM = GameObject.Find("GameManager");
         script = GM.GetComponent<GameManager>();
@@ -81,8 +89,10 @@ public class Item_S : MonoBehaviour {
                     objcolor = GameObject.Find("tenpuranabe");
                 }
                 else if (kona == true && other.gameObject.tag == "tenpuranabe") {
-
+                    
                     AgeCount += Time.deltaTime;
+                    slider.value = AgeCount / AgeCountMax;
+                    Debug.Log("slider.value : " + slider.value);
 
                     if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
@@ -119,6 +129,8 @@ public class Item_S : MonoBehaviour {
                 else if (kona == true && other.gameObject.tag == "tenpuranabe") {
 
                     AgeCount += Time.deltaTime;
+                    slider.value = AgeCount / AgeCountMax;
+                    Debug.Log("slider.value : " + slider.value);
 
                     if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
@@ -172,6 +184,8 @@ public class Item_S : MonoBehaviour {
                 if (other.gameObject.tag == "karaagenabe") {
 
                     AgeCount += Time.deltaTime;
+                    slider.value = AgeCount / AgeCountMax;
+                    Debug.Log("slider.value : " + slider.value);
 
                     if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
@@ -225,7 +239,10 @@ public class Item_S : MonoBehaviour {
                     objcolor = GameObject.Find("BreadPowder");
                 }
                 if (QuailFry == true && other.gameObject.tag == "karaagenabe") {
+
                     AgeCount += Time.deltaTime;
+                    slider.value = AgeCount / AgeCountMax;
+                    Debug.Log("slider.value : " + slider.value);
 
                     if (AgeCount >= AgeCountMax) {
                         objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
