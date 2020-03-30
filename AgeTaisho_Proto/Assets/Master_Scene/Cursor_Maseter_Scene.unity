@@ -2004,6 +2004,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickedGameObject: {fileID: 0}
   Resource: {fileID: 0}
+  HoldingFlg: 0
+  ColliderFlag: 0
   ClickObj2: {fileID: 558240519}
 --- !u!65 &758830175
 BoxCollider:
@@ -4239,6 +4241,11 @@ PrefabInstance:
       propertyPath: Plate1
       value: 
       objectReference: {fileID: 911819526}
+    - target: {fileID: 1107674678733481458, guid: bd99ef1846c4dcf4bbb787aac683adae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.494995
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd99ef1846c4dcf4bbb787aac683adae, type: 3}
 --- !u!4 &2046108795 stripped
