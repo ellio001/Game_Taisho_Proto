@@ -45,7 +45,7 @@ public class Item_S : MonoBehaviour {
         ThirdBreadPowder = false;
         
         //Sliderを満タンにする。
-        slider.value = 0;
+        slider.value = 1;
 
         dummy = GameObject.Find("dummy");
         //りょうまが作ったやつ
