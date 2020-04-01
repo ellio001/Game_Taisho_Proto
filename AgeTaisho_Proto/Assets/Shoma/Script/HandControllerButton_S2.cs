@@ -27,6 +27,8 @@ public class HandControllerButton_S2 : MonoBehaviour
     GameObject C2;    // Camera_2を入れる変数
     Camera_2 C2_script; // Camera_2のscriptを入れる変数
 
+    bool ItemSara;  //アイテム名にSaraが含まれているか判定
+
     void Start()
     {
         ClickObj = GameObject.Find("ControllerObjClick");
@@ -101,32 +103,35 @@ public class HandControllerButton_S2 : MonoBehaviour
                         }
                     }
 
-                    if (hit.collider.gameObject.tag == "Item") {
+                    if (hit.collider.gameObject.tag == "Item")
+                    {
                         clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                         clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                         HoldingFlg = true;
-
+                        ItemSara = hit.collider.gameObject.name.Contains("Sara");
+                        Debug.Log(ItemSara);
                         //当たり判定をを外す
                         ColliderOut();
                     }
 
                     //ClickObj2.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
                 }
-                else if (hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" || clickedGameObject.name == "ItemChicken")
+                else if (ItemSara || hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" &&
+                        hit.collider.gameObject.tag != "Stock" || clickedGameObject.name == "ItemChicken")
                 // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                 {
                     //当たり判定を入れる
                     ColliderIn();
 
 
-                        ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
-                        clickedGameObject.transform.parent = null;              //手との親子付けを解除
-                    
+                    ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
+                    clickedGameObject.transform.parent = null;              //手との親子付けを解除
+
                     clickedGameObject.GetComponent<Rigidbody>().isKinematic = false;    //重力を有効
 
                     clickedGameObject = null;   //対象を入れる箱を初期化
                     Resource = null;            //生成するプレハブの箱を初期化
-                    
+
                     HoldingFlg = false;
                 }
                 if (clickedGameObject != null)  //nullでないとき処理
