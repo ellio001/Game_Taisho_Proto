@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Item_S : MonoBehaviour {
 
     private float AgeCount;
+    private float StockCount;
     private float AgeCountMax;
     private float KogeCountMax;
     private float StockCountMax;
@@ -16,8 +17,6 @@ public class Item_S : MonoBehaviour {
     private bool Secondliquid;
     private bool ThirdBreadPowder;
     float alpha_Sin;    //オブジェクト発光の間隔(Sin波)
-
-    private float Damage;   //ダメージ
 
     GameObject gameobject;
     GameObject Resource;
@@ -36,6 +35,7 @@ public class Item_S : MonoBehaviour {
         gameObject.name = gameObject.name.Replace("(Clone)", ""); //プレハブ生成時の(Clone)を消す
         Resource = null;            //生成するプレハブの箱を初期化
         AgeCount = 0f;               //カウント初期化
+        StockCount = 0f;     //ストックのカウント
         KogeCountMax = 7f;        //焦げるスピード
         StockCountMax = 30f;       //ストックスピード
         kona = false;               //konaをfalseに
@@ -122,6 +122,7 @@ public class Item_S : MonoBehaviour {
                     objcolor = GameObject.Find("kona");
                 }
 
+
                 if (other.gameObject.tag == "kona") {
                     kona = true;
                     GetComponent<Renderer>().material.color = Color.white;
@@ -144,11 +145,18 @@ public class Item_S : MonoBehaviour {
                     objcolor = dummy;
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
+
+
                 objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
 
                 break;
 
             case "ItemTenpura":
+                
+                //ここを変更
+                StockCount += Time.deltaTime;
+                slider.value = StockCount / StockCountMax;
+
                 if (other.gameObject.tag == "tenpuranabe") {
 
                     AgeCount += Time.deltaTime;
