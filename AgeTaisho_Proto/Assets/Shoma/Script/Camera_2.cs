@@ -98,7 +98,7 @@ public class Camera_2 : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
 
-            if (gomi_flg) cursor = 9;
+            if (gomi_flg && (cs_target_M != Tableware_1 && cs_target_M != Tableware_2)) cursor = 9;
             else
             {
                 cursor += 1;
@@ -117,7 +117,7 @@ public class Camera_2 : MonoBehaviour
         // 右押したとき
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            if (gomi_flg) cursor = 5;
+            if (gomi_flg && (cs_target_M != Tableware_1 && cs_target_M != Tableware_2)) cursor = 5;
             else
             {
                 cursor -= 1;
