@@ -138,7 +138,7 @@ public class Camera_2 : MonoBehaviour
             /* ゴミフラグがたっている時、
              * 焦げアイテムを持っているときに下を押すした時、
              * 3つの客席を見ている時は、すぐにゴミ箱を向く*/
-            if (gomi_flg || (cursor >= 6 && cursor <= 8) || ClickObj.transform.GetChild(0).name == "ItemKoge")
+            if (gomi_flg || (cursor >= 6 && cursor <= 8) || (ClickObj.transform.childCount > 0 && ClickObj.transform.GetChild(0).name == "ItemKoge"))
             {
                 speed = SPEED * 2; // ゴミ箱を見る速さ
                 cs_target_M = cs_target_99;
