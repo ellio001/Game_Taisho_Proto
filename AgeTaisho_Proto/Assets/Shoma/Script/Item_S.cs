@@ -28,6 +28,7 @@ public class Item_S : MonoBehaviour {
 
     //Sliderを入れる
     public Slider slider;
+    public Canvas canvas;
 
     // Use this for initialization
     void Start() {
@@ -57,6 +58,8 @@ public class Item_S : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         alpha_Sin = Mathf.Sin(Time.time) / 2 + 0.5f;    //Sin波
+        //EnemyCanvasをMain Cameraに向かせる
+        canvas.transform.rotation = Camera.main.transform.rotation;
         //Debug.Log("液"+liquid);
         //Debug.Log("粉"+BredPowder);
         //Debug.Log("揚"+QuailFry);
