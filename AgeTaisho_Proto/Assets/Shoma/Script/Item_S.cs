@@ -36,7 +36,7 @@ public class Item_S : MonoBehaviour {
         Resource = null;            //生成するプレハブの箱を初期化
         AgeCount = 0f;               //カウント初期化
         StockCount = 0f;     //ストックのカウント
-        KogeCountMax = 7f;        //焦げるスピード
+        KogeCountMax = 14f;        //焦げるスピード
         StockCountMax = 30f;       //ストックスピード
         kona = false;               //konaをfalseに
         BredPowder = false;
@@ -153,23 +153,36 @@ public class Item_S : MonoBehaviour {
 
             case "ItemTenpura":
                 
-                //ここを変更
-                StockCount += Time.deltaTime;
-                slider.value = StockCount / StockCountMax;
+                AgeCount += Time.deltaTime;
+                slider.value = AgeCount / KogeCountMax;
 
                 if (other.gameObject.tag == "tenpuranabe") {
 
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / KogeCountMax;
                     Debug.Log(slider.value);
-                    if (AgeCount >= KogeCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
-                    }
+                }
+                if (AgeCount >= KogeCountMax) {
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 if (other.gameObject.tag == "Sara") {
                     print("ダイジョウブ");
                     Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
                 }
+
+                //if (other.gameObject.tag == "tenpuranabe") {
+
+                //    AgeCount += Time.deltaTime;
+                //    slider.value = AgeCount / KogeCountMax;
+                //    Debug.Log(slider.value);
+                //    if (AgeCount >= KogeCountMax) {
+                //        Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                //    }
+                //}
+                //if (other.gameObject.tag == "Sara") {
+                //    print("ダイジョウブ");
+                //    Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
+                //}
 
                 break;
 
@@ -215,13 +228,29 @@ public class Item_S : MonoBehaviour {
 
 
             case "ItemFriedchicken":
+
+                AgeCount += Time.deltaTime;
+                slider.value = AgeCount / KogeCountMax;
+
                 if (other.gameObject.tag == "karaagenabe") {
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / KogeCountMax;
-                    if (AgeCount >= KogeCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
-                    }
                 }
+                if (AgeCount >= KogeCountMax) {
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                if (other.gameObject.tag == "Sara") {
+                    print("ダイジョウブ");
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
+                }
+
+                //    if (other.gameObject.tag == "karaagenabe") {
+                //        AgeCount += Time.deltaTime;
+                //        slider.value = AgeCount / KogeCountMax;
+                //        if (AgeCount >= KogeCountMax) {
+                //            Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                //        }
+                //    }
 
                 if (other.gameObject.tag == "Sara") {
                     Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Chicken)");   //Resourceフォルダのプレハブを読み込む
@@ -308,13 +337,30 @@ public class Item_S : MonoBehaviour {
 
             case "ItemQuailFry":
 
+                AgeCount += Time.deltaTime;
+                slider.value = AgeCount / KogeCountMax;
+
                 if (other.gameObject.tag == "karaagenabe") {
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / KogeCountMax;
-                    if (AgeCount >= KogeCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
-                    }
                 }
+
+                if (AgeCount >= KogeCountMax) {
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+
+                if (other.gameObject.tag == "Sara") {
+                    print("ダイジョウブ");
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
+                }
+
+                //if (other.gameObject.tag == "karaagenabe") {
+                //    AgeCount += Time.deltaTime;
+                //    slider.value = AgeCount / KogeCountMax;
+                //    if (AgeCount >= KogeCountMax) {
+                //        Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                //    }
+                //}
 
                 if (other.gameObject.tag == "Sara") {
                     Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Quail)");   //Resourceフォルダのプレハブを読み込む
