@@ -3,7 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Box
+  - Garbage can
+  - Bread powder
+  - Stock
+  - kona
+  - karaagenabe
+  - Click
+  - Sara
+  - tenpuranabe
+  - liquid
+  - Item
+  - Seki
   layers:
   - Default
   - TransparentFX

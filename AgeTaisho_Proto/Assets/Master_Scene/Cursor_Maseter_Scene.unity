@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 59014775}
   m_Layer: 0
   m_Name: Plate0
-  m_TagString: Untagged
+  m_TagString: Seki
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2797,7 +2797,7 @@ GameObject:
   - component: {fileID: 1369758975}
   m_Layer: 0
   m_Name: Plate2
-  m_TagString: Untagged
+  m_TagString: Seki
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3484,7 +3484,7 @@ GameObject:
   - component: {fileID: 1805278940}
   m_Layer: 0
   m_Name: Plate1
-  m_TagString: Untagged
+  m_TagString: Seki
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

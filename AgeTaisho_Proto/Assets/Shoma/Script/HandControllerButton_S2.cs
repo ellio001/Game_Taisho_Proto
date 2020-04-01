@@ -101,6 +101,7 @@ public class HandControllerButton_S2 : MonoBehaviour
                                 break;
 
                         }
+                        ItemSara = hit.collider.gameObject.name.Contains("Sara");
                     }
 
                     if (hit.collider.gameObject.tag == "Item")
@@ -109,21 +110,21 @@ public class HandControllerButton_S2 : MonoBehaviour
                         clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                         HoldingFlg = true;
                         ItemSara = hit.collider.gameObject.name.Contains("Sara");
-                        Debug.Log(ItemSara);
+
                         //当たり判定をを外す
                         ColliderOut();
                     }
 
                     //ClickObj2.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
                 }
-                else if (ItemSara || hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" &&
-                        hit.collider.gameObject.tag != "Stock" || clickedGameObject.name == "ItemChicken")
+                else if ( (ItemSara && (hit.collider.gameObject.tag == "Stock" || hit.collider.gameObject.tag == "Seki" || hit.collider.gameObject.tag == "Garbage can")) || 
+                        (ItemSara == false && hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" &&
+                        hit.collider.gameObject.tag != "Stock"))
+
                 // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                 {
                     //当たり判定を入れる
                     ColliderIn();
-
-
                     ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
                     clickedGameObject.transform.parent = null;              //手との親子付けを解除
 
