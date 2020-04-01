@@ -35,6 +35,8 @@ public class Camera_2 : MonoBehaviour
     Quaternion target;      // 目的地の座標変数
     private bool gomi_flg = false; // ゴミ箱を向くときに使う
     public bool space_flg = false;
+    private const float SPEED = 240; // ここをいじれば移動スピードが変わる！
+    private GameObject ClickObj;
 
     void Start()
     {
@@ -65,7 +67,7 @@ public class Camera_2 : MonoBehaviour
         StockTabl_1 = GameObject.Find("CS_stock1");
         StockTabl_2 = GameObject.Find("CS_stock2");
 
-       
+        ClickObj = GameObject.Find("ControllerObjClick");
         //Garbage_can.gameObject.SetActiveRecursively(false);
     }
 
@@ -95,13 +97,19 @@ public class Camera_2 : MonoBehaviour
         // 左押したとき
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            cursor += 1;
-            if (cursor > 13)
+
+            if (gomi_flg) cursor = 9;
+            else
             {
-                cursor = 1;
-                speed = 360;
+                cursor += 1;
+                if (cursor > 13)
+                {
+                    cursor = 1;
+                    speed = SPEED + 120;
+                }
+                else speed = SPEED;
             }
-            else speed = 240;
+            
             gomi_flg = false;
             CameraCursor();
         }
@@ -109,13 +117,17 @@ public class Camera_2 : MonoBehaviour
         // 右押したとき
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            cursor -= 1;
-            if (cursor < 1)
+            if (gomi_flg) cursor = 5;
+            else
             {
-                cursor = 13;
-                speed = 360;
+                cursor -= 1;
+                if (cursor < 1)
+                {
+                    cursor = 13;
+                    speed = SPEED + 120;
+                }
+                else speed = SPEED;
             }
-            else speed = 240;
             gomi_flg = false;
             CameraCursor();
         }
@@ -123,13 +135,18 @@ public class Camera_2 : MonoBehaviour
         // 下押したとき
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            if (gomi_flg || cursor >= 6 && cursor <= 8)
+            /* ゴミフラグがたっている時、
+             * 焦げアイテムを持っているときに下を押すした時、
+             * 3つの客席を見ている時は、すぐにゴミ箱を向く*/
+            if (gomi_flg || (cursor >= 6 && cursor <= 8) || ClickObj.transform.GetChild(0).name == "ItemKoge")
             {
-                speed = 480; // ゴミ箱を見る速さ
+                speed = SPEED * 2; // ゴミ箱を見る速さ
                 cs_target_M = cs_target_99;
+                gomi_flg = true;
             }
             else
             {
+                Debug.Log("うああああああああああ");
                 // ストックを見ている時に下を押したらストックの直前の場所を向く
                 if (cs_target_M == StockTabl_1 || cs_target_M == StockTabl_2) CameraCursor();
                 else
@@ -141,7 +158,7 @@ public class Camera_2 : MonoBehaviour
                     gomi_flg = true;
                 }
             }
-
+            
         }
 
         // 上押したとき
