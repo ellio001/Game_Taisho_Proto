@@ -16,6 +16,7 @@ public class Item_S : MonoBehaviour {
     private bool QuailFry;
     private bool Secondliquid;
     private bool ThirdBreadPowder;
+    private bool TaihiFlag;
     float alpha_Sin;    //オブジェクト発光の間隔(Sin波)
 
     GameObject gameobject;
@@ -33,17 +34,18 @@ public class Item_S : MonoBehaviour {
     void Start() {
         gameobject = this.gameObject;   //このオブジェクトの情報をいれる
         gameObject.name = gameObject.name.Replace("(Clone)", ""); //プレハブ生成時の(Clone)を消す
-        Resource = null;            //生成するプレハブの箱を初期化
-        AgeCount = 0f;               //カウント初期化
-        StockCount = 0f;     //ストックのカウント
-        KogeCountMax = 14f;        //焦げるスピード
-        StockCountMax = 30f;       //ストックスピード
-        kona = false;               //konaをfalseに
+        Resource = null;                //生成するプレハブの箱を初期化
+        //AgeCount = 0f;                  //カウント初期化
+        StockCount = 0f;                //ストックのカウント
+        KogeCountMax = 14f;             //焦げるスピード
+        StockCountMax = 30f;            //ストックスピード
+        kona = false;                   //konaをfalseに
         BredPowder = false;
         liquid = false;
         QuailFry = false;
         Secondliquid = false;
         ThirdBreadPowder = false;
+        TaihiFlag = false;
 
         //Sliderを満タンにする。
         slider.value = 1f;
@@ -52,7 +54,6 @@ public class Item_S : MonoBehaviour {
         //りょうまが作ったやつ
         GM = GameObject.Find("GameManager");
         script = GM.GetComponent<GameManager>();
-
     }
 
     // Update is called once per frame
@@ -64,6 +65,7 @@ public class Item_S : MonoBehaviour {
         //Debug.Log("粉"+BredPowder);
         //Debug.Log("揚"+QuailFry);
     }
+    
 
     private void OnTriggerStay(Collider other) {
 
@@ -153,9 +155,6 @@ public class Item_S : MonoBehaviour {
 
             case "ItemTenpura":
                 
-                AgeCount += Time.deltaTime;
-                slider.value = AgeCount / KogeCountMax;
-
                 if (other.gameObject.tag == "tenpuranabe") {
 
                     AgeCount += Time.deltaTime;
@@ -168,7 +167,8 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 if (other.gameObject.tag == "Sara") {
-                    print("ダイジョウブ");
+                    script.Taihi = AgeCount;
+                    script.TaihiFlag = TaihiFlag;
                     Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
                 }
 
@@ -189,6 +189,12 @@ public class Item_S : MonoBehaviour {
                 break;
 
             case "ItemSara(Tenpura)":
+                if(TaihiFlag == false) {
+                    print("通った");
+                    AgeCount = script.Taihi;
+                    TaihiFlag = true;
+                }
+                
                 //ストックされたら腐る
                 if (other.gameObject.tag == "Stock") {
                     AgeCount += Time.deltaTime;
@@ -245,7 +251,8 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 if (other.gameObject.tag == "Sara") {
-                    print("ダイジョウブ");
+                    script.Taihi = AgeCount;
+                    script.TaihiFlag = TaihiFlag;
                     Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
                 }
 
@@ -258,6 +265,8 @@ public class Item_S : MonoBehaviour {
                 //    }
 
                 if (other.gameObject.tag == "Sara") {
+                    script.Taihi = AgeCount;
+                    script.TaihiFlag = TaihiFlag;
                     Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Chicken)");   //Resourceフォルダのプレハブを読み込む
                 }
                 // ゴミ箱に当たると焦げになる
@@ -265,6 +274,11 @@ public class Item_S : MonoBehaviour {
                 break;
 
             case "ItemSara(Chicken)":
+
+                if (TaihiFlag == false) {
+                    AgeCount = script.Taihi;
+                    TaihiFlag = true;
+                }
 
                 //ストックされたら
                 if (other.gameObject.tag == "Stock") {
@@ -362,11 +376,6 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
 
-                if (other.gameObject.tag == "Sara") {
-                    print("ダイジョウブ");
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
-                }
-
                 //if (other.gameObject.tag == "karaagenabe") {
                 //    AgeCount += Time.deltaTime;
                 //    slider.value = AgeCount / KogeCountMax;
@@ -376,12 +385,19 @@ public class Item_S : MonoBehaviour {
                 //}
 
                 if (other.gameObject.tag == "Sara") {
+                    script.Taihi = AgeCount;
+                    script.TaihiFlag = TaihiFlag;
                     Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Quail)");   //Resourceフォルダのプレハブを読み込む
                 }
 
                 break;
 
             case "ItemSara(Quail)":
+
+                if (TaihiFlag == false) {
+                    AgeCount = script.Taihi;
+                    TaihiFlag = true;
+                }
 
                 //ストックされたら
                 if (other.gameObject.tag == "Stock") {

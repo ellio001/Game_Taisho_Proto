@@ -5,12 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Tawata/Ryoma_New_Scene.unity
-    guid: 4697ea15b63c0cc42abca21b3b15aa24
   - enabled: 1
     path: Assets/Master_Scene/Cursor_Maseter_Scene.unity
-    guid: f3d97f45f336c7b44a02475cce965a9f
+    guid: e514f9240a2279246b15f381448ba0e8
   - enabled: 1
     path: Assets/Tawata/EndScene.unity
     guid: 68139bf99fb8ef8479559a98ad7247c7
