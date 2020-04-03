@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour {
     int FiverCountFlag = 0;     //何回目のフィーバーか判定フラグ
     public bool FiverFlag;             //フィーバーかどうかの判定フラグ
     bool TestSceneFlag;         //シーンを飛ぶ用のフラグ
+    public float Taihi;
+    public bool TaihiFlag;
 
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
