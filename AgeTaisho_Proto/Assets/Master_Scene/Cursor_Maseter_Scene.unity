@@ -2972,6 +2972,10 @@ MonoBehaviour:
   TaihiFlag: 0
   score_num: 0
   score_object: {fileID: 2146736519}
+  Nama:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1520555766
 Transform:
   m_ObjectHideFlags: 0
