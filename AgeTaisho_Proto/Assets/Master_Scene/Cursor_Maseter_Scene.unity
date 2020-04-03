@@ -2972,10 +2972,30 @@ MonoBehaviour:
   TaihiFlag: 0
   score_num: 0
   score_object: {fileID: 2146736519}
-  Nama:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  Item_Resources:
+  - {fileID: 7132295679800347507, guid: f84d64101db5c734fb2fdcb6330718ab, type: 3}
+  - {fileID: 7537360058213969868, guid: 9b070f8a2d902044f99b219a12181aa4, type: 3}
+  - {fileID: 1988355991532714082, guid: c8ff92caed4224f47bc84c1d975fc1d2, type: 3}
+  - {fileID: 6629114915025785467, guid: 1aa28650b7b05234d93424611f202d31, type: 3}
+  - {fileID: 8835392965791774826, guid: 2b2c4bf306a58da49b37292731bc0621, type: 3}
+  Powder_Resources:
+  - {fileID: 7132295679800347507, guid: a2fa3da97aacb144cad4a5eb0b6f89eb, type: 3}
+  - {fileID: 7537360058213969868, guid: 754cb3ef7cc4cdd479580322b2688e62, type: 3}
+  - {fileID: 1988355991532714082, guid: ca82ad4e82e147d4e99645aee0051776, type: 3}
+  - {fileID: 1148483166666378, guid: 52012b2cb1fce1244ab67f790d2c0915, type: 3}
+  - {fileID: 8835392965791774826, guid: e384f1e8b92741c4cb6d65d16c653151, type: 3}
+  Fried_Resources:
+  - {fileID: 1082506457563258266, guid: beec3dbbf91821841846c9f4fb458330, type: 3}
+  - {fileID: 1082506457563258266, guid: 77590feac5e5fb541ba3bd587e6389b8, type: 3}
+  - {fileID: 1082506457563258266, guid: e3337640c2f7ecb469243d36dbd30bfd, type: 3}
+  - {fileID: 1082506457563258266, guid: 75acce788436fe44a99036875fca4c38, type: 3}
+  - {fileID: 1082506457563258266, guid: a77e65a424177ce43bf765098d0fb187, type: 3}
+  Dish_Resources:
+  - {fileID: 7437207013789397015, guid: ad224b372bd5ec746b236d5440ffb6e3, type: 3}
+  - {fileID: 7437207013789397015, guid: e7293661b7a47b640bb152eac3b25ee9, type: 3}
+  - {fileID: 7437207013789397015, guid: cf98ad83bd18e6743b93775196774a0e, type: 3}
+  - {fileID: 6770264992575070489, guid: a0a067eee7c64194988de8f02540b3f2, type: 3}
+  - {fileID: 1587704105524970577, guid: 9f21ef16f59d06f4389dd01d28735e4e, type: 3}
 --- !u!4 &1520555766
 Transform:
   m_ObjectHideFlags: 0

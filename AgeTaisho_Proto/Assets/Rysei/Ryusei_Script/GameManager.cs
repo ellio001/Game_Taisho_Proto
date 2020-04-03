@@ -24,7 +24,12 @@ public class GameManager : MonoBehaviour {
     public int score_num = 0; // スコア変数
     public GameObject score_object = null; // Textオブジェクト
 
-    [SerializeField] List<GameObject> Nama = new List<GameObject>();
+    // プレファブ達をリスト化
+    
+    [SerializeField] List<GameObject> Item_Resources = new List<GameObject>();
+    [SerializeField] List<GameObject> Powder_Resources = new List<GameObject>();
+    [SerializeField] List<GameObject> Fried_Resources = new List<GameObject>();
+    [SerializeField] List<GameObject> Dish_Resources = new List<GameObject>();
 
     private void Awake()    //スタートよりも最初に呼ばれる
     {
