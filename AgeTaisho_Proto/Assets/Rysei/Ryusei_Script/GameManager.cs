@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
     public GameObject score_object = null; // Textオブジェクト
+
+    [SerializeField] List<GameObject> Nama = new List<GameObject>();
 
     private void Awake()    //スタートよりも最初に呼ばれる
     {
