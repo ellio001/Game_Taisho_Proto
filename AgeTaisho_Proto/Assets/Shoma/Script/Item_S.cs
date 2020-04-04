@@ -38,7 +38,7 @@ public class Item_S : MonoBehaviour {
         //AgeCount = 0f;                  //カウント初期化
         StockCount = 0f;                //ストックのカウント
         KogeCountMax = 14f;             //焦げるスピード
-        StockCountMax = 30f;            //ストックスピード
+        StockCountMax = 45f;            //ストックスピード
         kona = false;                   //konaをfalseに
         BredPowder = false;
         liquid = false;
