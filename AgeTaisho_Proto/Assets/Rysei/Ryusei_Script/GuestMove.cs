@@ -114,14 +114,13 @@ public class GuestMove : MonoBehaviour
         if (MyNumber >= 3)
         {
             ReturnCount += Time.deltaTime;
-            if (ReturnCount >= 8) GuestReturn(); //席につかず8秒たつとGuestReturnが呼ばれる
+            if (ReturnCount >=11) GuestReturn(); //席につかず8秒たつとGuestReturnが呼ばれる
             //Debug.Log(LineReturn);
         }
         if (GuestNowPosition.z >= -2 && Order == false)  //席に着いたら処理
         {
 
-            //ReturnCount = 14;    //客が席に着いてから帰るまでの時間
-            ReturnCount = 0;
+            ReturnCount = 0;    //客が帰るまでの時間を初期化
             Order = true;
             OrderObject.SetActive(true);    //オーダーを表示する
 
@@ -172,7 +171,7 @@ public class GuestMove : MonoBehaviour
         else if (Order == true)
         {
             ReturnCount += Time.deltaTime;
-            if (ReturnCount >= 18) GuestReturn(); //席につかず8秒たつとGuestReturnが呼ばれる
+            if (ReturnCount >= 25) GuestReturn(); //席について18秒たつとGuestReturnが呼ばれる
         }
 
         if (GuestNowPosition.z <= -13) Destroy(gameObject);   //zが-13以下になったら消える

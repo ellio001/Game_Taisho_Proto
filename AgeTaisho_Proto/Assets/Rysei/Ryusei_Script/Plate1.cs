@@ -32,7 +32,7 @@ public class Plate1 : MonoBehaviour
     {
         if (script != null && other.gameObject.name == script.ItemString)
         {
-            script.ReturnCount = 18;
+            script.ReturnCount += 100;
             GameManager.instance.score_num += script.ItemScore; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
 

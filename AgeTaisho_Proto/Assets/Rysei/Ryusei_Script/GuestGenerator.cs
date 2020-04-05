@@ -35,7 +35,7 @@ public class GuestGenerator : MonoBehaviour {
             GuestSpawn = 5;     //フィーバータイム時は5秒
         }
         else if(FirstGuest == true){
-            GuestSpawn = 12;    //非フィーバー状態時は6秒
+            GuestSpawn = 8;    //非フィーバー状態時は8秒
         }
 
         if (time >= GuestSpawn && Guest[Guest.Length - 1] == null)   //列の最後尾が埋まってなければGuestSpawn秒に１回処理
