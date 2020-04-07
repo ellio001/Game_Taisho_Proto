@@ -51,7 +51,8 @@ public class Tutorials_HandControllerButton : MonoBehaviour
         RaycastHit hit = new RaycastHit();
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-
+        // 天ぷらが生成されたら一度だけ次のテキストに進む
+        if (GameObject.Find("ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7; // テキストを進める
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f) && Input.GetKeyDown(KeyCode.Space) && C2_script.space_flg)
         {
@@ -61,17 +62,18 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                 {
                     if (hit.collider.gameObject.name == "EbiBox" && TextNumber == 3)
                     {
-                            Resource = (GameObject)Resources.Load("S_Resources/ItemEbi");   //Resourceフォルダのプレハブを読み込む
-                            clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
-                            HoldingFlg = true;
-                            ColliderFlag = 0;
-                            //当たり判定をを外す
-                            ColliderOut();
+                        Resource = (GameObject)Resources.Load("S_Resources/ItemEbi");   //Resourceフォルダのプレハブを読み込む
+                        clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
+                        HoldingFlg = true;
+                        ColliderFlag = 0;
+                        tutorialUI.TextNumber = 4; // テキストを進める
+                        //当たり判定をを外す
+                        ColliderOut();
                     }
                     ItemSara = hit.collider.gameObject.name.Contains("Sara");
                 }
 
-                if (hit.collider.gameObject.tag == "Item")
+                if (hit.collider.gameObject.tag == "Item" && (TextNumber != 6 && TextNumber != 9) )
                 {
                     clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                     clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
@@ -83,9 +85,8 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                 }
 
             }
-            else if ((ItemSara && (hit.collider.gameObject.tag == "Stock" || hit.collider.gameObject.tag == "Seki" || hit.collider.gameObject.tag == "Garbage can")) ||
-                    (ItemSara == false && hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" &&
-                    hit.collider.gameObject.tag != "Stock"))
+            else if ((TextNumber == 4 && hit.collider.gameObject.tag == "kona") || (TextNumber == 5 && hit.collider.gameObject.tag == "tenpuranabe")||
+                     (TextNumber == 7 && hit.collider.gameObject.tag == "Sara") || (TextNumber == 8 && hit.collider.gameObject.name == "Plate2"))
             // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
             {
                 //当たり判定を入れる
@@ -99,6 +100,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                 Resource = null;            //生成するプレハブの箱を初期化
 
                 HoldingFlg = false;
+                tutorialUI.TextNumber += 1; // テキストを進める
             }
             if (clickedGameObject != null)  //nullでないとき処理
             {
