@@ -8,9 +8,9 @@ public class TutorialUI : MonoBehaviour
     [SerializeField]
     private Text TutorialTextArea;  //Text型のTutorialTextをいれる
     //[SerializeField]
-    private List<string> TutorialTextList = new List<string>(); //テキストのリスト
+    public List<string> TutorialTextList = new List<string>(); //テキストのリスト
 
-    private int TextNumber = 0; //TextNumber番地のテキストをみる
+    public int TextNumber = 0; //TextNumber番地のテキストをみる
     private int StringCount;    //TextNumberがいくつまであるか
     private float TutorialTime; //Time.deltatimeをいれる
 
