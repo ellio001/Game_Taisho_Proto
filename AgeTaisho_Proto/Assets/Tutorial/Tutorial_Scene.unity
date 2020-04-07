@@ -2831,7 +2831,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d00bf2b42dbde44b4597a56015a3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cursor_List:
+  - {fileID: 203673801}
+  - {fileID: 1217268320}
+  - {fileID: 170482611}
+  - {fileID: 1582448665}
+  - {fileID: 1971391696}
+  - {fileID: 925275559}
+  - {fileID: 818583826}
+  - {fileID: 1177995197}
+  - {fileID: 1097565173}
+  - {fileID: 1982215998}
+  - {fileID: 721915714}
+  - {fileID: 1026241659}
+  - {fileID: 1558415801}
+  - {fileID: 1721210282}
+  - {fileID: 370283157}
+  - {fileID: 101667456}
+  - {fileID: 303442129}
+  - {fileID: 1504909165}
   space_flg: 0
+  ClickObj: {fileID: 0}
 --- !u!114 &1284708769
 MonoBehaviour:
   m_ObjectHideFlags: 0
