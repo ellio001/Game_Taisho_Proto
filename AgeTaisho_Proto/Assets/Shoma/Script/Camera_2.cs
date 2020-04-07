@@ -40,7 +40,6 @@ public class Camera_2 : MonoBehaviour
         if (Input.anyKeyDown)
         {
             DownKeyCheck();
-            Debug.Log("cs_target_Mの値" + cs_target_M);
             var aim = this.cs_target_M.transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
