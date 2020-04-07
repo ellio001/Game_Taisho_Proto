@@ -20,6 +20,10 @@ public class Camera_2 : MonoBehaviour
     public bool space_flg = false;
     private const float SPEED = 240; // ここをいじれば移動スピードが変わる！
     [SerializeField] GameObject ClickObj;
+    
+    //ポーズ画面
+    GameObject Pause;
+    Pause_Botton_Script script;
 
     void Start()
     {
@@ -31,27 +35,33 @@ public class Camera_2 : MonoBehaviour
         this.transform.localRotation = look;
         /*******************************************/
 
+        //ポーズ画面
+        Pause = GameObject.Find("Main Camera");
+        script = Pause.GetComponent<Pause_Botton_Script>();
 
         //Garbage_can.gameObject.SetActiveRecursively(false);
     }
 
     void Update()
     {
-        if (Input.anyKeyDown)
-        {
-            DownKeyCheck();
-            var aim = this.cs_target_M.transform.position - this.transform.position;
-            var look = Quaternion.LookRotation(aim);
-            target = look; // 目的座標を保存
+        if (script.PauseFlag) {
+            return;
         }
+        else {
+            if (Input.anyKeyDown) {
+                DownKeyCheck();
+                var aim = this.cs_target_M.transform.position - this.transform.position;
+                var look = Quaternion.LookRotation(aim);
+                target = look; // 目的座標を保存
+            }
 
-        // 移動を滑らかにする処理
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, target, speed * Time.deltaTime);
+            // 移動を滑らかにする処理
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, speed * Time.deltaTime);
 
-        // 目的地に着くとはフラグを立てる
-        if (transform.rotation != target) space_flg = false;
-        else space_flg = true;
-
+            // 目的地に着くとはフラグを立てる
+            if (transform.rotation != target) space_flg = false;
+            else space_flg = true;
+        }
     }
 
 
