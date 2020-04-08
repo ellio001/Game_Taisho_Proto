@@ -44,6 +44,10 @@ public class Tutorials_HandControllerButton : MonoBehaviour
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if ((TextNumber == 3 || TextNumber == 4)) Move_arrow();
+        ArrowObj.transform.position = new Vector3(transform.position.x, Mathf.PingPong(Time.time, 10), transform.position.z);
+        Debug.Log("ArrowObj =" + ArrowObj);
+       
+
         // 天ぷらが生成されたら次のテキストに進む
         if (GameObject.Find("ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7; // テキストを進める
 
@@ -132,11 +136,15 @@ public class Tutorials_HandControllerButton : MonoBehaviour
         }
         else if (DestroyFlg)
         {
-            Destroy(ArrowObj.gameObject);
+            Destroy(GameObject.Find("Yajirusi(Clone)"));
             DestroyFlg = false;
         }
+        else
+        {
+            Debug.Log("ArrowFlgはオン");
 
-        ArrowObj.transform.position = new Vector3(transform.position.x, Mathf.PingPong(Time.time, 10), transform.position.z);
+        }
+
     }
 }
 
