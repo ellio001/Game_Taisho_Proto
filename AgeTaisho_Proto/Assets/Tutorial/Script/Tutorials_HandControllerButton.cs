@@ -21,9 +21,11 @@ public class Tutorials_HandControllerButton : MonoBehaviour
     public TutorialUI tutorialUI;
     int TextNumber;
 
+    /***** 矢印関連 *****/
     [SerializeField] GameObject ArrowObj; // 矢印のObjを入れる変数
-    bool ArrowFlg = false; // 矢印が今出ているかの確認用
-    bool DestroyFlg = false;
+    bool ArrowFlg = false;                // 矢印が今出ているかの確認用
+    bool DestroyFlg = false;              // 矢印を消すか判断する用
+    Vector3 tmp;                          // カーソルの座標を仮に保存
 
     void Start()
     {
@@ -37,21 +39,17 @@ public class Tutorials_HandControllerButton : MonoBehaviour
     void Update()
     {
         TextNumber = tutorialUI.TextNumber; // TextNumberの値を常に更新
-        Debug.Log("TextNumber"+TextNumber);
 
         Ray ray = new Ray();
         RaycastHit hit = new RaycastHit();
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if ((TextNumber == 3 || TextNumber == 4)) Move_arrow();
-        ArrowObj.transform.position = new Vector3(transform.position.x, Mathf.PingPong(Time.time, 10), transform.position.z);
-        Debug.Log("ArrowObj =" + ArrowObj);
+        if (TextNumber == 3 || TextNumber == 4 ||
+            TextNumber == 5 || TextNumber == 7 ||
+            TextNumber == 8 || TextNumber == 9) Move_arrow(); // 矢印を表示
        
-
         // 天ぷらが生成されたら次のテキストに進む
-        if (GameObject.Find("ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7; // テキストを進める
-
-
+        if (GameObject.Find("ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7;
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f) && Input.GetKeyDown(KeyCode.Space) && C2_script.space_flg)
         {
@@ -65,7 +63,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                         clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                         HoldingFlg = true;
                         tutorialUI.TextNumber = 4; // テキストを進める
-                        DestroyFlg = true;
+                        DestroyFlg = true; // 矢印を消すフラグを立てる
                         //当たり判定をを外す
                         ColliderOut();
                     }
@@ -76,7 +74,6 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                     clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                     clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                     HoldingFlg = true;
-
                     //当たり判定をを外す
                     ColliderOut();
                 }
@@ -98,6 +95,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour
 
                 HoldingFlg = false;
                 tutorialUI.TextNumber += 1; // テキストを進める
+                DestroyFlg = true;
             }
             if (clickedGameObject != null)  //nullでないとき処理
             {
@@ -123,29 +121,37 @@ public class Tutorials_HandControllerButton : MonoBehaviour
 
     void Move_arrow()
     {
-        if (ArrowFlg == false)
+        if (ArrowFlg == false && TextNumber != 9)
         {
             switch (TextNumber)
             {
                 case 3:
-                    Vector3 tmp = C2_script.Cursor_List[3].transform.position;
-                    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.5f, tmp.z + 0.1f), Quaternion.identity);
-                    ArrowFlg = true; // 矢印が表示中のフラグ
+                    tmp = C2_script.Cursor_List[3].transform.position;
+                    break;
+                case 4:
+                    tmp = C2_script.Cursor_List[2].transform.position;
+                    break;
+                case 5:
+                    tmp = C2_script.Cursor_List[1].transform.position;
+                    break;
+                case 7:
+                    tmp = C2_script.Cursor_List[15].transform.position;
+                    break;
+                case 8:
+                    tmp = C2_script.Cursor_List[6].transform.position;
                     break;
             }
+            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z + 0.1f), Quaternion.identity);
+            ArrowFlg = true; // 矢印が表示中のフラグ
         }
-        else if (DestroyFlg)
+        else if (DestroyFlg || TextNumber == 9)
         {
             Destroy(GameObject.Find("Yajirusi(Clone)"));
             DestroyFlg = false;
+            ArrowFlg = false;
         }
-        else
-        {
-            Debug.Log("ArrowFlgはオン");
-
-        }
-
     }
+
 }
 
 
