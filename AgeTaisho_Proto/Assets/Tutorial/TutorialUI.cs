@@ -70,6 +70,8 @@ public class TutorialUI : MonoBehaviour
                 TutorialTextArea.text = TutorialTextList[TextNumber];   //テキストを更新
                 TutorialTime = 0;
                 break;
+            default:
+                break;
         }
 
         //次のテキストがあればzキーを押してテキストを進める

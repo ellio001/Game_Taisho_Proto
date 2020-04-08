@@ -16,6 +16,7 @@ TagManager:
   - liquid
   - Item
   - Seki
+  - Yajirusi
   layers:
   - Default
   - TransparentFX

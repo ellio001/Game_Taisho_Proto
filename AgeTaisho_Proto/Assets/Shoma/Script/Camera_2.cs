@@ -9,7 +9,7 @@ public class Camera_2 : MonoBehaviour
      *  1~13 = 食材や鍋などの座標
      * 14.15 = 14は揚げ物側の皿、15は天ぷら側の皿座標
      * 16.17 = 16は揚げ物側のストック、17は天ぷら側のストック座標*/
-    [SerializeField] List<GameObject>Cursor_List = new List<GameObject>();
+    public List<GameObject>Cursor_List = new List<GameObject>();
 
     private int cursor = 7; // カーソル用
     private GameObject cs_target_M; 

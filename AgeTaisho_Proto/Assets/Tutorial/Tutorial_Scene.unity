@@ -4417,9 +4417,10 @@ MonoBehaviour:
   clickedGameObject: {fileID: 0}
   Resource: {fileID: 0}
   HoldingFlg: 0
-  ColliderFlag: 0
   ClickObj2: {fileID: 1437964055}
   tutorialUI: {fileID: 1122659897}
+  ArrowObj: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
+    type: 3}
 --- !u!65 &1822677293
 BoxCollider:
   m_ObjectHideFlags: 0

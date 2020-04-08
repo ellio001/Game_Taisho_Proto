@@ -13,30 +13,22 @@ public class Tutorials_HandControllerButton : MonoBehaviour
     float handspeed = 0.1f;
 
     public bool HoldingFlg;
-    //ColliderFlagの説明
-    /* 0はEbiBox
-     * 1はChickenBox
-     * 2FishBox
-     * 3PotatoBox
-     * 4QuailBox*/
-    public int ColliderFlag;
     public Transform ClickObj2;
-    private Transform TmpFood; // 手に持っている物を入れる
-    private GameObject TmpObj; // レイで当たっているObjを入れる
 
     GameObject C2;    // Camera_2を入れる変数
     Camera_2 C2_script; // Camera_2のscriptを入れる変数
 
-    bool ItemSara;  //アイテム名にSaraが含まれているか判定
-
     public TutorialUI tutorialUI;
     int TextNumber;
+
+    [SerializeField] GameObject ArrowObj; // 矢印のObjを入れる変数
+    bool ArrowFlg = false; // 矢印が今出ているかの確認用
+    bool DestroyFlg = false;
 
     void Start()
     {
         ClickObj = GameObject.Find("ControllerObjClick");
         HoldingFlg = false;
-        ColliderFlag = 0;
 
         C2 = GameObject.Find("Main Camera");
         C2_script = C2.GetComponent<Camera_2>();
@@ -51,8 +43,11 @@ public class Tutorials_HandControllerButton : MonoBehaviour
         RaycastHit hit = new RaycastHit();
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        // 天ぷらが生成されたら一度だけ次のテキストに進む
+        if ((TextNumber == 3 || TextNumber == 4)) Move_arrow();
+        // 天ぷらが生成されたら次のテキストに進む
         if (GameObject.Find("ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7; // テキストを進める
+
+
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f) && Input.GetKeyDown(KeyCode.Space) && C2_script.space_flg)
         {
@@ -65,12 +60,11 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                         Resource = (GameObject)Resources.Load("S_Resources/ItemEbi");   //Resourceフォルダのプレハブを読み込む
                         clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                         HoldingFlg = true;
-                        ColliderFlag = 0;
                         tutorialUI.TextNumber = 4; // テキストを進める
+                        DestroyFlg = true;
                         //当たり判定をを外す
                         ColliderOut();
                     }
-                    ItemSara = hit.collider.gameObject.name.Contains("Sara");
                 }
 
                 if (hit.collider.gameObject.tag == "Item" && (TextNumber != 6 && TextNumber != 9) )
@@ -78,7 +72,6 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                     clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                     clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                     HoldingFlg = true;
-                    ItemSara = hit.collider.gameObject.name.Contains("Sara");
 
                     //当たり判定をを外す
                     ColliderOut();
@@ -122,6 +115,28 @@ public class Tutorials_HandControllerButton : MonoBehaviour
     void ColliderIn()
     {
         clickedGameObject.GetComponent<Collider>().enabled = true;
+    }
+
+    void Move_arrow()
+    {
+        if (ArrowFlg == false)
+        {
+            switch (TextNumber)
+            {
+                case 3:
+                    Vector3 tmp = C2_script.Cursor_List[3].transform.position;
+                    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.5f, tmp.z + 0.1f), Quaternion.identity);
+                    ArrowFlg = true; // 矢印が表示中のフラグ
+                    break;
+            }
+        }
+        else if (DestroyFlg)
+        {
+            Destroy(ArrowObj.gameObject);
+            DestroyFlg = false;
+        }
+
+        ArrowObj.transform.position = new Vector3(transform.position.x, Mathf.PingPong(Time.time, 10), transform.position.z);
     }
 }
 
