@@ -2899,6 +2899,7 @@ GameObject:
   - component: {fileID: 1263788062}
   - component: {fileID: 1263788061}
   - component: {fileID: 1263788060}
+  - component: {fileID: 1263788064}
   m_Layer: 0
   m_Name: Plate2
   m_TagString: Seki
@@ -2927,7 +2928,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263788058}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40e40f994001fbd4e821083f5b5c92ef, type: 3}
   m_Name: 
@@ -2990,6 +2991,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263788058}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1263788064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263788058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c47eacc669f184418357b7f7c929e69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1290845795
 GameObject:
   m_ObjectHideFlags: 0
@@ -4092,6 +4105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1722267318}
   - component: {fileID: 1722267317}
+  - component: {fileID: 1722267319}
   m_Layer: 0
   m_Name: GuestGenerator
   m_TagString: Untagged
@@ -4106,7 +4120,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1722267316}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fe068a553d2baf4e838712349d6255b, type: 3}
   m_Name: 
@@ -4150,6 +4164,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1722267319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722267316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d342b306a32e64b9165b6ba94dfaa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guest: {fileID: 4418672608648000112, guid: 10f6837e050877442966354759c2a879, type: 3}
+  GuestCount: 0
 --- !u!1 &1722640750
 GameObject:
   m_ObjectHideFlags: 0

@@ -69,6 +69,12 @@ public class TutorialGuestMove : MonoBehaviour
                     ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     break;
+                case "Tutorial_Scene":
+                    ItemScore = 100;
+                    ItemString = "Tutorial_ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    OrderString = "えびてん";
+                    Debug.Log("tutorial");
+                    break;
             }
             Text OrderText = OrderObject.GetComponent<Text>();            // オブジェクトからTextコンポーネントを取得
             OrderText.text = OrderString;    // テキストの表示を入れ替える

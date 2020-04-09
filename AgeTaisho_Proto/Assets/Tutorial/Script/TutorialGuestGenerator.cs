@@ -24,7 +24,7 @@ public class TutorialGuestGenerator : MonoBehaviour
 
         if (GuestSpawn >= 7 && !GuestCount) //GuestCoutで1回だけ呼ばれる処理
         {
-            Instantiate(Guest, new Vector3(-4.5f, 5.0f, -9.0f), transform.rotation);
+            Instantiate(Guest, new Vector3(-6.0f, 5.0f, -9.0f), transform.rotation);
             GuestCount = true;
         }
     }
