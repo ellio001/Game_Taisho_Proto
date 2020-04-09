@@ -59,8 +59,8 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                 TextNumber == 5 || TextNumber == 7 ||
                 TextNumber == 8 || TextNumber == 9) Move_arrow(); // 矢印を表示
 
-            // 天ぷらが生成されたら次のテキストに進む
-            if (GameObject.Find("Tutorial_ItemEbi") && TextNumber == 6) tutorialUI.TextNumber = 7;
+            // 天ぷらが生成されたら次のテキストに進むTutorial_ItemTenpura
+            if (GameObject.Find("Tutorial_ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7;
 
             if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f) && Input.GetKeyDown(KeyCode.Space) && C2_script.space_flg) {
                 if (HoldingFlg != true) // 手に何も持っていない時に入る
