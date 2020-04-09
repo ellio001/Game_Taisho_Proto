@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour {
         FiverNumber = 3;
         FiverFlag = false;
         TestSceneFlag = true;
+        SceneManager.activeSceneChanged += ActiveSceneChanged;
     }
 
     private void Update() {
@@ -159,5 +160,14 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene("EndScene", LoadSceneMode.Single);
         //処理を二度としないようにフラグで管理
         TestSceneFlag = false;
+    }
+
+    void ActiveSceneChanged(Scene thisScene, Scene nextScene)
+    {
+        score_object = GameObject.Find("ScoreText"); // Textオブジェクト
+        if (score_object != null)
+        {
+            Text score_text = score_object.GetComponent<Text>();// オブジェクトからTextコンポーネントを取得
+        }
     }
 }

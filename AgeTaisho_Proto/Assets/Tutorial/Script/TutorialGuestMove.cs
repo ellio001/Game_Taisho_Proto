@@ -65,12 +65,12 @@ public class TutorialGuestMove : MonoBehaviour
             switch (SceneManager.GetActiveScene().name)
             {
                 case "Ryusei_Scene":
-                    ItemScore = 100;
+                    ItemScore = 0;
                     ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     break;
                 case "Tutorial_Scene":
-                    ItemScore = 100;
+                    ItemScore = 0;
                     ItemString = "Tutorial_ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     Debug.Log("tutorial");
