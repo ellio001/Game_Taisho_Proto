@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
     public float Taihi;
     public bool TaihiFlag;
 
+
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
     public GameObject score_object = null; // Textオブジェクト
