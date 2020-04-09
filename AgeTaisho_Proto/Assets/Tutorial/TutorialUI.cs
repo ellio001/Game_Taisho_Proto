@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TutorialUI : MonoBehaviour
 {
@@ -66,9 +67,15 @@ public class TutorialUI : MonoBehaviour
             case 6:
             case 7:
             case 8:
-            case 9:
                 TutorialTextArea.text = TutorialTextList[TextNumber];   //テキストを更新
                 TutorialTime = 0;
+                break;
+            case 9:
+                TutorialTextArea.text = TutorialTextList[TextNumber];   //テキストを更新
+                if (TutorialTime >= 5) {
+                    TutorialTime = 0;
+                    ReadScene();
+                }
                 break;
             default:
                 break;
@@ -80,5 +87,9 @@ public class TutorialUI : MonoBehaviour
             TextNumber += 1;    //表示するテキストの番地を+1する
             TutorialTextArea.text = TutorialTextList[TextNumber];   //テキストを更新
         }
+    }
+    public void ReadScene() {
+        //Endシーン読込
+        SceneManager.LoadScene("Cursor_Maseter_Scene", LoadSceneMode.Single);
     }
 }
