@@ -19,7 +19,7 @@ public class Pause_Botton_Script : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("q")) {
+        if (Input.GetKeyDown("p")) {
             //　ポーズUIのアクティブ、非アクティブを切り替え
             PauseUI.SetActive(!PauseUI.activeSelf);
 
