@@ -38,7 +38,7 @@ public class Item_S : MonoBehaviour {
         //AgeCount = 0f;                  //カウント初期化
         StockCount = 0f;                //ストックのカウント
         KogeCountMax = 14f;             //焦げるスピード
-        StockCountMax = 30f;            //ストックスピード
+        StockCountMax = 45f;            //ストックスピード
         kona = false;                   //konaをfalseに
         BredPowder = false;
         liquid = false;
@@ -160,6 +160,7 @@ public class Item_S : MonoBehaviour {
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / KogeCountMax;
                     Debug.Log(slider.value);
+
                 }
                 // ゴミ箱に当たると焦げになる
                 if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
@@ -19,9 +20,17 @@ public class GameManager : MonoBehaviour {
     public float Taihi;
     public bool TaihiFlag;
 
+
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
     public GameObject score_object = null; // Textオブジェクト
+
+    // プレファブ達をリスト化
+    
+    [SerializeField] List<GameObject> Item_Resources = new List<GameObject>();
+    [SerializeField] List<GameObject> Powder_Resources = new List<GameObject>();
+    [SerializeField] List<GameObject> Fried_Resources = new List<GameObject>();
+    [SerializeField] List<GameObject> Dish_Resources = new List<GameObject>();
 
     private void Awake()    //スタートよりも最初に呼ばれる
     {
@@ -40,6 +49,7 @@ public class GameManager : MonoBehaviour {
         FiverNumber = 3;
         FiverFlag = false;
         TestSceneFlag = true;
+        SceneManager.activeSceneChanged += ActiveSceneChanged;
     }
 
     private void Update() {
@@ -150,5 +160,14 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene("EndScene", LoadSceneMode.Single);
         //処理を二度としないようにフラグで管理
         TestSceneFlag = false;
+    }
+
+    void ActiveSceneChanged(Scene thisScene, Scene nextScene)
+    {
+        score_object = GameObject.Find("ScoreText"); // Textオブジェクト
+        if (score_object != null)
+        {
+            Text score_text = score_object.GetComponent<Text>();// オブジェクトからTextコンポーネントを取得
+        }
     }
 }
