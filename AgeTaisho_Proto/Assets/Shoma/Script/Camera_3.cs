@@ -15,13 +15,14 @@ public class Camera_3 : MonoBehaviour
     public List<GameObject> Cursor_List = new List<GameObject>();
 
     private int cursor = 7; // カーソル用
-    private int tmp_cursor = 0; // 
+    private int tmp_cursor = 0; // 一時的に保存する用
     private GameObject cs_target_M;
 
     float speed = 240f;
     Quaternion target;      // 目的地の座標変数
-    private bool gomi_flg = false; // ゴミ箱を向くときに使う
+    private bool gomi_flg = false;   // ゴミ箱を向くときに使う
     public bool space_flg = false;
+    private bool stock_flg = false;  // ストックを見ているときはフラグがたつ
     private const float SPEED = 240; // ここをいじれば移動スピードが変わる！
     [SerializeField] GameObject ClickObj;
 
@@ -88,21 +89,33 @@ public class Camera_3 : MonoBehaviour
         // ←押したとき
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-
-            if (gomi_flg && (cs_target_M != Cursor_List[14] && cs_target_M != Cursor_List[15])) cursor = 9;
+            // ゴミ箱を向いているときに←押すと、唐揚げの場所を向く
+            if (gomi_flg && (cs_target_M != Cursor_List[14] && cs_target_M != Cursor_List[15]))
+            {
+                tmp_cursor = 9;
+                cursor = 9;
+            }
             else
             {
-                if (tmp_cursor != 0) cursor = tmp_cursor + 1;
-                else cursor += 1;
-                if (tmp_cursor == 0 && cursor > 13)
+                // ストックを内で←を押した時の処理
+                if (stock_flg)
                 {
-                    cursor = 1;
-                    speed = SPEED + 120;
+                    if (cursor + 1 != 22 && cursor + 1 != 19) cursor += 1;
                 }
                 else
                 {
-                    tmp_cursor = 0;
-                    speed = SPEED;
+                    if (tmp_cursor != 0) cursor = tmp_cursor + 1;
+                    else cursor += 1;
+                    if (tmp_cursor == 0 && cursor > 13)
+                    {
+                        cursor = 1;
+                        speed = SPEED + 180;
+                    }
+                    else
+                    {
+                        tmp_cursor = 0;
+                        speed = SPEED;
+                    }
                 }
             }
 
@@ -113,20 +126,31 @@ public class Camera_3 : MonoBehaviour
         // →押したとき
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            if (gomi_flg && (cs_target_M != Cursor_List[14] && cs_target_M != Cursor_List[15])) cursor = 5;
+            if (gomi_flg && (cs_target_M != Cursor_List[14] && cs_target_M != Cursor_List[15]))
+            {
+                tmp_cursor = 5;
+                cursor = 5;
+            }
             else
             {
-                if (tmp_cursor != 0) cursor = tmp_cursor - 1;
-                else cursor -= 1;
-                if (tmp_cursor == 0 && cursor < 1)
+                if (stock_flg)
                 {
-                    cursor = 13;
-                    speed = SPEED + 120;
+                    if (cursor - 1 != 18 && cursor - 1 != 15) cursor -= 1;
                 }
                 else
                 {
-                    tmp_cursor = 0;
-                    speed = SPEED;
+                    if (tmp_cursor != 0) cursor = tmp_cursor - 1;
+                    else cursor -= 1;
+                    if (tmp_cursor == 0 && cursor < 1)
+                    {
+                        cursor = 13;
+                        speed = SPEED + 120;
+                    }
+                    else
+                    {
+                        tmp_cursor = 0;
+                        speed = SPEED;
+                    }
                 }
             }
             gomi_flg = false;
@@ -142,26 +166,21 @@ public class Camera_3 : MonoBehaviour
             if (gomi_flg || (cursor >= 6 && cursor <= 8) || (ClickObj.transform.childCount > 0 && ClickObj.transform.GetChild(0).name == "ItemKoge"))
             {
                 speed = SPEED * 2; // ゴミ箱を見る速さ
-                cs_target_M = Cursor_List[0];
+                cursor = 0;
+                cs_target_M = Cursor_List[cursor];
                 gomi_flg = true;
             }
             else
             {
                 // ストックを見ている時に↓を押したらストックの直前の場所を向く
-                if (cs_target_M == Cursor_List[16] || cs_target_M == Cursor_List[17])
+                if (stock_flg)
                 {
                     cursor = tmp_cursor;
                     cs_target_M = Cursor_List[cursor];
+                    stock_flg = false;
                 }
                 else
                 {
-                    //お皿をもりつける場所を見る(揚げ物側)
-                    if (cursor >= 9 && cursor <= 13)
-                    {
-                        tmp_cursor = cursor;
-                        cursor = 14;
-                        cs_target_M = Cursor_List[cursor];
-                    }
                     //お皿をもりつける場所を見る(油もの側)
                     if (cursor >= 1 && cursor <= 5)
                     {
@@ -169,9 +188,18 @@ public class Camera_3 : MonoBehaviour
                         cursor = 15;
                         cs_target_M = Cursor_List[cursor];
                     }
+                    //お皿をもりつける場所を見る(揚げ物側)
+                    if (cursor >= 9 && cursor <= 13)
+                    {
+                        tmp_cursor = cursor;
+                        cursor = 14;
+                        cs_target_M = Cursor_List[cursor];
+                    }
+
                     gomi_flg = true;
                 }
             }
+            
         }
 
         // ↑押したとき
@@ -184,28 +212,29 @@ public class Camera_3 : MonoBehaviour
                 cs_target_M = Cursor_List[cursor];
             }
             // ゴミ箱を見てるときに↑を押すと、真ん中のテーブルを向く
-            else if (cs_target_M == Cursor_List[0])
+            else if (gomi_flg)
             {
+                tmp_cursor = 7;
                 cursor = 7;
                 cs_target_M = Cursor_List[cursor];
             }
             else
             {
-                //ストックする場所を見る(揚げ物側)
-                if (cursor >= 9 && cursor <= 13)
-                {
-                    tmp_cursor = cursor;
-                    cursor = 16;
-                    cs_target_M = Cursor_List[cursor];
-                }
-
                 //ストックする場所を見る(油もの側)
                 if (cursor >= 1 && cursor <= 5)
+                {
+                    tmp_cursor = cursor;
+                    cursor = 20;
+                    cs_target_M = Cursor_List[cursor];
+                }
+                //ストックする場所を見る(揚げ物側)
+                if (cursor >= 9 && cursor <= 13)
                 {
                     tmp_cursor = cursor;
                     cursor = 17;
                     cs_target_M = Cursor_List[cursor];
                 }
+                stock_flg = true;
             }
 
             gomi_flg = false;
@@ -223,7 +252,7 @@ public class Camera_3 : MonoBehaviour
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
         }
-        else if (cursor == 6 || cursor == 8)
+        else if (cursor == 0 || cursor == 6 || cursor == 8)
         {
             var aim = this.CP_List[1].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
