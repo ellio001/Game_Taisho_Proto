@@ -14,16 +14,15 @@ public class Camera_3 : MonoBehaviour
      * 16.17 = 16は揚げ物側のストック、17は天ぷら側のストック座標*/
     public List<GameObject> Cursor_List = new List<GameObject>();
 
-    private int cursor = 7; // カーソル用
+    public int cursor = 7; // カーソル用
     private int tmp_cursor = 0; // 一時的に保存する用
     private GameObject cs_target_M;
 
-    float speed = 240f;
     Quaternion target;      // 目的地の座標変数
     private bool gomi_flg = false;   // ゴミ箱を向くときに使う
     public bool space_flg = false;
     private bool stock_flg = false;  // ストックを見ているときはフラグがたつ
-    private const float SPEED = 240; // ここをいじれば移動スピードが変わる！
+    private const float SPEED = 420f; // ここをいじれば移動スピードが変わる！
     [SerializeField] GameObject ClickObj;
 
     //ポーズ画面
@@ -70,14 +69,14 @@ public class Camera_3 : MonoBehaviour
                 MoveCamera(); // カメラを移動させる処理
                 MoveLight(); // カーソルの移動についての処理
                 
-                Debug.Log("カーソル番号：" + cursor);
+                //Debug.Log("カーソル番号：" + cursor);
 
             }
 
             // 移動を滑らかにする処理
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, speed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, SPEED * Time.deltaTime);
 
-            // 目的地に着くとはフラグを立てる
+            // 目的地に着くとフラグを立てる
             if (transform.rotation != target) space_flg = false;
             else space_flg = true;
         }
@@ -109,12 +108,10 @@ public class Camera_3 : MonoBehaviour
                     if (tmp_cursor == 0 && cursor > 13)
                     {
                         cursor = 1;
-                        speed = SPEED + 180;
                     }
                     else
                     {
                         tmp_cursor = 0;
-                        speed = SPEED;
                     }
                 }
             }
@@ -144,12 +141,10 @@ public class Camera_3 : MonoBehaviour
                     if (tmp_cursor == 0 && cursor < 1)
                     {
                         cursor = 13;
-                        speed = SPEED + 120;
                     }
                     else
                     {
                         tmp_cursor = 0;
-                        speed = SPEED;
                     }
                 }
             }
@@ -165,7 +160,6 @@ public class Camera_3 : MonoBehaviour
              * 3つの客席を見ている時は、すぐにゴミ箱を向く*/
             if (gomi_flg || (cursor >= 6 && cursor <= 8) || (ClickObj.transform.childCount > 0 && ClickObj.transform.GetChild(0).name == "ItemKoge"))
             {
-                speed = SPEED * 2; // ゴミ箱を見る速さ
                 cursor = 0;
                 cs_target_M = Cursor_List[cursor];
                 gomi_flg = true;
@@ -189,7 +183,7 @@ public class Camera_3 : MonoBehaviour
                         cs_target_M = Cursor_List[cursor];
                     }
                     //お皿をもりつける場所を見る(揚げ物側)
-                    if (cursor >= 9 && cursor <= 13)
+                    else if (cursor >= 9 && cursor <= 13)
                     {
                         tmp_cursor = cursor;
                         cursor = 14;
@@ -236,28 +230,29 @@ public class Camera_3 : MonoBehaviour
                 }
                 stock_flg = true;
             }
-
             gomi_flg = false;
         }
-
     }
     
 
     void MoveCamera()
-    {
-        // 三方向にカメラを固定
+    {// 三方向にカメラを固定する処理
+
+        /* 天ぷら側 */
         if (cursor == 1 || cursor == 5)
         {
             var aim = this.CP_List[0].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
         }
+        /* お客側 */
         else if (cursor == 0 || cursor == 6 || cursor == 8)
         {
             var aim = this.CP_List[1].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
         }
+        /* 揚げ物側 */
         else if (cursor == 9 || cursor == 13)
         {
             var aim = this.CP_List[2].transform.position - this.transform.position;
@@ -270,6 +265,6 @@ public class Camera_3 : MonoBehaviour
     void MoveLight()
     {
         Vector3 tmp = Cursor_List[cursor].transform.position;
-        LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z + 0.1f);
+        LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z -0.05f);
     }
 }

@@ -25,6 +25,10 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
     GameObject C2;    // Camera_2を入れる変数
     Camera_2 C2_script; // Camera_2のscriptを入れる変数
+    Camera_3 C3_script; // Camera_3のscriptを入れる変数
+
+    [SerializeField] GameObject Player; // プレイヤーの位置を保存
+    Vector3 Player_V;                   // プレイヤーの座標を保存する用
 
     //ポーズ画面
     GameObject Pause;
@@ -39,6 +43,13 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
         C2 = GameObject.Find("Main Camera");
         C2_script = C2.GetComponent<Camera_2>();
+        C3_script = C2.GetComponent<Camera_3>();
+
+        // プレイヤーの座標をVector3に変換
+        Player_V.x = Player.transform.position.x;
+        Player_V.y = Player.transform.position.y;
+        Player_V.z = Player.transform.position.z;
+
         //ポーズ画面
         Pause = GameObject.Find("Main Camera");
         script = Pause.GetComponent<Pause_Botton_Script>();
@@ -52,13 +63,16 @@ public class HandControllerButton_S2 : MonoBehaviour {
         else {
             Ray ray = new Ray();
             RaycastHit hit = new RaycastHit();
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);  
+            // 今選択しているカーソルの位置を代入している
+            Vector3 direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
+            
+            if (Physics.Linecast(Player_V, direction, out hit)) {
+                Debug.Log("space_flg=" + C3_script.space_flg);
+                Debug.DrawLine(Player_V, direction, Color.red);
 
-
-
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f)) {
-                // フラグがたっていないとボタンが聞かない
-                if (Input.GetKeyDown(KeyCode.Space) && C2_script.space_flg) {
+                // フラグがたっていないとボタンが聞かな
+                if (Input.GetKeyDown(KeyCode.Space) && C3_script.space_flg) {
                     if (HoldingFlg != true) // 手に何も持っていない時に入る
                     {
                         if (hit.collider.gameObject.tag == "Box") {
