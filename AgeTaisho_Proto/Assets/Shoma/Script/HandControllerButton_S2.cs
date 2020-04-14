@@ -63,12 +63,10 @@ public class HandControllerButton_S2 : MonoBehaviour {
         else {
             Ray ray = new Ray();
             RaycastHit hit = new RaycastHit();
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);  
             // 今選択しているカーソルの位置を代入している
             Vector3 direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
             
             if (Physics.Linecast(Player_V, direction, out hit)) {
-                Debug.Log("space_flg=" + C3_script.space_flg);
                 Debug.DrawLine(Player_V, direction, Color.red);
 
                 // フラグがたっていないとボタンが聞かな
