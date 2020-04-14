@@ -24,9 +24,10 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
     public GameObject score_object = null; // Textオブジェクト
+    public GameObject Pouse_object = null;
 
     // プレファブ達をリスト化
-    
+
     [SerializeField] List<GameObject> Item_Resources = new List<GameObject>();
     [SerializeField] List<GameObject> Powder_Resources = new List<GameObject>();
     [SerializeField] List<GameObject> Fried_Resources = new List<GameObject>();
@@ -59,8 +60,10 @@ public class GameManager : MonoBehaviour {
         if (TestSceneFlag) {
             // オブジェクトからTextコンポーネントを取得
             Text score_text = score_object.GetComponent<Text>();
+            Text Pouse_text = Pouse_object.GetComponent<Text>();
             // テキストの表示を入れ替える
             score_text.text = "Score:" + score_num;
+            Pouse_text.text = "Pキー：ポーズ";
 
             //判定
             Judgment();
@@ -162,12 +165,13 @@ public class GameManager : MonoBehaviour {
         TestSceneFlag = false;
     }
 
-    void ActiveSceneChanged(Scene thisScene, Scene nextScene)
-    {
+    void ActiveSceneChanged(Scene thisScene, Scene nextScene) {
         score_object = GameObject.Find("ScoreText"); // Textオブジェクト
-        if (score_object != null)
+        Pouse_object = GameObject.Find("PouseUIText");
+        if (score_object != null || Pouse_object != null)
         {
             Text score_text = score_object.GetComponent<Text>();// オブジェクトからTextコンポーネントを取得
+            Text Pouse_text = Pouse_object.GetComponent<Text>();
         }
     }
 }
