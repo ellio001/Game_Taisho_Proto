@@ -4756,7 +4756,7 @@ MonoBehaviour:
   TaihiFlag: 0
   score_num: 0
   score_object: {fileID: 1376351492}
-  Pouse_object: {fileID: 1881998171}
+  Pause_object: {fileID: 1881998171}
   Item_Resources:
   - {fileID: 7132295679800347507, guid: f84d64101db5c734fb2fdcb6330718ab, type: 3}
   - {fileID: 7537360058213969868, guid: 9b070f8a2d902044f99b219a12181aa4, type: 3}
@@ -4807,7 +4807,7 @@ GameObject:
   - component: {fileID: 1881998174}
   - component: {fileID: 1881998173}
   m_Layer: 5
-  m_Name: PouseUIText
+  m_Name: PauseUIText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
