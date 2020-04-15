@@ -29,6 +29,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
     [SerializeField] GameObject Player; // プレイヤーの位置を保存
     Vector3 Player_V;                   // プレイヤーの座標を保存する用
+    Vector3 direction; // Rayの終点座標
 
     //ポーズ画面
     GameObject Pause;
@@ -49,6 +50,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
         Player_V.x = Player.transform.position.x;
         Player_V.y = Player.transform.position.y;
         Player_V.z = Player.transform.position.z;
+        direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
 
         //ポーズ画面
         Pause = GameObject.Find("Main Camera");
@@ -64,7 +66,14 @@ public class HandControllerButton_S2 : MonoBehaviour {
             Ray ray = new Ray();
             RaycastHit hit = new RaycastHit();
             // 今選択しているカーソルの位置を代入している
-            Vector3 direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
+            if (C3_script.pot_flg)
+            {
+                direction = C3_script.PCS_List[C3_script.tektou].transform.position;
+            }
+            else
+            {
+                direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
+            }
             
             if (Physics.Linecast(Player_V, direction, out hit)) {
                 Debug.DrawLine(Player_V, direction, Color.red);

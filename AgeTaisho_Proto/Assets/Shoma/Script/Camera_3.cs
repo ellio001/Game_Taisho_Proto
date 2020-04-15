@@ -8,33 +8,37 @@ using System;
 
 public class Camera_3 : MonoBehaviour
 {
-    /*   0   = ゴミ箱の座標
-     *  1~13 = 食材や鍋などの座標
-     * 14.15 = 14は揚げ物側の皿、15は天ぷら側の皿座標
-     * 16.17 = 16は揚げ物側のストック、17は天ぷら側のストック座標*/
+    /*-------------------------------------------リスト---------------------------------------------------*/
+     //   0   = ゴミ箱の座標
+     // 1~13 = 食材や鍋などの座標
+     // 14.15 = 14は揚げ物側の皿、15は天ぷら側の皿座標
+     // 16.17 = 16は揚げ物側のストック、17は天ぷら側のストック座標
     public List<GameObject> Cursor_List = new List<GameObject>();
+    public List<GameObject> PCS_List = new List<GameObject>(); // 鍋用のカーソル座標リスト
+    // CP=CameraPosition　　0＝天ぷら側　1＝客側　2＝揚げ物側
+    [SerializeField] List<GameObject> CP_List = new List<GameObject>(); // カメラの場所を入れるリスト
+    /*----------------------------------------------------------------------------------------------------*/
 
-    public int cursor = 7; // カーソル用
-    private int tmp_cursor = 0; // 一時的に保存する用
-    private GameObject cs_target_M;
+    [System.NonSerialized] public int cursor = 7; // カーソル用
+    int tmp_cursor = 0; // cusorを一時的に保存する用
+    GameObject cs_target_M;
 
+    public bool pot_flg = false; // 鍋を見るかのフラグ
+    [System.NonSerialized] public bool space_flg = false;
     Quaternion target;      // 目的地の座標変数
-    private bool gomi_flg = false;   // ゴミ箱を向くときに使う
-    public bool space_flg = false;
-    private bool stock_flg = false;  // ストックを見ているときはフラグがたつ
-    private const float SPEED = 420f; // ここをいじれば移動スピードが変わる！
+    bool gomi_flg = false;   // ゴミ箱を向くときに使う
+    bool stock_flg = false;  // ストックを見ているときはフラグがたつ
+    const float SPEED = 420f; // ここをいじれば移動スピードが変わる！
     [SerializeField] GameObject ClickObj;
+    [SerializeField] GameObject LightObj; // スポットライトのObjを入れる変数
 
     //ポーズ画面
     GameObject Pause;
     Pause_Botton_Script script;
 
-    /***** カメラ座標関連 *****/
-    // CP=CameraPosition
-    // 0＝天ぷら側　1＝客側　2＝揚げ物側
-    [SerializeField] List<GameObject> CP_List = new List<GameObject>();
-    [SerializeField] GameObject LightObj; // スポットライトのObjを入れる変数
-
+    int esc_cursor;
+    public int tektou = 0;
+    bool potfast_flg = false; // 粉から鍋を選択すると左下が選択されるためのフラグ
 
     void Start()
     {
@@ -65,10 +69,15 @@ public class Camera_3 : MonoBehaviour
             if (Input.anyKeyDown)
             {
                 
-                DownKeyCheck();
-                MoveCamera(); // カメラを移動させる処理
-                MoveLight(); // カーソルの移動についての処理
                 
+                if(pot_flg==false)
+                {
+                    DownKeyCheck(); // 押されたボタンの処理をする
+                    if (cursor == 1) pot_flg=true;
+                    MoveLight(); // カーソルの移動についての処理
+                }
+                if (pot_flg) PotSelect();
+                MoveCamera(); // カメラを移動させる処理
                 //Debug.Log("カーソル番号：" + cursor);
 
             }
@@ -81,6 +90,7 @@ public class Camera_3 : MonoBehaviour
             else space_flg = true;
         }
     }
+
 
 
     void DownKeyCheck()
@@ -108,6 +118,7 @@ public class Camera_3 : MonoBehaviour
                     if (tmp_cursor == 0 && cursor > 13)
                     {
                         cursor = 1;
+                        pot_flg = true;
                     }
                     else
                     {
@@ -141,6 +152,7 @@ public class Camera_3 : MonoBehaviour
                     if (tmp_cursor == 0 && cursor < 1)
                     {
                         cursor = 13;
+                        pot_flg = true;
                     }
                     else
                     {
@@ -232,8 +244,62 @@ public class Camera_3 : MonoBehaviour
             }
             gomi_flg = false;
         }
-    }
-    
+    }//DownKeyCheck()
+
+
+
+    void PotSelect()
+    {
+
+        if (cursor == 1)
+        {
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                if (tektou != 0 && tektou != 2) tektou -= 1;
+                else {
+                    potfast_flg = false;
+                    pot_flg = false;
+                    cursor = 2;
+                        }
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                if (potfast_flg == false){
+                    tektou = 0;
+                    potfast_flg = true;
+                }
+                else if (tektou != 1 && tektou != 3) tektou += 1;
+                else
+                {
+                    potfast_flg = false;
+                    pot_flg = false;
+                    cursor = 13;
+                }
+            }
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                if (tektou != 0 && tektou != 1) tektou -= 2;
+            }
+            else if (Input.GetKey(KeyCode.UpArrow))
+            {
+                if (tektou != 2 && tektou != 3) tektou += 2;
+            }
+
+        }
+        if (pot_flg) {
+            Vector3 tmp = PCS_List[tektou].transform.position;
+            LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z - 0.05f);
+        }
+        else
+        {
+            Vector3 tmp = Cursor_List[cursor].transform.position;
+            LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z - 0.05f);
+
+        }
+
+    }//PotSelect()
+
+
 
     void MoveCamera()
     {// 三方向にカメラを固定する処理
@@ -259,7 +325,7 @@ public class Camera_3 : MonoBehaviour
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
         }
-    }
+    }//MoveCamera()
 
 
     void MoveLight()
