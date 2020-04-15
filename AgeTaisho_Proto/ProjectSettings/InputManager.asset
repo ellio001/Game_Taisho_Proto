@@ -298,16 +298,16 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: 
+    positiveButton: joystick button 2
     altNegativeButton: 
-    altPositiveButton: 
-    gravity: 0
-    dead: 0.19
-    sensitivity: 1
+    altPositiveButton: space
+    gravity: 1000
+    dead: 0.1
+    sensitivity: 1000
     snap: 0
     invert: 0
     type: 0
-    axis: 4
+    axis: 0
     joyNum: 0
   - serializedVersion: 3
     m_Name: L_Horizontal
@@ -372,4 +372,36 @@ InputManager:
     invert: 0
     type: 0
     axis: 4
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Cross_Horizontal
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.19
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 6
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Cross_Vertical
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.19
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 7
     joyNum: 0

@@ -20,11 +20,18 @@ public class GameManager : MonoBehaviour {
     public float Taihi;
     public bool TaihiFlag;
 
+
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
     public GameObject score_object = null; // Textオブジェクト
+    public GameObject Pause_object = null;
 
-    [SerializeField] List<GameObject> Nama = new List<GameObject>();
+    // プレファブ達をリスト化
+
+    [SerializeField] List<GameObject> Item_Resources = new List<GameObject>();
+    [SerializeField] List<GameObject> Powder_Resources = new List<GameObject>();
+    [SerializeField] List<GameObject> Fried_Resources = new List<GameObject>();
+    [SerializeField] List<GameObject> Dish_Resources = new List<GameObject>();
 
     private void Awake()    //スタートよりも最初に呼ばれる
     {
@@ -43,6 +50,7 @@ public class GameManager : MonoBehaviour {
         FiverNumber = 3;
         FiverFlag = false;
         TestSceneFlag = true;
+        SceneManager.activeSceneChanged += ActiveSceneChanged;
     }
 
     private void Update() {
@@ -52,8 +60,10 @@ public class GameManager : MonoBehaviour {
         if (TestSceneFlag) {
             // オブジェクトからTextコンポーネントを取得
             Text score_text = score_object.GetComponent<Text>();
+            Text Pause_text = Pause_object.GetComponent<Text>();
             // テキストの表示を入れ替える
             score_text.text = "Score:" + score_num;
+            Pause_text.text = "Pキー：ポーズ";
 
             //判定
             Judgment();
@@ -153,5 +163,15 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene("EndScene", LoadSceneMode.Single);
         //処理を二度としないようにフラグで管理
         TestSceneFlag = false;
+    }
+
+    void ActiveSceneChanged(Scene thisScene, Scene nextScene) {
+        score_object = GameObject.Find("ScoreText"); // Textオブジェクト
+        Pause_object = GameObject.Find("PouseUIText");
+        if (score_object != null || Pause_object != null)
+        {
+            Text score_text = score_object.GetComponent<Text>();// オブジェクトからTextコンポーネントを取得
+            Text Pause_text = Pause_object.GetComponent<Text>();
+        }
     }
 }

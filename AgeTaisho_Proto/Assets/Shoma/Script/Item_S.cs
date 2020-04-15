@@ -38,7 +38,7 @@ public class Item_S : MonoBehaviour {
         //AgeCount = 0f;                  //カウント初期化
         StockCount = 0f;                //ストックのカウント
         KogeCountMax = 14f;             //焦げるスピード
-        StockCountMax = 30f;            //ストックスピード
+        StockCountMax = 45f;            //ストックスピード
         kona = false;                   //konaをfalseに
         BredPowder = false;
         liquid = false;
@@ -89,8 +89,6 @@ public class Item_S : MonoBehaviour {
 
                 if (other.gameObject.tag == "kona") {
                     kona = true;
-                    GetComponent<Renderer>().material.color = Color.white;
-                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = GameObject.Find("tenpuranabe");
                 }
                 else if (kona == true && other.gameObject.tag == "tenpuranabe") {
@@ -99,17 +97,14 @@ public class Item_S : MonoBehaviour {
                     slider.value = AgeCount / AgeCountMax;
 
                     if (AgeCount >= AgeCountMax) {
-                        objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                         objcolor = dummy;
                         Resource = (GameObject)Resources.Load("S_Resources/ItemTenpura");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 else if (other.gameObject.tag != "Click") {
-                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
-                objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
 
                 break;
             case "ItemFish":
@@ -127,8 +122,6 @@ public class Item_S : MonoBehaviour {
 
                 if (other.gameObject.tag == "kona") {
                     kona = true;
-                    GetComponent<Renderer>().material.color = Color.white;
-                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = GameObject.Find("tenpuranabe");
                 }
                 else if (kona == true && other.gameObject.tag == "tenpuranabe") {
@@ -137,19 +130,16 @@ public class Item_S : MonoBehaviour {
                     slider.value = AgeCount / AgeCountMax;
 
                     if (AgeCount >= AgeCountMax) {
-                        objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                         objcolor = dummy;
                         Resource = (GameObject)Resources.Load("S_Resources/ItemTenpura");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 else if (other.gameObject.tag != "Click") {
-                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
 
-
-                objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
+                
 
                 break;
 
@@ -160,6 +150,7 @@ public class Item_S : MonoBehaviour {
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / KogeCountMax;
                     Debug.Log(slider.value);
+
                 }
                 // ゴミ箱に当たると焦げになる
                 if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
@@ -224,17 +215,14 @@ public class Item_S : MonoBehaviour {
                     Debug.Log("slider.value : " + slider.value);
 
                     if (AgeCount >= AgeCountMax) {
-                        objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                         objcolor = dummy;
                         Resource = (GameObject)Resources.Load("S_Resources/ItemFriedchicken");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 else if (other.gameObject.tag != "Click") {
-                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
-                objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
                 break;
 
 
@@ -310,13 +298,11 @@ public class Item_S : MonoBehaviour {
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / AgeCountMax;
                     if (AgeCount >= AgeCountMax) {
-                        objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                         objcolor = dummy;
                         Resource = (GameObject)Resources.Load("S_Resources/ItemQuailFry");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 else if (other.gameObject.tag == "Bread powder" && ThirdBreadPowder == true) {
-                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
@@ -324,39 +310,29 @@ public class Item_S : MonoBehaviour {
                 {
                     ThirdBreadPowder = true;
                     QuailFry = true;
-                    GetComponent<Renderer>().material.color = Color.blue;
-                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = GameObject.Find("karaagenabe");
                 }
                 else if (other.gameObject.tag == "Bread powder" && BredPowder == true && liquid == true)//粉２回目
                 {
                     Secondliquid = true;
-                    GetComponent<Renderer>().material.color = Color.red;
-                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = GameObject.Find("liquid");
                 }
                 else if (other.gameObject.tag == "Bread powder") //粉１回目
                 {
                     BredPowder = true;
-                    GetComponent<Renderer>().material.color = Color.red;
-                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = GameObject.Find("liquid");
                 }
                 else if (BredPowder == true && other.gameObject.tag == "liquid") //液１回目
                 {
                     //BredPowder = false;
                     liquid = true;
-                    GetComponent<Renderer>().material.color = Color.blue;
-                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = GameObject.Find("BreadPowder");
                 }
                 else if (other.gameObject.tag != "Click") //OnCollisionStayだと1液が処理された瞬間呼ばれてしまう
                 {
-                    objcolor.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
                     objcolor = dummy;
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
-                objcolor.GetComponent<Renderer>().material.color = new Color(alpha_Sin, alpha_Sin, alpha_Sin);
                 break;
 
             case "ItemQuailFry":

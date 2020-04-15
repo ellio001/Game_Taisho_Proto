@@ -21,7 +21,7 @@ public class GuestGenerator : MonoBehaviour {
 
 
     void Start() {
-        GuestSpawn = 12; //客生成の間隔　数値/秒
+        GuestSpawn = 15; //最初の客生成の間隔　数値/秒
         FirstGuest = false;
         GM = GameObject.Find("GameManager");
         script = GM.GetComponent<GameManager>();
@@ -35,7 +35,7 @@ public class GuestGenerator : MonoBehaviour {
             GuestSpawn = 5;     //フィーバータイム時は5秒
         }
         else if(FirstGuest == true){
-            GuestSpawn = 6;    //非フィーバー状態時は6秒
+            GuestSpawn = 8;    //非フィーバー状態時は8秒
         }
 
         if (time >= GuestSpawn && Guest[Guest.Length - 1] == null)   //列の最後尾が埋まってなければGuestSpawn秒に１回処理
