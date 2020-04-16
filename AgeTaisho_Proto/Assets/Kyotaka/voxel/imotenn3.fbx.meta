@@ -1,16 +1,14 @@
 fileFormatVersion: 2
-guid: a9f416c3823e3b64988628091f6ff6b6
+guid: 0e1536e87e7b88c4281cc7f45df725d2
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: default
-    100002: //RootNode
-    400000: default
-    400002: //RootNode
-    2100000: defaultMat
-    2300000: default
-    3300000: default
-    4300000: default
+    100000: //RootNode
+    400000: //RootNode
+    2100000: palette.004
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: ObjObject.004
   externalObjects: {}
   materials:
     importMaterials: 1
