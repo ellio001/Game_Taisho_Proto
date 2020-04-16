@@ -68,7 +68,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
             // 今選択しているカーソルの位置を代入している
             if (C3_script.pot_flg)
             {
-                direction = C3_script.PCS_List[C3_script.tektou].transform.position;
+                direction = C3_script.PCS_List[C3_script.Pcursor].transform.position;
             }
             else
             {
@@ -79,7 +79,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
                 // フラグがたっていないとボタンが聞かな
-                if (Input.GetKeyDown(KeyCode.Space) && C3_script.space_flg) {
+                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && C3_script.space_flg) {
                     if (HoldingFlg != true) // 手に何も持っていない時に入る
                     {
                         if (hit.collider.gameObject.tag == "Box") {

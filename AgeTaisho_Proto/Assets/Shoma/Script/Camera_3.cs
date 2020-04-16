@@ -8,7 +8,7 @@ using System;
 
 public class Camera_3 : MonoBehaviour
 {
-    /*-------------------------------------------リスト---------------------------------------------------*/
+    /*------------------------------------------＜リスト＞--------------------------------------------------*/
      //   0   = ゴミ箱の座標
      // 1~13 = 食材や鍋などの座標
      // 14.15 = 14は揚げ物側の皿、15は天ぷら側の皿座標
@@ -19,14 +19,21 @@ public class Camera_3 : MonoBehaviour
     [SerializeField] List<GameObject> CP_List = new List<GameObject>(); // カメラの場所を入れるリスト
     /*----------------------------------------------------------------------------------------------------*/
 
+    /*------------------------------------------＜フラグ＞--------------------------------------------------*/
+    bool gomi_flg = false;   // ゴミ箱を向くときに使う
+    bool stock_flg = false;  // ストックを見ているときはフラグがたつ
+    public bool pot_flg = false; // 鍋を見るかのフラグ
+    [System.NonSerialized] public bool space_flg = false;
+    bool potfast_flg = false; // 粉から鍋を選択すると左下が選択されるためのフラグ
+    bool button_flg = false;  // ボタンが一回だけ押さるようにするフラグ
+    /*----------------------------------------------------------------------------------------------------*/
+
     [System.NonSerialized] public int cursor = 7; // カーソル用
     int tmp_cursor = 0; // cusorを一時的に保存する用
 
-    public bool pot_flg = false; // 鍋を見るかのフラグ
-    [System.NonSerialized] public bool space_flg = false;
+
     Quaternion target;      // 目的地の座標変数
-    bool gomi_flg = false;   // ゴミ箱を向くときに使う
-    bool stock_flg = false;  // ストックを見ているときはフラグがたつ
+
     const float SPEED = 420f; // ここをいじれば移動スピードが変わる！
     [SerializeField] GameObject ClickObj;
     [SerializeField] GameObject LightObj; // スポットライトのObjを入れる変数
@@ -36,8 +43,9 @@ public class Camera_3 : MonoBehaviour
     Pause_Botton_Script script;
 
     int esc_cursor;
-    public int tektou = 0;
-    bool potfast_flg = false; // 粉から鍋を選択すると左下が選択されるためのフラグ
+    public int Pcursor = 0;
+    float button_time = 0f; // 次のボタンが押せるまでのインターバルを計る変数
+
 
     void Start()
     {
@@ -54,15 +62,25 @@ public class Camera_3 : MonoBehaviour
 
     void Update()
     {
+
+        if (button_flg == true)
+        {
+            button_time += Time.deltaTime;
+            if (button_time >= 0.2)
+            {
+                button_flg = false;
+                button_time = 0;
+            }
+        }
+
         if (script.PauseFlag)
         {
             return;
         }
         else
         {
-            if (Input.anyKeyDown)
-            {              
-                if(pot_flg==false)
+            Debug.Log("time：" + button_time);
+            if (pot_flg==false)
                 {
                     DownKeyCheck(); // 押されたボタンの処理をする
                     if (cursor == 1||cursor == 13) pot_flg=true;
@@ -71,14 +89,18 @@ public class Camera_3 : MonoBehaviour
                 if (pot_flg) PotSelect();
                 MoveCamera(); // カメラを移動させる処理
                 //Debug.Log("カーソル番号：" + cursor);
-            }
+
 
             // 移動を滑らかにする処理
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, SPEED * Time.deltaTime);
 
             // 目的地に着くとフラグを立てる
             if (transform.rotation != target) space_flg = false;
-            else space_flg = true;
+            else
+            {
+                space_flg = true;
+
+            }
         }
     }
 
@@ -87,8 +109,9 @@ public class Camera_3 : MonoBehaviour
     void DownKeyCheck()
     {
         // ←押したとき
-        if (Input.GetKey(KeyCode.LeftArrow) || 0 >Input.GetAxisRaw("Cross_Horizontal"))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("Cross_Horizontal")&& !button_flg))
         {
+            button_flg = true;
             // ゴミ箱を向いているときに←押すと、唐揚げの場所を向く
             if (gomi_flg && (cursor != 14 && cursor != 15))
             {
@@ -105,7 +128,11 @@ public class Camera_3 : MonoBehaviour
                 else
                 {
                     if (tmp_cursor != 0) cursor = tmp_cursor + 1;
-                    else cursor += 1;
+                    else
+                    {
+                        cursor += 1;
+
+                    }
                     if (tmp_cursor == 0 && cursor > 13)
                     {
                         cursor = 1;
@@ -122,8 +149,9 @@ public class Camera_3 : MonoBehaviour
         }
 
         // →押したとき
-        else if (Input.GetKey(KeyCode.RightArrow) || 0 < Input.GetAxisRaw("Cross_Horizontal"))
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
         {
+            button_flg = true;
             if (gomi_flg && (cursor != 14 && cursor != 15))
             {
                 tmp_cursor = 5;
@@ -154,8 +182,9 @@ public class Camera_3 : MonoBehaviour
         }
 
         // ↓押したとき
-        else if (Input.GetKey(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("Cross_Vertical"))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("Cross_Vertical") && !button_flg))
         {
+            button_flg = true;
             /* ゴミフラグがたっている時、
              * 焦げアイテムを持っているときに下を押すした時、
              * 3つの客席を見ている時は、すぐにゴミ箱を向く*/
@@ -194,8 +223,9 @@ public class Camera_3 : MonoBehaviour
         }
 
         // ↑押したとき
-        else if (Input.GetKey(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("Cross_Vertical"))
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("Cross_Vertical") && !button_flg))
         {
+            button_flg = true;
             // 盛り付け場を見ている時に↑を押したらストックの直前の場所を向く
             if (cursor == 14 || cursor == 15)
             {
@@ -233,9 +263,10 @@ public class Camera_3 : MonoBehaviour
     {
         if (cursor == 1)
         {
-            if (Input.GetKey(KeyCode.LeftArrow) || 0 > Input.GetAxisRaw("Cross_Horizontal"))
+            if (Input.GetKey(KeyCode.LeftArrow) || (0 > Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
             {
-                if (tektou != 0 && tektou != 2) tektou -= 1;
+                button_flg = true;
+                if (Pcursor != 0 && Pcursor != 2) Pcursor -= 1;
                 else
                 {
                     potfast_flg = false;
@@ -243,24 +274,26 @@ public class Camera_3 : MonoBehaviour
                     cursor = 2;
                 }
             }
-            else if (Input.GetKey(KeyCode.RightArrow) || 0 < Input.GetAxisRaw("Cross_Horizontal"))
+            else if (Input.GetKey(KeyCode.RightArrow) || (0 < Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
             {
+                button_flg = true;
                 if (potfast_flg == false)
                 {
-                    tektou = 0;
+                    Pcursor = 0;
                     potfast_flg = true;
                 }
-                else if (tektou != 1 && tektou != 3) tektou += 1;
+                else if (Pcursor != 1 && Pcursor != 3) Pcursor += 1;
                 else
                 {
                     potfast_flg = false;
                     cursor = 13;
-                    tektou = 5;
+                    Pcursor = 5;
                 }
             }
-            else if (Input.GetKey(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("Cross_Vertical"))
+            else if (Input.GetKey(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("Cross_Vertical") && !button_flg))
             {
-                if (tektou != 0 && tektou != 1) tektou -= 2;
+                button_flg = true;
+                if (Pcursor != 0 && Pcursor != 1) Pcursor -= 2;
                 else
                 {
                     potfast_flg = false;
@@ -269,9 +302,10 @@ public class Camera_3 : MonoBehaviour
                     cursor = 15;
                 }
             }
-            else if (Input.GetKey(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("Cross_Vertical"))
+            else if (Input.GetKey(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("Cross_Vertical") && !button_flg))
             {
-                if (tektou != 2 && tektou != 3) tektou += 2;
+                button_flg = true;
+                if (Pcursor != 2 && Pcursor != 3) Pcursor += 2;
                 else
                 {
                     potfast_flg = false;
@@ -285,25 +319,26 @@ public class Camera_3 : MonoBehaviour
 
         else if (cursor == 13)
         {
-            if (Input.GetKey(KeyCode.LeftArrow) || 0 > Input.GetAxisRaw("Cross_Horizontal"))
+            if (Input.GetKey(KeyCode.LeftArrow) || (0 > Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
             {
+                button_flg = true;
                 if (potfast_flg == false)
                 {
-                    tektou = 4;
+                    Pcursor = 4;
                     potfast_flg = true;
                 }
-                else if (tektou != 5 && tektou != 7) tektou += 1;
+                else if (Pcursor != 5 && Pcursor != 7) Pcursor += 1;
                 else
                 {
                     potfast_flg = false;
                     cursor = 1;
-                    tektou = 1;
+                    Pcursor = 1;
                 }
             }
-            else if (Input.GetKey(KeyCode.RightArrow) || 0 < Input.GetAxisRaw("Cross_Horizontal"))
+            else if (Input.GetKey(KeyCode.RightArrow) || (0 < Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
             {
-
-                if (tektou != 4 && tektou != 6) tektou -= 1;
+                button_flg = true;
+                if (Pcursor != 4 && Pcursor != 6) Pcursor -= 1;
                 else
                 {
                     potfast_flg = false;
@@ -311,9 +346,10 @@ public class Camera_3 : MonoBehaviour
                     cursor = 12;
                 }
             }
-            else if (Input.GetKey(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("Cross_Vertical"))
+            else if (Input.GetKey(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("Cross_Vertical") && !button_flg))
             {
-                if (tektou != 4 && tektou != 5) tektou -= 2;
+                button_flg = true;
+                if (Pcursor != 4 && Pcursor != 5) Pcursor -= 2;
                 else
                 {
                     potfast_flg = false;
@@ -322,9 +358,10 @@ public class Camera_3 : MonoBehaviour
                     cursor = 14;
                 }
             }
-            else if (Input.GetKey(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("Cross_Vertical"))
+            else if (Input.GetKey(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("Cross_Vertical") && !button_flg))
             {
-                if (tektou != 6 && tektou != 7) tektou += 2;
+                button_flg = true;
+                if (Pcursor != 6 && Pcursor != 7) Pcursor += 2;
                 else
                 {
                     potfast_flg = false;
@@ -338,14 +375,13 @@ public class Camera_3 : MonoBehaviour
         }
         if (pot_flg)
         {
-            Vector3 tmp = PCS_List[tektou].transform.position;
+            Vector3 tmp = PCS_List[Pcursor].transform.position;
             LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z - 0.05f);
         }
         else
         {
             Vector3 tmp = Cursor_List[cursor].transform.position;
             LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z - 0.05f);
-
         }
     
         
