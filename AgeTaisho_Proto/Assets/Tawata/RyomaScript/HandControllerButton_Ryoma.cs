@@ -6,9 +6,9 @@ public class HandControllerButton_Ryoma : MonoBehaviour {
     //このスクリプトはControllerMouseClickと共存しない
     //このスクリプトはhandにいれる
 
-    public GameObject clickedGameObject;
-    public GameObject Resource;
-    private GameObject ClickObj;
+    GameObject clickedGameObject;
+    GameObject Resource;
+    GameObject ClickObj;
     float handspeed = 0.1f;
 
     public bool HoldingFlg;
