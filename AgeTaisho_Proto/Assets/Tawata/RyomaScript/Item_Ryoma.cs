@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Item_Ryoma: MonoBehaviour {
+public class Item_Ryoma : MonoBehaviour {
 
     private float AgeCount;         //現在の揚げる時間
     private float AgeCountMax;      //揚げ揚がる時間
@@ -20,7 +20,6 @@ public class Item_Ryoma: MonoBehaviour {
 
     GameObject gameobject;
     GameObject Resource;
-    GameObject objcolor;
     GameObject GM;              //GameMa agerがオブジェクト
     GameManager script;         //GameManagerが入る変数
 
@@ -46,7 +45,7 @@ public class Item_Ryoma: MonoBehaviour {
 
         //Sliderを満タンにする。
         slider.value = 1f;
-        
+
         //りょうまが作ったやつ
         GM = GameObject.Find("GameManager");
         script = GM.GetComponent<GameManager>();
@@ -69,35 +68,51 @@ public class Item_Ryoma: MonoBehaviour {
                     Destroy(gameObject);
                 }
                 break;
-            case "ItemPotato":
+            case "Item_Potato":
+                if (other.gameObject.tag == "kona") {
+                    Resource = (GameObject)Resources.Load("R_Resources/Powder_Potato");   //Resourceフォルダのプレハブを読み込む
+                }
+                else if (other.gameObject.tag != "Click") {
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                break;
+            case "Powder_Potato":
                 if (script.FiverFlag) {
                     AgeCountMax = 1;
                 }
                 else {
                     AgeCountMax = 5;
                 }
-                if (kona == false) {
-                    objcolor = GameObject.Find("kona");
-                }
-
-                if (other.gameObject.tag == "kona") {
-                    kona = true;
-                    objcolor = GameObject.Find("tenpuranabe");
-                }
-                else if (kona == true && other.gameObject.tag == "tenpuranabe") {
+                if (other.gameObject.tag == "tenpuranabe") {
 
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / AgeCountMax;
 
                     if (AgeCount >= AgeCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemTenpura");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("R_Resources/Fried_K_Potato");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
-                else if (other.gameObject.tag != "Click") {
+                break;
+            case "Fried_K_Potato":
+                if (other.gameObject.tag == "tenpuranabe") {
+
+                    AgeCount += Time.deltaTime;
+                    slider.value = AgeCount / KogeCountMax;
+                    Debug.Log(slider.value);
+
+                }
+                // ゴミ箱に当たると焦げになる
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (AgeCount >= KogeCountMax) {
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
-
+                if (other.gameObject.tag == "Sara") {
+                    script.Taihi = AgeCount;
+                    script.TaihiFlag = TaihiFlag;
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
+                }
                 break;
+
             case "ItemFish":
             case "ItemEbi":
                 if (script.FiverFlag) {
@@ -106,14 +121,10 @@ public class Item_Ryoma: MonoBehaviour {
                 else {
                     AgeCountMax = 6;
                 }
-                if (kona == false) {
-                    objcolor = GameObject.Find("kona");
-                }
-
 
                 if (other.gameObject.tag == "kona") {
                     kona = true;
-                    objcolor = GameObject.Find("tenpuranabe");
+
                 }
                 else if (kona == true && other.gameObject.tag == "tenpuranabe") {
 
@@ -127,9 +138,6 @@ public class Item_Ryoma: MonoBehaviour {
                 else if (other.gameObject.tag != "Click") {
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
-
-
-
                 break;
 
             case "ItemTenpura":
@@ -180,7 +188,6 @@ public class Item_Ryoma: MonoBehaviour {
                 else {
                     AgeCountMax = 5;
                 }
-                objcolor = GameObject.Find("karaagenabe");
 
                 if (other.gameObject.tag == "karaagenabe") {
 
@@ -215,7 +222,7 @@ public class Item_Ryoma: MonoBehaviour {
                     script.TaihiFlag = TaihiFlag;
                     Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
                 }
-                
+
                 if (other.gameObject.tag == "Sara") {
                     script.Taihi = AgeCount;
                     script.TaihiFlag = TaihiFlag;
@@ -244,17 +251,14 @@ public class Item_Ryoma: MonoBehaviour {
                 if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
                 break;
 
-            case "ItemQuail":
+            case "Item_Quail":
                 //揚がるスピード
                 if (script.FiverFlag) {
                     AgeCountMax = 1;
-                }
-                else {
+                }else {
                     AgeCountMax = 2;
                 }
-                if (BredPowder == false) {
-                    objcolor = GameObject.Find("BreadPowder");
-                }
+
                 // ゴミ箱に当たると焦げになる
                 if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
                 if (QuailFry == true && other.gameObject.tag == "karaagenabe") {
@@ -262,7 +266,7 @@ public class Item_Ryoma: MonoBehaviour {
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / AgeCountMax;
                     if (AgeCount >= AgeCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemQuailFry");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("R_Resources/Fried_K_Quail");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 else if (other.gameObject.tag == "Bread powder" && ThirdBreadPowder == true) {
@@ -272,27 +276,31 @@ public class Item_Ryoma: MonoBehaviour {
                 {
                     ThirdBreadPowder = true;
                     QuailFry = true;
-                    objcolor = GameObject.Find("karaagenabe");
                 }
                 else if (other.gameObject.tag == "Bread powder" && BredPowder == true && liquid == true)//粉２回目
                 {
                     Secondliquid = true;
-                    objcolor = GameObject.Find("liquid");
                 }
                 else if (other.gameObject.tag == "Bread powder") //粉１回目
                 {
                     BredPowder = true;
-                    objcolor = GameObject.Find("liquid");
+                    Resource = (GameObject)Resources.Load("R_Resources/Powder_Quail");   //Resourceフォルダのプレハブを読み込む
                 }
                 else if (BredPowder == true && other.gameObject.tag == "liquid") //液１回目
                 {
                     liquid = true;
-                    objcolor = GameObject.Find("BreadPowder");
+                    Resource = (GameObject)Resources.Load("R_Resources/Liquid_Quail");   //Resourceフォルダのプレハブを読み込む
                 }
                 else if (other.gameObject.tag != "Click") //OnCollisionStayだと1液が処理された瞬間呼ばれてしまう
                 {
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
+                break;
+
+            case "Powder_Quail":
+                break;
+
+            case "Liquid_Quail":
                 break;
 
             case "ItemQuailFry":
