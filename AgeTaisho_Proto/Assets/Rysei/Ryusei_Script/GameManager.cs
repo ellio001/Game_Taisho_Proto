@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
-
     public float GameTime;             //ゲーム開始の時間
     float GameFinishTime;       //ゲームのプレイ最大時間
     public float FiverTime;            //フィーバーの時間です
@@ -55,6 +54,7 @@ public class GameManager : MonoBehaviour {
 
     private void Update() {
 
+        //現在までのフレーム
         GameTime += Time.deltaTime;
 
         if (TestSceneFlag) {
@@ -149,6 +149,8 @@ public class GameManager : MonoBehaviour {
             case 3:
                 break;
         }
+        //ESCで終了
+        if (Input.GetKey(KeyCode.Escape)) Quit();
     }
 
     //変数を初期化するための関数
@@ -168,10 +170,17 @@ public class GameManager : MonoBehaviour {
     void ActiveSceneChanged(Scene thisScene, Scene nextScene) {
         score_object = GameObject.Find("ScoreText"); // Textオブジェクト
         Pause_object = GameObject.Find("PouseUIText");
-        if (score_object != null || Pause_object != null)
-        {
+        if (score_object != null || Pause_object != null) {
             Text score_text = score_object.GetComponent<Text>();// オブジェクトからTextコンポーネントを取得
             Text Pause_text = Pause_object.GetComponent<Text>();
         }
+    }
+
+    void Quit() {
+    #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+    #elif UNITY_STANDALONE
+          UnityEngine.Application.Quit();
+    #endif
     }
 }
