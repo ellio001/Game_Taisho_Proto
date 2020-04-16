@@ -113,7 +113,53 @@ public class Item_Ryoma : MonoBehaviour {
                 }
                 break;
 
-            case "ItemFish":
+            case "Item_Fish":
+                if (other.gameObject.tag == "kona") {
+                    Resource = (GameObject)Resources.Load("R_Resources/Powder_Fish");   //Resourceフォルダのプレハブを読み込む
+                }
+                else if (other.gameObject.tag != "Click") {
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                break;
+
+            case "Powder_Fish":
+                if (script.FiverFlag) {
+                    AgeCountMax = 1;
+                }
+                else {
+                    AgeCountMax = 5;
+                }
+                if (other.gameObject.tag == "tenpuranabe") {
+
+                    AgeCount += Time.deltaTime;
+                    slider.value = AgeCount / AgeCountMax;
+
+                    if (AgeCount >= AgeCountMax) {
+                        Resource = (GameObject)Resources.Load("R_Resources/Fried_T_Fish");   //Resourceフォルダのプレハブを読み込む
+                    }
+                }
+                break;
+
+            case "Fried_T_Fish":
+                if (other.gameObject.tag == "tenpuranabe") {
+
+                    AgeCount += Time.deltaTime;
+                    slider.value = AgeCount / KogeCountMax;
+                    Debug.Log(slider.value);
+
+                }
+                // ゴミ箱に当たると焦げになる
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (AgeCount >= KogeCountMax) {
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                if (other.gameObject.tag == "Sara") {
+                    script.Taihi = AgeCount;
+                    script.TaihiFlag = TaihiFlag;
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
+                }
+                break;
+
             case "ItemEbi":
                 if (script.FiverFlag) {
                     AgeCountMax = 1;
