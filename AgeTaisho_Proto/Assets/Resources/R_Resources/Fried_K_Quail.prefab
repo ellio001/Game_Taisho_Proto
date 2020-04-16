@@ -220,9 +220,9 @@ GameObject:
   - component: {fileID: 8867972016896372922}
   - component: {fileID: 526766263580030619}
   - component: {fileID: 4995846988534504429}
-  - component: {fileID: 1434224166709011342}
+  - component: {fileID: 2467649855520800688}
   m_Layer: 0
-  m_Name: Fried_K_Quail (1)
+  m_Name: Fried_K_Quail
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -317,7 +317,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1434224166709011342
+--- !u!114 &2467649855520800688
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4843160461959894972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f32d6a8b38280c340a09079e3fe35c49, type: 3}
+  m_Script: {fileID: 11500000, guid: a1bd06194faadec47b16100ceb87c710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 3556364644314169551}
