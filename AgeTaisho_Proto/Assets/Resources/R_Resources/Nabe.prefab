@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 5048736205276531284}
   - component: {fileID: 65337751956313412}
   - component: {fileID: 82365838076619690}
+  - component: {fileID: 114263934854741298}
   m_Layer: 0
   m_Name: Nabe
-  m_TagString: Untagged
+  m_TagString: tenpuranabe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,7 +88,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5048736205274600596}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.037, y: 0.017, z: 0.042999998}
@@ -103,7 +104,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8d2c3f10d1ea7ad49a7c73a2caa614aa, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -188,3 +189,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114263934854741298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5048736205274600596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23042e640de74be4a89c8dadb25e9d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AgeSound: {fileID: 8300000, guid: 8d2c3f10d1ea7ad49a7c73a2caa614aa, type: 3}
