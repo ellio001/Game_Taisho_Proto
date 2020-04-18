@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Master_Scene/Title_Scene.unity
+  - enabled: 1
+    path: Assets/Main_Scene/Title_Scene.unity
     guid: b14dd28f696ed9044925c3b7d8b102dd
-  - enabled: 0
+  - enabled: 1
     path: Assets/Tutorial/Tutorial_Scene.unity
     guid: 292a62c12cfdc784a9215e6fc96e0323
   - enabled: 1
@@ -17,4 +17,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Tawata/EndScene.unity
     guid: 68139bf99fb8ef8479559a98ad7247c7
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Difficulty_Scene.unity
+    guid: d02e927bae6ff054b8352a15448090ef
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Easy_Tutorial_Scene.unity
+    guid: ef6adc30a23586348a6693e8738da7f7
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Normal_Tutorial_Scene.unity
+    guid: 5517ec0bfe86356438388a220e40b8d9
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Hard_Tutorial_Scene.unity
+    guid: 70acc7be9a7057446ab6042ff3369bb3
   m_configObjects: {}
