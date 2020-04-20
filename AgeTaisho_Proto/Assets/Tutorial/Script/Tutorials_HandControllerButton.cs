@@ -17,6 +17,11 @@ public class Tutorials_HandControllerButton : MonoBehaviour
 
     GameObject C2;    // Camera_2を入れる変数
     Camera_2 C2_script; // Camera_2のscriptを入れる変数
+    Camera_3 C3_script; // Camera_3のscriptを入れる変数
+
+    [SerializeField] GameObject Player; // プレイヤーの位置を保存
+    Vector3 Player_V;                   // プレイヤーの座標を保存する用
+    Vector3 direction; // Rayの終点座標
 
     //ポーズ画面
     GameObject Pause;
@@ -38,6 +43,14 @@ public class Tutorials_HandControllerButton : MonoBehaviour
 
         C2 = GameObject.Find("Main Camera");
         C2_script = C2.GetComponent<Camera_2>();
+        C3_script = C2.GetComponent<Camera_3>();
+
+        // プレイヤーの座標をVector3に変換
+        Player_V.x = Player.transform.position.x;
+        Player_V.y = Player.transform.position.y;
+        Player_V.z = Player.transform.position.z;
+        direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
+
         //ポーズ画面
         Pause = GameObject.Find("Main Camera");
         script = Pause.GetComponent<Pause_Botton_Script>();
@@ -55,6 +68,16 @@ public class Tutorials_HandControllerButton : MonoBehaviour
             RaycastHit hit = new RaycastHit();
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+            // 今選択しているカーソルの位置を代入している
+            if (C3_script.pot_flg)
+            {
+                direction = C3_script.PCS_List[C3_script.Pcursor].transform.position;
+            }
+            else
+            {
+                direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
+            }
+
             if (TextNumber == 3 || TextNumber == 4 ||
                 TextNumber == 5 || TextNumber == 7 ||
                 TextNumber == 8 || TextNumber == 9) Move_arrow(); // 矢印を表示
@@ -62,54 +85,62 @@ public class Tutorials_HandControllerButton : MonoBehaviour
             // 天ぷらが生成されたら次のテキストに進むTutorial_ItemTenpura
             if (GameObject.Find("Tutorial_ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7;
 
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f) && Input.GetKeyDown(KeyCode.Space) && C2_script.space_flg) {
-                if (HoldingFlg != true) // 手に何も持っていない時に入る
+            if (Physics.Linecast(Player_V, direction, out hit)){
+                Debug.DrawLine(Player_V, direction, Color.red);
+                // フラグがたっていないとボタンが聞かな
+                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && C3_script.space_flg)
                 {
-                    if (hit.collider.gameObject.tag == "Box") {
-                        if (hit.collider.gameObject.name == "EbiBox" && TextNumber == 3) {
-                            Resource = (GameObject)Resources.Load("S_Resources/Tutorial_ItemEbi");   //Resourceフォルダのプレハブを読み込む
-                            clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
+
+                    if (HoldingFlg != true) // 手に何も持っていない時に入る
+                    {
+                        if (hit.collider.gameObject.tag == "Box")
+                        {
+                            if (hit.collider.gameObject.name == "EbiBox" && TextNumber == 3)
+                            {
+                                Resource = (GameObject)Resources.Load("S_Resources/Tutorial_ItemEbi");   //Resourceフォルダのプレハブを読み込む
+                                clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
+                                HoldingFlg = true;
+                                tutorialUI.TextNumber = 4; // テキストを進める
+                                DestroyFlg = true; // 矢印を消すフラグを立てる
+
+                                ColliderOut();//当たり判定をを外す
+                            }
+                        }
+
+                        if (hit.collider.gameObject.tag == "Item" && (TextNumber != 6 && TextNumber != 9))
+                        {
+                            clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
+                            clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                             HoldingFlg = true;
-                            tutorialUI.TextNumber = 4; // テキストを進める
-                            DestroyFlg = true; // 矢印を消すフラグを立てる
-                                               //当たり判定をを外す
+                            //当たり判定をを外す
                             ColliderOut();
                         }
+
                     }
+                    else if ((TextNumber == 4 && hit.collider.gameObject.tag == "kona") || (TextNumber == 5 && hit.collider.gameObject.tag == "tenpuranabe") ||
+                             (TextNumber == 7 && hit.collider.gameObject.tag == "Sara") || (TextNumber == 8 && hit.collider.gameObject.name == "Plate2"))
+                    // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
+                    {
+                        //当たり判定を入れる
+                        ColliderIn();
+                        ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
+                        clickedGameObject.transform.parent = null;              //手との親子付けを解除
 
-                    if (hit.collider.gameObject.tag == "Item" && (TextNumber != 6 && TextNumber != 9)) {
-                        clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
-                        clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
-                        HoldingFlg = true;
-                        //当たり判定をを外す
-                        ColliderOut();
+                        clickedGameObject.GetComponent<Rigidbody>().isKinematic = false;    //重力を有効
+
+                        clickedGameObject = null;   //対象を入れる箱を初期化
+                        Resource = null;            //生成するプレハブの箱を初期化
+
+                        HoldingFlg = false;
+                        tutorialUI.TextNumber += 1; // テキストを進める
+                        DestroyFlg = true;
                     }
-
+                    if (clickedGameObject != null)  //nullでないとき処理
+                    {
+                        clickedGameObject.transform.parent = ClickObj.gameObject.transform; //このスクリプトが入っているオブジェクトと親子付け
+                        clickedGameObject.GetComponent<Rigidbody>().isKinematic = true; //ヒットしたオブジェクトの重力を無効
+                    }
                 }
-                else if ((TextNumber == 4 && hit.collider.gameObject.tag == "kona") || (TextNumber == 5 && hit.collider.gameObject.tag == "tenpuranabe") ||
-                         (TextNumber == 7 && hit.collider.gameObject.tag == "Sara") || (TextNumber == 8 && hit.collider.gameObject.name == "Plate2"))
-                // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
-                {
-                    //当たり判定を入れる
-                    ColliderIn();
-                    ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
-                    clickedGameObject.transform.parent = null;              //手との親子付けを解除
-
-                    clickedGameObject.GetComponent<Rigidbody>().isKinematic = false;    //重力を有効
-
-                    clickedGameObject = null;   //対象を入れる箱を初期化
-                    Resource = null;            //生成するプレハブの箱を初期化
-
-                    HoldingFlg = false;
-                    tutorialUI.TextNumber += 1; // テキストを進める
-                    DestroyFlg = true;
-                }
-                if (clickedGameObject != null)  //nullでないとき処理
-                {
-                    clickedGameObject.transform.parent = ClickObj.gameObject.transform; //このスクリプトが入っているオブジェクトと親子付け
-                    clickedGameObject.GetComponent<Rigidbody>().isKinematic = true; //ヒットしたオブジェクトの重力を無効
-                }
-
             }
         }
     }
@@ -133,19 +164,19 @@ public class Tutorials_HandControllerButton : MonoBehaviour
             switch (TextNumber)
             {
                 case 3:
-                    tmp = C2_script.Cursor_List[3].transform.position;
+                    tmp = C3_script.Cursor_List[3].transform.position;
                     break;
                 case 4:
-                    tmp = C2_script.Cursor_List[2].transform.position;
+                    tmp = C3_script.Cursor_List[2].transform.position;
                     break;
                 case 5:
-                    tmp = C2_script.Cursor_List[1].transform.position;
+                    tmp = C3_script.Cursor_List[1].transform.position;
                     break;
                 case 7:
-                    tmp = C2_script.Cursor_List[15].transform.position;
+                    tmp = C3_script.Cursor_List[15].transform.position;
                     break;
                 case 8:
-                    tmp = C2_script.Cursor_List[6].transform.position;
+                    tmp = C3_script.Cursor_List[6].transform.position;
                     break;
             }
             Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z + 0.1f), Quaternion.identity);
