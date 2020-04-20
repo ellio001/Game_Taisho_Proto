@@ -29,4 +29,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main_Scene/Difficulty/Hard_Tutorial_Scene.unity
     guid: 70acc7be9a7057446ab6042ff3369bb3
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Easy_Scene.unity
+    guid: 175db003c9766ab47989a1857b418cc1
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Normal_Scene.unity
+    guid: 1674d0080c2d5f54d95d2af0371a2229
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Hard_Scene.unity
+    guid: 34363f2f3d676fc45b50194978e432a3
   m_configObjects: {}
