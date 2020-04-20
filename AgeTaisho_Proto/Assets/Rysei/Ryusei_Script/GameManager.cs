@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour {
                 break;
         }
         //ESCで終了
-        if (Input.GetKey(KeyCode.Escape)) Quit();
+        if (Input.GetKey(KeyCode.Tab)) Quit();
     }
 
     //変数を初期化するための関数
