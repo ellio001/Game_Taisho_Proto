@@ -15,9 +15,17 @@ public class TutorialUI : MonoBehaviour
     private int StringCount;    //TextNumberがいくつまであるか
     private float TutorialTime; //Time.deltatimeをいれる
 
+    int Difficulty;    // 今のシーンの難易度を入れる変数
+
+
     void Start()
     {
-                            //↓リスト番号
+        // hogehogeシーンでのみやりたい処理
+        if (SceneManager.GetActiveScene().name == "Easy") Difficulty = 0;
+        else if (SceneManager.GetActiveScene().name == "Normal") Difficulty = 1;
+        else if (SceneManager.GetActiveScene().name == "Hard") Difficulty = 2;
+
+        //↓リスト番号
         TutorialTextList.Add/*0*/("よく来たな！お前が今日から働く新人か！？ここでの働き方をお前に教えてやるからな！");
         TutorialTextList.Add/*1*/("グズグズしている暇はないぞ！お客さんは待ってはくれないからな！...ほら、早速来たぞ!!");
         TutorialTextList.Add/*2*/("お客さんを見てみろ！お客さんは○○の天ぷらを求めているだろ？");
@@ -27,10 +35,8 @@ public class TutorialUI : MonoBehaviour
         TutorialTextList.Add/*6*/("天ぷらの調理方法は全部同じ手順だからな!!");
         TutorialTextList.Add/*7*/("よし！無事に揚げ終わったな！次はそれを皿に盛り付けだ!!\n" +
                                   "揚がったものを皿の方に持っていけ");
-        //TutorialTextList.Add/*8*/("揚がったものを皿の方に持っていけ");
         TutorialTextList.Add/*8*/("よし！お前、器用だな!きれいに盛り付けできたぞ！\n" +
                                   "じゃあそれをそのままお客さんに提供するんだ!!");
-        //TutorialTextList.Add/*9*/("じゃあそれをそのままお客さんに提供するんだ!!");
         TutorialTextList.Add/*9*/("よし！お客さんが満足して帰っていったぞ上出来だ！これでてんぷらの作り方は完璧だな!!");
 
         StringCount = TutorialTextList.Count - 1;   //文字列がいくつあるか
@@ -40,15 +46,6 @@ public class TutorialUI : MonoBehaviour
     void Update()
     {
         TutorialTime += Time.deltaTime;
-
-        //次のテキストがあれば5秒ごとにテキストを進める
-        //if (TutorialTime >= 5 || ((3 > TextNumber)|| 4 <= TextNumber))
-        //{
-        //    TextNumber += 1;    //表示するテキストの番地を+1する
-        //    TutorialTextArea.text = TutorialTextList[TextNumber];   //テキストを更新
-        //    TutorialTime = 0;
-        //}
-
         switch (TextNumber)
         {
             case 0:
@@ -88,8 +85,22 @@ public class TutorialUI : MonoBehaviour
             TutorialTextArea.text = TutorialTextList[TextNumber];   //テキストを更新
         }
     }
+
+
     public void ReadScene() {
         //Endシーン読込
-        SceneManager.LoadScene("Cursor_Maseter_Scene", LoadSceneMode.Single);
+        switch (Difficulty)
+        {
+            case 0:
+                SceneManager.LoadScene("Easy_Scene");
+                break;
+            case 1:
+                SceneManager.LoadScene("Normal_Scene");
+                break;
+            case 2:
+                SceneManager.LoadScene("Hard_Scene");
+                break;
+        }
+        //SceneManager.LoadScene("Cursor_Maseter_Scene", LoadSceneMode.Single);
     }
 }

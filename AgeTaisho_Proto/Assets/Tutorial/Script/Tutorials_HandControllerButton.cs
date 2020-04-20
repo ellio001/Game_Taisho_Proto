@@ -83,7 +83,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                 TextNumber == 8 || TextNumber == 9) Move_arrow(); // 矢印を表示
 
             // 天ぷらが生成されたら次のテキストに進むTutorial_ItemTenpura
-            if (GameObject.Find("Tutorial_ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7;
+            if (GameObject.Find("ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7;
 
             if (Physics.Linecast(Player_V, direction, out hit)){
                 Debug.DrawLine(Player_V, direction, Color.red);
@@ -97,7 +97,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                         {
                             if (hit.collider.gameObject.name == "EbiBox" && TextNumber == 3)
                             {
-                                Resource = (GameObject)Resources.Load("S_Resources/Tutorial_ItemEbi");   //Resourceフォルダのプレハブを読み込む
+                                Resource = (GameObject)Resources.Load("S_Resources/ItemEbi");   //Resourceフォルダのプレハブを読み込む
                                 clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                 HoldingFlg = true;
                                 tutorialUI.TextNumber = 4; // テキストを進める

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Difficulty_Script : MonoBehaviour
 {
-    int Difficulty = 0; //難易度選択の変数
+    [System.NonSerialized] public int Difficulty = 0; //難易度選択の変数
 
     [SerializeField]
     GameObject Choice_Image;    //Chois_Imageをいれる箱
