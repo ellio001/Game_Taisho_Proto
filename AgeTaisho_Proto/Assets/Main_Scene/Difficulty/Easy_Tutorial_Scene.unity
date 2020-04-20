@@ -3141,7 +3141,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238921753}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fe068a553d2baf4e838712349d6255b, type: 3}
   m_Name: 
@@ -4997,8 +4997,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TutorialTextArea: {fileID: 358987196}
-  TutorialTextList: []
-  TextNumber: 0
 --- !u!114 &1889408539
 MonoBehaviour:
   m_ObjectHideFlags: 0

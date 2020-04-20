@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour {
     public GameObject score_object = null; // Textオブジェクト
     public GameObject Pause_object = null;
 
+    bool Bad_Score;     //Bad_Scoreをいれる箱
+    bool Normal_Score;  //Nomal_Score1をいれる箱
+    bool Good_Score;    //Good_Scoreをいれる箱
+
     // プレファブ達をリスト化
 
     [SerializeField] List<GameObject> Item_Resources = new List<GameObject>();
@@ -50,6 +54,10 @@ public class GameManager : MonoBehaviour {
         FiverFlag = false;
         TestSceneFlag = true;
         SceneManager.activeSceneChanged += ActiveSceneChanged;
+
+        Bad_Score = score_num < 1000;                           //スコア1000未満でBad_Score
+        Normal_Score = score_num >= 1000 && score_num < 2000;   //スコア1000以上2000未満でNormal_Score
+        Good_Score = score_num >= 2000;                         //スコア2000以上でGood_Score
     }
 
     private void Update() {
@@ -78,7 +86,7 @@ public class GameManager : MonoBehaviour {
 
     public void Judgment() {
         //ゲーム時間を判定
-        if (GameTime >= GameFinishTime) {
+        if (GameTime >= GameFinishTime){
             Debug.Log("ゲーム終了！");
             //Scene読込
             ReadScene();
@@ -161,8 +169,11 @@ public class GameManager : MonoBehaviour {
     }
 
     public void ReadScene() {
-        //Endシーン読込
-        SceneManager.LoadScene("EndScene", LoadSceneMode.Single);
+
+        if(Bad_Score) SceneManager.LoadScene("Score_Bad_Scene");
+        else if(Normal_Score) SceneManager.LoadScene("Score_Normal_Scene");
+        else if(Good_Score) SceneManager.LoadScene("Score_Good_Scene");
+
         //処理を二度としないようにフラグで管理
         TestSceneFlag = false;
     }

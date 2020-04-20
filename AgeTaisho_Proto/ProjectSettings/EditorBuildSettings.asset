@@ -38,4 +38,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main_Scene/Difficulty/Hard_Scene.unity
     guid: 34363f2f3d676fc45b50194978e432a3
+  - enabled: 1
+    path: Assets/Main_Scene/Score/Score_Bad_Scene.unity
+    guid: 92afe07e9e2f7a94f8207ed1b82123ab
+  - enabled: 1
+    path: Assets/Main_Scene/Score/Score_Normal_Scene.unity
+    guid: 91ab9b8536747c341a4e5dbdce9eba3e
+  - enabled: 1
+    path: Assets/Main_Scene/Score/Score_Good_Scene.unity
+    guid: d7b57a3721c63894ca24baa4cdf850fe
   m_configObjects: {}
