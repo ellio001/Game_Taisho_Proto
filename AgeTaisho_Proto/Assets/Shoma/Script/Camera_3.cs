@@ -386,12 +386,12 @@ public class Camera_3 : MonoBehaviour
         if (pot_flg)
         {
             Vector3 tmp = PCS_List[Pcursor].transform.position;
-            LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z - 0.05f);
+            LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z);
         }
         else
         {
             Vector3 tmp = Cursor_List[cursor].transform.position;
-            LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z - 0.05f);
+            LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z);
         }
     
         
@@ -428,7 +428,7 @@ public class Camera_3 : MonoBehaviour
     void MoveLight()
     {
         Vector3 tmp = Cursor_List[cursor].transform.position;
-        LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z - 0.05f);
+        LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z);
     }
     
 }

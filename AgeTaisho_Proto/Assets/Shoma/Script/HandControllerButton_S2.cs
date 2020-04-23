@@ -84,8 +84,6 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
                 // フラグがたっていないとボタンが効かない
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && C3_script.space_flg ) {
-
-
                     if (!HoldingFlg) // 手に何も持っていない時に入る
                     {
                         if (hit.collider.gameObject.tag == "Box") {
