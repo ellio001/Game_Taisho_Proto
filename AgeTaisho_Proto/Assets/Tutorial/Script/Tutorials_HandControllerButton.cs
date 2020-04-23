@@ -77,17 +77,14 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                 direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
 
 
-            if (TextNumber == 3 || TextNumber == 4 ||
-                TextNumber == 5 || TextNumber == 7 ||
-                TextNumber == 8 || TextNumber == 9) Move_arrow(); // 矢印を表示
+            if ((TextNumber >= 3 && TextNumber <= 5) ||
+                (TextNumber >= 7 && TextNumber <= 9)) Move_arrow(); // 矢印を表示
 
             // 天ぷらが生成されたら次のテキストに進むTutorial_ItemTenpura
             if (GameObject.Find("ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7;
 
             if (Physics.Linecast(Player_V, direction, out hit)){
                 Debug.DrawLine(Player_V, direction, Color.red);
-
-                Debug.Log(KonaFlag);
 
                 // フラグがたっていないとボタンが聞かな
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && C3_script.space_flg){

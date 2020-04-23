@@ -77,9 +77,9 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
                 // てんぷら粉、ウズラの液と粉、を選択中はフラグを立てる
-                if (C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[2] ||
+                if (C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[2]  ||
                     C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[11] ||
-                    C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[12]) KonaFlag = true;
+                    C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[12] ) KonaFlag = true;
                 else KonaFlag = false;
 
                 // フラグがたっていないとボタンが効かない
