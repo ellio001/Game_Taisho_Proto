@@ -237,6 +237,38 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
                 }
                 break;
+            case "ItemEbi":
+                if (script.FiverFlag) {
+                    AgeCountMax = 1;
+                }
+                else {
+                    AgeCountMax = 6;
+                }
+                if (kona == false) {
+                    objcolor = GameObject.Find("kona");
+                }
+
+
+                if (other.gameObject.tag == "kona") {
+                    kona = true;
+                    objcolor = GameObject.Find("tenpuranabe");
+                }
+                else if (kona == true && other.gameObject.tag == "tenpuranabe") {
+
+                    AgeCount += Time.deltaTime;
+                    slider.value = AgeCount / AgeCountMax;
+
+                    if (AgeCount >= AgeCountMax) {
+                        objcolor = dummy;
+                        Resource = (GameObject)Resources.Load("S_Resources/ItemTenpura");   //Resourceフォルダのプレハブを読み込む
+                    }
+                }
+                else if (other.gameObject.tag != "Click") {
+                    objcolor = dummy;
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                
+                break;
 
             case "ItemSara(Tenpura)":
                 if (TaihiFlag == false) {
