@@ -89,7 +89,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                         if (hit.collider.gameObject.tag == "Box") {
                             switch (hit.collider.gameObject.name) {
                                 case "EbiBox":
-                                    Resource = (GameObject)Resources.Load("S_Resources/ItemEbi");   //Resourceフォルダのプレハブを読み込む
+                                    Resource = (GameObject)Resources.Load("R_Resources/Item_Shrimp");   //Resourceフォルダのプレハブを読み込む
                                     clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                     HoldingFlg = true;
                                     ColliderFlag = 0;

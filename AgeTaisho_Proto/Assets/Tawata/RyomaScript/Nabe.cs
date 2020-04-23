@@ -21,5 +21,9 @@ public class Nabe : MonoBehaviour {
             flag = true;
             AudioSource.PlayOneShot(AgeSound);
         }
+        if (!AudioSource.isPlaying) {
+            flag = false;
+        }
     }
 }
+
