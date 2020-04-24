@@ -168,29 +168,52 @@ public class Item_S : MonoBehaviour {
                 }
                 break;
 
-            case "ItemEbi":
+            //えびだよ
+            case "Item_Shrimp":
+                print("きた");
+                if (other.gameObject.tag == "kona") {
+                    Resource = (GameObject)Resources.Load("R_Resources/Powder_Shrimp");   //Resourceフォルダのプレハブを読み込む
+                }
+                else if (other.gameObject.tag != "Click") {
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                break;
+
+            case "Powder_Shrimp":
                 if (script.FiverFlag) {
                     AgeCountMax = 1;
                 }
                 else {
-                    AgeCountMax = 6;
+                    AgeCountMax = 5;
                 }
-
-                if (other.gameObject.tag == "kona") {
-                    kona = true;
-
-                }
-                else if (kona == true && other.gameObject.tag == "tenpuranabe") {
+                if (other.gameObject.tag == "tenpuranabe") {
 
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / AgeCountMax;
 
                     if (AgeCount >= AgeCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemTenpura");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("R_Resources/Fried_T_Shrimp");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
-                else if (other.gameObject.tag != "Click") {
+                break;
+            case "Fried_T_Shrimp":
+                print("きた3");
+                if (other.gameObject.tag == "tenpuranabe") {
+
+                    AgeCount += Time.deltaTime;
+                    slider.value = AgeCount / KogeCountMax;
+                    Debug.Log(slider.value);
+
+                }
+                // ゴミ箱に当たると焦げになる
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (AgeCount >= KogeCountMax) {
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                if (other.gameObject.tag == "Sara") {
+                    script.Taihi = AgeCount;
+                    script.TaihiFlag = TaihiFlag;
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
                 }
                 break;
 
@@ -213,6 +236,38 @@ public class Item_S : MonoBehaviour {
                     script.TaihiFlag = TaihiFlag;
                     Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Tenpura)");   //Resourceフォルダのプレハブを読み込む
                 }
+                break;
+            case "ItemEbi":
+                if (script.FiverFlag) {
+                    AgeCountMax = 1;
+                }
+                else {
+                    AgeCountMax = 6;
+                }
+                if (kona == false) {
+                    objcolor = GameObject.Find("kona");
+                }
+
+
+                if (other.gameObject.tag == "kona") {
+                    kona = true;
+                    objcolor = GameObject.Find("tenpuranabe");
+                }
+                else if (kona == true && other.gameObject.tag == "tenpuranabe") {
+
+                    AgeCount += Time.deltaTime;
+                    slider.value = AgeCount / AgeCountMax;
+
+                    if (AgeCount >= AgeCountMax) {
+                        objcolor = dummy;
+                        Resource = (GameObject)Resources.Load("S_Resources/ItemTenpura");   //Resourceフォルダのプレハブを読み込む
+                    }
+                }
+                else if (other.gameObject.tag != "Click") {
+                    objcolor = dummy;
+                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                }
+                
                 break;
 
             case "ItemSara(Tenpura)":

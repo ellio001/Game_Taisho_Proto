@@ -36,6 +36,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
     Pause_Botton_Script script;
 
     bool ItemSara;  //アイテム名にSaraが含まれているか判定
+    bool KonaFlag = false; // 〇を押すと粉に漬け、離すと手元に戻るようにするフラグ
 
     void Start() {
         ClickObj = GameObject.Find("ControllerObjClick");
@@ -66,24 +67,29 @@ public class HandControllerButton_S2 : MonoBehaviour {
             Ray ray = new Ray();
             RaycastHit hit = new RaycastHit();
             // 今選択しているカーソルの位置を代入している
-            if (C3_script.pot_flg) {
-                direction = C3_script.PCS_List[C3_script.Pcursor].transform.position;
-            }
-            else {
+            if (C3_script.pot_flg) 
+                direction = C3_script.PCS_List[C3_script.Pcursor].transform.position;           
+            else 
                 direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
-            }
+            
 
             if (Physics.Linecast(Player_V, direction, out hit)) {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
-                // フラグがたっていないとボタンが聞かな
-                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && C3_script.space_flg) {
-                    if (HoldingFlg != true) // 手に何も持っていない時に入る
+                // てんぷら粉、ウズラの液と粉、を選択中はフラグを立てる
+                if (C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[2]  ||
+                    C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[11] ||
+                    C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[12] ) KonaFlag = true;
+                else KonaFlag = false;
+
+                // フラグがたっていないとボタンが効かない
+                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && C3_script.space_flg ) {
+                    if (!HoldingFlg) // 手に何も持っていない時に入る
                     {
                         if (hit.collider.gameObject.tag == "Box") {
                             switch (hit.collider.gameObject.name) {
                                 case "EbiBox":
-                                    Resource = (GameObject)Resources.Load("S_Resources/ItemEbi");   //Resourceフォルダのプレハブを読み込む
+                                    Resource = (GameObject)Resources.Load("R_Resources/Item_Shrimp");   //Resourceフォルダのプレハブを読み込む
                                     clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                     HoldingFlg = true;
                                     ColliderFlag = 0;
@@ -162,6 +168,19 @@ public class HandControllerButton_S2 : MonoBehaviour {
                         clickedGameObject.transform.parent = ClickObj.gameObject.transform; //このスクリプトが入っているオブジェクトと親子付け
                         clickedGameObject.GetComponent<Rigidbody>().isKinematic = true; //ヒットしたオブジェクトの重力を無効
                     }
+                }
+
+                // 粉系に漬けるときにボタンを離すと手元に戻ってくるようにしている
+                if (KonaFlag && hit.collider.gameObject.tag == "Item" && (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("〇")))
+                {
+                    clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
+                    clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
+                    HoldingFlg = true;
+
+                    //当たり判定をを外す
+                    ColliderOut();
+                    clickedGameObject.transform.parent = ClickObj.gameObject.transform; //このスクリプトが入っているオブジェクトと親子付け
+                    clickedGameObject.GetComponent<Rigidbody>().isKinematic = true; //ヒットしたオブジェクトの重力を無効
                 }
             }
 

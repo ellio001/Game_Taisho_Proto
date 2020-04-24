@@ -30,6 +30,8 @@ public class Tutorials_HandControllerButton : MonoBehaviour
     public TutorialUI tutorialUI;
     int TextNumber;
 
+    bool KonaFlag = false; // 〇を押すと粉に漬け、離すと手元に戻るようにするフラグ
+
     /***** 矢印関連 *****/
     [SerializeField] GameObject ArrowObj; // 矢印のObjを入れる変数
     bool ArrowFlg = false;                // 矢印が今出ているかの確認用
@@ -70,27 +72,22 @@ public class Tutorials_HandControllerButton : MonoBehaviour
 
             // 今選択しているカーソルの位置を代入している
             if (C3_script.pot_flg)
-            {
                 direction = C3_script.PCS_List[C3_script.Pcursor].transform.position;
-            }
             else
-            {
                 direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
-            }
 
-            if (TextNumber == 3 || TextNumber == 4 ||
-                TextNumber == 5 || TextNumber == 7 ||
-                TextNumber == 8 || TextNumber == 9) Move_arrow(); // 矢印を表示
+
+            if ((TextNumber >= 3 && TextNumber <= 5) ||
+                (TextNumber >= 7 && TextNumber <= 9)) Move_arrow(); // 矢印を表示
 
             // 天ぷらが生成されたら次のテキストに進むTutorial_ItemTenpura
             if (GameObject.Find("ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7;
 
             if (Physics.Linecast(Player_V, direction, out hit)){
                 Debug.DrawLine(Player_V, direction, Color.red);
-                // フラグがたっていないとボタンが聞かな
-                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && C3_script.space_flg)
-                {
 
+                // フラグがたっていないとボタンが聞かな
+                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && C3_script.space_flg){
                     if (HoldingFlg != true) // 手に何も持っていない時に入る
                     {
                         if (hit.collider.gameObject.tag == "Box")
@@ -102,11 +99,10 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                                 HoldingFlg = true;
                                 tutorialUI.TextNumber = 4; // テキストを進める
                                 DestroyFlg = true; // 矢印を消すフラグを立てる
-
+                                KonaFlag = true;
                                 ColliderOut();//当たり判定をを外す
                             }
                         }
-
                         if (hit.collider.gameObject.tag == "Item" && (TextNumber != 6 && TextNumber != 9))
                         {
                             clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
@@ -140,6 +136,20 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                         clickedGameObject.transform.parent = ClickObj.gameObject.transform; //このスクリプトが入っているオブジェクトと親子付け
                         clickedGameObject.GetComponent<Rigidbody>().isKinematic = true; //ヒットしたオブジェクトの重力を無効
                     }
+                }
+
+                // 粉系に漬けるときにボタンを離すと手元に戻ってくるようにしている
+                if (KonaFlag && hit.collider.gameObject.tag == "Item" && (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("〇")))
+                {
+                    KonaFlag = false;
+                    clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
+                    clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
+                    HoldingFlg = true;
+
+                    //当たり判定をを外す
+                    ColliderOut();
+                    clickedGameObject.transform.parent = ClickObj.gameObject.transform; //このスクリプトが入っているオブジェクトと親子付け
+                    clickedGameObject.GetComponent<Rigidbody>().isKinematic = true; //ヒットしたオブジェクトの重力を無効
                 }
             }
         }
@@ -179,7 +189,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                     tmp = C3_script.Cursor_List[6].transform.position;
                     break;
             }
-            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z + 0.1f), Quaternion.identity);
+            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
             ArrowFlg = true; // 矢印が表示中のフラグ
         }
         else if (DestroyFlg || TextNumber == 9)
