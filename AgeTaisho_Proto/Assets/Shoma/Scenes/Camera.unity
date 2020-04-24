@@ -660,9 +660,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76aa71a3fb64c7a4e9c28ba6cf64554a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickedGameObject: {fileID: 0}
-  Resource: {fileID: 0}
-  HoldingFlg: 0
   ColliderFlag: 0
   ClickObj2: {fileID: 915168758}
   Player: {fileID: 1657952164}
@@ -1319,7 +1316,7 @@ MonoBehaviour:
   pot_flg: 0
   ClickObj: {fileID: 915168757}
   LightObj: {fileID: 1338903782}
-  tektou: 0
+  HCB: {fileID: 0}
 --- !u!1 &454746171
 GameObject:
   m_ObjectHideFlags: 0
@@ -3173,6 +3170,7 @@ GameObject:
   - component: {fileID: 1304942170}
   - component: {fileID: 1304942169}
   - component: {fileID: 1304942168}
+  - component: {fileID: 1304942171}
   m_Layer: 0
   m_Name: PotatoBox
   m_TagString: Box
@@ -3252,6 +3250,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304942166}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1304942171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304942166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.9433962, g: 0.16464934, b: 0.16464934, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1338116962
 GameObject:
   m_ObjectHideFlags: 0
