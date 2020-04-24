@@ -46,6 +46,9 @@ public class Camera_3 : MonoBehaviour
     [System.NonSerialized] public int Pcursor = 0;
     float button_time = 0f; // 次のボタンが押せるまでのインターバルを計る変数
 
+    public GameObject HCB;
+    HandControllerButton_S2 HCBscript;
+
 
     void Start()
     {
@@ -58,11 +61,12 @@ public class Camera_3 : MonoBehaviour
         //ポーズ画面
         Pause = GameObject.Find("Main Camera");
         script = Pause.GetComponent<Pause_Botton_Script>();
+
+        HCBscript = HCB.GetComponent<HandControllerButton_S2>();
     }
 
     void Update()
     {
-
         if (button_flg)
         {
             button_time += Time.deltaTime;
@@ -73,10 +77,7 @@ public class Camera_3 : MonoBehaviour
             }
         }
 
-        if (script.PauseFlag)
-        {
-            return;
-        }
+        if (script.PauseFlag)return;
         else
         {
             if (pot_flg==false)
@@ -269,7 +270,6 @@ public class Camera_3 : MonoBehaviour
     {
         if (cursor == 1)
         {
-            Debug.Log("button_flg: " + button_flg);
             if (potfast_flg == false)
             {
                 Pcursor = 0;
@@ -289,7 +289,6 @@ public class Camera_3 : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
             {
                 button_flg = true;
-
                 if (Pcursor != 1 && Pcursor != 3) Pcursor += 1;
                 else
                 {
@@ -335,7 +334,6 @@ public class Camera_3 : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftArrow) || (0 > Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
             {
                 button_flg = true;
-
                 if (Pcursor != 5 && Pcursor != 7) Pcursor += 1;
                 else
                 {
@@ -381,6 +379,21 @@ public class Camera_3 : MonoBehaviour
                 }
             }
 
+        }
+        Debug.Log(Pcursor);
+        //Tag=Powderを持っている && 見ているところに食材があったら
+        if (HCBscript.ItemPowder && HCBscript.TargetTag == "Item")
+        {
+            bool escapeFlg = false;
+            do
+            {
+                if (HCBscript.TargetTag != "Item") escapeFlg = true;
+                else Pcursor += 1;
+                if (cursor == 1 && Pcursor == 4) Pcursor = 0;
+                else if (cursor == 13 && Pcursor == 8) Pcursor = 5;
+
+
+            } while (escapeFlg);
         }
 
         if (pot_flg)
