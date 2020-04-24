@@ -49,6 +49,8 @@ public class Camera_3 : MonoBehaviour
     public GameObject HCB;
     HandControllerButton_S2 HCBscript;
 
+    int tmp_Pcursor = -1;
+    bool potLight_Flg = false;
 
     void Start()
     {
@@ -88,8 +90,6 @@ public class Camera_3 : MonoBehaviour
             }
             if (pot_flg) PotSelect();
             MoveCamera(); // カメラを移動させる処理
-            //Debug.Log("カーソル番号：" + cursor);
-
             // 移動を滑らかにする処理
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, SPEED * Time.deltaTime);
 
@@ -122,27 +122,21 @@ public class Camera_3 : MonoBehaviour
                 }
                 else
                 {
+                    if (tmp_cursor != 0) cursor = tmp_cursor + 1;
+                    else cursor += 1;
                     if (tmp_cursor == 13)
                     {
                         cursor = 13;
                         Pcursor = 4;
                         tmp_cursor = 0;
                     }
-                    if (tmp_cursor != 0) cursor = tmp_cursor + 1;
-                    else
-                    {
-                        cursor += 1;
-
-                    }
                     if (tmp_cursor == 0 && cursor > 13)
                     {
-                        cursor = 1;
-                        pot_flg = true;
+                        //cursor = 1;
+                        //pot_flg = true;
                     }
-                    else
-                    {
-                        tmp_cursor = 0;
-                    }
+                    else tmp_cursor = 0;
+                    
                 }
             }
 
@@ -166,23 +160,22 @@ public class Camera_3 : MonoBehaviour
                 }
                 else
                 {
+
+                    if (tmp_cursor != 0) cursor = tmp_cursor - 1;
+                    else  cursor -= 1;
                     if (tmp_cursor == 1)
                     {
                         cursor = 1;
                         Pcursor = 1;
                         tmp_cursor = 0;
                     }
-                    if (tmp_cursor != 0) cursor = tmp_cursor - 1;
-                    else cursor -= 1;
                     if (tmp_cursor == 0 && cursor < 1)
                     {
-                        cursor = 13;
-                        pot_flg = true;
+                        //cursor = 13;
+                        //pot_flg = true;
                     }
-                    else
-                    {
-                        tmp_cursor = 0;
-                    }
+                    else tmp_cursor = 0;
+                    
                 }
             }
             gomi_flg = false;
@@ -272,7 +265,7 @@ public class Camera_3 : MonoBehaviour
         {
             if (potfast_flg == false)
             {
-                Pcursor = 0;
+                Pcursor = -1;
                 potfast_flg = true;
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
@@ -290,12 +283,12 @@ public class Camera_3 : MonoBehaviour
             {
                 button_flg = true;
                 if (Pcursor != 1 && Pcursor != 3) Pcursor += 1;
-                else
-                {
-                    potfast_flg = false;
-                    cursor = 13;
-                    Pcursor = 5;
-                }
+                //else
+                //{
+                //    potfast_flg = false;
+                //    cursor = 13;
+                //    Pcursor = 5;
+                //}
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("Cross_Vertical") && !button_flg))
             {
@@ -313,14 +306,14 @@ public class Camera_3 : MonoBehaviour
             {
                 button_flg = true;
                 if (Pcursor != 2 && Pcursor != 3) Pcursor += 2;
-                else
-                {
-                    potfast_flg = false;
-                    pot_flg = false;
-                    stock_flg = true;
-                    tmp_cursor = cursor;
-                    cursor = 19;
-                }
+                //else
+                //{
+                //    potfast_flg = false;
+                //    pot_flg = false;
+                //    stock_flg = true;
+                //    tmp_cursor = cursor;
+                //    cursor = 19;
+                //}
             }
         }
 
@@ -328,19 +321,19 @@ public class Camera_3 : MonoBehaviour
         {
             if (potfast_flg == false)
             {
-                Pcursor = 4;
+                Pcursor = 3;
                 potfast_flg = true;
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow) || (0 > Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
             {
                 button_flg = true;
                 if (Pcursor != 5 && Pcursor != 7) Pcursor += 1;
-                else
-                {
-                    potfast_flg = false;
-                    cursor = 1;
-                    Pcursor = 1;
-                }
+                //else
+                //{
+                //    potfast_flg = false;
+                //    cursor = 1;
+                //    Pcursor = 1;
+                //}
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) || (0 < Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
             {
@@ -380,23 +373,33 @@ public class Camera_3 : MonoBehaviour
             }
 
         }
-        Debug.Log(Pcursor);
+
         //Tag=Powderを持っている && 見ているところに食材があったら
         if (HCBscript.ItemPowder && HCBscript.TargetTag == "Item")
         {
-            bool escapeFlg = false;
-            do
+            if (HCBscript.TargetTag != "Item")// おける場所が見つかった時
             {
-                if (HCBscript.TargetTag != "Item") escapeFlg = true;
-                else Pcursor += 1;
-                if (cursor == 1 && Pcursor == 4) Pcursor = 0;
-                else if (cursor == 13 && Pcursor == 8) Pcursor = 5;
+                tmp_Pcursor = -1;
+                potLight_Flg = true;
+            }
+            else
+            {
+                if (tmp_Pcursor == -1) tmp_Pcursor = Pcursor;
+                Pcursor += 1;
+            }
 
-
-            } while (escapeFlg);
+            if (cursor == 1 && Pcursor == 4) Pcursor = 0;
+            else if (cursor == 13 && Pcursor == 8) Pcursor = 5;
+            if(tmp_Pcursor == Pcursor)
+            {
+                cursor = 2;
+                Pcursor = -1;
+                potfast_flg = false;
+                pot_flg = false;
+            }
         }
 
-        if (pot_flg)
+        if (pot_flg && tmp_Pcursor == -1)
         {
             Vector3 tmp = PCS_List[Pcursor].transform.position;
             LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z);

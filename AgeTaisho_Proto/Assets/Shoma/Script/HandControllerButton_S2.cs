@@ -62,7 +62,6 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
     void Update() {
 
-        Debug.Log(ItemPowder);
         if (script.PauseFlag) {
             return;
         }
