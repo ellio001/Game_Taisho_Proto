@@ -11,7 +11,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
     GameObject ClickObj;
     float handspeed = 0.1f;
 
-    public bool HoldingFlg;
+    [System.NonSerialized]public bool HoldingFlg;
     //ColliderFlagの説明
     /* 0はEbiBox
      * 1はChickenBox
@@ -37,6 +37,9 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
     bool ItemSara;  //アイテム名にSaraが含まれているか判定
     bool KonaFlag = false; // 〇を押すと粉に漬け、離すと手元に戻るようにするフラグ
+    [System.NonSerialized] public string TargetTag;//今見ているOBJのタグを保存する 
+    [System.NonSerialized] public bool ItemPowder; // 粉系を持っているかの判定フラグ
+    [System.NonSerialized] public bool MoveFlg = false; // スペースを押している間は移動できないようにするフラグ
 
     void Start() {
         ClickObj = GameObject.Find("ControllerObjClick");
@@ -59,7 +62,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
     }
 
     void Update() {
-
+        Debug.Log(ItemPowder);
         if (script.PauseFlag) {
             return;
         }
@@ -71,11 +74,14 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 direction = C3_script.PCS_List[C3_script.Pcursor].transform.position;           
             else 
                 direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
-            
+
+            // スペースを離したときにカーソル移動ができるようにしている
+            if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("〇")) MoveFlg = false;
 
             if (Physics.Linecast(Player_V, direction, out hit)) {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
+                TargetTag = hit.collider.gameObject.tag; // 今見ているOBJのタグを保存
                 // てんぷら粉、ウズラの液と粉、を選択中はフラグを立てる
                 if (C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[2]  ||
                     C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[11] ||
@@ -84,6 +90,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
                 // フラグがたっていないとボタンが効かない
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && C3_script.space_flg ) {
+                    MoveFlg = true;
                     if (!HoldingFlg) // 手に何も持っていない時に入る
                     {
                         if (hit.collider.gameObject.tag == "Box") {
@@ -100,6 +107,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                     Resource = (GameObject)Resources.Load("S_Resources/ItemChicken");   //Resourceフォルダのプレハブを読み込む
                                     clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                     HoldingFlg = true;
+                                    ItemPowder = true;
                                     ColliderFlag = 1;
                                     //当たり判定をを外す
                                     ColliderOut();
@@ -146,11 +154,11 @@ public class HandControllerButton_S2 : MonoBehaviour {
                         //ClickObj2.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
                     }
                     else if ((ItemSara && (hit.collider.gameObject.tag == "Stock" || hit.collider.gameObject.tag == "Seki" || hit.collider.gameObject.tag == "Garbage can")) ||
-                            (ItemSara == false && hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" &&
+                            (!ItemSara &&  hit.collider.gameObject.tag != "Item"  && hit.collider.gameObject.tag != "Box"  &&
                             hit.collider.gameObject.tag != "Stock"))
-
                     // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                     {
+                        ItemPowder = false; // 粉をつけたものを鍋に置いたときにFalse
                         //当たり判定を入れる
                         ColliderIn();
                         ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
@@ -169,10 +177,12 @@ public class HandControllerButton_S2 : MonoBehaviour {
                         clickedGameObject.GetComponent<Rigidbody>().isKinematic = true; //ヒットしたオブジェクトの重力を無効
                     }
                 }
-
+                
                 // 粉系に漬けるときにボタンを離すと手元に戻ってくるようにしている
                 if (KonaFlag && hit.collider.gameObject.tag == "Item" && (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("〇")))
                 {
+                    ItemPowder = true;
+
                     clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                     clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                     HoldingFlg = true;
