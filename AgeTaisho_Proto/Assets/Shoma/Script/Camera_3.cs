@@ -23,7 +23,7 @@ public class Camera_3 : MonoBehaviour
     bool gomi_flg = false;   // ゴミ箱を向くときに使う
     bool stock_flg = false;  // ストックを見ているときはフラグがたつ
     public bool pot_flg = false; // 鍋を見るかのフラグ
-    [System.NonSerialized] public bool space_flg = false;
+    [System.NonSerialized] public bool space_flg = false; // 移動中にスペースキーが反応しないようにするフラグ
     bool potfast_flg = false; // 粉から鍋を選択すると左下が選択されるためのフラグ
     bool button_flg = false;  // ボタンが一回だけ押さるようにするフラグ
     /*----------------------------------------------------------------------------------------------------*/
@@ -80,7 +80,7 @@ public class Camera_3 : MonoBehaviour
         }
 
         if (script.PauseFlag)return;
-        else
+        else if(!HCBscript.MoveFlg) // スペースを離しているかの判定
         {
             if (pot_flg==false)
             {
@@ -283,7 +283,7 @@ public class Camera_3 : MonoBehaviour
             {
                 button_flg = true;
                 if (Pcursor != 1 && Pcursor != 3) Pcursor += 1;
-                //else
+                //else 盛り付け場から鍋に行く際のバグ解消のため
                 //{
                 //    potfast_flg = false;
                 //    cursor = 13;
@@ -306,7 +306,7 @@ public class Camera_3 : MonoBehaviour
             {
                 button_flg = true;
                 if (Pcursor != 2 && Pcursor != 3) Pcursor += 2;
-                //else
+                //else 鍋からストックに行けないようにコメントしている
                 //{
                 //    potfast_flg = false;
                 //    pot_flg = false;
@@ -362,14 +362,14 @@ public class Camera_3 : MonoBehaviour
             {
                 button_flg = true;
                 if (Pcursor != 6 && Pcursor != 7) Pcursor += 2;
-                else
-                {
-                    potfast_flg = false;
-                    pot_flg = false;
-                    stock_flg = true;
-                    tmp_cursor = cursor;
-                    cursor = 18;
-                }
+                //else
+                //{
+                //    potfast_flg = false;
+                //    pot_flg = false;
+                //    stock_flg = true;
+                //    tmp_cursor = cursor;
+                //    cursor = 18;
+                //}
             }
 
         }
@@ -399,7 +399,7 @@ public class Camera_3 : MonoBehaviour
             }
         }
 
-        if (pot_flg && tmp_Pcursor == -1)
+        if (pot_flg)
         {
             Vector3 tmp = PCS_List[Pcursor].transform.position;
             LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z);

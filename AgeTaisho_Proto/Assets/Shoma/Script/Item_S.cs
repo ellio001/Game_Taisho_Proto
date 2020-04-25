@@ -296,7 +296,6 @@ public class Item_S : MonoBehaviour {
 
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / AgeCountMax;
-                    Debug.Log("slider.value : " + slider.value);
 
                     if (AgeCount >= AgeCountMax) {
                         Resource = (GameObject)Resources.Load("S_Resources/ItemFriedchicken");   //Resourceフォルダのプレハブを読み込む
