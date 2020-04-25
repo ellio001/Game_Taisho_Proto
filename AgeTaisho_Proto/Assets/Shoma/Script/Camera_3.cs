@@ -23,7 +23,7 @@ public class Camera_3 : MonoBehaviour
     bool gomi_flg = false;   // ゴミ箱を向くときに使う
     bool stock_flg = false;  // ストックを見ているときはフラグがたつ
     public bool pot_flg = false; // 鍋を見るかのフラグ
-    [System.NonSerialized] public bool space_flg = false;
+    [System.NonSerialized] public bool space_flg = false; // 移動中にスペースキーが反応しないようにするフラグ
     bool potfast_flg = false; // 粉から鍋を選択すると左下が選択されるためのフラグ
     bool button_flg = false;  // ボタンが一回だけ押さるようにするフラグ
     /*----------------------------------------------------------------------------------------------------*/
@@ -46,6 +46,11 @@ public class Camera_3 : MonoBehaviour
     [System.NonSerialized] public int Pcursor = 0;
     float button_time = 0f; // 次のボタンが押せるまでのインターバルを計る変数
 
+    public GameObject HCB;
+    HandControllerButton_S2 HCBscript;
+
+    int tmp_Pcursor = -1;
+    bool potLight_Flg = false;
 
     void Start()
     {
@@ -58,11 +63,12 @@ public class Camera_3 : MonoBehaviour
         //ポーズ画面
         Pause = GameObject.Find("Main Camera");
         script = Pause.GetComponent<Pause_Botton_Script>();
+
+        HCBscript = HCB.GetComponent<HandControllerButton_S2>();
     }
 
     void Update()
     {
-
         if (button_flg)
         {
             button_time += Time.deltaTime;
@@ -73,11 +79,8 @@ public class Camera_3 : MonoBehaviour
             }
         }
 
-        if (script.PauseFlag)
-        {
-            return;
-        }
-        else
+        if (script.PauseFlag)return;
+        else if(!HCBscript.MoveFlg) // スペースを離しているかの判定
         {
             if (pot_flg==false)
             {
@@ -87,8 +90,6 @@ public class Camera_3 : MonoBehaviour
             }
             if (pot_flg) PotSelect();
             MoveCamera(); // カメラを移動させる処理
-            //Debug.Log("カーソル番号：" + cursor);
-
             // 移動を滑らかにする処理
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, SPEED * Time.deltaTime);
 
@@ -121,27 +122,21 @@ public class Camera_3 : MonoBehaviour
                 }
                 else
                 {
+                    if (tmp_cursor != 0) cursor = tmp_cursor + 1;
+                    else cursor += 1;
                     if (tmp_cursor == 13)
                     {
                         cursor = 13;
                         Pcursor = 4;
                         tmp_cursor = 0;
                     }
-                    if (tmp_cursor != 0) cursor = tmp_cursor + 1;
-                    else
-                    {
-                        cursor += 1;
-
-                    }
                     if (tmp_cursor == 0 && cursor > 13)
                     {
-                        cursor = 1;
-                        pot_flg = true;
+                        //cursor = 1;
+                        //pot_flg = true;
                     }
-                    else
-                    {
-                        tmp_cursor = 0;
-                    }
+                    else tmp_cursor = 0;
+                    
                 }
             }
 
@@ -165,23 +160,22 @@ public class Camera_3 : MonoBehaviour
                 }
                 else
                 {
+
+                    if (tmp_cursor != 0) cursor = tmp_cursor - 1;
+                    else  cursor -= 1;
                     if (tmp_cursor == 1)
                     {
                         cursor = 1;
                         Pcursor = 1;
                         tmp_cursor = 0;
                     }
-                    if (tmp_cursor != 0) cursor = tmp_cursor - 1;
-                    else cursor -= 1;
                     if (tmp_cursor == 0 && cursor < 1)
                     {
-                        cursor = 13;
-                        pot_flg = true;
+                        //cursor = 13;
+                        //pot_flg = true;
                     }
-                    else
-                    {
-                        tmp_cursor = 0;
-                    }
+                    else tmp_cursor = 0;
+                    
                 }
             }
             gomi_flg = false;
@@ -269,10 +263,9 @@ public class Camera_3 : MonoBehaviour
     {
         if (cursor == 1)
         {
-            Debug.Log("button_flg: " + button_flg);
             if (potfast_flg == false)
             {
-                Pcursor = 0;
+                Pcursor = -1;
                 potfast_flg = true;
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
@@ -289,14 +282,13 @@ public class Camera_3 : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
             {
                 button_flg = true;
-
                 if (Pcursor != 1 && Pcursor != 3) Pcursor += 1;
-                else
-                {
-                    potfast_flg = false;
-                    cursor = 13;
-                    Pcursor = 5;
-                }
+                //else 盛り付け場から鍋に行く際のバグ解消のため
+                //{
+                //    potfast_flg = false;
+                //    cursor = 13;
+                //    Pcursor = 5;
+                //}
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("Cross_Vertical") && !button_flg))
             {
@@ -314,14 +306,14 @@ public class Camera_3 : MonoBehaviour
             {
                 button_flg = true;
                 if (Pcursor != 2 && Pcursor != 3) Pcursor += 2;
-                else
-                {
-                    potfast_flg = false;
-                    pot_flg = false;
-                    stock_flg = true;
-                    tmp_cursor = cursor;
-                    cursor = 19;
-                }
+                //else 鍋からストックに行けないようにコメントしている
+                //{
+                //    potfast_flg = false;
+                //    pot_flg = false;
+                //    stock_flg = true;
+                //    tmp_cursor = cursor;
+                //    cursor = 19;
+                //}
             }
         }
 
@@ -329,20 +321,19 @@ public class Camera_3 : MonoBehaviour
         {
             if (potfast_flg == false)
             {
-                Pcursor = 4;
+                Pcursor = 3;
                 potfast_flg = true;
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow) || (0 > Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
             {
                 button_flg = true;
-
                 if (Pcursor != 5 && Pcursor != 7) Pcursor += 1;
-                else
-                {
-                    potfast_flg = false;
-                    cursor = 1;
-                    Pcursor = 1;
-                }
+                //else
+                //{
+                //    potfast_flg = false;
+                //    cursor = 1;
+                //    Pcursor = 1;
+                //}
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) || (0 < Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
             {
@@ -371,16 +362,41 @@ public class Camera_3 : MonoBehaviour
             {
                 button_flg = true;
                 if (Pcursor != 6 && Pcursor != 7) Pcursor += 2;
-                else
-                {
-                    potfast_flg = false;
-                    pot_flg = false;
-                    stock_flg = true;
-                    tmp_cursor = cursor;
-                    cursor = 18;
-                }
+                //else
+                //{
+                //    potfast_flg = false;
+                //    pot_flg = false;
+                //    stock_flg = true;
+                //    tmp_cursor = cursor;
+                //    cursor = 18;
+                //}
             }
 
+        }
+
+        //Tag=Powderを持っている && 見ているところに食材があったら
+        if (HCBscript.ItemPowder && HCBscript.TargetTag == "Item")
+        {
+            if (HCBscript.TargetTag != "Item")// おける場所が見つかった時
+            {
+                tmp_Pcursor = -1;
+                potLight_Flg = true;
+            }
+            else
+            {
+                if (tmp_Pcursor == -1) tmp_Pcursor = Pcursor;
+                Pcursor += 1;
+            }
+
+            if (cursor == 1 && Pcursor == 4) Pcursor = 0;
+            else if (cursor == 13 && Pcursor == 8) Pcursor = 5;
+            if(tmp_Pcursor == Pcursor)
+            {
+                cursor = 2;
+                Pcursor = -1;
+                potfast_flg = false;
+                pot_flg = false;
+            }
         }
 
         if (pot_flg)

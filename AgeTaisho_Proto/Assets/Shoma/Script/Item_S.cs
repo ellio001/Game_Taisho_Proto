@@ -106,8 +106,6 @@ public class Item_S : MonoBehaviour {
 
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / KogeCountMax;
-                    Debug.Log(slider.value);
-
                 }
                 // ゴミ箱に当たると焦げになる
                 if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
@@ -173,7 +171,6 @@ public class Item_S : MonoBehaviour {
 
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / KogeCountMax;
-                    Debug.Log(slider.value);
 
                 }
                 // ゴミ箱に当たると焦げになる
@@ -240,7 +237,6 @@ public class Item_S : MonoBehaviour {
 
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / KogeCountMax;
-                    Debug.Log(slider.value);
 
                 }
                 // ゴミ箱に当たると焦げになる
@@ -359,7 +355,6 @@ public class Item_S : MonoBehaviour {
 
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / AgeCountMax;
-                    Debug.Log("slider.value : " + slider.value);
 
                     if (AgeCount >= AgeCountMax) {
                         Resource = (GameObject)Resources.Load("S_Resources/ItemFriedchicken");   //Resourceフォルダのプレハブを読み込む
