@@ -138,15 +138,15 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                     break;
 
                             }
-                            ItemSara = hit.collider.gameObject.name.Contains("Sara");
+                            ItemSara = hit.collider.gameObject.name.Contains("Dish");
                         }
 
                         if (hit.collider.gameObject.tag == "Item") {
                             clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                             clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                             HoldingFlg = true;
-                            ItemSara = hit.collider.gameObject.name.Contains("Sara");
-
+                            ItemSara = hit.collider.gameObject.name.Contains("Dish");
+                            Debug.Log("皿フラグ="+ItemSara);
                             //当たり判定をを外す
                             ColliderOut();
                         }
@@ -154,8 +154,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                         //ClickObj2.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
                     }
                     else if ((ItemSara && (hit.collider.gameObject.tag == "Stock" || hit.collider.gameObject.tag == "Seki" || hit.collider.gameObject.tag == "Garbage can")) ||
-                            (!ItemSara &&  hit.collider.gameObject.tag != "Item"  && hit.collider.gameObject.tag != "Box"  &&
-                            hit.collider.gameObject.tag != "Stock"))
+                            (!ItemSara &&  hit.collider.gameObject.tag != "Item"  && hit.collider.gameObject.tag != "Box"  && hit.collider.gameObject.tag != "Stock"))
                     // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                     {
                         ItemPowder = false; // 粉をつけたものを鍋に置いたときにFalse
