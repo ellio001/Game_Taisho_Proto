@@ -2374,6 +2374,7 @@ MonoBehaviour:
   pot_flg: 0
   ClickObj: {fileID: 642624809}
   LightObj: {fileID: 1001058976}
+  HCB: {fileID: 1754235643}
 --- !u!114 &842528471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4634,7 +4635,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76aa71a3fb64c7a4e9c28ba6cf64554a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HoldingFlg: 0
   ColliderFlag: 0
   ClickObj2: {fileID: 642624810}
   Player: {fileID: 35015284}

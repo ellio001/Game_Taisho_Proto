@@ -62,7 +62,6 @@ public class HandControllerButton_S2 : MonoBehaviour {
     }
 
     void Update() {
-        Debug.Log(ItemPowder);
         if (script.PauseFlag) {
             return;
         }
@@ -146,7 +145,6 @@ public class HandControllerButton_S2 : MonoBehaviour {
                             clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                             HoldingFlg = true;
                             ItemSara = hit.collider.gameObject.name.Contains("Dish");
-                            Debug.Log("皿フラグ="+ItemSara);
                             //当たり判定をを外す
                             ColliderOut();
                         }

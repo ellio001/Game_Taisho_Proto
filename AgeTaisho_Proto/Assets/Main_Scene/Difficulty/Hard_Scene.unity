@@ -2642,7 +2642,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76aa71a3fb64c7a4e9c28ba6cf64554a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HoldingFlg: 0
   ColliderFlag: 0
   ClickObj2: {fileID: 438744122}
   Player: {fileID: 196483692}
@@ -5419,6 +5418,7 @@ MonoBehaviour:
   pot_flg: 0
   ClickObj: {fileID: 438744121}
   LightObj: {fileID: 1682193030}
+  HCB: {fileID: 1047472927}
 --- !u!114 &2135214265
 MonoBehaviour:
   m_ObjectHideFlags: 0

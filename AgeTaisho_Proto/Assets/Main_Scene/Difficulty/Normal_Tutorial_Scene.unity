@@ -1262,6 +1262,7 @@ MonoBehaviour:
   pot_flg: 0
   ClickObj: {fileID: 306401957}
   LightObj: {fileID: 346268778}
+  HCB: {fileID: 1282367221}
 --- !u!114 &449398584
 MonoBehaviour:
   m_ObjectHideFlags: 0
