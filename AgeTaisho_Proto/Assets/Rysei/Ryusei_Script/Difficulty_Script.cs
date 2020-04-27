@@ -12,10 +12,13 @@ public class Difficulty_Script : MonoBehaviour
     Transform Choice_Image_Transform;   //Chois_ImageのTransformをいれる箱
     Vector3 Choice_Image_Vector;    //Chois_Imageの
 
+    bool Button_Flg;
+    float Button_Time;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        Button_Flg = false;
     }
 
     // Update is called once per frame
@@ -25,11 +28,37 @@ public class Difficulty_Script : MonoBehaviour
         Choice_Image_Transform = Choice_Image.transform;    //Choice_Image.transform(本体)の位置をChoice_Image_Transform(仮)にいれる
         Choice_Image_Vector = Choice_Image_Transform.position;  //仮にはいっている位置のVector3をChoice_Image_Vectorにいれる
 
-        if ((Input.GetKeyDown(KeyCode.UpArrow) ||  0 < Input.GetAxisRaw("Cross_Vertical")) && Difficulty == 0) Difficulty = 2;
-        else if ((Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("Cross_Vertical")) && Difficulty > 0) Difficulty -= 1;
+        if (Button_Flg)
+        {
+            Button_Time += Time.deltaTime;
+            if (Button_Time >= 0.2)
+            {
+                Button_Flg = false;
+                Button_Time = 0;
+            }
+        }
 
-        if ((Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("Cross_Vertical")) && Difficulty == 2) Difficulty = 0;
-        else if ((Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("Cross_Vertical")) && Difficulty < 2) Difficulty += 1;
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("Cross_Vertical")) && Difficulty == 0 && !Button_Flg)
+        {
+            Button_Flg = true;
+            Difficulty = 2;
+        }
+        else if ((Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("Cross_Vertical")) && Difficulty > 0 && !Button_Flg)
+        {
+            Button_Flg = true;
+            Difficulty -= 1;
+        }
+
+        if ((Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("Cross_Vertical")) && Difficulty == 2 && !Button_Flg)
+        {
+            Button_Flg = true;
+            Difficulty = 0;
+        }
+        else if ((Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("Cross_Vertical")) && Difficulty < 2 && !Button_Flg)
+        {
+            Button_Flg = true;
+            Difficulty += 1;
+        }
 
         Choice_Image_Vector.y = -100* (Difficulty + 1) + 145;   //仮のほうの座標を動かす
         Choice_Image_Transform.position = Choice_Image_Vector;  //仮の座標を本決定

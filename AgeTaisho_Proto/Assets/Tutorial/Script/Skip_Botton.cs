@@ -11,7 +11,7 @@ public class Skip_Botton : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown("s"))   ReadScene();
+        if (Input.GetButtonDown("PS4_joystick_button_3"))   ReadScene();
     }
     public void ReadScene() {
         //Endシーン読込
