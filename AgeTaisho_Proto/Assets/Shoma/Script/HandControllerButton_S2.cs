@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HandControllerButton_S2 : MonoBehaviour {
     //このスクリプトはControllerMouseClickと共存しない
@@ -29,7 +27,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
     [SerializeField] GameObject Player; // プレイヤーの位置を保存
     Vector3 Player_V;                   // プレイヤーの座標を保存する用
-    Vector3 direction; // Rayの終点座標
+    [System.NonSerialized] public Vector3 direction; // Rayの終点座標
 
     //ポーズ画面
     GameObject Pause;
@@ -38,6 +36,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
     bool ItemSara;  //アイテム名にSaraが含まれているか判定
     bool KonaFlag = false; // 〇を押すと粉に漬け、離すと手元に戻るようにするフラグ
     [System.NonSerialized] public string TargetTag;//今見ているOBJのタグを保存する 
+    [System.NonSerialized] public GameObject TargetObj;//今見ているOBJのタグを保存する 
+
     [System.NonSerialized] public bool ItemPowder; // 粉系を持っているかの判定フラグ
     [System.NonSerialized] public bool MoveFlg = false; // スペースを押している間は移動できないようにするフラグ
 
@@ -81,6 +81,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
                 TargetTag = hit.collider.gameObject.tag; // 今見ているOBJのタグを保存
+                TargetObj = hit.collider.gameObject; // 今見ているOBJを保存(C3のアウトラインのオンオフで使う)
+
                 // てんぷら粉、ウズラの液と粉、を選択中はフラグを立てる
                 if (C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[2]  ||
                     C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[11] ||
@@ -138,13 +140,17 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
                             }
                             ItemSara = hit.collider.gameObject.name.Contains("Dish");
+                            ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
                         }
 
                         if (hit.collider.gameObject.tag == "Item") {
                             clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                             clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                             HoldingFlg = true;
+                            Debug.Log("はいったよ");
+
                             ItemSara = hit.collider.gameObject.name.Contains("Dish");
+                            ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
                             //当たり判定をを外す
                             ColliderOut();
                         }

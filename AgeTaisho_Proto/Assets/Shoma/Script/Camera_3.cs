@@ -52,6 +52,8 @@ public class Camera_3 : MonoBehaviour
     int tmp_Pcursor = -1;
     bool potLight_Flg = false;
 
+    Vector3 old_direction;
+
     void Start()
     {
         /***最初に正面を向くための処理***************/
@@ -65,6 +67,7 @@ public class Camera_3 : MonoBehaviour
         script = Pause.GetComponent<Pause_Botton_Script>();
 
         HCBscript = HCB.GetComponent<HandControllerButton_S2>();
+        old_direction = HCBscript.direction;
     }
 
     void Update()
@@ -89,9 +92,17 @@ public class Camera_3 : MonoBehaviour
                 MoveLight();    // カーソルの移動についての処理
             }
             if (pot_flg) PotSelect();
+
             MoveCamera(); // カメラを移動させる処理
             // 移動を滑らかにする処理
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, SPEED * Time.deltaTime);
+
+            // カーソル移動したときのアウトラインのオンオフを設定
+            if (old_direction != HCBscript.direction)
+                 HCBscript.TargetObj.GetComponent<Outline>().enabled = true;           
+            else
+                HCBscript.TargetObj.GetComponent<Outline>().enabled = false;
+            
 
             // 目的地に着くとフラグを立てる
             if (transform.rotation != target) space_flg = false;
@@ -106,6 +117,7 @@ public class Camera_3 : MonoBehaviour
         // ←押したとき
         if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("Cross_Horizontal")&& !button_flg))
         {
+            old_direction = HCBscript.direction;
             button_flg = true;
             // ゴミ箱を向いているときに←押すと、唐揚げの場所を向く
             if (gomi_flg && (cursor != 14 && cursor != 15))
@@ -146,6 +158,7 @@ public class Camera_3 : MonoBehaviour
         // →押したとき
         else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
         {
+            old_direction = HCBscript.direction;
             button_flg = true;
             if (gomi_flg && (cursor != 14 && cursor != 15))
             {
@@ -184,6 +197,7 @@ public class Camera_3 : MonoBehaviour
         // ↓押したとき
         else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("Cross_Vertical") && !button_flg))
         {
+            old_direction = HCBscript.direction;
             button_flg = true;
             /* ゴミフラグがたっている時、
              * 焦げアイテムを持っているときに下を押すした時、
@@ -225,6 +239,7 @@ public class Camera_3 : MonoBehaviour
         // ↑押したとき
         else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("Cross_Vertical") && !button_flg))
         {
+            old_direction = HCBscript.direction;
             button_flg = true;
             // 盛り付け場を見ている時に↑を押したらストックの直前の場所を向く
             if (cursor == 14 || cursor == 15)
