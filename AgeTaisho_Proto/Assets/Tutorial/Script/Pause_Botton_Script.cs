@@ -19,7 +19,7 @@ public class Pause_Botton_Script : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("p")) {
+        if (Input.GetKeyDown("PS4_joystick_button_9")) {
             //　ポーズUIのアクティブ、非アクティブを切り替え
             PauseUI.SetActive(!PauseUI.activeSelf);
 
