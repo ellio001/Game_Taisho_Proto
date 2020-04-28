@@ -104,7 +104,6 @@ public class Camera_3 : MonoBehaviour
             else
                 HCBscript.TargetObj.GetComponent<Outline>().enabled = false;
             
-
             // 目的地に着くとフラグを立てる
             if (transform.rotation != target) space_flg = false;
             else space_flg = true;

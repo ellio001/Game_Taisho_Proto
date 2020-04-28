@@ -61,7 +61,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
         script = Pause.GetComponent<Pause_Botton_Script>();
     }
 
-    void Update() {
+    void Update(){
+        Debug.Log(ItemSara);
         if (script.PauseFlag) {
             return;
         }
@@ -74,9 +75,10 @@ public class HandControllerButton_S2 : MonoBehaviour {
             else 
                 direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
 
+            
+
             // スペースを離したときにカーソル移動ができるようにしている
             if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("〇")) MoveFlg = false;
-
             if (Physics.Linecast(Player_V, direction, out hit)) {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
@@ -139,18 +141,27 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                     break;
 
                             }
-                            ItemSara = hit.collider.gameObject.name.Contains("Dish");
-                            ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
+                            if (hit.collider.gameObject.name.Contains("Dish"))
+                            {
+                                Debug.Log("Dishに入った");
+                                ItemSara = hit.collider.gameObject.name.Contains("Dish");
+                            }
+                            else if (hit.collider.gameObject.name.Contains("Sara"))
+                            {
+                                Debug.Log("Saraに入った");
+                                ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
+                            }
                         }
 
                         if (hit.collider.gameObject.tag == "Item") {
                             clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                             clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                             HoldingFlg = true;
-                            Debug.Log("はいったよ");
 
-                            ItemSara = hit.collider.gameObject.name.Contains("Dish");
-                            ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
+                            if (hit.collider.gameObject.name.Contains("Dish"))
+                                ItemSara = hit.collider.gameObject.name.Contains("Dish");
+                            else if (hit.collider.gameObject.name.Contains("Sara"))
+                                ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
                             //当たり判定をを外す
                             ColliderOut();
                         }
