@@ -32,7 +32,9 @@ public class GuestMove : MonoBehaviour
     bool Order = false; //注文したかどうか
     bool Retrun = false;    //帰る処理になったかどうか
     public float ReturnCount;   //客が帰るまでの時間をいれる箱
+    public float EatCount;      //客が食べている間の時間をいれる
     public bool OneProces = false; //自分のいた箱を1回だけ初期化する
+    public bool Eat;            //提供された時trueにする
 
     string SceneName; // sceneの名前を記憶する変数
 
@@ -58,6 +60,7 @@ public class GuestMove : MonoBehaviour
         //Endシーン読込
         switch (SceneManager.GetActiveScene().name)
         {
+            case "Ryusei_Scene":
             case "Easy_Scene":
                 RandomMax = 3;
                 break;
@@ -134,6 +137,11 @@ public class GuestMove : MonoBehaviour
             ReturnCount += Time.deltaTime;
             if (ReturnCount >=11) GuestReturn(); //席につかず8秒たつとGuestReturnが呼ばれる
             //Debug.Log(LineReturn);
+        }
+        if (Eat)
+        {
+            EatCount += Time.deltaTime;
+            if (EatCount >= 2) GuestReturn();   //2秒たったら食べ終わり帰る
         }
         if (GuestNowPosition.z >= -2 && Order == false)  //席に着いたら処理
         {
