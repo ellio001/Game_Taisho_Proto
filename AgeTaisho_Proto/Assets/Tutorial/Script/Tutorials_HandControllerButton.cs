@@ -17,11 +17,11 @@ public class Tutorials_HandControllerButton : MonoBehaviour
 
     GameObject C2;    // Camera_2を入れる変数
     Camera_2 C2_script; // Camera_2のscriptを入れる変数
-    Camera_3 C3_script; // Camera_3のscriptを入れる変数
+    Tutorial_Camera_3 C3_script; // Camera_3のscriptを入れる変数
 
     [SerializeField] GameObject Player; // プレイヤーの位置を保存
     Vector3 Player_V;                   // プレイヤーの座標を保存する用
-    Vector3 direction; // Rayの終点座標
+    [System.NonSerialized] public Vector3 direction; // Rayの終点座標
 
     //ポーズ画面
     GameObject Pause;
@@ -30,7 +30,13 @@ public class Tutorials_HandControllerButton : MonoBehaviour
     public TutorialUI tutorialUI;
     int TextNumber;
 
+    bool ItemSara;  //アイテム名にSaraが含まれているか判定
     bool KonaFlag = false; // 〇を押すと粉に漬け、離すと手元に戻るようにするフラグ
+    [System.NonSerialized] public string TargetTag;//今見ているOBJのタグを保存する 
+    [System.NonSerialized] public GameObject TargetObj;//今見ているOBJのタグを保存する 
+    [System.NonSerialized] public bool ItemPowder; // 粉系を持っているかの判定フラグ
+    [System.NonSerialized] public bool MoveFlg = false; // スペースを押している間は移動できないようにするフラグ
+
 
     /***** 矢印関連 *****/
     [SerializeField] GameObject ArrowObj; // 矢印のObjを入れる変数
@@ -45,7 +51,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour
 
         C2 = GameObject.Find("Main Camera");
         C2_script = C2.GetComponent<Camera_2>();
-        C3_script = C2.GetComponent<Camera_3>();
+        C3_script = C2.GetComponent<Tutorial_Camera_3>();
 
         // プレイヤーの座標をVector3に変換
         Player_V.x = Player.transform.position.x;
@@ -82,13 +88,26 @@ public class Tutorials_HandControllerButton : MonoBehaviour
 
             // 天ぷらが生成されたら次のテキストに進むTutorial_ItemTenpura
             if (GameObject.Find("ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7;
+            // スペースを離したときにカーソル移動ができるようにしている
+            if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("〇")) MoveFlg = false;
+
 
             if (Physics.Linecast(Player_V, direction, out hit)){
                 Debug.DrawLine(Player_V, direction, Color.red);
 
+                TargetTag = hit.collider.gameObject.tag; // 今見ているOBJのタグを保存
+                TargetObj = hit.collider.gameObject; // 今見ているOBJを保存(C3のアウトラインのオンオフで使う)
+
+                // てんぷら粉、ウズラの液と粉、を選択中はフラグを立てる
+                if (C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[2] ||
+                    C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[11] ||
+                    C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[12]) KonaFlag = true;
+                else KonaFlag = false;
+
                 // フラグがたっていないとボタンが聞かな
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && C3_script.space_flg){
-                    if (HoldingFlg != true) // 手に何も持っていない時に入る
+                    MoveFlg = true;
+                    if (!HoldingFlg) // 手に何も持っていない時に入る
                     {
                         if (hit.collider.gameObject.tag == "Box")
                         {
@@ -102,12 +121,18 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                                 KonaFlag = true;
                                 ColliderOut();//当たり判定をを外す
                             }
+                            ItemSara = hit.collider.gameObject.name.Contains("Dish");
+                            ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
                         }
                         if (hit.collider.gameObject.tag == "Item" && (TextNumber != 6 && TextNumber != 9))
                         {
                             clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                             clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                             HoldingFlg = true;
+
+                            ItemSara = hit.collider.gameObject.name.Contains("Dish");
+                            ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
+
                             //当たり判定をを外す
                             ColliderOut();
                         }
@@ -141,6 +166,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                 // 粉系に漬けるときにボタンを離すと手元に戻ってくるようにしている
                 if (KonaFlag && hit.collider.gameObject.tag == "Item" && (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("〇")))
                 {
+                    ItemPowder = true;
                     KonaFlag = false;
                     clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                     clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる

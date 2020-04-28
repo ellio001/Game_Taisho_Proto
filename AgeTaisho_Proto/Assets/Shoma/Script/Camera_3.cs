@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Camera_3 : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class Camera_3 : MonoBehaviour
 
     int tmp_Pcursor = -1;
     bool potLight_Flg = false;
-
+    string SceneName; // sceneの名前を記憶する変数
     Vector3 old_direction;
 
     void Start()
