@@ -142,6 +142,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour
                              (TextNumber == 7 && hit.collider.gameObject.tag == "Sara") || (TextNumber == 8 && hit.collider.gameObject.name == "Plate2"))
                     // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                     {
+                        ItemPowder = false; // 粉をつけたものを鍋に置いたときにFalse
                         //当たり判定を入れる
                         ColliderIn();
                         ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
