@@ -244,7 +244,9 @@ public class Camera_3 : MonoBehaviour
             // 盛り付け場を見ている時に↑を押したらストックの直前の場所を向く
             if (cursor == 14 || cursor == 15)
             {
-                cursor = tmp_cursor;
+                if (tmp_cursor == 1) cursor = 2; // 直前に鍋を見ていたら鍋の隣を向く
+                else if (tmp_cursor == 13) cursor = 12;
+                else cursor = tmp_cursor;
             }
             // ゴミ箱を見てるときに↑を押すと、真ん中のテーブルを向く
             else if (gomi_flg)
