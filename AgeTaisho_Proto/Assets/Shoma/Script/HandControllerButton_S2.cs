@@ -141,16 +141,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                     break;
 
                             }
-                            if (hit.collider.gameObject.name.Contains("Dish"))
-                            {
-                                Debug.Log("Dishに入った");
-                                ItemSara = hit.collider.gameObject.name.Contains("Dish");
-                            }
-                            else if (hit.collider.gameObject.name.Contains("Sara"))
-                            {
-                                Debug.Log("Saraに入った");
-                                ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
-                            }
+                                ItemSara = false;                            
                         }
 
                         if (hit.collider.gameObject.tag == "Item") {
@@ -162,6 +153,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                 ItemSara = hit.collider.gameObject.name.Contains("Dish");
                             else if (hit.collider.gameObject.name.Contains("Sara"))
                                 ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
+                            else ItemSara = false;
+                            
                             //当たり判定をを外す
                             ColliderOut();
                         }
