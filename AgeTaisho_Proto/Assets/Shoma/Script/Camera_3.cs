@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Camera_3 : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class Camera_3 : MonoBehaviour
 
     Quaternion target;      // 目的地の座標変数
 
-    const float SPEED = 420f; // ここをいじれば移動スピードが変わる！
+    const float SPEED = 480f; // ここをいじれば移動スピードが変わる！
     [SerializeField] GameObject ClickObj;
     [SerializeField] GameObject LightObj; // スポットライトのObjを入れる変数
 
@@ -51,6 +52,8 @@ public class Camera_3 : MonoBehaviour
 
     int tmp_Pcursor = -1;
     bool potLight_Flg = false;
+    string SceneName; // sceneの名前を記憶する変数
+    Vector3 old_direction;
 
     void Start()
     {
@@ -65,11 +68,12 @@ public class Camera_3 : MonoBehaviour
         script = Pause.GetComponent<Pause_Botton_Script>();
 
         HCBscript = HCB.GetComponent<HandControllerButton_S2>();
+        old_direction = HCBscript.direction;
     }
 
     void Update()
     {
-        if (button_flg)
+        if (button_flg) // 連続でボタンを押せないようにインターバルを設定
         {
             button_time += Time.deltaTime;
             if (button_time >= 0.2)
@@ -89,10 +93,17 @@ public class Camera_3 : MonoBehaviour
                 MoveLight();    // カーソルの移動についての処理
             }
             if (pot_flg) PotSelect();
+
             MoveCamera(); // カメラを移動させる処理
             // 移動を滑らかにする処理
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, SPEED * Time.deltaTime);
 
+            // カーソル移動したときのアウトラインのオンオフを設定
+            if (old_direction != HCBscript.direction)
+                HCBscript.TargetObj.GetComponent<Outline>().enabled = true;
+            else
+                HCBscript.TargetObj.GetComponent<Outline>().enabled = false;
+            
             // 目的地に着くとフラグを立てる
             if (transform.rotation != target) space_flg = false;
             else space_flg = true;
@@ -104,8 +115,9 @@ public class Camera_3 : MonoBehaviour
     void DownKeyCheck()
     {
         // ←押したとき
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("Cross_Horizontal")&& !button_flg))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
         {
+            old_direction = HCBscript.direction;
             button_flg = true;
             // ゴミ箱を向いているときに←押すと、唐揚げの場所を向く
             if (gomi_flg && (cursor != 14 && cursor != 15))
@@ -136,7 +148,7 @@ public class Camera_3 : MonoBehaviour
                         //pot_flg = true;
                     }
                     else tmp_cursor = 0;
-                    
+
                 }
             }
 
@@ -146,6 +158,7 @@ public class Camera_3 : MonoBehaviour
         // →押したとき
         else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
         {
+            old_direction = HCBscript.direction;
             button_flg = true;
             if (gomi_flg && (cursor != 14 && cursor != 15))
             {
@@ -162,7 +175,7 @@ public class Camera_3 : MonoBehaviour
                 {
 
                     if (tmp_cursor != 0) cursor = tmp_cursor - 1;
-                    else  cursor -= 1;
+                    else cursor -= 1;
                     if (tmp_cursor == 1)
                     {
                         cursor = 1;
@@ -175,7 +188,7 @@ public class Camera_3 : MonoBehaviour
                         //pot_flg = true;
                     }
                     else tmp_cursor = 0;
-                    
+
                 }
             }
             gomi_flg = false;
@@ -184,6 +197,7 @@ public class Camera_3 : MonoBehaviour
         // ↓押したとき
         else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("Cross_Vertical") && !button_flg))
         {
+            old_direction = HCBscript.direction;
             button_flg = true;
             /* ゴミフラグがたっている時、
              * 焦げアイテムを持っているときに下を押すした時、
@@ -219,17 +233,20 @@ public class Camera_3 : MonoBehaviour
                     gomi_flg = true;
                 }
             }
-            
+
         }
 
         // ↑押したとき
         else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("Cross_Vertical") && !button_flg))
         {
+            old_direction = HCBscript.direction;
             button_flg = true;
             // 盛り付け場を見ている時に↑を押したらストックの直前の場所を向く
             if (cursor == 14 || cursor == 15)
             {
-                cursor = tmp_cursor;
+                if (tmp_cursor == 1) cursor = 2; // 直前に鍋を見ていたら鍋の隣を向く
+                else if (tmp_cursor == 13) cursor = 12;
+                else cursor = tmp_cursor;
             }
             // ゴミ箱を見てるときに↑を押すと、真ん中のテーブルを向く
             else if (gomi_flg)
@@ -255,6 +272,8 @@ public class Camera_3 : MonoBehaviour
             }
             gomi_flg = false;
         }
+
+
     }//DownKeyCheck()
 
 
@@ -437,6 +456,63 @@ public class Camera_3 : MonoBehaviour
             var aim = this.CP_List[2].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
+        }
+
+    // CP_Listごとで移動する処理
+        // 左へカメラごとの移動
+        if (Input.GetKeyDown("a") || Input.GetButtonDown("PS4_L1"))
+        {
+            /* 天ぷら側 */
+            if ((cursor >= 1 && cursor <= 5) || cursor == 15 || (cursor >= 19 && cursor <= 21))
+            {
+                var aim = this.CP_List[1].transform.position - this.transform.position;
+                var look = Quaternion.LookRotation(aim);
+                target = look; // 目的座標を保存
+                old_direction = HCBscript.direction;
+                cursor = 7;
+                tmp_cursor = 0;
+                pot_flg = false;
+                potfast_flg = false;
+            }
+            /* お客側 */
+            else if (cursor == 0 || (cursor >= 6 && cursor <= 8))
+            {
+                var aim = this.CP_List[2].transform.position - this.transform.position;
+                var look = Quaternion.LookRotation(aim);
+                target = look; // 目的座標を保存
+                old_direction = HCBscript.direction;
+                cursor = 11;
+                tmp_cursor = 0;
+                gomi_flg = false;
+            }
+        }
+
+        // 右へカメラごとの移動
+        else if (Input.GetKeyDown("d") || Input.GetButtonDown("PS4_R1"))
+        {
+            /* お客側 */
+            if (cursor == 0 || (cursor >= 6 && cursor <= 8))
+            {
+                var aim = this.CP_List[0].transform.position - this.transform.position;
+                var look = Quaternion.LookRotation(aim);
+                target = look; // 目的座標を保存
+                old_direction = HCBscript.direction;
+                cursor = 3;
+                tmp_cursor = 0;
+                gomi_flg = false;
+            }
+            /* 揚げ物側 */
+            else if ((cursor >= 9 && cursor <= 13) || cursor == 14 || (cursor >= 16 && cursor <= 18))
+            {
+                var aim = this.CP_List[1].transform.position - this.transform.position;
+                var look = Quaternion.LookRotation(aim);
+                target = look; // 目的座標を保存
+                old_direction = HCBscript.direction;
+                cursor = 7;
+                tmp_cursor = 0;
+                pot_flg = false;
+                potfast_flg = false;
+            }
         }
     }//MoveCamera()
 

@@ -32,7 +32,8 @@ public class Plate2 : MonoBehaviour
     {
         if (script != null && other.gameObject.name == script.ItemString)
         {
-            script.ReturnCount += 999;
+            script.ReturnCount = 0; //客が帰るまでの時間を初期化
+            script.Eat = true;      //客が商品を食べ始める
             GameManager.instance.score_num += script.ItemScore; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
 
