@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Main_Scene/Master_Scene/Cursor_Maseter_Scene.unity
     guid: e514f9240a2279246b15f381448ba0e8
   - enabled: 1
-    path: Assets/Tawata/EndScene.unity
+    path: Assets/Main_Scene/Difficulty/EndScene.unity
     guid: 68139bf99fb8ef8479559a98ad7247c7
   - enabled: 1
     path: Assets/Main_Scene/Difficulty/Difficulty_Scene.unity

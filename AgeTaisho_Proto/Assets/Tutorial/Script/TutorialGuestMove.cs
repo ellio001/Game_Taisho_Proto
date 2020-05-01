@@ -67,7 +67,7 @@ public class TutorialGuestMove : MonoBehaviour
 
                 case "Easy_Tutorial_Scene":
                     ItemScore = 0;
-                    ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     break;
                 case "Normal_Tutorial_Scene":
@@ -77,7 +77,7 @@ public class TutorialGuestMove : MonoBehaviour
                     break;
                 case "Hard_Tutorial_Scene":
                     ItemScore = 0;
-                    ItemString = "ItemSara(Quail)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    ItemString = "Dish_T_Quail"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "うずら";
                     break;
             }
