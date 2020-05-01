@@ -460,7 +460,7 @@ public class Camera_3 : MonoBehaviour
 
     // CP_Listごとで移動する処理
         // 左へカメラごとの移動
-        if (Input.GetKeyDown("a"))
+        if (Input.GetKeyDown("a") || Input.GetButtonDown("PS4_L1"))
         {
             /* 天ぷら側 */
             if ((cursor >= 1 && cursor <= 5) || cursor == 15 || (cursor >= 19 && cursor <= 21))
@@ -488,7 +488,7 @@ public class Camera_3 : MonoBehaviour
         }
 
         // 右へカメラごとの移動
-        else if (Input.GetKeyDown("d"))
+        else if (Input.GetKeyDown("d") || Input.GetButtonDown("PS4_R1"))
         {
             /* お客側 */
             if (cursor == 0 || (cursor >= 6 && cursor <= 8))
