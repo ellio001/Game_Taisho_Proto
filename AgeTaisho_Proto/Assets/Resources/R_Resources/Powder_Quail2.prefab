@@ -136,8 +136,8 @@ GameObject:
   - component: {fileID: 6771488300294878334}
   - component: {fileID: 1024384988487725911}
   m_Layer: 0
-  m_Name: Tamago3
-  m_TagString: Untagged
+  m_Name: Powder_Quail2
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

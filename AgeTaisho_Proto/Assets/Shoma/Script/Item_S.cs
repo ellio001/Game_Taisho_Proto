@@ -472,12 +472,11 @@ public class Item_S : MonoBehaviour {
                     slider.value = AgeCount / AgeCountMax;
                     if (AgeCount >= AgeCountMax) {
                         objcolor = dummy;
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemQuailFry");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("R_Resources/Fried_K_Quail");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 // ゴミ箱に当たると焦げになる
                 if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
-                if (other.gameObject.tag != "Click") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 break;
 
             case "Fried_K_Quail":
@@ -499,11 +498,11 @@ public class Item_S : MonoBehaviour {
                 if (other.gameObject.tag == "Sara") {
                     script.Taihi = AgeCount;
                     script.TaihiFlag = TaihiFlag;
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Quail)");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("R_Resources/Dish_K_Quail");   //Resourceフォルダのプレハブを読み込む
                 }
                 break;
 
-            case "Dish_T_Quail":
+            case "Dish_K_Quail":
                 if (TaihiFlag == false) {
                     AgeCount = script.Taihi;
                     TaihiFlag = true;
