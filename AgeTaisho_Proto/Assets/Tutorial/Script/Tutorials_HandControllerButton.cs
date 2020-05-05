@@ -16,7 +16,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
 
     GameObject C2;    // Camera_2を入れる変数
     Camera_2 C2_script; // Camera_2のscriptを入れる変数
-    Tutorial_Camera_3 C3_script; // Camera_3のscriptを入れる変数
+    Tutorial_Camera_3 TC3_script; // Camera_3のscriptを入れる変数
 
     [SerializeField] GameObject Player; // プレイヤーの位置を保存
     Vector3 Player_V;                   // プレイヤーの座標を保存する用
@@ -37,25 +37,37 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
     [System.NonSerialized] public bool MoveFlg = false; // スペースを押している間は移動できないようにするフラグ
 
 
-    /***** 矢印関連 *****/
-    [SerializeField] GameObject ArrowObj; // 矢印のObjを入れる変数
+    /***** 矢印(アウトライン)関連 *****/
+    //[SerializeField] GameObject ArrowObj; // 矢印のObjを入れる変数
     bool ArrowFlg = false;                // 矢印が今出ているかの確認用
     bool DestroyFlg = false;              // 矢印を消すか判断する用
     Vector3 tmp;                          // カーソルの座標を仮に保存
+    // アウトラインのオンオフで使う
+    GameObject EbiBox;
+    GameObject Kona;
+    GameObject Tenpra_Nabe;
+    GameObject Sara;
+    GameObject Seki;
 
     void Start() {
+        EbiBox = GameObject.Find("EbiBox");
+        Kona = GameObject.Find("kona");
+        Tenpra_Nabe = GameObject.Find("Tenpra_Nabe");
+        Sara = GameObject.Find("Sara");
+        Seki = GameObject.Find("Plate2");
+
         ClickObj = GameObject.Find("ControllerObjClick");
         HoldingFlg = false;
 
         C2 = GameObject.Find("Main Camera");
         C2_script = C2.GetComponent<Camera_2>();
-        C3_script = C2.GetComponent<Tutorial_Camera_3>();
+        TC3_script = C2.GetComponent<Tutorial_Camera_3>();
 
         // プレイヤーの座標をVector3に変換
         Player_V.x = Player.transform.position.x;
         Player_V.y = Player.transform.position.y;
         Player_V.z = Player.transform.position.z;
-        direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
+        direction = TC3_script.Cursor_List[TC3_script.cursor].transform.position;
 
         //ポーズ画面
         Pause = GameObject.Find("Main Camera");
@@ -74,10 +86,10 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             // 今選択しているカーソルの位置を代入している
-            if (C3_script.pot_flg)
-                direction = C3_script.PCS_List[C3_script.Pcursor].transform.position;
+            if (TC3_script.pot_flg)
+                direction = TC3_script.PCS_List[TC3_script.Pcursor].transform.position;
             else
-                direction = C3_script.Cursor_List[C3_script.cursor].transform.position;
+                direction = TC3_script.Cursor_List[TC3_script.cursor].transform.position;
 
 
             if ((TextNumber >= 3 && TextNumber <= 5) ||
@@ -96,13 +108,16 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
                 TargetObj = hit.collider.gameObject; // 今見ているOBJを保存(C3のアウトラインのオンオフで使う)
 
                 // てんぷら粉、ウズラの液と粉、を選択中はフラグを立てる
-                if (C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[2] ||
-                    C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[11] ||
-                    C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[12]) KonaFlag = true;
+                if( TC3_script.Cursor_List[TC3_script.cursor] == TC3_script.Cursor_List[2]  ||
+                    TC3_script.Cursor_List[TC3_script.cursor] == TC3_script.Cursor_List[11] ||
+                    TC3_script.Cursor_List[TC3_script.cursor] == TC3_script.Cursor_List[12] ||
+                    TC3_script.Cursor_List[TC3_script.cursor] == TC3_script.Cursor_List[14] ||
+                    TC3_script.Cursor_List[TC3_script.cursor] == TC3_script.Cursor_List[15]) KonaFlag = true;
                 else KonaFlag = false;
 
+
                 // フラグがたっていないとボタンが聞かな
-                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && C3_script.space_flg) {
+                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && TC3_script.space_flg) {
                     MoveFlg = true;
                     if (!HoldingFlg) // 手に何も持っていない時に入る
                     {
@@ -159,10 +174,13 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
                     }
                 }
 
-                // 粉系に漬けるときにボタンを離すと手元に戻ってくるようにしている
-                if (KonaFlag && hit.collider.gameObject.tag == "Item" && (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("〇"))) {
-                    ItemPowder = true;
-                    KonaFlag = false;
+                // 粉系か皿に置くときに、ボタンを離すと手元に戻ってくるようにしている
+                if (KonaFlag && (hit.collider.gameObject.name.Contains("Dish") || hit.collider.gameObject.tag == "Item" ) && 
+                    (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("〇")))
+                {
+                    if (hit.collider.gameObject.name.Contains("Dish")) ItemSara = true;
+                    else if (hit.collider.gameObject.tag == "Item") ItemPowder = true;
+
                     clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                     clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                     HoldingFlg = true;
@@ -190,27 +208,36 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
         if (ArrowFlg == false && TextNumber != 9) {
             switch (TextNumber) {
                 case 3:
-                    tmp = C3_script.Cursor_List[3].transform.position;
+                    EbiBox.GetComponent<Outline>().enabled = true;
+                    //tmp = TC3_script.Cursor_List[3].transform.position;
                     break;
                 case 4:
-                    tmp = C3_script.Cursor_List[2].transform.position;
+                    EbiBox.GetComponent<Outline>().enabled = false;
+                    Kona.GetComponent<Outline>().enabled = true;
+                    //tmp = TC3_script.Cursor_List[2].transform.position;
                     break;
                 case 5:
-                    tmp = C3_script.Cursor_List[1].transform.position;
+                    Kona.GetComponent<Outline>().enabled = false;
+                    Tenpra_Nabe.GetComponent<Outline>().enabled = true;
+                    //tmp = TC3_script.Cursor_List[1].transform.position;
                     break;
                 case 7:
-                    tmp = C3_script.Cursor_List[15].transform.position;
+                    Tenpra_Nabe.GetComponent<Outline>().enabled = false;
+                    Sara.GetComponent<Outline>().enabled = true;
+                    //tmp = TC3_script.Cursor_List[15].transform.position;
                     break;
                 case 8:
-                    tmp = C3_script.Cursor_List[6].transform.position;
+                    Sara.GetComponent<Outline>().enabled = false;
+                    Seki.GetComponent<Outline>().enabled = true;
+                    //tmp = TC3_script.Cursor_List[6].transform.position;
                     break;
             }
-            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+            //Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
             ArrowFlg = true; // 矢印が表示中のフラグ
         }
         else if (DestroyFlg || TextNumber == 9) {
-            Destroy(GameObject.Find("Yajirusi(Clone)"));
-            DestroyFlg = false;
+            //Destroy(GameObject.Find("Yajirusi(Clone)"));
+            //DestroyFlg = false;
             ArrowFlg = false;
         }
     }
