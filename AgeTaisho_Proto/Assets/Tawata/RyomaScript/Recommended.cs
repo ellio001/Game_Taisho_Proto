@@ -6,17 +6,31 @@ using UnityEngine.SceneManagement;
 
 public class Recommended : MonoBehaviour {
 
-    private float GameTime;             //ゲーム開始の時間
+    int RondemNumber;
+    int Flame;
+    int FlameMin;
+    int FlameMax;
+    int Count;
+    int CountMin;
+    int CountMax;
+    int RandomMin;
+    int RandomMax;
     GameObject Recommended_object = null;
-    GameObject Random_obj;
-    Random_Number script;
 
     // Start is called before the first frame update
     void Start() {
         Recommended_object = GameObject.Find("Recommended_text"); // Textオブジェクト
-        Random_obj = GameObject.Find("Random_obj");
-        script = Random_obj.GetComponent<Random_Number>();
+        RondemNumber = 0;
+        Flame = 0;
+        FlameMin = 0;
+        FlameMax = 200;
+        RandomMin = 100;
+        RandomMax = 200;
+        CountMax = Random.Range(RandomMin, RandomMax);
+        Count = 0;
+        CountMin = 0;
     }
+
 
 
     // Update is called once per frame
@@ -25,20 +39,53 @@ public class Recommended : MonoBehaviour {
         // オブジェクトからTextコンポーネントを取得
         Text Recommended_text = Recommended_object.GetComponent<Text>();
 
-        if (script.Number == 1) {
-            // テキストの表示を入れ替える
-            Recommended_text.text = "えび";
-            print("えび");
+        RondemNumber++;
+
+        if (Count++ < CountMax) {
+            if (Flame++ <= FlameMax) {
+                if (RondemNumber == 1) {
+                    // テキストの表示を入れ替える
+                    Recommended_text.text = "えび";
+                    print("えび");
+                }
+                else if (RondemNumber == 2) {
+                    // テキストの表示を入れ替える
+                    Recommended_text.text = "さかな";
+                    print("さかな");
+                }
+                else if (RondemNumber == 3) {
+                    // テキストの表示を入れ替える
+                    Recommended_text.text = "いも";
+                    print("いも");
+                    RondemNumber = 0;
+                }
+                Flame = FlameMin;
+            }
         }
-        else if (script.Number == 2) {
-            // テキストの表示を入れ替える
-            Recommended_text.text = "さかな";
-            print("さかな");
+        else if (Count++ >= CountMax) {
+
         }
-        else if (script.Number == 3) {
-            // テキストの表示を入れ替える
-            Recommended_text.text = "いも";
-            print("いも");
+        //テスト用においている
+        //もし見つけたら消してくれ
+        if (Input.GetKey(KeyCode.Escape)) {
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+            #endif
         }
+        //if (script.Number == 1) {
+        //    // テキストの表示を入れ替える
+        //    Recommended_text.text = "えび";
+        //    print("えび");
+        //}
+        //else if (script.Number == 2) {
+        //    // テキストの表示を入れ替える
+        //    Recommended_text.text = "さかな";
+        //    print("さかな");
+        //}
+        //else if (script.Number == 3) {
+        //    // テキストの表示を入れ替える
+        //    Recommended_text.text = "いも";
+        //    print("いも");
+        //}
     }
 }

@@ -56,13 +56,6 @@ public class Random_Number : MonoBehaviour {
             Count++;
         }
 
-        //テスト用においている
-        //もし見つけたら消してくれ
-        if (Input.GetKey(KeyCode.Escape)) {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#endif
-        }
     }
 
     void Road_Scene() {
