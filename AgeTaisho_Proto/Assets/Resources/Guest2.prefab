@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 136852093266996528}
   - component: {fileID: 114329214679566566}
   - component: {fileID: 54864818464772996}
-  m_Layer: 0
+  - component: {fileID: 5355537357183662452}
+  - component: {fileID: 2307833101793918977}
+  m_Layer: 2
   m_Name: Guest2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1359249871301514}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.375411, y: 4, z: -2.2226026}
+  m_LocalPosition: {x: -4.5, y: 5, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4468151027358069968}
@@ -102,7 +104,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1359249871301514}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4b5b9064f404984ab289aa9fc8b6ee4, type: 3}
   m_Name: 
@@ -116,7 +118,9 @@ MonoBehaviour:
   GuestSpeed: 0
   GuestNowPosition: {x: 0, y: 0, z: 0}
   ReturnCount: 0
+  EatCount: 0
   OneProces: 0
+  Eat: 0
 --- !u!54 &54864818464772996
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -133,6 +137,43 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &5355537357183662452
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359249871301514}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.1, z: 1}
+  m_Center: {x: 0, y: -0.3, z: 1}
+--- !u!114 &2307833101793918977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359249871301514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fdc313bffc161e4c9eccd84f26d6d36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pos: {x: 0, y: 0, z: 0}
+  ItemString: 
+  NumberString: 
+  ItemScore: 0
+  GuestNumber: []
+  GuestPosition: []
+  GuestSpeed: 0
+  GuestNowPosition: {x: 0, y: 0, z: 0}
+  ReturnCount: 0
+  EatCount: 0
+  OneProces: 0
+  Eat: 0
 --- !u!1 &5706508390815439476
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +186,7 @@ GameObject:
   - component: {fileID: 7472131239561426429}
   - component: {fileID: 6339205703584531419}
   - component: {fileID: 5562006463763522734}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +285,7 @@ GameObject:
   - component: {fileID: 6325188691519790464}
   - component: {fileID: 7978714968680219499}
   - component: {fileID: 6613249891116358553}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +308,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.5}
   m_SizeDelta: {x: 640, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7978714968680219499
@@ -316,7 +357,7 @@ GameObject:
   - component: {fileID: 6132371305978980719}
   - component: {fileID: 7346436342099503410}
   - component: {fileID: 1638808613163451369}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +371,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7744134366520766466}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0.6}
   m_LocalScale: {x: 0.002, y: 0.002, z: 0.03}
   m_Children: []
@@ -339,7 +380,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.5}
   m_SizeDelta: {x: 1600, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7346436342099503410

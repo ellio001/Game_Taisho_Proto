@@ -113,7 +113,6 @@ public class Camera_3 : MonoBehaviour
             if (transform.rotation != target) space_flg = false;
             else space_flg = true;
         }
-        
     }
 
 
@@ -475,6 +474,7 @@ public class Camera_3 : MonoBehaviour
                 tmp_cursor = 0;
                 pot_flg = false;
                 potfast_flg = false;
+                gomi_flg = false;
             }
             /* お客側 */
             else if (cursor == 0 || (cursor >= 6 && cursor <= 8))
@@ -515,6 +515,7 @@ public class Camera_3 : MonoBehaviour
                 tmp_cursor = 0;
                 pot_flg = false;
                 potfast_flg = false;
+                gomi_flg = false;
             }
             MoveLight();
         }

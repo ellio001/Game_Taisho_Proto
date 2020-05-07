@@ -6,39 +6,127 @@ using UnityEngine.SceneManagement;
 
 public class Recommended : MonoBehaviour {
 
-    private float GameTime;             //ゲーム開始の時間
+    public static int NumberTaihi;  //確定した品番
+    int RondemNumber;               //本日のおすすめ品番
+    bool NumberFlag;                //確定した品番取った判定
+    int Flame;                      //フレーム変数
+    int FlameMin;                   //フレームの最大回数
+    int FlameMax;                   //フレームの初期値
+    int FlameMax2;                  //NumberFlagがたった後のフレーム
+    bool FlashingFlag;              //文字の点滅に使う
+    int Count;                      //処理のカウント
+    int CountMin;                   //処理のカウント初期値
+    int CountMax;                   //処理の最大値
+    int RandomMin;                  //ランダムの最小値
+    int RandomMax;                  //ランダムの最大値
     GameObject Recommended_object = null;
-    GameObject Random_obj;
-    Random_Number script;
+    GameObject ebi_image_object = null;
+    GameObject imo_image_object = null;
+    GameObject sakana_image_object = null;
+    GameObject panel_object = null;
+    GameObject Decision_Text = null;
 
     // Start is called before the first frame update
     void Start() {
-        Recommended_object = GameObject.Find("Recommended_text"); // Textオブジェクト
-        Random_obj = GameObject.Find("Random_obj");
-        script = Random_obj.GetComponent<Random_Number>();
-    }
 
+        // オブジェクトの取得
+        ebi_image_object = GameObject.Find("EbiImage");      // Imageオブジェクト
+        imo_image_object = GameObject.Find("ImoImage");      // Imageオブジェクト
+        sakana_image_object = GameObject.Find("SakanaImage");// Imageオブジェクト
+        panel_object = GameObject.Find("PanelImage");        // Panelオブジェクト
+        Decision_Text = GameObject.Find("DecisionText");     // Textオブジェクト
+
+        //変数
+        RondemNumber = 0;
+        Flame = 0;
+        FlameMin = 0;
+        FlameMax = 200;
+        FlameMax2 = 30;
+        RandomMin = 100;
+        RandomMax = 200;
+        CountMax = Random.Range(RandomMin, RandomMax);
+        Count = 0;
+        CountMin = 0;
+        NumberFlag = false;
+        FlashingFlag = false;
+
+        //処理
+        ebi_image_object.SetActive(false);
+        imo_image_object.SetActive(false);
+        sakana_image_object.SetActive(false);
+        panel_object.SetActive(false);
+        Decision_Text.SetActive(false);
+    }
 
     // Update is called once per frame
     void Update() {
 
-        // オブジェクトからTextコンポーネントを取得
-        Text Recommended_text = Recommended_object.GetComponent<Text>();
+        //ルーレット処理
+        if (NumberFlag == false) {
+            RondemNumber++;
+            if (Count++ < CountMax) {
+                if (Flame++ <= FlameMax) {
+                    //エビ
+                    if (RondemNumber == 1) {
+                        ebi_image_object.SetActive(true);
+                        imo_image_object.SetActive(false);
+                        sakana_image_object.SetActive(false);
+                    }
+                    //サカナ
+                    else if (RondemNumber == 2) {
+                        ebi_image_object.SetActive(false);
+                        imo_image_object.SetActive(false);
+                        sakana_image_object.SetActive(true);
+                    }
+                    //イモ
+                    else if (RondemNumber == 3) {
+                        ebi_image_object.SetActive(false);
+                        imo_image_object.SetActive(true);
+                        sakana_image_object.SetActive(false);
+                        RondemNumber = 0;
+                    }
+                    Flame = FlameMin;
+                }
+            }
+            else if (Count++ >= CountMax) {
+                NumberFlag = true;
+                FlashingFlag = true;
+                if (NumberFlag) NumberTaihi = RondemNumber;
+            }
+        }
 
-        if (script.Number == 1) {
-            // テキストの表示を入れ替える
-            Recommended_text.text = "えび";
-            print("えび");
+        //ルーレット後の処理
+        else if (NumberFlag) {
+            panel_object.SetActive(true);
+
+            Flame++;
+            //文字点滅処理
+            if (Flame > FlameMax2) {
+                if (FlashingFlag) {
+                    Decision_Text.SetActive(true);
+                    FlashingFlag = false;
+                }
+                else {
+                    Decision_Text.SetActive(false);
+                    FlashingFlag = true;
+                }
+                Flame = FlameMin;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) {
+                SceneManager.LoadScene("Easy_Scene");
+            }
         }
-        else if (script.Number == 2) {
-            // テキストの表示を入れ替える
-            Recommended_text.text = "さかな";
-            print("さかな");
+
+        //テスト用においている
+        //もし見つけたら消してくれ
+        if (Input.GetKey(KeyCode.Escape)) {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
         }
-        else if (script.Number == 3) {
-            // テキストの表示を入れ替える
-            Recommended_text.text = "いも";
-            print("いも");
-        }
+    }
+    public static int getNumberTaihi() {
+        return NumberTaihi;
     }
 }
