@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Ossan_script : MonoBehaviour
 {
-    //金持ちステータス---------------------------------
+    //おっさんステータス---------------------------------
     float EatTime = 1;          //食べ終わるまでの時間
     float RowTime = 13;         //列に並んでいる時間
     float SitTime = 23;         //席に座っている時間
@@ -43,12 +43,14 @@ public class Ossan_script : MonoBehaviour
 
     string SceneName; // sceneの名前を記憶する変数
 
-    GameObject Recommended;
-    TestRuret testruret;
+    int Osusume;
+    //GameObject Recommended;
+    //TestRuret testruret;
     void Start()
     {
-        Recommended = GameObject.Find("Directional Light");
-        testruret = Recommended.GetComponent<TestRuret>();
+        //Recommended = GameObject.Find("Directional Light");
+        //testruret = Recommended.GetComponent<TestRuret>();
+        Osusume = TestRuret.getNumberTaihi();
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
         OrderObject = this.gameObject.transform.Find("Canvas/Text").gameObject; //子要素のtextを取得
@@ -144,7 +146,7 @@ public class Ossan_script : MonoBehaviour
             Order = true;
             OrderObject.SetActive(true);    //オーダーを表示する
 
-            switch (testruret.RondemNumber)
+            switch (Osusume)
             {
                 case 1:
                     ItemScore = 100;
