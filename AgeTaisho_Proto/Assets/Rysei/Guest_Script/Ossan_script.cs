@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Ossan_script : MonoBehaviour
 {
-    //金持ちステータス---------------------------------
+    //おっさんステータス---------------------------------
     float EatTime = 1;          //食べ終わるまでの時間
     float RowTime = 13;         //列に並んでいる時間
     float SitTime = 23;         //席に座っている時間
@@ -43,12 +43,14 @@ public class Ossan_script : MonoBehaviour
 
     string SceneName; // sceneの名前を記憶する変数
 
-    [SerializeField] GameObject Recommended;
-    TestRuret testruret;
+    int Osusume;
+    //GameObject Recommended;
+    //TestRuret testruret;
     void Start()
     {
-
-        testruret = Recommended.GetComponent<TestRuret>();
+        //Recommended = GameObject.Find("Directional Light");
+        //testruret = Recommended.GetComponent<TestRuret>();
+        Osusume = Recommended.getNumberTaihi();
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
         OrderObject = this.gameObject.transform.Find("Canvas/Text").gameObject; //子要素のtextを取得
@@ -144,19 +146,19 @@ public class Ossan_script : MonoBehaviour
             Order = true;
             OrderObject.SetActive(true);    //オーダーを表示する
 
-            switch (testruret.RondemNumber)
+            switch (Osusume)
             {
-                case 1:
+                case 2:
                     ItemScore = 100;
                     ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     break;
-                case 2:
+                case 3:
                     ItemScore = 100;
                     ItemString = "Dish_T_Fish"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
                     OrderString = "魚てん";
                     break;
-                case 3:
+                case 1:
                     ItemScore = 100;
                     ItemString = "Dish_T_Potato"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
                     OrderString = "芋てん";
