@@ -101,4 +101,8 @@ public class Recommended : MonoBehaviour {
 #endif
         }
     }
+    public static int getNumberTaihi()
+    {
+        return NumberTaihi;
+    }
 }

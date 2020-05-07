@@ -50,7 +50,7 @@ public class Ossan_script : MonoBehaviour
     {
         //Recommended = GameObject.Find("Directional Light");
         //testruret = Recommended.GetComponent<TestRuret>();
-        Osusume = TestRuret.getNumberTaihi();
+        Osusume = Recommended.getNumberTaihi();
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
         OrderObject = this.gameObject.transform.Find("Canvas/Text").gameObject; //子要素のtextを取得
