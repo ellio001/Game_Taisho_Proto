@@ -15,6 +15,6 @@ public class Skip_Botton : MonoBehaviour {
     }
     public void ReadScene() {
         //Endシーン読込
-        SceneManager.LoadScene("Easy_Scene", LoadSceneMode.Single);
+        SceneManager.LoadScene("Recommendation_Scene", LoadSceneMode.Single);
     }
 }

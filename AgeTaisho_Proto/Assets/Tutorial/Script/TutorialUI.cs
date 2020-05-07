@@ -174,7 +174,7 @@ public class TutorialUI : MonoBehaviour
         switch (SceneName)
         {
             case "Easy_Tutorial_Scene":
-                SceneManager.LoadScene("Easy_Scene");
+                SceneManager.LoadScene("Recommendation_Scene");
                 break;
             case "Normal_Tutorial_Scene":
                 SceneManager.LoadScene("Normal_Scene");
