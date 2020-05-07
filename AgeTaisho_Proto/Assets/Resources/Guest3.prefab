@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 4448635046315625810}
   - component: {fileID: 4388894809517037104}
   - component: {fileID: 6364133339400550754}
-  - component: {fileID: 8088965581516358312}
-  m_Layer: 0
+  - component: {fileID: 4347952859321675245}
+  m_Layer: 2
   m_Name: Guest3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: -0.2, z: 1}
---- !u!114 &8088965581516358312
+--- !u!114 &4347952859321675245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4336478166042193470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fdc313bffc161e4c9eccd84f26d6d36, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a437187953aa584db6fa29eedd57188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 0, y: 0, z: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 7579585556925852891}
   - component: {fileID: 6474310665745968262}
   - component: {fileID: 3068253243854718557}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 7776874656271243316}
   - component: {fileID: 5949397134319355615}
   - component: {fileID: 7488479497301417517}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 6600236447850803273}
   - component: {fileID: 7769824063007655535}
   - component: {fileID: 8150003193814638874}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2614291440271425307}
   - component: {fileID: 1444778016383813949}
   - component: {fileID: 1064455467752599112}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 1455250269868283750}
   - component: {fileID: 3264992146353441165}
   - component: {fileID: 1743869763826815359}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 1652553628755190665}
   - component: {fileID: 2739960012608431060}
   - component: {fileID: 6146204249759271183}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Text1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 4843455036813138274}
   - component: {fileID: 320083785731273706}
   - component: {fileID: 114966402317371836}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Guest4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,7 +451,7 @@ GameObject:
   - component: {fileID: 4986172044603198317}
   - component: {fileID: 9076772554458132503}
   - component: {fileID: 8183409922444326731}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Text2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 1111519739860708749}
   - component: {fileID: 2250667732826382648}
   - component: {fileID: 775378143169606016}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Text3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

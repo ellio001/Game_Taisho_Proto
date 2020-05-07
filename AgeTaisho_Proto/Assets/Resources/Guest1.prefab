@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 136591438409738194}
   - component: {fileID: 114902494859657848}
   - component: {fileID: 54916408327534162}
-  - component: {fileID: 8671952857330691418}
   - component: {fileID: 1915017269634503650}
-  m_Layer: 0
+  - component: {fileID: 1689142761463535410}
+  m_Layer: 2
   m_Name: Guest1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8671952857330691418
+--- !u!65 &1915017269634503650
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216312987813446}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.1, z: 1}
+  m_Center: {x: 0, y: -0.2, z: 1}
+--- !u!114 &1689142761463535410
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,7 +159,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1216312987813446}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a437187953aa584db6fa29eedd57188, type: 3}
+  m_Script: {fileID: 11500000, guid: 34600bd88d0fd9b42901cdfc703b269d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {x: 0, y: 0, z: 0}
@@ -161,19 +174,7 @@ MonoBehaviour:
   EatCount: 0
   OneProces: 0
   Eat: 0
---- !u!65 &1915017269634503650
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1216312987813446}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.1, z: 1}
-  m_Center: {x: 0, y: -0.2, z: 1}
+  Recommended: {fileID: 0}
 --- !u!1 &1499574623129718986
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +186,7 @@ GameObject:
   - component: {fileID: 2661302603647289973}
   - component: {fileID: 4784607250523168375}
   - component: {fileID: 1677877178710679385}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +263,7 @@ GameObject:
   - component: {fileID: 1660699676756135425}
   - component: {fileID: 396475548953851975}
   - component: {fileID: 696609284416658054}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +336,7 @@ GameObject:
   - component: {fileID: 4283542764000665309}
   - component: {fileID: 2989752068678657418}
   - component: {fileID: 3339418957544935032}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
