@@ -4710,6 +4710,9 @@ MonoBehaviour:
   - {fileID: 1765017471589500, guid: bf804bcd94e422347b3908e05bce0b38, type: 3}
   - {fileID: 1216312987813446, guid: bd99ef1846c4dcf4bbb787aac683adae, type: 3}
   - {fileID: 1359249871301514, guid: 05474fd8a9002ad4cb028dbab3e21d9a, type: 3}
+  - {fileID: 4336478166042193470, guid: 21feee015b8a5814b9a491bac0c43f67, type: 3}
+  - {fileID: 4895790787510264172, guid: 1e7ccf3d10718f141ace556741a50931, type: 3}
+  - {fileID: 8832834541269859291, guid: cb3808f39613b6940b137f5e7c150d96, type: 3}
   Position:
   - {x: -3, y: 5, z: -2}
   - {x: -4.5, y: 5, z: -2}

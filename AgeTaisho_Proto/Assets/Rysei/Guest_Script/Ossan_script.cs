@@ -148,17 +148,17 @@ public class Ossan_script : MonoBehaviour
 
             switch (Osusume)
             {
-                case 1:
+                case 2:
                     ItemScore = 100;
                     ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     break;
-                case 2:
+                case 3:
                     ItemScore = 100;
                     ItemString = "Dish_T_Fish"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
                     OrderString = "魚てん";
                     break;
-                case 3:
+                case 1:
                     ItemScore = 100;
                     ItemString = "Dish_T_Potato"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
                     OrderString = "芋てん";

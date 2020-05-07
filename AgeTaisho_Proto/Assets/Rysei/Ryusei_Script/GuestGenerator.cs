@@ -54,7 +54,7 @@ public class GuestGenerator : MonoBehaviour
             if (GuestSpawnCount % 7 == 0) Guest[Guest.Length - 1] = Instantiate(GuestType[5], Position[Position.Length - 1], transform.rotation);  //客生成(客番号,座標,回転)
             else if (GuestSpawnCount % 10 == 0) Guest[Guest.Length - 1] = Instantiate(GuestType[4], Position[Position.Length - 1], transform.rotation);  //客生成(客番号,座標,回転)
             else if (GuestSpawnCount % 6 == 0) Guest[Guest.Length - 1] = Instantiate(GuestType[3], Position[Position.Length - 1], transform.rotation);  //客生成(客番号,座標,回転)
-            else if (SceneManager.GetActiveScene().name == "Ryusei_Scene" || SceneManager.GetActiveScene().name != "Easy_Scene")
+            else if (SceneManager.GetActiveScene().name == "Ryusei_Scene" || SceneManager.GetActiveScene().name == "Easy_Scene")
             {
                 Trainnumber = Random.Range(0, 2);    //客の種類をランダムにとる
                 Guest[Guest.Length - 1] = Instantiate(GuestType[Trainnumber], Position[Position.Length - 1], transform.rotation);  //客生成(客番号,座標,回転)
