@@ -43,11 +43,11 @@ public class Ossan_script : MonoBehaviour
 
     string SceneName; // sceneの名前を記憶する変数
 
-    [SerializeField] GameObject Recommended;
+    GameObject Recommended;
     TestRuret testruret;
     void Start()
     {
-
+        Recommended = GameObject.Find("Directional Light");
         testruret = Recommended.GetComponent<TestRuret>();
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
