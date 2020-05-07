@@ -12,6 +12,8 @@ public class Recommended : MonoBehaviour {
     int Flame;                      //フレーム変数
     int FlameMin;                   //フレームの最大回数
     int FlameMax;                   //フレームの初期値
+    int FlameMax2;                  //NumberFlagがたった後のフレーム
+    bool FlashingFlag;              //文字の点滅に使う
     int Count;                      //処理のカウント
     int CountMin;                   //処理のカウント初期値
     int CountMax;                   //処理の最大値
@@ -39,12 +41,14 @@ public class Recommended : MonoBehaviour {
         Flame = 0;
         FlameMin = 0;
         FlameMax = 200;
+        FlameMax2 = 30;
         RandomMin = 100;
         RandomMax = 200;
         CountMax = Random.Range(RandomMin, RandomMax);
         Count = 0;
         CountMin = 0;
         NumberFlag = false;
+        FlashingFlag = false;
 
         //処理
         ebi_image_object.SetActive(false);
@@ -53,24 +57,28 @@ public class Recommended : MonoBehaviour {
         panel_object.SetActive(false);
         Decision_Text.SetActive(false);
     }
-    
+
     // Update is called once per frame
     void Update() {
 
+        //ルーレット処理
         if (NumberFlag == false) {
             RondemNumber++;
             if (Count++ < CountMax) {
                 if (Flame++ <= FlameMax) {
+                    //エビ
                     if (RondemNumber == 1) {
                         ebi_image_object.SetActive(true);
                         imo_image_object.SetActive(false);
                         sakana_image_object.SetActive(false);
                     }
+                    //サカナ
                     else if (RondemNumber == 2) {
                         ebi_image_object.SetActive(false);
                         imo_image_object.SetActive(false);
                         sakana_image_object.SetActive(true);
                     }
+                    //イモ
                     else if (RondemNumber == 3) {
                         ebi_image_object.SetActive(false);
                         imo_image_object.SetActive(true);
@@ -82,12 +90,29 @@ public class Recommended : MonoBehaviour {
             }
             else if (Count++ >= CountMax) {
                 NumberFlag = true;
+                FlashingFlag = true;
                 if (NumberFlag) NumberTaihi = RondemNumber;
             }
         }
+
+        //ルーレット後の処理
         else if (NumberFlag) {
             panel_object.SetActive(true);
-            Decision_Text.SetActive(true);
+
+            Flame++;
+            //文字点滅処理
+            if (Flame > FlameMax2) {
+                if (FlashingFlag) {
+                    Decision_Text.SetActive(true);
+                    FlashingFlag = false;
+                }
+                else {
+                    Decision_Text.SetActive(false);
+                    FlashingFlag = true;
+                }
+                Flame = FlameMin;
+            }
+
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) {
                 SceneManager.LoadScene("Easy_Scene");
             }
@@ -101,8 +126,7 @@ public class Recommended : MonoBehaviour {
 #endif
         }
     }
-    public static int getNumberTaihi()
-    {
+    public static int getNumberTaihi() {
         return NumberTaihi;
     }
 }
