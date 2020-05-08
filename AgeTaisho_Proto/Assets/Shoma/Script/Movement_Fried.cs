@@ -14,8 +14,8 @@ public class Movement_Fried : MonoBehaviour
         if (start)
         {
             // その場で上下運動させている
-            transform.position = 
-                new Vector3(transform.position.x, nowPosi + Mathf.PingPong(Time.time / 3, UpDownSpeed), transform.position.z);
+            //transform.position = 
+            //    new Vector3(transform.position.x, nowPosi + Mathf.PingPong(Time.time / 3, UpDownSpeed), transform.position.z);
             // その場で回転させている
             transform.Rotate(new Vector3(0, RotationSpeed, 0) * Time.deltaTime, Space.World);
         }
