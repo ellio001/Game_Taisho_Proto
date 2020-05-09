@@ -114,7 +114,7 @@ public class Control : MonoBehaviour {
 
     void DownKeyCheck() {
         // ←押したとき
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("XBox_L_Horizontal") && !button_flg)) {
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg)) {
             //old_direction = HCBRscript.direction;
             button_flg = true;
             // ゴミ箱を向いているときに←押すと、唐揚げの場所を向く
@@ -149,7 +149,7 @@ public class Control : MonoBehaviour {
         }
 
         // →押したとき
-        else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("XBox_L_Horizontal") && !button_flg)) {
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg)) {
             //old_direction = HCBRscript.direction;
             button_flg = true;
             if (gomi_flg && (cursor != 14 && cursor != 15)) {
@@ -182,7 +182,7 @@ public class Control : MonoBehaviour {
         }
 
         // ↓押したとき
-        else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_L_Vertical") && !button_flg)) {
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg)) {
             //old_direction = HCBRscript.direction;
             button_flg = true;
             /* ゴミフラグがたっている時、
@@ -213,12 +213,11 @@ public class Control : MonoBehaviour {
                     gomi_flg = true;
                 }
             }
-            print("した");
             MoveLight();
         }
 
         // ↑押したとき
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_L_Vertical") && !button_flg)) {
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_Pad_V") && !button_flg)) {
             //old_direction = HCBRscript.direction;
             button_flg = true;
             // 盛り付け場を見ている時に↑を押したらストックの直前の場所を向く
@@ -245,7 +244,6 @@ public class Control : MonoBehaviour {
                 }
                 stock_flg = true;
             }
-            print("うえ");
             gomi_flg = false;
             MoveLight();
         }
@@ -261,7 +259,7 @@ public class Control : MonoBehaviour {
                 Pcursor = -1;
                 potfast_flg = true;
             }
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg)) {
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg)) {
                 button_flg = true;
                 if (Pcursor != 0 && Pcursor != 2) Pcursor -= 1;
                 else {
@@ -271,12 +269,12 @@ public class Control : MonoBehaviour {
                 }
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg)) {
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg)) {
                 button_flg = true;
                 if (Pcursor != 1 && Pcursor != 3) Pcursor += 1;
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("Cross_Vertical") && !button_flg)) {
+            else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg)) {
                 button_flg = true;
                 if (Pcursor != 0 && Pcursor != 1) Pcursor -= 2;
                 else {
@@ -288,7 +286,7 @@ public class Control : MonoBehaviour {
                 }
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("Cross_Vertical") && !button_flg)) {
+            else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_Pad_V") && !button_flg)) {
                 button_flg = true;
                 if (Pcursor != 2 && Pcursor != 3) Pcursor += 2;
                 //else 鍋からストックに行けないようにコメントしている
@@ -308,7 +306,7 @@ public class Control : MonoBehaviour {
                 Pcursor = 3;
                 potfast_flg = true;
             }
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || (0 > Input.GetAxisRaw("Cross_Horizontal") && !button_flg)) {
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || (0 > Input.GetAxisRaw("XBox_L_Horizontal") && !button_flg)) {
                 button_flg = true;
                 if (Pcursor != 5 && Pcursor != 7) Pcursor += 1;
                 //else
@@ -319,7 +317,7 @@ public class Control : MonoBehaviour {
                 //}
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || (0 < Input.GetAxisRaw("Cross_Horizontal") && !button_flg)) {
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || (0 < Input.GetAxisRaw("XBox_L_Horizontal") && !button_flg)) {
                 button_flg = true;
                 if (Pcursor != 4 && Pcursor != 6) Pcursor -= 1;
                 else {
@@ -329,7 +327,7 @@ public class Control : MonoBehaviour {
                 }
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("Cross_Vertical") && !button_flg)) {
+            else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg)) {
                 button_flg = true;
                 if (Pcursor != 4 && Pcursor != 5) Pcursor -= 2;
                 else {
@@ -341,7 +339,7 @@ public class Control : MonoBehaviour {
                 }
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("Cross_Vertical") && !button_flg)) {
+            else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_Pad_V") && !button_flg)) {
                 button_flg = true;
                 if (Pcursor != 6 && Pcursor != 7) Pcursor += 2;
                 //else
