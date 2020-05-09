@@ -161,7 +161,6 @@ public class Control : MonoBehaviour {
                     if (cursor - 1 != 18 && cursor - 1 != 15) cursor -= 1;
                 }
                 else {
-
                     if (tmp_cursor != 0) cursor = tmp_cursor - 1;
                     else cursor -= 1;
                     if (tmp_cursor == 1) {
@@ -256,7 +255,7 @@ public class Control : MonoBehaviour {
     void PotSelect() {
         if (cursor == 1) {
             if (potfast_flg == false) {
-                Pcursor = -1;
+                Pcursor = 0;
                 potfast_flg = true;
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg)) {
@@ -306,7 +305,7 @@ public class Control : MonoBehaviour {
                 Pcursor = 3;
                 potfast_flg = true;
             }
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || (0 > Input.GetAxisRaw("XBox_L_Horizontal") && !button_flg)) {
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || (0 > Input.GetAxisRaw("XBox_Pad_H") && !button_flg)) {
                 button_flg = true;
                 if (Pcursor != 5 && Pcursor != 7) Pcursor += 1;
                 //else
@@ -317,7 +316,7 @@ public class Control : MonoBehaviour {
                 //}
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || (0 < Input.GetAxisRaw("XBox_L_Horizontal") && !button_flg)) {
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || (0 < Input.GetAxisRaw("XBox_Pad_H") && !button_flg)) {
                 button_flg = true;
                 if (Pcursor != 4 && Pcursor != 6) Pcursor -= 1;
                 else {
