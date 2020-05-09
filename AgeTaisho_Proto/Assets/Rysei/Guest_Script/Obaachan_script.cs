@@ -114,10 +114,10 @@ public class Obaachan_script : MonoBehaviour
                 }
             }
 
-            if (GuestNowPosition.x < GuestPosition[MyNumber].x) GuestNowPosition.x += GuestSpeed;   //目的地よりz座標が小さければ-
-            else if (GuestNowPosition.x > GuestPosition[MyNumber].x) GuestNowPosition.x -= GuestSpeed; //目的地よりz座標が大きければ+
-            if (GuestNowPosition.z < GuestPosition[MyNumber].z) GuestNowPosition.z += GuestSpeed;   //目的地よりx座標が小さければ-
-            else if (GuestNowPosition.z > GuestPosition[MyNumber].z) GuestNowPosition.z -= GuestSpeed; //目的地よりx座標が大きければ+
+            if (GuestNowPosition.x < GuestPosition[MyNumber].x - 0.1) GuestNowPosition.x += GuestSpeed;   //目的地よりz座標が小さければ-
+            else if (GuestNowPosition.x > GuestPosition[MyNumber].x + 0.1) GuestNowPosition.x -= GuestSpeed; //目的地よりz座標が大きければ+
+            if (GuestNowPosition.z < GuestPosition[MyNumber].z - 0.1) GuestNowPosition.z += GuestSpeed;   //目的地よりx座標が小さければ-
+            else if (GuestNowPosition.z > GuestPosition[MyNumber].z + 0.1) GuestNowPosition.z -= GuestSpeed; //目的地よりx座標が大きければ+
         }
 
         this.gameObject.transform.position = GuestNowPosition;  //現在の位置を更新
@@ -133,7 +133,7 @@ public class Obaachan_script : MonoBehaviour
             EatCount += Time.deltaTime;
             if (EatCount >= EatTime) GuestReturn();   //5秒たったら食べ終わり帰る
         }
-        if (GuestNowPosition.z >= -2 && Order == false)  //席に着いたら処理
+        if (GuestNowPosition.z >= -2.1 && Order == false)  //席に着いたら処理
         {
 
             ReturnCount = 0;    //客が帰るまでの時間を初期化
