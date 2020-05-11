@@ -4,19 +4,32 @@ using UnityEngine;
 
 public class Movement_Fried : MonoBehaviour
 {
-    Vector3 nowPosi;
+    Vector3 nowPosi; // スクリプトがついているObjの座標を記憶させる
     float UpDownSpeed = 0.2f;   // 上下の移動幅の値
     float RotationSpeed = 70f;// 回転させる速さ
 
     int count = 0;
-    float a = 0.01f;
-
-    bool start = false;
-    bool moveflg = false;
+    float a = 0.01f; // 上下移動の計算の代入用
+    bool moveflg = false; // false =上下移動中 ・ true =上下移動終了中
 
     void Update()
     {
-        if (start)
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "tenpuranabe" || other.gameObject.tag == "karaagenabe")
+        {
+            nowPosi = this.transform.position;
+            nowPosi.y = this.transform.position.y - 0.08f;
+            moveflg = false;
+            count = 0;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "tenpuranabe" || other.gameObject.tag == "karaagenabe")
         {
             // その場で一度だけ上下運動させている
             if (!moveflg)
@@ -28,22 +41,15 @@ public class Movement_Fried : MonoBehaviour
                 transform.position =
                     new Vector3(nowPosi.x, nowPosi.y + a, nowPosi.z);
             }
-            //transform.position =
-            //    new Vector3(transform.position.x, nowPosi + Mathf.PingPong(Time.time / 3, UpDownSpeed), transform.position.z);
-            
             // その場で回転させている
             transform.Rotate(new Vector3(0, RotationSpeed, 0) * Time.deltaTime, Space.World);
+
+
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "tenpuranabe" || other.gameObject.tag == "karaagenabe")
-        {
-            nowPosi = this.transform.position;
-            nowPosi.y = this.transform.position.y-0.08f;
-            start = true;
-        }
-    }
 
+    }
 }
