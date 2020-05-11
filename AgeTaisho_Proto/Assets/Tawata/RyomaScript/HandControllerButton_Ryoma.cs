@@ -189,7 +189,7 @@ public class HandControllerButton_Ryoma : MonoBehaviour {
 
                 // 粉系か皿に置くときに、ボタンを離すと手元に戻ってくるようにしている
                 if (KonaFlag && (hit.collider.gameObject.name.Contains("Dish") || hit.collider.gameObject.tag == "Item") &&
-                    (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("〇"))) {
+                    (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("XBox_joystick_B"))) {
                     if (hit.collider.gameObject.name.Contains("Dish")) ItemSara = true;
                     else if (hit.collider.gameObject.tag == "Item") ItemPowder = true;
 
