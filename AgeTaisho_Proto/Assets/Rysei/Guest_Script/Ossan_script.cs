@@ -31,6 +31,7 @@ public class Ossan_script : MonoBehaviour
     public GameObject[] GuestNumber; //列番号を入れる箱
     public Vector3[] GuestPosition; //座標番号を入れる箱
     GameObject OrderObject;   //注文を表示するTextの箱
+    GameObject Panel;         //客についてるパネル
 
     public float GuestSpeed;   //客の移動速度をいれる箱
     public Vector3 GuestNowPosition;   //客の現在位置の仮決定をいれる箱
@@ -54,6 +55,7 @@ public class Ossan_script : MonoBehaviour
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
         OrderObject = this.gameObject.transform.Find("Canvas/Text").gameObject; //子要素のtextを取得
+        Panel = this.gameObject.transform.Find("Canvas/Panel").gameObject; //子要素のPanelを取得
         Number = GuestGenerator.GetComponent<GuestGenerator>();
         MyNumber = Number.Guest.Length - 1;   //自分の席番号を記憶する
         GuestNumber = Number.Guest; //GeneratorのGuestを獲得
@@ -77,6 +79,7 @@ public class Ossan_script : MonoBehaviour
 
         flooredIntrandom = (int)Mathf.Floor(random);        //5倍したランダムな値の小数点を切り捨てる(random自体の範囲0f~1.0f)
 
+        Panel.SetActive(false);   //席につくまではパネルを表示しない
         OrderObject.SetActive(false);   //席につくまではオーダーを表示しない
     }
 
@@ -141,9 +144,10 @@ public class Ossan_script : MonoBehaviour
         }
         if (GuestNowPosition.z >= -2.1 && Order == false)  //席に着いたら処理
         {
-
+            GuestNowPosition.y -= 0.5f;    //客を沈める(後でけす)
             ReturnCount = 0;    //客が帰るまでの時間を初期化
             Order = true;
+            Panel.SetActive(true);   //パネルを表示する
             OrderObject.SetActive(true);    //オーダーを表示する
 
             switch (Osusume)
@@ -165,7 +169,6 @@ public class Ossan_script : MonoBehaviour
                     break;
             }
 
-            Debug.Log(NumberString + "の席に" + ItemString + "の注文が入った");
             Text OrderText = OrderObject.GetComponent<Text>();            // オブジェクトからTextコンポーネントを取得
             OrderText.text = OrderString;    // テキストの表示を入れ替える
         }
@@ -183,7 +186,9 @@ public class Ossan_script : MonoBehaviour
         GuestNowPosition.z -= GuestSpeed;   //-z方向に移動しつづける
         if (OneProces == false)
         {
+            if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
+            Panel.SetActive(false);   //パネルを表示しない
             OrderObject.SetActive(false);    //オーダーを非表示にする
             OneProces = true;   //この処理が2回目以降通らないようにする
         }
