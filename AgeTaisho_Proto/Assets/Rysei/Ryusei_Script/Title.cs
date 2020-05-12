@@ -27,7 +27,7 @@ public class Title : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonUp("〇"))
+        if (Input.GetButtonUp("XBox_joystick_B"))
         {
             SceneManager.LoadScene("Difficulty_Scene");
         }
