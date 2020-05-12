@@ -895,11 +895,11 @@ MonoBehaviour:
   - {x: -3, y: 5, z: -2}
   - {x: -4.5, y: 5, z: -2}
   - {x: -6, y: 5, z: -2}
-  - {x: -4.5, y: 5, z: -5}
-  - {x: -4.5, y: 5, z: -6}
-  - {x: -4.5, y: 5, z: -7}
-  - {x: -4.5, y: 5, z: -8}
-  - {x: -4.5, y: 5, z: -9}
+  - {x: -4.5, y: 5, z: -4}
+  - {x: -5.5, y: 5, z: -4}
+  - {x: -6.5, y: 5, z: -4}
+  - {x: -7.5, y: 5, z: -4}
+  - {x: -8.5, y: 5, z: -4}
   Guest:
   - {fileID: 0}
   - {fileID: 0}
@@ -1479,7 +1479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9b7e1506286be48bcb1cab749c3e56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RondemNumber: 0
 --- !u!1 &634226471
 GameObject:
   m_ObjectHideFlags: 0

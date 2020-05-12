@@ -86,7 +86,7 @@ public class NotReturn_Script : MonoBehaviour
 
         if (Order == false && OneProces == false) //席についていない間実行
         {
-            while (MyNumber >= 3 && GuestNumber[MyNumber - 1] == null) //3番地以上 かつ 1こ前の番地が空いていたら処理
+            while (MyNumber >= 4 && GuestNumber[MyNumber - 1] == null) //4番地以上 かつ 1こ前の番地が空いていたら処理
             {
                 MyNumber -= 1;  //番地を-1する
                 GuestNumber[MyNumber] = this.gameObject;    //1つ前の番地にコピー
@@ -94,7 +94,7 @@ public class NotReturn_Script : MonoBehaviour
                 //Debug.Log(MyNumber);
             }
 
-            if (MyNumber == 3)
+            if (MyNumber == 3 && (GuestNowPosition.x >= GuestPosition[3].x - 0.2)) //客がPosition[3]の許容範囲より左にきたら1~3へ通す
             {
                 if (GuestNumber[0] == null) MyNumber = 0; //0の席が空いていたら移動
                 else if (GuestNumber[1] == null) MyNumber = 1; //1の席が空いていたら移動
