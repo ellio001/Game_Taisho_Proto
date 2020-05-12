@@ -234,6 +234,7 @@ GameObject:
   - component: {fileID: 8068069544749582663}
   - component: {fileID: 4910884080650823486}
   - component: {fileID: 4132359981197881050}
+  - component: {fileID: 114902157310561230}
   m_Layer: 0
   m_Name: Fried_T_Shrimp
   m_TagString: Item
@@ -344,6 +345,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 1958243434898674870}
   canvas: {fileID: 3909594194536884759}
+--- !u!114 &114902157310561230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358204639987388066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cda9cfe639b7c8409abf08830dbfb52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4367393473212151922
 GameObject:
   m_ObjectHideFlags: 0

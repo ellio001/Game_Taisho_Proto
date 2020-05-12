@@ -209,7 +209,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
     //当たり判定を切る関数
     void ColliderOut() {
-        clickedGameObject.GetComponent<Collider>().enabled = false;
+        //clickedGameObject.GetComponent<Collider>().enabled = false;
     }
 
     //当たり判定を入れる関数
