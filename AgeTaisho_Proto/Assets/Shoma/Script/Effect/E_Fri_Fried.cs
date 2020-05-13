@@ -72,4 +72,9 @@ public class E_Fri_Fried : MonoBehaviour
             Destroy(PowderParticle);
         }
     }
+
+    private void OnDestroy()
+    {
+        Destroy(PowderParticle);
+    }
 }
