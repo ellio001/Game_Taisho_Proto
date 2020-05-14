@@ -6,16 +6,21 @@ using UnityEngine.UI;
 public class Time_limit : MonoBehaviour {
 
     float time;         //時間
-    int gaugeMax;     //ゲージの最大
+    float gaugeMax;       //ゲージの最大
 
     //Sliderを入れる
-    public Slider slider;
+    Slider slider;
 
     void Start() {
+
+        slider = GetComponent<Slider>();
+
         //Sliderを満タンにする。
-        slider.value = 1;
         time = 0f;
-        gaugeMax = 180;
+        gaugeMax = 180f;
+
+        //スライダーの最大値の設定
+        slider.maxValue = gaugeMax;
     }
 
     //ColliderオブジェクトのIsTriggerにチェック入れること。
@@ -23,9 +28,9 @@ public class Time_limit : MonoBehaviour {
 
         time += Time.deltaTime;//毎フレームの時間を加算.
 
-        slider.value = time / gaugeMax;
+        slider.value = time;
         
-        print(time);
-        print(slider.value);
+        //print(time);
+        //print(slider.value);
     }
 }

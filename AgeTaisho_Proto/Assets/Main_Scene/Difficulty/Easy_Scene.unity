@@ -2845,6 +2845,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1054747348}
   - component: {fileID: 1054747349}
+  - component: {fileID: 1054747350}
   m_Layer: 5
   m_Name: Time_limit
   m_TagString: Untagged
@@ -2920,6 +2921,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1054747350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054747347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 869f51cb1fcd7b04b8917de046ad5d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1068625133
 GameObject:
   m_ObjectHideFlags: 0
@@ -5867,7 +5880,6 @@ MonoBehaviour:
   score_num: 0
   score_object: {fileID: 1366447352}
   Pause_object: {fileID: 1982439074}
-  slider: {fileID: 1054747349}
   Item_Resources:
   - {fileID: 7132295679800347507, guid: f84d64101db5c734fb2fdcb6330718ab, type: 3}
   - {fileID: 7537360058213969868, guid: 9b070f8a2d902044f99b219a12181aa4, type: 3}

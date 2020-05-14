@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour {
     bool Bad_Score;     //Bad_Scoreをいれる箱
     bool Normal_Score;  //Nomal_Score1をいれる箱
     bool Good_Score;    //Good_Scoreをいれる箱
-    public Slider slider;    //Sliderを入れる
+    //public Slider slider;    //Sliderを入れる
 
     // プレファブ達をリスト化
 
@@ -54,8 +54,8 @@ public class GameManager : MonoBehaviour {
         FiverFlag = false;
         TestSceneFlag = true;
         SceneManager.activeSceneChanged += ActiveSceneChanged;
-        //Sliderを満タンにする。
-        slider.value = 1;
+        ////Sliderを満タンにする。
+        //slider.value = 1;
         GameTime = 0f;
 
         Bad_Score = score_num < 1000;                           //スコア1000未満でBad_Score
@@ -67,8 +67,8 @@ public class GameManager : MonoBehaviour {
 
         //現在までのフレーム
         GameTime += Time.deltaTime;
-        //ゲージを動かす
-        slider.value = GameTime / GameFinishTime;
+        ////ゲージを動かす
+        //slider.value = GameTime / GameFinishTime;
 
         if (TestSceneFlag) {
             // オブジェクトからTextコンポーネントを取得
