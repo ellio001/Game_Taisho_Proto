@@ -30,7 +30,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
     int TextNumber;
 
     bool ItemSara;  //アイテム名にSaraが含まれているか判定
-    bool KonaFlag = false; // 〇を押すと粉に漬け、離すと手元に戻るようにするフラグ
+    bool KonaFlag = false; // XBox_joystick_Bを押すと粉に漬け、離すと手元に戻るようにするフラグ
     [System.NonSerialized] public string TargetTag;//今見ているOBJのタグを保存する 
     [System.NonSerialized] public GameObject TargetObj;//今見ているOBJのタグを保存する 
     [System.NonSerialized] public bool ItemPowder; // 粉系を持っているかの判定フラグ
@@ -98,7 +98,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
             // 天ぷらが生成されたら次のテキストに進むTutorial_ItemTenpura
             if (GameObject.Find("Fried_T_Shrimp") && TextNumber == 6) tutorialUI.TextNumber = 7;
             // スペースを離したときにカーソル移動ができるようにしている
-            if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("〇")) MoveFlg = false;
+            if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("XBox_joystick_B")) MoveFlg = false;
 
 
             if (Physics.Linecast(Player_V, direction, out hit)) {
@@ -117,7 +117,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
 
 
                 // フラグがたっていないとボタンが聞かな
-                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) && TC3_script.space_flg) {
+                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_joystick_B")) && TC3_script.space_flg) {
                     MoveFlg = true;
                     if (!HoldingFlg) // 手に何も持っていない時に入る
                     {
@@ -176,7 +176,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
 
                 // 粉系か皿に置くときに、ボタンを離すと手元に戻ってくるようにしている
                 if (KonaFlag && (hit.collider.gameObject.name.Contains("Dish") || hit.collider.gameObject.tag == "Item" ) && 
-                    (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("〇")))
+                    (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("XBox_joystick_B")))
                 {
                     if (hit.collider.gameObject.name.Contains("Dish")) ItemSara = true;
                     else if (hit.collider.gameObject.tag == "Item") ItemPowder = true;
