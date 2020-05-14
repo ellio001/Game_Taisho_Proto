@@ -71,7 +71,7 @@ public class Camera_3 : MonoBehaviour {
 
         // 矢印を表示させている
         Vector3 tmp = Cursor_List[cursor].transform.position;
-        LightObj.transform.position = new Vector3(tmp.x, tmp.y + 1f, tmp.z);
+        LightObj.transform.position = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z);
     }
 
     void Update() {
