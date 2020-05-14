@@ -51,7 +51,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
 
     void Start() {
         EbiBox = GameObject.Find("EbiBox");
-        Kona = GameObject.Find("kona");
+        Kona = GameObject.Find("pannko");
         Tenpra_Nabe = GameObject.Find("Tenpra_Nabe");
         Sara = GameObject.Find("Sara");
         Seki = GameObject.Find("Plate2");

@@ -287,7 +287,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
         {
             if (potfast_flg == false)
             {
-                Pcursor = -1;
+                Pcursor = 0;
                 potfast_flg = true;
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg))
