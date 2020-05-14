@@ -1991,6 +1991,7 @@ MonoBehaviour:
   score_num: 0
   score_object: {fileID: 1094770009}
   Pause_object: {fileID: 138798530}
+  slider: {fileID: 0}
   Item_Resources:
   - {fileID: 7132295679800347507, guid: f84d64101db5c734fb2fdcb6330718ab, type: 3}
   - {fileID: 7537360058213969868, guid: 9b070f8a2d902044f99b219a12181aa4, type: 3}
@@ -2027,7 +2028,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &729016931
 GameObject:
@@ -2119,7 +2120,7 @@ Transform:
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &764731700
 GameObject:
@@ -2584,7 +2585,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &908128240
 GameObject:
@@ -3134,6 +3135,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4de6ea2bca9ea29498ad0596cc25a3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1068734902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1068734903}
+  m_Layer: 0
+  m_Name: CP_4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1068734903
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068734902}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.63, y: 4, z: -1.87}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1694377635}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1094770009
 GameObject:
   m_ObjectHideFlags: 0
@@ -3324,6 +3355,7 @@ MonoBehaviour:
   - {fileID: 1260833314}
   - {fileID: 669149233}
   - {fileID: 1484804773}
+  - {fileID: 1068734902}
   pot_flg: 0
   ClickObj: {fileID: 1137722709}
   LightObj: {fileID: 218443416}
@@ -5284,8 +5316,9 @@ Transform:
   - {fileID: 1260833315}
   - {fileID: 669149234}
   - {fileID: 1484804774}
+  - {fileID: 1068734903}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1700746803
 GameObject:
