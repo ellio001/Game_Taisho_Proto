@@ -119,7 +119,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
     void DownKeyCheck()
     {
         // ←押したとき
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg))
         {
             //old_direction = THCBscript.direction;
             button_flg = true;
@@ -161,7 +161,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
         }
 
         // →押したとき
-        else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg))
         {
             //old_direction = THCBscript.direction;
             button_flg = true;
@@ -201,7 +201,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
         }
 
         // ↓押したとき
-        else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("Cross_Vertical") && !button_flg))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
         {
             //old_direction = THCBscript.direction;
             button_flg = true;
@@ -243,7 +243,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
         }
 
         // ↑押したとき
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("Cross_Vertical") && !button_flg))
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
         {
             //old_direction = THCBscript.direction;
             button_flg = true;
@@ -290,7 +290,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
                 Pcursor = -1;
                 potfast_flg = true;
             }
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg))
             {
                 button_flg = true;
                 if (Pcursor != 0 && Pcursor != 2) Pcursor -= 1;
@@ -302,7 +302,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
                 }
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg))
             {
                 button_flg = true;
                 if (Pcursor != 1 && Pcursor != 3) Pcursor += 1;
@@ -314,7 +314,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
                 //}
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("Cross_Vertical") && !button_flg))
+            else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
             {
                 button_flg = true;
                 if (Pcursor != 0 && Pcursor != 1) Pcursor -= 2;
@@ -327,7 +327,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
                 }
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("Cross_Vertical") && !button_flg))
+            else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
             {
                 button_flg = true;
                 if (Pcursor != 2 && Pcursor != 3) Pcursor += 2;
@@ -350,7 +350,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
                 Pcursor = 3;
                 potfast_flg = true;
             }
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || (0 > Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || (0 > Input.GetAxisRaw("XBox_Pad_H") && !button_flg))
             {
                 button_flg = true;
                 if (Pcursor != 5 && Pcursor != 7) Pcursor += 1;
@@ -362,7 +362,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
                 //}
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || (0 < Input.GetAxisRaw("Cross_Horizontal") && !button_flg))
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || (0 < Input.GetAxisRaw("XBox_Pad_H") && !button_flg))
             {
                 button_flg = true;
                 if (Pcursor != 4 && Pcursor != 6) Pcursor -= 1;
@@ -374,7 +374,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
                 }
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("Cross_Vertical") && !button_flg))
+            else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
             {
                 button_flg = true;
                 if (Pcursor != 4 && Pcursor != 5) Pcursor -= 2;
@@ -387,7 +387,7 @@ public class Tutorial_Camera_3 : MonoBehaviour
                 }
                 MoveLight();
             }
-            else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("Cross_Vertical") && !button_flg))
+            else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
             {
                 button_flg = true;
                 if (Pcursor != 6 && Pcursor != 7) Pcursor += 2;
