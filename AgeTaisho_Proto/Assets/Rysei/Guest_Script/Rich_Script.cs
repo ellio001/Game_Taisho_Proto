@@ -32,6 +32,7 @@ public class Rich_Script : MonoBehaviour
     public GameObject[] GuestNumber; //列番号を入れる箱
     public Vector3[] GuestPosition; //座標番号を入れる箱
     GameObject OrderObject;   //注文を表示するTextの箱
+    GameObject Panel;         //客についてるパネル
 
     public float GuestSpeed;   //客の移動速度をいれる箱
     public Vector3 GuestNowPosition;   //客の現在位置の仮決定をいれる箱
@@ -49,6 +50,7 @@ public class Rich_Script : MonoBehaviour
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
         OrderObject = this.gameObject.transform.Find("Canvas/Text").gameObject; //子要素のtextを取得
+        Panel = this.gameObject.transform.Find("Canvas/Panel").gameObject; //子要素のPanelを取得
         Number = GuestGenerator.GetComponent<GuestGenerator>();
         MyNumber = Number.Guest.Length - 1;   //自分の席番号を記憶する
         GuestNumber = Number.Guest; //GeneratorのGuestを獲得
@@ -72,6 +74,7 @@ public class Rich_Script : MonoBehaviour
 
         flooredIntrandom = (int)Mathf.Floor(random);        //5倍したランダムな値の小数点を切り捨てる(random自体の範囲0f~1.0f)
 
+        Panel.SetActive(false);   //席につくまではパネルを表示しない
         OrderObject.SetActive(false);   //席につくまではオーダーを表示しない
     }
 
@@ -81,7 +84,7 @@ public class Rich_Script : MonoBehaviour
 
         if (Order == false && OneProces == false) //席についていない間実行
         {
-            while (MyNumber >= 3 && GuestNumber[MyNumber - 1] == null) //3番地以上 かつ 1こ前の番地が空いていたら処理
+            while (MyNumber >= 4 && GuestNumber[MyNumber - 1] == null) //4番地以上 かつ 1こ前の番地が空いていたら処理
             {
                 MyNumber -= 1;  //番地を-1する
                 GuestNumber[MyNumber] = this.gameObject;    //1つ前の番地にコピー
@@ -89,7 +92,7 @@ public class Rich_Script : MonoBehaviour
                 //Debug.Log(MyNumber);
             }
 
-            if (MyNumber == 3)
+            if (MyNumber == 3 && (GuestNowPosition.x >= GuestPosition[3].x - 0.2)) //客がPosition[3]の許容範囲より左にきたら1~3へ通す
             {
                 if (GuestNumber[0] == null) MyNumber = 0; //0の席が空いていたら移動
                 else if (GuestNumber[1] == null) MyNumber = 1; //1の席が空いていたら移動
@@ -115,10 +118,10 @@ public class Rich_Script : MonoBehaviour
                 }
             }
 
-            if (GuestNowPosition.x < GuestPosition[MyNumber].x) GuestNowPosition.x += GuestSpeed;   //目的地よりz座標が小さければ-
-            else if (GuestNowPosition.x > GuestPosition[MyNumber].x) GuestNowPosition.x -= GuestSpeed; //目的地よりz座標が大きければ+
-            if (GuestNowPosition.z < GuestPosition[MyNumber].z) GuestNowPosition.z += GuestSpeed;   //目的地よりx座標が小さければ-
-            else if (GuestNowPosition.z > GuestPosition[MyNumber].z) GuestNowPosition.z -= GuestSpeed; //目的地よりx座標が大きければ+
+            if (GuestNowPosition.x < GuestPosition[MyNumber].x - 0.1) GuestNowPosition.x += GuestSpeed;   //目的地よりz座標が小さければ-
+            else if (GuestNowPosition.x > GuestPosition[MyNumber].x + 0.1) GuestNowPosition.x -= GuestSpeed; //目的地よりz座標が大きければ+
+            if (GuestNowPosition.z < GuestPosition[MyNumber].z - 0.1) GuestNowPosition.z += GuestSpeed;   //目的地よりx座標が小さければ-
+            else if (GuestNowPosition.z > GuestPosition[MyNumber].z + 0.1) GuestNowPosition.z -= GuestSpeed; //目的地よりx座標が大きければ+
         }
 
         this.gameObject.transform.position = GuestNowPosition;  //現在の位置を更新
@@ -134,11 +137,12 @@ public class Rich_Script : MonoBehaviour
             EatCount += Time.deltaTime;
             if (EatCount >= EatTime) GuestReturn();   //5秒たったら食べ終わり帰る
         }
-        if (GuestNowPosition.z >= -2 && Order == false)  //席に着いたら処理
+        if (GuestNowPosition.z >= -2.1 && Order == false)  //席に着いたら処理
         {
-
+            GuestNowPosition.y -= 0.5f;    //客を沈める(後でけす)
             ReturnCount = 0;    //客が帰るまでの時間を初期化
             Order = true;
+            Panel.SetActive(true);   //パネルを表示する
             OrderObject.SetActive(true);    //オーダーを表示する
 
             switch (SceneManager.GetActiveScene().name)
@@ -190,7 +194,9 @@ public class Rich_Script : MonoBehaviour
         GuestNowPosition.z -= GuestSpeed;   //-z方向に移動しつづける
         if (OneProces == false)
         {
+            if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
+            Panel.SetActive(false);   //パネルを表示しない
             OrderObject.SetActive(false);    //オーダーを非表示にする
             OneProces = true;   //この処理が2回目以降通らないようにする
         }

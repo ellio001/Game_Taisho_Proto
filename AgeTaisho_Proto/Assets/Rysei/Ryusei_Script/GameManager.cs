@@ -18,8 +18,7 @@ public class GameManager : MonoBehaviour {
     bool TestSceneFlag;         //シーンを飛ぶ用のフラグ
     public float Taihi;
     public bool TaihiFlag;
-
-
+    
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
     public GameObject score_object = null; // Textオブジェクト
@@ -28,6 +27,7 @@ public class GameManager : MonoBehaviour {
     bool Bad_Score;     //Bad_Scoreをいれる箱
     bool Normal_Score;  //Nomal_Score1をいれる箱
     bool Good_Score;    //Good_Scoreをいれる箱
+    //public Slider slider;    //Sliderを入れる
 
     // プレファブ達をリスト化
 
@@ -54,6 +54,9 @@ public class GameManager : MonoBehaviour {
         FiverFlag = false;
         TestSceneFlag = true;
         SceneManager.activeSceneChanged += ActiveSceneChanged;
+        ////Sliderを満タンにする。
+        //slider.value = 1;
+        GameTime = 0f;
 
         Bad_Score = score_num < 1000;                           //スコア1000未満でBad_Score
         Normal_Score = score_num >= 1000 && score_num < 2000;   //スコア1000以上2000未満でNormal_Score
@@ -64,6 +67,8 @@ public class GameManager : MonoBehaviour {
 
         //現在までのフレーム
         GameTime += Time.deltaTime;
+        ////ゲージを動かす
+        //slider.value = GameTime / GameFinishTime;
 
         if (TestSceneFlag) {
             // オブジェクトからTextコンポーネントを取得

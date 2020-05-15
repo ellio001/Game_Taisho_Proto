@@ -113,14 +113,14 @@ public class Recommended : MonoBehaviour {
                 Flame = FlameMin;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("〇")) {
+            if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("XBox_joystick_B")) {
                 SceneManager.LoadScene("Easy_Scene");
             }
         }
 
         //テスト用においている
         //もし見つけたら消してくれ
-        if (Input.GetKey(KeyCode.Escape)) {
+        if (Input.GetKey(KeyCode.Tab)) {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #endif

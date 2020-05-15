@@ -38,23 +38,23 @@ public class Difficulty_Script : MonoBehaviour
             }
         }
 
-        if ((Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("Cross_Vertical")) && Difficulty == 0 && !Button_Flg)
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("XBox_Pad_V")) && Difficulty == 0 && !Button_Flg)
         {
             Button_Flg = true;
             Difficulty = 2;
         }
-        else if ((Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("Cross_Vertical")) && Difficulty > 0 && !Button_Flg)
+        else if ((Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("XBox_Pad_V")) && Difficulty > 0 && !Button_Flg)
         {
             Button_Flg = true;
             Difficulty -= 1;
         }
 
-        if ((Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("Cross_Vertical")) && Difficulty == 2 && !Button_Flg)
+        if ((Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("XBox_Pad_V")) && Difficulty == 2 && !Button_Flg)
         {
             Button_Flg = true;
             Difficulty = 0;
         }
-        else if ((Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("Cross_Vertical")) && Difficulty < 2 && !Button_Flg)
+        else if ((Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("XBox_Pad_V")) && Difficulty < 2 && !Button_Flg)
         {
             Button_Flg = true;
             Difficulty += 1;
@@ -63,7 +63,7 @@ public class Difficulty_Script : MonoBehaviour
         Choice_Image_Vector.y = -100* (Difficulty + 1) + 145;   //仮のほうの座標を動かす
         Choice_Image_Transform.position = Choice_Image_Vector;  //仮の座標を本決定
 
-        if (Input.GetButtonUp("〇"))
+        if (Input.GetButtonUp("XBox_joystick_B"))
         {
             switch (Difficulty)
             {
