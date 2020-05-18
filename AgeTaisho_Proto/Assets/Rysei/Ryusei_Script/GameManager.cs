@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
     bool TestSceneFlag;         //シーンを飛ぶ用のフラグ
     public float Taihi;
     public bool TaihiFlag;
-    
+
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
     public GameObject score_object = null; // Textオブジェクト
@@ -29,8 +29,12 @@ public class GameManager : MonoBehaviour {
     bool Good_Score;    //Good_Scoreをいれる箱
     //public Slider slider;    //Sliderを入れる
 
-    // プレファブ達をリスト化
+    //テスト用のコード
+    public GameObject Box;
+    public GameObject slider;
 
+
+    // プレファブ達をリスト化
     [SerializeField] List<GameObject> Item_Resources = new List<GameObject>();
     [SerializeField] List<GameObject> Powder_Resources = new List<GameObject>();
     [SerializeField] List<GameObject> Fried_Resources = new List<GameObject>();
@@ -61,6 +65,10 @@ public class GameManager : MonoBehaviour {
         Bad_Score = score_num < 1000;                           //スコア1000未満でBad_Score
         Normal_Score = score_num >= 1000 && score_num < 2000;   //スコア1000以上2000未満でNormal_Score
         Good_Score = score_num >= 2000;                         //スコア2000以上でGood_Score
+
+        //テストコード
+        Box = GameObject.Find("Box");   //Resourceフォルダのプレハブを読み込む
+        slider = GameObject.Find("Handle");
     }
 
     private void Update() {
@@ -91,7 +99,7 @@ public class GameManager : MonoBehaviour {
 
     public void Judgment() {
         //ゲーム時間を判定
-        if (GameTime >= GameFinishTime){
+        if (GameTime >= GameFinishTime) {
             Debug.Log("ゲーム終了！");
             //Scene読込
             ReadScene();
@@ -104,8 +112,10 @@ public class GameManager : MonoBehaviour {
                 case 0:
                     //1回目のフィーバー
                     if (GameTime >= GameFinishTime - 120f) {
+                        //テストコード
+                        Instantiate(Box, new Vector3(slider.transform.position.x, slider.transform.position.y, slider.transform.position.z), Quaternion.identity);
+
                         print("1回目のフィーバー");
-                        //
                         FiverNumber = 0;
                         FiverFlag = true;
                         Initial();
@@ -113,8 +123,20 @@ public class GameManager : MonoBehaviour {
                     }
                     break;
                 case 1:
+                    //1回目のフィーバー
+                    if (GameTime >= GameFinishTime - 120f - FiverFinishTime) {
+                        //テストコード
+                        Instantiate(Box, new Vector3(slider.transform.position.x, slider.transform.position.y, slider.transform.position.z), Quaternion.identity);
+                        print("フィーバー終了");
+                        FiverCountFlag++;
+                    }
+                    break;
+                case 2:
                     //２回目のフィーバー
                     if (GameTime >= GameFinishTime - 60f) {
+                        //テストコード
+                        Instantiate(Box, new Vector3(slider.transform.position.x, slider.transform.position.y, slider.transform.position.z), Quaternion.identity);
+
                         print("2回目のフィーバー");
                         FiverNumber = 1;
                         FiverFlag = true;
@@ -122,6 +144,36 @@ public class GameManager : MonoBehaviour {
                         FiverCountFlag++;
                     }
                     break;
+                case 3:
+                    //２回目のフィーバー
+                    if (GameTime >= GameFinishTime - 60f - FiverFinishTime) {
+                        print("フィーバー終了");
+                        //テストコード
+                        Instantiate(Box, new Vector3(slider.transform.position.x, slider.transform.position.y, slider.transform.position.z), Quaternion.identity);
+                        FiverCountFlag++;
+                    }
+                    break;
+                    //case 0:
+
+                    //    //1回目のフィーバー
+                    //    if (GameTime >= GameFinishTime - 120f) {
+                    //        print("1回目のフィーバー");
+                    //        FiverNumber = 0;
+                    //        FiverFlag = true;
+                    //        Initial();
+                    //        FiverCountFlag++;
+                    //    }
+                    //    break;
+                    //case 1:
+                    //    //２回目のフィーバー
+                    //    if (GameTime >= GameFinishTime - 60f) {
+                    //        print("2回目のフィーバー");
+                    //        FiverNumber = 1;
+                    //        FiverFlag = true;
+                    //        Initial();
+                    //        FiverCountFlag++;
+                    //    }
+                    //    break;
             }
 
         }
@@ -175,9 +227,9 @@ public class GameManager : MonoBehaviour {
 
     public void ReadScene() {
 
-        if(Bad_Score) SceneManager.LoadScene("Score_Bad_Scene");
-        else if(Normal_Score) SceneManager.LoadScene("Score_Normal_Scene");
-        else if(Good_Score) SceneManager.LoadScene("Score_Good_Scene");
+        if (Bad_Score) SceneManager.LoadScene("Score_Bad_Scene");
+        else if (Normal_Score) SceneManager.LoadScene("Score_Normal_Scene");
+        else if (Good_Score) SceneManager.LoadScene("Score_Good_Scene");
 
         //処理を二度としないようにフラグで管理
         TestSceneFlag = false;
@@ -193,10 +245,10 @@ public class GameManager : MonoBehaviour {
     }
 
     void Quit() {
-    #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-    #elif UNITY_STANDALONE
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
           UnityEngine.Application.Quit();
-    #endif
+#endif
     }
 }
