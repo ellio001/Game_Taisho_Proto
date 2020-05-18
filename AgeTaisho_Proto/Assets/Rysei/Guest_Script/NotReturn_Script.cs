@@ -29,9 +29,9 @@ public class NotReturn_Script : MonoBehaviour
     int MyNumber;   //列番号
     public GameObject[] GuestNumber; //列番号を入れる箱
     public Vector3[] GuestPosition; //座標番号を入れる箱
-    [SerializeField] GameObject []OrderObject;   //注文を表示するTextの箱
     [SerializeField] Text [] OrderText;              //Textをいれる箱
     GameObject Panel;         //客についてるパネル
+    [SerializeField] GameObject[] OrderItems;   //席についたとき注文
 
     public float GuestSpeed;   //客の移動速度をいれる箱
     public Vector3 GuestNowPosition;   //客の現在位置の仮決定をいれる箱
@@ -48,9 +48,6 @@ public class NotReturn_Script : MonoBehaviour
     {
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
-        OrderObject[0] = this.gameObject.transform.Find("Canvas/Text1").gameObject; //子要素のtextを取得
-        OrderObject[1] = this.gameObject.transform.Find("Canvas/Text2").gameObject; //子要素のtextを取得
-        OrderObject[2] = this.gameObject.transform.Find("Canvas/Text3").gameObject; //子要素のtextを取得
         Panel = this.gameObject.transform.Find("Canvas/Panel").gameObject; //子要素のPanelを取得
 
         Number = GuestGenerator.GetComponent<GuestGenerator>();
@@ -77,9 +74,9 @@ public class NotReturn_Script : MonoBehaviour
         flooredIntrandom = (int)Mathf.Floor(random);        //5倍したランダムな値の小数点を切り捨てる(random自体の範囲0f~1.0f)
 
         Panel.SetActive(false);   //席につくまではパネルを表示しない
-        OrderObject[0].SetActive(false);   //席につくまではオーダーを表示しない
-        OrderObject[1].SetActive(false);   //席につくまではオーダーを表示しない
-        OrderObject[2].SetActive(false);   //席につくまではオーダーを表示しない
+        OrderItems[0].SetActive(false);   //席につくまではオーダーを表示しない
+        OrderItems[1].SetActive(false);   //席につくまではオーダーを表示しない
+        OrderItems[2].SetActive(false);   //席につくまではオーダーを表示しない
 
     }
 
@@ -153,9 +150,9 @@ public class NotReturn_Script : MonoBehaviour
             ReturnCount = 0;    //客が帰るまでの時間を初期化
             Order = true;
             Panel.SetActive(true);   //パネルを表示する
-            OrderObject[0].SetActive(true);    //オーダーを表示する
-            OrderObject[1].SetActive(true);    //オーダーを表示する
-            OrderObject[2].SetActive(true);    //オーダーを表示する
+            OrderItems[0].SetActive(true);   //席につくまではオーダーを表示しない
+            OrderItems[1].SetActive(true);   //席につくまではオーダーを表示しない
+            OrderItems[2].SetActive(true);   //席につくまではオーダーを表示しない
 
 
             ItemString[0] = "Dish_T_Shrimp";
@@ -167,14 +164,6 @@ public class NotReturn_Script : MonoBehaviour
             ItemString[2] = "Dish_T_Potato";
             OrderString[2] = "芋てん";
 
-
-            OrderText[0] = OrderObject[0].GetComponent<Text>();            // オブジェクトからTextコンポーネントを取得
-            OrderText[1] = OrderObject[1].GetComponent<Text>();            // オブジェクトからTextコンポーネントを取得
-            OrderText[2] = OrderObject[2].GetComponent<Text>();            // オブジェクトからTextコンポーネントを取得
-
-            OrderText[0].text = OrderString[0];    // テキストの表示を入れ替える
-            OrderText[1].text = OrderString[1];    // テキストの表示を入れ替える
-            OrderText[2].text = OrderString[2];    // テキストの表示を入れ替える
         }
         else if (Order == true)
         {
@@ -207,7 +196,7 @@ public class NotReturn_Script : MonoBehaviour
             GameManager.instance.score_num += 100; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
             ItemString[0] = null;
-            OrderObject[0].SetActive(false);   //席につくまではオーダーを表示しない
+            OrderItems[0].SetActive(false);   //席につくまではオーダーを表示しない
         }
         else if (other.gameObject.name == ItemString[1])
         {
@@ -215,7 +204,7 @@ public class NotReturn_Script : MonoBehaviour
             GameManager.instance.score_num += 100; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
             ItemString[1] = null;
-            OrderObject[1].SetActive(false);   //席につくまではオーダーを表示しない
+            OrderItems[1].SetActive(false);   //席につくまではオーダーを表示しない
         }
         else if (other.gameObject.name == ItemString[2])
         {
@@ -223,7 +212,7 @@ public class NotReturn_Script : MonoBehaviour
             GameManager.instance.score_num += 100; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
             ItemString[2] = null;
-            OrderObject[2].SetActive(false);   //席につくまではオーダーを表示しない
+            OrderItems[2].SetActive(false);   //席につくまではオーダーを表示しない
         }
     }
 }

@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class Score_Scene_Transition : MonoBehaviour
 {
-    [SerializeField]
-    GameObject score_object; // Textオブジェクトをいれる箱
+    [SerializeField] GameObject score_object;    // Textオブジェクトをいれる箱
+    [SerializeField] GameObject NextText;        //Bボタンで移動　のテキスト
+    float NextSceneLoadTime;    //次のシーンのロードまで時間を作る
 
     // Start is called before the first frame update
     void Start()
@@ -16,14 +17,18 @@ public class Score_Scene_Transition : MonoBehaviour
         Text score_text = score_object.GetComponent<Text>();
         // テキストの表示を入れ替える
         score_text.text = "TotalScore:" + GameManager.instance.score_num;
+        NextText.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonUp("XBox_joystick_B"))
+        NextSceneLoadTime += Time.deltaTime;
+
+        if(NextSceneLoadTime >= 1.5)
         {
-            SceneManager.LoadScene("Difficulty_Scene");
+            NextText.SetActive(true);
+            if (Input.GetButtonUp("XBox_joystick_B")) SceneManager.LoadScene("Difficulty_Scene");
         }
     }
 }
