@@ -598,6 +598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score_object: {fileID: 1558372784}
+  NextText: {fileID: 1831820622}
 --- !u!1 &1831820622
 GameObject:
   m_ObjectHideFlags: 0
