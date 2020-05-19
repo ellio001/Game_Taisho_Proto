@@ -28,11 +28,7 @@ public class GameManager : MonoBehaviour {
     bool Normal_Score;  //Nomal_Score1をいれる箱
     bool Good_Score;    //Good_Scoreをいれる箱
     //public Slider slider;    //Sliderを入れる
-
-    //テスト用のコード
-    public GameObject Box;
-    public GameObject slider;
-
+    
 
     // プレファブ達をリスト化
     [SerializeField] List<GameObject> Item_Resources = new List<GameObject>();
@@ -65,10 +61,7 @@ public class GameManager : MonoBehaviour {
         Bad_Score = score_num < 1000;                           //スコア1000未満でBad_Score
         Normal_Score = score_num >= 1000 && score_num < 2000;   //スコア1000以上2000未満でNormal_Score
         Good_Score = score_num >= 2000;                         //スコア2000以上でGood_Score
-
-        //テストコード
-        Box = GameObject.Find("Box");   //Resourceフォルダのプレハブを読み込む
-        slider = GameObject.Find("Handle");
+       
     }
 
     private void Update() {
@@ -112,9 +105,6 @@ public class GameManager : MonoBehaviour {
                 case 0:
                     //1回目のフィーバー
                     if (GameTime >= GameFinishTime - 120f) {
-                        //テストコード
-                        Instantiate(Box, new Vector3(slider.transform.position.x, slider.transform.position.y, slider.transform.position.z), Quaternion.identity);
-
                         print("1回目のフィーバー");
                         FiverNumber = 0;
                         FiverFlag = true;
@@ -123,33 +113,12 @@ public class GameManager : MonoBehaviour {
                     }
                     break;
                 case 1:
-                    //1回目のフィーバー
-                    if (GameTime >= GameFinishTime - 120f - FiverFinishTime) {
-                        //テストコード
-                        Instantiate(Box, new Vector3(slider.transform.position.x, slider.transform.position.y, slider.transform.position.z), Quaternion.identity);
-                        print("フィーバー終了");
-                        FiverCountFlag++;
-                    }
-                    break;
-                case 2:
                     //２回目のフィーバー
                     if (GameTime >= GameFinishTime - 60f) {
-                        //テストコード
-                        Instantiate(Box, new Vector3(slider.transform.position.x, slider.transform.position.y, slider.transform.position.z), Quaternion.identity);
-
                         print("2回目のフィーバー");
                         FiverNumber = 1;
                         FiverFlag = true;
                         Initial();
-                        FiverCountFlag++;
-                    }
-                    break;
-                case 3:
-                    //２回目のフィーバー
-                    if (GameTime >= GameFinishTime - 60f - FiverFinishTime) {
-                        print("フィーバー終了");
-                        //テストコード
-                        Instantiate(Box, new Vector3(slider.transform.position.x, slider.transform.position.y, slider.transform.position.z), Quaternion.identity);
                         FiverCountFlag++;
                     }
                     break;
@@ -223,6 +192,7 @@ public class GameManager : MonoBehaviour {
         FiverTime = Time.deltaTime;
         FiverEvacuation = FiverTime + FiverFinishTime;
         FiverFlag = true;
+        print(FiverEvacuation);
     }
 
     public void ReadScene() {
