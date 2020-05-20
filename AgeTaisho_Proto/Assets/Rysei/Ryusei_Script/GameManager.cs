@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
     bool TestSceneFlag;         //シーンを飛ぶ用のフラグ
     public float Taihi;
     public bool TaihiFlag;
-    
+
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
     public GameObject score_object = null; // Textオブジェクト
@@ -28,9 +28,9 @@ public class GameManager : MonoBehaviour {
     bool Normal_Score;  //Nomal_Score1をいれる箱
     bool Good_Score;    //Good_Scoreをいれる箱
     //public Slider slider;    //Sliderを入れる
+    
 
     // プレファブ達をリスト化
-
     [SerializeField] List<GameObject> Item_Resources = new List<GameObject>();
     [SerializeField] List<GameObject> Powder_Resources = new List<GameObject>();
     [SerializeField] List<GameObject> Fried_Resources = new List<GameObject>();
@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour {
         Bad_Score = score_num < 1000;                           //スコア1000未満でBad_Score
         Normal_Score = score_num >= 1000 && score_num < 2000;   //スコア1000以上2000未満でNormal_Score
         Good_Score = score_num >= 2000;                         //スコア2000以上でGood_Score
+       
     }
 
     private void Update() {
@@ -76,7 +77,7 @@ public class GameManager : MonoBehaviour {
             Text Pause_text = Pause_object.GetComponent<Text>();
             // テキストの表示を入れ替える
             score_text.text = "Score:" + score_num;
-            Pause_text.text = "Pキー：ポーズ";
+            Pause_text.text = "オプションキー：ポーズ";
 
             //判定
             Judgment();
@@ -91,7 +92,7 @@ public class GameManager : MonoBehaviour {
 
     public void Judgment() {
         //ゲーム時間を判定
-        if (GameTime >= GameFinishTime){
+        if (GameTime >= GameFinishTime) {
             Debug.Log("ゲーム終了！");
             //Scene読込
             ReadScene();
@@ -105,7 +106,6 @@ public class GameManager : MonoBehaviour {
                     //1回目のフィーバー
                     if (GameTime >= GameFinishTime - 120f) {
                         print("1回目のフィーバー");
-                        //
                         FiverNumber = 0;
                         FiverFlag = true;
                         Initial();
@@ -122,6 +122,27 @@ public class GameManager : MonoBehaviour {
                         FiverCountFlag++;
                     }
                     break;
+                    //case 0:
+
+                    //    //1回目のフィーバー
+                    //    if (GameTime >= GameFinishTime - 120f) {
+                    //        print("1回目のフィーバー");
+                    //        FiverNumber = 0;
+                    //        FiverFlag = true;
+                    //        Initial();
+                    //        FiverCountFlag++;
+                    //    }
+                    //    break;
+                    //case 1:
+                    //    //２回目のフィーバー
+                    //    if (GameTime >= GameFinishTime - 60f) {
+                    //        print("2回目のフィーバー");
+                    //        FiverNumber = 1;
+                    //        FiverFlag = true;
+                    //        Initial();
+                    //        FiverCountFlag++;
+                    //    }
+                    //    break;
             }
 
         }
@@ -171,13 +192,14 @@ public class GameManager : MonoBehaviour {
         FiverTime = Time.deltaTime;
         FiverEvacuation = FiverTime + FiverFinishTime;
         FiverFlag = true;
+        print(FiverEvacuation);
     }
 
     public void ReadScene() {
 
-        if(Bad_Score) SceneManager.LoadScene("Score_Bad_Scene");
-        else if(Normal_Score) SceneManager.LoadScene("Score_Normal_Scene");
-        else if(Good_Score) SceneManager.LoadScene("Score_Good_Scene");
+        if (Bad_Score) SceneManager.LoadScene("Score_Bad_Scene");
+        else if (Normal_Score) SceneManager.LoadScene("Score_Normal_Scene");
+        else if (Good_Score) SceneManager.LoadScene("Score_Good_Scene");
 
         //処理を二度としないようにフラグで管理
         TestSceneFlag = false;
@@ -193,10 +215,10 @@ public class GameManager : MonoBehaviour {
     }
 
     void Quit() {
-    #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-    #elif UNITY_STANDALONE
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
           UnityEngine.Application.Quit();
-    #endif
+#endif
     }
 }

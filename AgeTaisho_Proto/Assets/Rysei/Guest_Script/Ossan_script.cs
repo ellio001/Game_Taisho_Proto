@@ -30,8 +30,8 @@ public class Ossan_script : MonoBehaviour
     int MyNumber;   //列番号
     public GameObject[] GuestNumber; //列番号を入れる箱
     public Vector3[] GuestPosition; //座標番号を入れる箱
-    GameObject OrderObject;   //注文を表示するTextの箱
     GameObject Panel;         //客についてるパネル
+    [SerializeField] GameObject []OrderItems; //席についたとき注文
 
     public float GuestSpeed;   //客の移動速度をいれる箱
     public Vector3 GuestNowPosition;   //客の現在位置の仮決定をいれる箱
@@ -54,7 +54,6 @@ public class Ossan_script : MonoBehaviour
         Osusume = Recommended.getNumberTaihi();
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
-        OrderObject = this.gameObject.transform.Find("Canvas/Text").gameObject; //子要素のtextを取得
         Panel = this.gameObject.transform.Find("Canvas/Panel").gameObject; //子要素のPanelを取得
         Number = GuestGenerator.GetComponent<GuestGenerator>();
         MyNumber = Number.Guest.Length - 1;   //自分の席番号を記憶する
@@ -80,7 +79,9 @@ public class Ossan_script : MonoBehaviour
         flooredIntrandom = (int)Mathf.Floor(random);        //5倍したランダムな値の小数点を切り捨てる(random自体の範囲0f~1.0f)
 
         Panel.SetActive(false);   //席につくまではパネルを表示しない
-        OrderObject.SetActive(false);   //席につくまではオーダーを表示しない
+        OrderItems[0].SetActive(false);   //席につくまではパネルを表示しない
+        OrderItems[1].SetActive(false);   //席につくまではパネルを表示しない
+        OrderItems[2].SetActive(false);   //席につくまではパネルを表示しない
     }
 
     // Update is called once per frame
@@ -148,7 +149,6 @@ public class Ossan_script : MonoBehaviour
             ReturnCount = 0;    //客が帰るまでの時間を初期化
             Order = true;
             Panel.SetActive(true);   //パネルを表示する
-            OrderObject.SetActive(true);    //オーダーを表示する
 
             switch (Osusume)
             {
@@ -156,21 +156,22 @@ public class Ossan_script : MonoBehaviour
                     ItemScore = 100;
                     ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
+                    OrderItems[0].SetActive(true);
                     break;
                 case 3:
                     ItemScore = 100;
                     ItemString = "Dish_T_Fish"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
                     OrderString = "魚てん";
+                    OrderItems[1].SetActive(true);
                     break;
                 case 1:
                     ItemScore = 100;
                     ItemString = "Dish_T_Potato"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
                     OrderString = "芋てん";
+                    OrderItems[2].SetActive(true);
                     break;
             }
 
-            Text OrderText = OrderObject.GetComponent<Text>();            // オブジェクトからTextコンポーネントを取得
-            OrderText.text = OrderString;    // テキストの表示を入れ替える
         }
         else if (Order == true)
         {
@@ -189,7 +190,9 @@ public class Ossan_script : MonoBehaviour
             if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
             Panel.SetActive(false);   //パネルを表示しない
-            OrderObject.SetActive(false);    //オーダーを非表示にする
+            OrderItems[0].SetActive(false);
+            OrderItems[1].SetActive(false);
+            OrderItems[2].SetActive(false);
             OneProces = true;   //この処理が2回目以降通らないようにする
         }
     }

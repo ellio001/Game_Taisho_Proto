@@ -801,7 +801,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223701579}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 627a7852393af8945800277e511b8782, type: 3}
   m_Name: 
@@ -4602,8 +4602,6 @@ MonoBehaviour:
   ClickObj2: {fileID: 396443067}
   Player: {fileID: 109045396}
   tutorialUI: {fileID: 1167131836}
-  ArrowObj: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
-    type: 3}
 --- !u!65 &1620428491
 BoxCollider:
   m_ObjectHideFlags: 0
