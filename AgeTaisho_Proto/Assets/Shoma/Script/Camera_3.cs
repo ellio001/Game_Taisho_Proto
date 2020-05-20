@@ -36,7 +36,7 @@ public class Camera_3 : MonoBehaviour {
 
     const float SPEED = 480f; // ここをいじれば移動スピードが変わる！
     [SerializeField] GameObject ClickObj;
-    [SerializeField] GameObject LightObj; // スポットライトのObjを入れる変数
+    [SerializeField] GameObject CursorObj; // スポットライトのObjを入れる変数
 
     //ポーズ画面
     GameObject Pause;
@@ -71,7 +71,7 @@ public class Camera_3 : MonoBehaviour {
 
         // 矢印を表示させている
         Vector3 tmp = Cursor_List[cursor].transform.position;
-        LightObj.transform.position = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z);
+        CursorObj.transform.position = new Vector3(tmp.x, tmp.y/* + 0.2f*/, tmp.z);
     }
 
     void Update() {
@@ -468,11 +468,11 @@ public class Camera_3 : MonoBehaviour {
     void MoveLight() {
         if (cursor == 1 || cursor == 13) {
             Vector3 tmp = PCS_List[Pcursor].transform.position;
-            LightObj.transform.position = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z);
+            CursorObj.transform.position = new Vector3(tmp.x, tmp.y /*+ 0.2f*/, tmp.z);
         }
         else {
             Vector3 tmp = Cursor_List[cursor].transform.position;
-            LightObj.transform.position = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z);
+            CursorObj.transform.position = new Vector3(tmp.x, tmp.y /*+ 0.2f*/, tmp.z);
         }
     }
 
@@ -516,7 +516,7 @@ public class Camera_3 : MonoBehaviour {
 
 //    const float SPEED = 480f; // ここをいじれば移動スピードが変わる！
 //    [SerializeField] GameObject ClickObj;
-//    [SerializeField] GameObject LightObj; // スポットライトのObjを入れる変数
+//    [SerializeField] GameObject CursorObj; // スポットライトのObjを入れる変数
 
 //    //ポーズ画面
 //    GameObject Pause;
@@ -552,7 +552,7 @@ public class Camera_3 : MonoBehaviour {
 
 //        // 矢印を表示させている
 //        Vector3 tmp = Cursor_List[cursor].transform.position;
-//        LightObj.transform.position = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z);
+//        CursorObj.transform.position = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z);
 //    }
 
 //    void Update()
@@ -1006,12 +1006,12 @@ public class Camera_3 : MonoBehaviour {
 //        if (cursor == 1 || cursor == 13)
 //        {
 //            Vector3 tmp = PCS_List[Pcursor].transform.position;
-//            LightObj.transform.position = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z);
+//            CursorObj.transform.position = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z);
 //        }
 //        else
 //        {
 //            Vector3 tmp = Cursor_List[cursor].transform.position;
-//            LightObj.transform.position = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z);
+//            CursorObj.transform.position = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z);
 //        }
 //    }
 
