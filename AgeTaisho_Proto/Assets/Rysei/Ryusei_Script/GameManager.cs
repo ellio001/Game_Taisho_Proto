@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour {
             Text Pause_text = Pause_object.GetComponent<Text>();
             // テキストの表示を入れ替える
             score_text.text = "Score:" + score_num;
-            Pause_text.text = "Pキー：ポーズ";
+            Pause_text.text = "オプションキー：ポーズ";
 
             //判定
             Judgment();
