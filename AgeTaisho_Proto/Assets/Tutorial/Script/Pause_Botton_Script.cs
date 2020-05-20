@@ -14,7 +14,7 @@ public class Pause_Botton_Script : MonoBehaviour {
     void Start()
     {
         PauseFlag = false;
-        PauseUI.SetActive(!PauseUI.activeSelf);
+        PauseUI.SetActive(false);
     }
 
     // Update is called once per frame

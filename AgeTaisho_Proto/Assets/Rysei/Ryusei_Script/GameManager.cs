@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour {
             Text Pause_text = Pause_object.GetComponent<Text>();
             // テキストの表示を入れ替える
             score_text.text = "Score:" + score_num;
-            Pause_text.text = "オプションキー：ポーズ";
+            Pause_text.text = "Optionボタン：ポーズ";
 
             //判定
             Judgment();
@@ -105,7 +105,6 @@ public class GameManager : MonoBehaviour {
                 case 0:
                     //1回目のフィーバー
                     if (GameTime >= GameFinishTime - 120f) {
-                        print("1回目のフィーバー");
                         FiverNumber = 0;
                         FiverFlag = true;
                         Initial();
@@ -115,7 +114,6 @@ public class GameManager : MonoBehaviour {
                 case 1:
                     //２回目のフィーバー
                     if (GameTime >= GameFinishTime - 60f) {
-                        print("2回目のフィーバー");
                         FiverNumber = 1;
                         FiverFlag = true;
                         Initial();
@@ -159,7 +157,6 @@ public class GameManager : MonoBehaviour {
                     if (FiverTime >= FiverEvacuation) {
                         FiverFlag = false;
                         FiverNumber = 3;
-                        Debug.Log("フィーバータイム終了！");
                     }
                 }
                 break;
@@ -175,7 +172,6 @@ public class GameManager : MonoBehaviour {
                     if (FiverTime >= FiverEvacuation) {
                         FiverFlag = false;
                         FiverNumber = 3;
-                        Debug.Log("フィーバータイム終了！");
                     }
                 }
                 break;
