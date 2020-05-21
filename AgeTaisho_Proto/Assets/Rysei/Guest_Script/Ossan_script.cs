@@ -47,8 +47,16 @@ public class Ossan_script : MonoBehaviour
     int Osusume;
     //GameObject Recommended;
     //TestRuret testruret;
+
+    //GameObject Display;
+    //SideDisplay S_Display;
+    [SerializeField] GameObject[] SideOrder;        //プレハブをいれる
+    [SerializeField] Vector3[] DisplayPosition;     //位置をいれる
+    [SerializeField] GameObject[] SideItems;        //シーン上に置くアイテムをいれる
     void Start()
     {
+        //Display = GameObject.Find("SideDisplay"); //ディスプレイの追加
+        //S_Display = Display.GetComponent<SideDisplay>();    //SideDysplayスクリプトの追加
         //Recommended = GameObject.Find("Directional Light");
         //testruret = Recommended.GetComponent<TestRuret>();
         Osusume = Recommended.getNumberTaihi();
@@ -157,18 +165,24 @@ public class Ossan_script : MonoBehaviour
                     ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     OrderItems[0].SetActive(true);
+                    SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
                     break;
                 case 3:
                     ItemScore = 100;
                     ItemString = "Dish_T_Fish"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
                     OrderString = "魚てん";
                     OrderItems[1].SetActive(true);
+                    SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
                     break;
                 case 1:
                     ItemScore = 100;
                     ItemString = "Dish_T_Potato"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
                     OrderString = "芋てん";
                     OrderItems[2].SetActive(true);
+                    SideItems[0] = Instantiate(OrderItems[2], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[2], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
                     break;
             }
 
@@ -189,10 +203,13 @@ public class Ossan_script : MonoBehaviour
         {
             if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
+            GuestNumber[MyNumber] = null;   //ジェネレータの箱？
             Panel.SetActive(false);   //パネルを表示しない
             OrderItems[0].SetActive(false);
             OrderItems[1].SetActive(false);
             OrderItems[2].SetActive(false);
+            Destroy(SideItems[0]);
+            Destroy(SideItems[1]);
             OneProces = true;   //この処理が2回目以降通らないようにする
         }
     }

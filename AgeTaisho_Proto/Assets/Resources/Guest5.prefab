@@ -352,6 +352,16 @@ MonoBehaviour:
   EatCount: 0
   OneProces: 0
   Eat: 0
+  DisplayPosition:
+  - {x: -7, y: 6, z: 0}
+  - {x: -7, y: 6, z: 1.5}
+  - {x: -7, y: 6, z: 3}
+  - {x: -1, y: 6, z: 3}
+  - {x: -1, y: 6, z: 1.5}
+  - {x: -1, y: 6, z: 0}
+  SideItems:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &5118933833070805745
 PrefabInstance:
   m_ObjectHideFlags: 0

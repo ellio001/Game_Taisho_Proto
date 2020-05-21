@@ -168,6 +168,20 @@ MonoBehaviour:
   EatCount: 0
   OneProces: 0
   Eat: 0
+  SideOrder:
+  - {fileID: 4088248499218768598, guid: a71f05aa6a3043946ba5f641cc42cd64, type: 3}
+  - {fileID: 3116378258014384086, guid: a4510063e20226e43b58925a6ff5168a, type: 3}
+  - {fileID: 5335241039083882934, guid: efbdba2ac24a40d4abc21dc14122192f, type: 3}
+  DisplayPosition:
+  - {x: -7, y: 6, z: 0}
+  - {x: -7, y: 6, z: 1.5}
+  - {x: -7, y: 6, z: 3}
+  - {x: -1, y: 6, z: 3}
+  - {x: -1, y: 6, z: 1.5}
+  - {x: -1, y: 6, z: 0}
+  SideItems:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!65 &7186846140028278959
 BoxCollider:
   m_ObjectHideFlags: 0

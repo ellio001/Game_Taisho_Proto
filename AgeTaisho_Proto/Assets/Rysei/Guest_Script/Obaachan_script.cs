@@ -44,8 +44,15 @@ public class Obaachan_script : MonoBehaviour
 
     string SceneName; // sceneの名前を記憶する変数
 
+    //GameObject Display;
+    //SideDisplay S_Display;
+    //[SerializeField] GameObject[] SideOrder;        //プレハブをいれる
+    [SerializeField] Vector3[] DisplayPosition;     //位置をいれる
+    [SerializeField] GameObject[] SideItems;        //シーン上に置くアイテムをいれる
     void Start()
     {
+        //Display = GameObject.Find("SideDisplay"); //ディスプレイの追加
+        //S_Display = Display.GetComponent<SideDisplay>();    //SideDysplayスクリプトの追加
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
         Panel = this.gameObject.transform.Find("Canvas/Panel").gameObject; //子要素のPanelを取得
@@ -158,12 +165,16 @@ public class Obaachan_script : MonoBehaviour
                     ItemString = "Dish_T_Fish"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
                     OrderString = "魚てん";
                     OrderItems[0].SetActive(true);
+                    SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
                     break;
                 case 9:
                     ItemScore = 100;
                     ItemString = "Dish_T_Potato"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
                     OrderString = "芋てん";
                     OrderItems[1].SetActive(true);
+                    SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
                     break;
             }
         }
@@ -186,6 +197,8 @@ public class Obaachan_script : MonoBehaviour
             Panel.SetActive(false);   //パネルを表示しない
             OrderItems[0].SetActive(false);
             OrderItems[1].SetActive(false);
+            Destroy(SideItems[0]);
+            Destroy(SideItems[1]);
             OneProces = true;   //この処理が2回目以降通らないようにする
         }
     }
