@@ -198,6 +198,8 @@ GameObject:
   - component: {fileID: 9190942305628910473}
   - component: {fileID: 3617891749064128482}
   - component: {fileID: 266747438891108131}
+  - component: {fileID: 114556849647735370}
+  - component: {fileID: 114926750050416472}
   m_Layer: 0
   m_Name: Powder_Fish_v2
   m_TagString: Item
@@ -292,7 +294,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &266747438891108131
 MonoBehaviour:
@@ -308,6 +310,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 160438646572385271}
   canvas: {fileID: 1918896611442571692}
+--- !u!114 &114556849647735370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3798388363363431226}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 065113436d4e4034cadc6aa6eacad363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114926750050416472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3798388363363431226}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8a5a4990737b54090625d5e0d563e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3893687687772053102
 GameObject:
   m_ObjectHideFlags: 0

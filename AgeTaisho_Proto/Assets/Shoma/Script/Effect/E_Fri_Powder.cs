@@ -42,7 +42,6 @@ public class E_Fri_Powder : MonoBehaviour
     {
         if (other.gameObject.name.Contains("Nabe"))
         {
-            Debug.Log("kita");
             P_Effect = (GameObject)Resources.Load("Effects/E_Frying");   //Resourceフォルダのプレハブを読み込む
             pos = this.gameObject.transform.position;      // 粉の座標代入
             rot = P_Effect.gameObject.transform.rotation;  // エフェクトの回転を代入

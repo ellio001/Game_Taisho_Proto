@@ -65,8 +65,8 @@ public class UIFollowTarget : MonoBehaviour
                 target = C3_script.PCS_List[C3_script.Pcursor].transform;
                 if (!flg)
                 {
-                    IconSize.x = 540;
-                    IconSize.y = 320;
+                    IconSize.x = 390;
+                    IconSize.y = 170;
                     GetComponent<RectTransform>().sizeDelta = IconSize;
                     rect_tra.Translate(new Vector3(-0.917f, -0.815f, -0.361f));
                     flg = true;
