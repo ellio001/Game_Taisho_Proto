@@ -118,7 +118,7 @@ public class HandControllerButton_Ryoma : MonoBehaviour {
                                     ColliderOut();
                                     break;
                                 case "FishBox":
-                                    Resource = (GameObject)Resources.Load("R_Resources/Item_Fish");   //Resourceフォルダのプレハブを読み込む
+                                    Resource = (GameObject)Resources.Load("R_Resources/Item_Fish_v2");   //Resourceフォルダのプレハブを読み込む
                                     clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                     HoldingFlg = true;
                                     ColliderFlag = 2;
