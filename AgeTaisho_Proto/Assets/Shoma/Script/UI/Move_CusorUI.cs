@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Move_CusorUI : MonoBehaviour
 {
     GameObject C3;
     Camera_3 C3_script;
-    Vector2 CursorPos;
+    Vector3 CursorPos;
+    Vector3 TMPCursorPos;
 
+    
     //　アイコンのサイズ取得で使用
     private RectTransform rect;
     //　アイコンが画面内に収まる為のオフセット値
@@ -17,11 +20,10 @@ public class Move_CusorUI : MonoBehaviour
     void Start()
     {
         rect = GetComponent<RectTransform>();
-        //　オフセット値をアイコンのサイズの半分で設定
-        offset = new Vector2(rect.sizeDelta.x / 2f, rect.sizeDelta.y / 2f);
 
         C3 = GameObject.Find("Main Camera");
         C3_script = C3.GetComponent<Camera_3>();
+        TMPCursorPos = CursorPos;
     }
 
     void Update()
@@ -31,16 +33,23 @@ public class Move_CusorUI : MonoBehaviour
         //　移動先を計算
         //var pos = rect.anchoredPosition + new Vector2(CursorPos.x, CursorPos.y);
 
-        var pos = new Vector2(CursorPos.x, CursorPos.y);
-        Debug.Log("CursorPos.x:" + CursorPos.x);
-        Debug.Log("CursorPos.y:" + CursorPos.y);
+        if (TMPCursorPos != CursorPos)
+        {
+            //var pos = new Vector3(CursorPos.x, CursorPos.y,CursorPos.z-100);
+            //RectTransform.position
+            TMPCursorPos = CursorPos;
+            Debug.Log("入った");
+            Debug.Log("x:" + rect.localPosition.x);
+            Debug.Log("y:" + rect.localPosition.y);
+            //Debug.Log("CursorPos.y:" + CursorPos.y);
+        }
+        //RectTransform.= -290f;
 
-        
         //　アイコンが画面外に出ないようにする
         //pos.x = Mathf.Clamp(pos.x, -Screen.width * 0.5f + offset.x, Screen.width * 0.5f - offset.x);
         //pos.y = Mathf.Clamp(pos.y, -Screen.height * 0.5f + offset.y, Screen.height * 0.5f - offset.y);
         //　アイコン位置を設定
-        rect.anchoredPosition = pos;
+        //rect.anchoredPosition = pos;
 
 
         //ScalOperation();
