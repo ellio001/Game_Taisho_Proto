@@ -20,7 +20,7 @@ public class Camera_3 : MonoBehaviour {
     /*----------------------------------------------------------------------------------------------------*/
 
     /*------------------------------------------＜フラグ＞--------------------------------------------------*/
-    bool gomi_flg = false;   // ゴミ箱を向くときに使う
+    [System.NonSerialized] public bool gomi_flg = false;   // ゴミ箱を向くときに使う
     bool stock_flg = false;  // ストックを見ているときはフラグがたつ
     public bool pot_flg = false; // 鍋を見るかのフラグ
     [System.NonSerialized] public bool space_flg = false; // 移動中にスペースキーが反応しないようにするフラグ

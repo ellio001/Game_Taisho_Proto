@@ -448,22 +448,29 @@ public class Tutorial_Camera_3 : MonoBehaviour
     void MoveCamera()
     {// 三方向にカメラを固定する処理
 
+        /* ゴミ箱側 */
+        if (cursor == 0)
+        {
+            var aim = this.CP_List[3].transform.position - this.transform.position;
+            var look = Quaternion.LookRotation(aim);
+            target = look; // 目的座標を保存
+        }
         /* 天ぷら側 */
-        if (cursor == 1 || cursor == 5)
+        if (cursor >= 1 && cursor <= 5)
         {
             var aim = this.CP_List[0].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
         }
         /* お客側 */
-        else if (cursor == 0 || cursor == 6 || cursor == 8)
+        else if (cursor >= 6 && cursor <= 8)
         {
             var aim = this.CP_List[1].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
         }
         /* 揚げ物側 */
-        else if (cursor == 9 || cursor == 13)
+        else if (cursor >= 9 && cursor <= 13)
         {
             var aim = this.CP_List[2].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
