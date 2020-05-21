@@ -173,9 +173,9 @@ MonoBehaviour:
   - {fileID: 3116378258014384086, guid: a4510063e20226e43b58925a6ff5168a, type: 3}
   - {fileID: 5335241039083882934, guid: efbdba2ac24a40d4abc21dc14122192f, type: 3}
   DisplayPosition:
-  - {x: -7, y: 6, z: 0}
-  - {x: -7, y: 6, z: 1.5}
-  - {x: -7, y: 6, z: 3}
+  - {x: -8, y: 5.1, z: 0}
+  - {x: -8, y: 5.1, z: 1.2}
+  - {x: -8, y: 5.1, z: 2.4}
   - {x: -1, y: 6, z: 3}
   - {x: -1, y: 6, z: 1.5}
   - {x: -1, y: 6, z: 0}

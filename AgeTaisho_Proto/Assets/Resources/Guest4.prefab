@@ -364,9 +364,9 @@ MonoBehaviour:
   OneProces: 0
   Eat: 0
   DisplayPosition:
-  - {x: -7, y: 6, z: 0}
-  - {x: -7, y: 6, z: 1.5}
-  - {x: -7, y: 6, z: 3}
+  - {x: -8, y: 5.1, z: 0}
+  - {x: -8, y: 5.1, z: 1.2}
+  - {x: -8, y: 5.1, z: 2.4}
   - {x: -1, y: 6, z: 3}
   - {x: -1, y: 6, z: 1.5}
   - {x: -1, y: 6, z: 0}

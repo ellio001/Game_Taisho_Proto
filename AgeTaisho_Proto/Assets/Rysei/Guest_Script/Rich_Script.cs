@@ -159,8 +159,8 @@ public class Rich_Script : MonoBehaviour
                     ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     OrderItems[0].SetActive(true);
-                    SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
-                    SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
+                    SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
                     break;
                 case "Normal_Scene":
                     ItemScore = 100*ScorePush;
