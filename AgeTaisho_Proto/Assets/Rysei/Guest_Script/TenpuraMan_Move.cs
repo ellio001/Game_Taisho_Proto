@@ -44,12 +44,20 @@ public class TenpuraMan_Move : MonoBehaviour
 
     string SceneName; // sceneの名前を記憶する変数
 
+    //GameObject Display;
+    //SideDisplay S_Display;
+    [SerializeField] GameObject[] SideOrder;        //プレハブをいれる
+    [SerializeField] Vector3[] DisplayPosition;     //位置をいれる
+    [SerializeField] GameObject[] SideItems;        //シーン上に置くアイテムをいれる
+
     void Start()
     {
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
+        //Display = GameObject.Find("SideDisplay"); //ディスプレイの追加
         Panel = this.gameObject.transform.Find("Canvas/Panel").gameObject; //子要素のPanelを取得
         Number = GuestGenerator.GetComponent<GuestGenerator>();
+        //S_Display = Display.GetComponent<SideDisplay>();    //SideDysplayスクリプトの追加
         MyNumber = Number.Guest.Length - 1;   //自分の席番号を記憶する
         GuestNumber = Number.Guest; //GeneratorのGuestを獲得
         GuestPosition = Number.Position; //GeneratorのPositionを獲得
@@ -151,23 +159,31 @@ public class TenpuraMan_Move : MonoBehaviour
                     ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     OrderItems[0].SetActive(true);
+                    SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
                     break;
                 case 1:
                     ItemScore = 100;
                     ItemString = "Dish_T_Fish"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
                     OrderString = "魚てん";
                     OrderItems[1].SetActive(true);
+                    SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
                     break;
                 case 2:
                     ItemScore = 100;
                     ItemString = "Dish_T_Potato"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
                     OrderItems[2].SetActive(true);
                     OrderString = "芋てん";
+                    SideItems[0] = Instantiate(OrderItems[2], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[2], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
                     break;
             }
+
         }
         else if (Order == true)
         {
+            //S_Display.StartSideDisplay();
             ReturnCount += Time.deltaTime;
             if (ReturnCount >= SitTime) GuestReturn(); //席について30秒たつとGuestReturnが呼ばれる
         }
@@ -182,10 +198,13 @@ public class TenpuraMan_Move : MonoBehaviour
         {
             if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
+            GuestNumber[MyNumber] = null;   //ジェネレータの箱？
             Panel.SetActive(false);   //パネルを表示しない
             OrderItems[0].SetActive(false);
             OrderItems[1].SetActive(false);
             OrderItems[2].SetActive(false);
+            Destroy(SideItems[0]);
+            Destroy(SideItems[1]);
             OneProces = true;   //この処理が2回目以降通らないようにする
         }
     }
@@ -198,7 +217,6 @@ public class TenpuraMan_Move : MonoBehaviour
             Eat = true;      //客が商品を食べ始める
             GameManager.instance.score_num += ItemScore; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
-
         }
     }
 }

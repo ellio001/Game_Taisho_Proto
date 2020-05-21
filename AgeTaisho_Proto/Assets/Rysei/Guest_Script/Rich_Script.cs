@@ -45,9 +45,15 @@ public class Rich_Script : MonoBehaviour
 
     string SceneName; // sceneの名前を記憶する変数
 
+    //GameObject Display;
+    //SideDisplay S_Display;
+    //[SerializeField] GameObject[] SideOrder;        //プレハブをいれる
+    [SerializeField] Vector3[] DisplayPosition;     //位置をいれる
+    [SerializeField] GameObject[] SideItems;        //シーン上に置くアイテムをいれる
     void Start()
     {
-
+        //Display = GameObject.Find("SideDisplay"); //ディスプレイの追加
+        //S_Display = Display.GetComponent<SideDisplay>();    //SideDysplayスクリプトの追加
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
         Panel = this.gameObject.transform.Find("Canvas/Panel").gameObject; //子要素のPanelを取得
         Number = GuestGenerator.GetComponent<GuestGenerator>();
@@ -153,18 +159,24 @@ public class Rich_Script : MonoBehaviour
                     ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     OrderItems[0].SetActive(true);
+                    SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
                     break;
                 case "Normal_Scene":
                     ItemScore = 100*ScorePush;
                     ItemString = "ItemSara(Chicken)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "からあげ";
                     OrderItems[1].SetActive(true);
+                    SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
                     break;
                 case "Hard_Scene":
                     ItemScore = 100*ScorePush;
                     ItemString = "Dish_K_Quail"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "うずら";
                     OrderItems[2].SetActive(true);
+                    SideItems[0] = Instantiate(OrderItems[2], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[2], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
                     break;
             }
             switch (MyNumber)
@@ -201,6 +213,8 @@ public class Rich_Script : MonoBehaviour
             OrderItems[0].SetActive(false);
             OrderItems[1].SetActive(false);
             OrderItems[2].SetActive(false);
+            Destroy(SideItems[0]);
+            Destroy(SideItems[1]);
             OneProces = true;   //この処理が2回目以降通らないようにする
         }
     }
