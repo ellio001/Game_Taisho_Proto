@@ -23,6 +23,7 @@ public class UIFollowTarget : MonoBehaviour
     const float Scale_val = 0.00001f; // 拡大縮小する値
     const int Count_return = 120; // 拡大縮小の一往復するまでのカウント値
 
+    int tmp_cursor;
     bool flg=false;
 
     void Awake()
@@ -35,7 +36,6 @@ public class UIFollowTarget : MonoBehaviour
 
         C3 = GameObject.Find("Main Camera");
         C3_script = C3.GetComponent<Camera_3>();
-        
     }
 
     void Update()
@@ -50,9 +50,6 @@ public class UIFollowTarget : MonoBehaviour
         var screenPos = RectTransformUtility.WorldToScreenPoint(worldCamera, target.position);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, uiCamera, out pos);
         rectTransform.localPosition = pos;
-
-        //Debug.Log("サイズ:" + IconSize);
-        Debug.Log("サイズ:" + CanvasPos);
         
         ScalOperation();
     }
@@ -60,30 +57,41 @@ public class UIFollowTarget : MonoBehaviour
 
     void TargetSelect()
     {
-        if (C3_script.pot_flg)
-        { // 鍋の中はPcursorをターゲットにしている
-            target = C3_script.PCS_List[C3_script.Pcursor].transform;
-            if (!flg)
-            {
-                IconSize.x = 540;
-                IconSize.y = 320;
-                GetComponent<RectTransform>().sizeDelta = IconSize;
-                rect_tra.Translate(new Vector3(-0.917f,-0.815f,-0.361f));
-                flg = true;
-            }
-        }
-        else
+        if (tmp_cursor != C3_script.cursor || C3_script.pot_flg)
         {
-            target = C3_script.Cursor_List[C3_script.cursor].transform;
-            if (flg)
-            {
-                IconSize.x = 640;
-                IconSize.y = 420;
-                GetComponent<RectTransform>().sizeDelta = IconSize;
-                rect_tra.Translate(new Vector3(+0.917f, +0.815f, +0.361f));
-                flg = false;
+            tmp_cursor = C3_script.cursor;
+            if (C3_script.pot_flg)
+            { // 鍋の中はPcursorをターゲットにしている
+                target = C3_script.PCS_List[C3_script.Pcursor].transform;
+                if (!flg)
+                {
+                    IconSize.x = 540;
+                    IconSize.y = 320;
+                    GetComponent<RectTransform>().sizeDelta = IconSize;
+                    rect_tra.Translate(new Vector3(-0.917f, -0.815f, -0.361f));
+                    flg = true;
+                }
             }
-            this.transform.parent.GetComponent<RectTransform>().anchoredPosition = CanvasPos;
+            else
+            {
+                target = C3_script.Cursor_List[C3_script.cursor].transform;
+                if (flg)
+                {
+                    IconSize.x = 640;
+                    IconSize.y = 420;
+                    GetComponent<RectTransform>().sizeDelta = IconSize;
+                    rect_tra.Translate(new Vector3(+0.917f, +0.815f, +0.361f));
+                    flg = false;
+                }
+                // Saraを選択したときにカーソルが隠れないように位置調整している
+                if (C3_script.cursor == 14 || C3_script.cursor == 15)
+                {
+                    rect_tra.Translate(new Vector3(-0.917f, -0.815f, -0.361f));
+                    flg = true;
+                }
+                
+                this.transform.parent.GetComponent<RectTransform>().anchoredPosition = CanvasPos;
+            }
         }
     }
 
