@@ -38,7 +38,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
 
 
     /***** 矢印(アウトライン)関連 *****/
-    //[SerializeField] GameObject ArrowObj; // 矢印のObjを入れる変数
+    [SerializeField] GameObject ArrowObj; // 矢印のObjを入れる変数
     bool ArrowFlg = false;                // 矢印が今出ているかの確認用
     bool DestroyFlg = false;              // 矢印を消すか判断する用
     Vector3 tmp;                          // カーソルの座標を仮に保存
@@ -208,36 +208,36 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
         if (ArrowFlg == false && TextNumber != 9) {
             switch (TextNumber) {
                 case 3:
-                    EbiBox.GetComponent<Outline>().enabled = true;
-                    //tmp = TC3_script.Cursor_List[3].transform.position;
+                    //EbiBox.GetComponent<Outline>().enabled = true;
+                    tmp = TC3_script.Cursor_List[3].transform.position;
                     break;
                 case 4:
-                    EbiBox.GetComponent<Outline>().enabled = false;
-                    Kona.GetComponent<Outline>().enabled = true;
-                    //tmp = TC3_script.Cursor_List[2].transform.position;
+                    //EbiBox.GetComponent<Outline>().enabled = false;
+                    //Kona.GetComponent<Outline>().enabled = true;
+                    tmp = TC3_script.Cursor_List[2].transform.position;
                     break;
                 case 5:
-                    Kona.GetComponent<Outline>().enabled = false;
-                    Tenpra_Nabe.GetComponent<Outline>().enabled = true;
-                    //tmp = TC3_script.Cursor_List[1].transform.position;
+                    //Kona.GetComponent<Outline>().enabled = false;
+                    //Tenpra_Nabe.GetComponent<Outline>().enabled = true;
+                    tmp = TC3_script.Cursor_List[1].transform.position;
                     break;
                 case 7:
-                    Tenpra_Nabe.GetComponent<Outline>().enabled = false;
-                    Sara.GetComponent<Outline>().enabled = true;
-                    //tmp = TC3_script.Cursor_List[15].transform.position;
+                    //Tenpra_Nabe.GetComponent<Outline>().enabled = false;
+                    //Sara.GetComponent<Outline>().enabled = true;
+                    tmp = TC3_script.Cursor_List[15].transform.position;
                     break;
                 case 8:
-                    Sara.GetComponent<Outline>().enabled = false;
-                    Seki.GetComponent<Outline>().enabled = true;
-                    //tmp = TC3_script.Cursor_List[6].transform.position;
+                    //Sara.GetComponent<Outline>().enabled = false;
+                    //Seki.GetComponent<Outline>().enabled = true;
+                    tmp = TC3_script.Cursor_List[6].transform.position;
                     break;
             }
-            //Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
             ArrowFlg = true; // 矢印が表示中のフラグ
         }
         else if (DestroyFlg || TextNumber == 9) {
-            //Destroy(GameObject.Find("Yajirusi(Clone)"));
-            //DestroyFlg = false;
+            Destroy(GameObject.Find("Yajirusi(Clone)"));
+            DestroyFlg = false;
             ArrowFlg = false;
         }
     }
