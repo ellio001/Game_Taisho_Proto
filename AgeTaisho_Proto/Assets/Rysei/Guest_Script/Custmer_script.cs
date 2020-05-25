@@ -41,6 +41,7 @@ public class Custmer_script : MonoBehaviour
     public float EatCount;      //客が食べている間の時間をいれる
     public bool OneProces = false; //自分のいた箱を1回だけ初期化する
     public bool Eat;            //提供された時trueにする
+    bool OneDelete;             //注文を１回だけ消す
 
     string SceneName; // sceneの名前を記憶する変数
 
@@ -142,6 +143,16 @@ public class Custmer_script : MonoBehaviour
         if (Eat)
         {
             EatCount += Time.deltaTime;
+            if (OneDelete == false)
+            {
+                Panel.SetActive(false);   //パネルを表示しない
+                OrderItems[0].SetActive(false);
+                OrderItems[1].SetActive(false);
+                OrderItems[2].SetActive(false);
+                Destroy(SideItems[0]);
+                Destroy(SideItems[1]);
+                OneDelete = true;
+            }
             if (EatCount >= EatTime) GuestReturn();   //5秒たったら食べ終わり帰る
         }
         if (GuestNowPosition.z >= -2.1 && Order == false)  //席に着いたら処理
@@ -236,12 +247,16 @@ public class Custmer_script : MonoBehaviour
         {
             if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
-            Panel.SetActive(false);   //パネルを表示しない
-            OrderItems[0].SetActive(false);
-            OrderItems[1].SetActive(false);
-            OrderItems[2].SetActive(false);
-            Destroy(SideItems[0]);
-            Destroy(SideItems[1]);
+            if (OneDelete == false)
+            {
+                Panel.SetActive(false);   //パネルを表示しない
+                OrderItems[0].SetActive(false);
+                OrderItems[1].SetActive(false);
+                OrderItems[2].SetActive(false);
+                Destroy(SideItems[0]);
+                Destroy(SideItems[1]);
+                OneDelete = true;
+            }
             OneProces = true;   //この処理が2回目以降通らないようにする
         }
     }
