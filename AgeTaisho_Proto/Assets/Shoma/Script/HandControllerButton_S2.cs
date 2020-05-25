@@ -96,6 +96,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 // フラグがたっていないとボタンが効かない
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_joystick_B")) && C3_script.space_flg) {
                     MoveFlg = true;
+                    if (C3_script.stock_flg && ItemSara) C3_script.StockEX_flg = true;
                     if (!HoldingFlg) // 手に何も持っていない時に入る
                     {
                         if (hit.collider.gameObject.tag == "Box") {
