@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 7189043562627532258}
   - component: {fileID: 4941657235454487613}
   - component: {fileID: 6494989221309306218}
+  - component: {fileID: 114768745578341692}
   m_Layer: 0
   m_Name: Fried_T_Fish_v2
   m_TagString: Item
@@ -196,6 +197,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 2392770493090459811}
   canvas: {fileID: 1906961183121149623}
+--- !u!114 &114768745578341692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677448543434244457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cda9cfe639b7c8409abf08830dbfb52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2537896710169206713
 GameObject:
   m_ObjectHideFlags: 0
