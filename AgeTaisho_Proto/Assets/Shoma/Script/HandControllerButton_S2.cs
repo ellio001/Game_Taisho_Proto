@@ -62,7 +62,6 @@ public class HandControllerButton_S2 : MonoBehaviour {
     }
 
     void Update() {
-        //Debug.Log(KonaFlag);
         if (script.PauseFlag) {
             return;
         }
@@ -96,6 +95,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 // フラグがたっていないとボタンが効かない
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_joystick_B")) && C3_script.space_flg) {
                     MoveFlg = true;
+                    // ストックにsaraを置いたときtrue(C3のストック自動選択で使う)
                     if (C3_script.stock_flg && ItemSara) C3_script.StockEX_flg = true;
                     if (!HoldingFlg) // 手に何も持っていない時に入る
                     {
@@ -168,6 +168,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                             (!ItemSara && hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" && hit.collider.gameObject.tag != "Stock"))
                     // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                     {
+                        if (C3_script.pot_flg) C3_script.PotEX_flg = true;
+
                         ItemPowder = false; // 粉をつけたものを鍋に置いたときにFalse
                         //当たり判定を入れる
                         ColliderIn();
