@@ -12,6 +12,9 @@ public class Difficulty_Script : MonoBehaviour {
     Vector3 Choice_Image_Vector;    //Chois_Imageの
 
     GameObject easy_back_image = null;
+    GameObject easy_back_ui = null;
+    GameObject normal_back_ui = null;
+    GameObject hard_back_ui = null;
 
     bool Button_Flg;
     float Button_Time;
@@ -22,8 +25,14 @@ public class Difficulty_Script : MonoBehaviour {
         Button_Flg = false;
         //オブジェクトの取得
         easy_back_image = GameObject.Find("Easy_Back_Image");
+        easy_back_ui = GameObject.Find("Easy_Back_UI");
+        normal_back_ui = GameObject.Find("Normal_Back_UI");
+        hard_back_ui = GameObject.Find("Hard_Back_UI");
         //処理
         easy_back_image.SetActive(false);
+        easy_back_ui.SetActive(false);
+        normal_back_ui.SetActive(false);
+        hard_back_ui.SetActive(false);
     }
 
     // Update is called once per frame
@@ -60,19 +69,19 @@ public class Difficulty_Script : MonoBehaviour {
 
         switch (Difficulty) {
             case 0:
-                easy_back_image.SetActive(true);
+                Easy_Active();
                 break;
             case 1:
-                easy_back_image.SetActive(false);
+                Normal_Active();
                 break;
             case 2:
-                easy_back_image.SetActive(false);
+                Hard_Active();
                 break;
         }
 
-        //Choice_Image_Vector.y = -150 * (Difficulty + 1) + 650;
-        Choice_Image_Vector.y = -150 * (Difficulty + 1) + 650;  //仮の座標を決定
-        Choice_Image_Transform.position = Choice_Image_Vector;  //仮の座標を本決定
+        ////Choice_Image_Vector.y = -150 * (Difficulty + 1) + 650;
+        //Choice_Image_Vector.y = -150 * (Difficulty + 1) + 650;  //仮の座標を決定
+        //Choice_Image_Transform.position = Choice_Image_Vector;  //仮の座標を本決定
 
         print(Choice_Image_Vector.y);
 
@@ -89,5 +98,24 @@ public class Difficulty_Script : MonoBehaviour {
                     break;
             }
         }
+
+    }
+    void Easy_Active() {
+        easy_back_image.SetActive(true);
+        easy_back_ui.SetActive(true);
+        normal_back_ui.SetActive(false);
+        hard_back_ui.SetActive(false);
+    }
+    void Normal_Active() {
+        easy_back_image.SetActive(false);
+        easy_back_ui.SetActive(false);
+        normal_back_ui.SetActive(true);
+        hard_back_ui.SetActive(false);
+    }
+    void Hard_Active() {
+        easy_back_image.SetActive(false);
+        easy_back_ui.SetActive(false);
+        normal_back_ui.SetActive(false);
+        hard_back_ui.SetActive(true);
     }
 }
