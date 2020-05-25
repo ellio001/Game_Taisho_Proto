@@ -21,11 +21,42 @@ public class Camera_3 : MonoBehaviour {
 
     /*------------------------------------------＜フラグ＞--------------------------------------------------*/
     [System.NonSerialized] public bool gomi_flg = false;   // ゴミ箱を向くときに使う
-    bool stock_flg = false;  // ストックを見ているときはフラグがたつ
+    [System.NonSerialized] public bool stock_flg = false;  // ストックを見ているときはフラグがたつ
     public bool pot_flg = false; // 鍋を見るかのフラグ
     [System.NonSerialized] public bool space_flg = false; // 移動中にスペースキーが反応しないようにするフラグ
     bool potfast_flg = false; // 粉から鍋を選択すると左下が選択されるためのフラグ
     bool button_flg = false;  // ボタンが一回だけ押さるようにするフラグ
+    /*----------------------------------------------------------------------------------------------------*/
+
+    /*------------------------------------------＜配列＞--------------------------------------------------*/
+    bool[,] StockMG = { // ストックが置いている場所はフラグがたつようにする
+        { false, false, false }, // 油もの側用
+        { false, false, false }  // 揚げ物側用
+    };
+    int AutCount = 0;
+
+    struct _Stock{
+        public bool flg;      // その場所にItemがあればtrue
+        public int cursorNum; // cursorに代入する用
+    };
+    _Stock[] stock = new _Stock[6];
+
+
+
+    //static void Main(string[] args)
+    //{
+    //    stock = new _Stock[6]{
+    //    new _Stock() { flg = false,cursorNum = 21},
+    //    new _Stock() { flg = false,cursorNum = 20},
+    //    new _Stock() { flg = false,cursorNum = 19},
+    //    new _Stock() { flg = false,cursorNum = 18},
+    //    new _Stock() { flg = false,cursorNum = 17},
+    //    new _Stock() { flg = false,cursorNum = 16}
+    //    };
+    //}
+
+    [System.NonSerialized] public bool AutSelect_flg = true;
+    [System.NonSerialized] public bool StockEX_flg = false; // ストックに物がある時はフラグがたつ
     /*----------------------------------------------------------------------------------------------------*/
 
     [System.NonSerialized] public int cursor = 7; // カーソル用
@@ -72,13 +103,15 @@ public class Camera_3 : MonoBehaviour {
         // 矢印を表示させている
         Vector3 tmp = Cursor_List[cursor].transform.position;
         CursorObj.transform.position = new Vector3(tmp.x, tmp.y/* + 0.2f*/, tmp.z);
+
+        InitialStructure(); // 構造体の初期化
     }
 
     void Update() {
         if (button_flg) // 連続でボタンを押せないようにインターバルを設定
         {
             button_time += Time.deltaTime;
-            if (button_time >= 0.2) {
+            if (button_time >= 0.1) {
                 button_flg = false;
                 button_time = 0;
             }
@@ -92,11 +125,17 @@ public class Camera_3 : MonoBehaviour {
                 if (cursor == 1 || cursor == 13) pot_flg = true;
                 //MoveLight();    // カーソルの移動についての処理
             }
+            // 鍋を見ているときに４つの座標から選択できるようにしている
             if (pot_flg) PotSelect();
+
 
             MoveCamera(); // カメラを移動させる処理
             // 移動を滑らかにする処理
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, SPEED * Time.deltaTime);
+
+            // ストックに何か置いてて何も持っていない時、ストックを見るとすでにあるものを選択できないようにする
+            Debug.Log("cursor : " + cursor);
+            if (StockEX_flg && !HCBscript.HoldingFlg) AutoCursorSelect();
 
             //// カーソル移動したときのアウトラインのオンオフを設定
             //if (old_direction != HCBscript.direction)
@@ -110,7 +149,39 @@ public class Camera_3 : MonoBehaviour {
         }
     }
 
+    /*----------------------------------------------------------------------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------------------------------------------------------------*/
 
+    void AutoCursorSelect()
+    {
+        if(stock_flg && AutSelect_flg) // チェック
+        {// ストックにあるものを自動選択する
+            if (HCBscript.TargetTag != "Item")
+            {
+                if(cursor <= 21 && cursor >= 19)
+                {
+                    if (cursor != 19) cursor -= 1;
+                    else
+                    {
+                        cursor = 21;
+                        AutSelect_flg = false;
+                    }
+                }
+                else if (cursor <= 18 && cursor >= 16)
+                {
+                    if (cursor != 16) cursor -= 1;
+                    else
+                    {
+                        cursor = 18;
+                        AutSelect_flg = false;
+                    }
+                }
+                
+            }
+            else AutSelect_flg = false;
+            
+        }
+    }
 
     void DownKeyCheck() {
         // ←押したとき
@@ -196,6 +267,7 @@ public class Camera_3 : MonoBehaviour {
                 if (stock_flg) {
                     cursor = tmp_cursor;
                     stock_flg = false;
+                    AutSelect_flg = true;
                 }
                 else {
                     //お皿をもりつける場所を見る(油もの側)
@@ -234,12 +306,12 @@ public class Camera_3 : MonoBehaviour {
                 //ストックする場所を見る(油もの側)
                 if (cursor >= 1 && cursor <= 5) {
                     tmp_cursor = cursor;
-                    cursor = 20;
+                    cursor = 21;
                 }
                 //ストックする場所を見る(揚げ物側)
                 if (cursor >= 9 && cursor <= 13) {
                     tmp_cursor = cursor;
-                    cursor = 17;
+                    cursor = 18;
                 }
                 stock_flg = true;
             }
@@ -368,7 +440,7 @@ public class Camera_3 : MonoBehaviour {
 
             if (cursor == 1 && Pcursor == 4) Pcursor = 0;
             else if (cursor == 13 && Pcursor == 8) Pcursor = 5;
-            if (tmp_Pcursor == Pcursor) {
+            if (tmp_Pcursor == Pcursor) { // 置ける場所がなかった時
                 cursor = 2;
                 Pcursor = -1;
                 potfast_flg = false;
@@ -474,6 +546,28 @@ public class Camera_3 : MonoBehaviour {
             Vector3 tmp = Cursor_List[cursor].transform.position;
             CursorObj.transform.position = new Vector3(tmp.x, tmp.y /*+ 0.2f*/, tmp.z);
         }
+    }
+
+    void InitialStructure()
+    {
+        stock[0].flg = false;
+        stock[0].cursorNum = 21;
+
+        stock[1].flg = false;
+        stock[1].cursorNum = 20;
+
+        stock[2].flg = false;
+        stock[2].cursorNum = 19;
+
+        stock[3].flg = false;
+        stock[3].cursorNum = 18;
+
+        stock[4].flg = false;
+        stock[4].cursorNum = 17;
+
+        stock[5].flg = false;
+        stock[5].cursorNum = 16;
+
     }
 
 }
