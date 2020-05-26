@@ -122,10 +122,10 @@ public class NotReturn_Script : MonoBehaviour
                 }
             }
 
-            if (GuestNowPosition.x < GuestPosition[MyNumber].x - 0.1) GuestNowPosition.x += GuestSpeed;   //目的地よりz座標が小さければ-
-            else if (GuestNowPosition.x > GuestPosition[MyNumber].x + 0.1) GuestNowPosition.x -= GuestSpeed; //目的地よりz座標が大きければ+
-            if (GuestNowPosition.z < GuestPosition[MyNumber].z - 0.1) GuestNowPosition.z += GuestSpeed;   //目的地よりx座標が小さければ-
-            else if (GuestNowPosition.z > GuestPosition[MyNumber].z + 0.1) GuestNowPosition.z -= GuestSpeed; //目的地よりx座標が大きければ+
+            if (GuestNowPosition.x < GuestPosition[MyNumber].x - 0.03) GuestNowPosition.x += GuestSpeed;   //目的地よりz座標が小さければ-
+            else if (GuestNowPosition.x > GuestPosition[MyNumber].x + 0.03) GuestNowPosition.x -= GuestSpeed; //目的地よりz座標が大きければ+
+            if (GuestNowPosition.z < GuestPosition[MyNumber].z - 0.03) GuestNowPosition.z += GuestSpeed;   //目的地よりx座標が小さければ-
+            else if (GuestNowPosition.z > GuestPosition[MyNumber].z + 0.03) GuestNowPosition.z -= GuestSpeed; //目的地よりx座標が大きければ+
         }
 
         this.gameObject.transform.position = GuestNowPosition;  //現在の位置を更新

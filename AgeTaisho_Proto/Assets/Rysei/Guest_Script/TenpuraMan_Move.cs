@@ -50,6 +50,9 @@ public class TenpuraMan_Move : MonoBehaviour
     [SerializeField] GameObject[] SideOrder;        //プレハブをいれる
     [SerializeField] Vector3[] DisplayPosition;     //位置をいれる
     [SerializeField] GameObject[] SideItems;        //シーン上に置くアイテムをいれる
+    [SerializeField] Image ReturnImage;           //客が帰るまでのゲージ
+    [SerializeField] Text ReturnText;               //客が帰るまでの秒数を表示するテキスト
+    int ReturnTime;                                 //客が帰るまでの秒数
 
     void Start()
     {
@@ -85,6 +88,8 @@ public class TenpuraMan_Move : MonoBehaviour
         OrderItems[0].SetActive(false);   //席につくまではパネルを表示しない
         OrderItems[1].SetActive(false);   //席につくまではパネルを表示しない
         OrderItems[2].SetActive(false);   //席につくまではパネルを表示しない
+        ReturnImage.enabled = false;      //帰るゲージをfalseに
+        ReturnText.enabled = false;      //テキストをfalseに
     }
 
     // Update is called once per frame
@@ -127,10 +132,10 @@ public class TenpuraMan_Move : MonoBehaviour
                 }
             }
 
-            if (GuestNowPosition.x < GuestPosition[MyNumber].x - 0.1) GuestNowPosition.x += GuestSpeed;   //目的地よりz座標が小さければ-
-            else if (GuestNowPosition.x > GuestPosition[MyNumber].x + 0.1) GuestNowPosition.x -= GuestSpeed; //目的地よりz座標が大きければ+
-            if (GuestNowPosition.z < GuestPosition[MyNumber].z - 0.1) GuestNowPosition.z += GuestSpeed;   //目的地よりx座標が小さければ-
-            else if (GuestNowPosition.z > GuestPosition[MyNumber].z + 0.1) GuestNowPosition.z -= GuestSpeed; //目的地よりx座標が大きければ+
+            if (GuestNowPosition.x < GuestPosition[MyNumber].x - 0.03) GuestNowPosition.x += GuestSpeed;   //目的地よりz座標が小さければ-
+            else if (GuestNowPosition.x > GuestPosition[MyNumber].x + 0.03) GuestNowPosition.x -= GuestSpeed; //目的地よりz座標が大きければ+
+            if (GuestNowPosition.z < GuestPosition[MyNumber].z - 0.03) GuestNowPosition.z += GuestSpeed;   //目的地よりx座標が小さければ-
+            else if (GuestNowPosition.z > GuestPosition[MyNumber].z + 0.03) GuestNowPosition.z -= GuestSpeed; //目的地よりx座標が大きければ+
         }
 
         this.gameObject.transform.position = GuestNowPosition;  //現在の位置を更新
@@ -152,6 +157,8 @@ public class TenpuraMan_Move : MonoBehaviour
                 OrderItems[2].SetActive(false);
                 Destroy(SideItems[0]);
                 Destroy(SideItems[1]);
+                ReturnImage.enabled = false;      //Imageをfalseに
+                ReturnText.enabled = false;
                 OneDelete = true;
             }
             if (EatCount >= EatTime) GuestReturn();   //2秒たったら食べ終わり帰る
@@ -162,6 +169,8 @@ public class TenpuraMan_Move : MonoBehaviour
             ReturnCount = 0;    //客が帰るまでの時間を初期化
             Order = true;
             Panel.SetActive(true);   //パネルを表示する
+            ReturnImage.enabled = true;      //Imageを表示する
+            ReturnText.enabled = true;      //Textを表示する
 
             switch (flooredIntrandom)
             {
@@ -196,6 +205,9 @@ public class TenpuraMan_Move : MonoBehaviour
         {
             //S_Display.StartSideDisplay();
             ReturnCount += Time.deltaTime;
+            ReturnTime = (int)SitTime - (int)ReturnCount;
+            ReturnImage.fillAmount = 1 - ((ReturnCount / SitTime));
+            ReturnText.text = "" + ReturnTime;
             if (ReturnCount >= SitTime) GuestReturn(); //席について30秒たつとGuestReturnが呼ばれる
         }
 
@@ -218,6 +230,8 @@ public class TenpuraMan_Move : MonoBehaviour
                 OrderItems[2].SetActive(false);
                 Destroy(SideItems[0]);
                 Destroy(SideItems[1]);
+                ReturnImage.enabled = false;
+                ReturnText.enabled = false;
                 OneDelete = true;
             }
             OneProces = true;   //この処理が2回目以降通らないようにする
