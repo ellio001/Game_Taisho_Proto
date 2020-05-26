@@ -5,16 +5,49 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Master_Scene/Title_Scene.unity
+  - enabled: 1
+    path: Assets/Main_Scene/Title_Scene.unity
     guid: b14dd28f696ed9044925c3b7d8b102dd
   - enabled: 1
     path: Assets/Tutorial/Tutorial_Scene.unity
     guid: 292a62c12cfdc784a9215e6fc96e0323
   - enabled: 1
-    path: Assets/Master_Scene/Cursor_Maseter_Scene.unity
+    path: Assets/Main_Scene/Master_Scene/Cursor_Maseter_Scene.unity
     guid: e514f9240a2279246b15f381448ba0e8
   - enabled: 1
-    path: Assets/Tawata/EndScene.unity
+    path: Assets/Main_Scene/Difficulty/EndScene.unity
     guid: 68139bf99fb8ef8479559a98ad7247c7
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Difficulty_Scene.unity
+    guid: d02e927bae6ff054b8352a15448090ef
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Easy_Tutorial_Scene.unity
+    guid: ef6adc30a23586348a6693e8738da7f7
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Normal_Tutorial_Scene.unity
+    guid: 5517ec0bfe86356438388a220e40b8d9
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Hard_Tutorial_Scene.unity
+    guid: 70acc7be9a7057446ab6042ff3369bb3
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Recommendation_Scene.unity
+    guid: 8d65b930b2581574880cdb26b9ed6421
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Easy_Scene.unity
+    guid: 175db003c9766ab47989a1857b418cc1
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Normal_Scene.unity
+    guid: 1674d0080c2d5f54d95d2af0371a2229
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Hard_Scene.unity
+    guid: 34363f2f3d676fc45b50194978e432a3
+  - enabled: 1
+    path: Assets/Main_Scene/Score/Score_Bad_Scene.unity
+    guid: 92afe07e9e2f7a94f8207ed1b82123ab
+  - enabled: 1
+    path: Assets/Main_Scene/Score/Score_Normal_Scene.unity
+    guid: 91ab9b8536747c341a4e5dbdce9eba3e
+  - enabled: 1
+    path: Assets/Main_Scene/Score/Score_Good_Scene.unity
+    guid: d7b57a3721c63894ca24baa4cdf850fe
   m_configObjects: {}

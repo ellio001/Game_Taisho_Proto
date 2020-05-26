@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GuestMove : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GuestMove : MonoBehaviour
     bool Collider;  //Colliderにあたっているかあたっていないか
     float random;   //注文のランダム変数
     int flooredIntrandom;   //ランダムの変数を整数に変えて入れる箱
+    private float RandomMax;    //ランダムの最大値を決める変数
     int WaitCount;  //客が帰るまでの時間
     public string ItemString;   //Resourceのアイテム名の文字列を入れる箱
     private string OrderString; //表示するアイテム名の文字列をいれる箱
@@ -30,7 +32,11 @@ public class GuestMove : MonoBehaviour
     bool Order = false; //注文したかどうか
     bool Retrun = false;    //帰る処理になったかどうか
     public float ReturnCount;   //客が帰るまでの時間をいれる箱
+    public float EatCount;      //客が食べている間の時間をいれる
     public bool OneProces = false; //自分のいた箱を1回だけ初期化する
+    public bool Eat;            //提供された時trueにする
+
+    string SceneName; // sceneの名前を記憶する変数
 
     void Start()
     {
@@ -51,11 +57,26 @@ public class GuestMove : MonoBehaviour
         myTransform = this.transform;           // transformを取得
         pos = myTransform.position;         // 座標を取得
 
-        random = Random.value * 5;          // ランダムな値を取得し5倍する(0~5の値をとるため)
+        //Endシーン読込
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Ryusei_Scene":
+            case "Easy_Scene":
+                RandomMax = 3;
+                break;
+            case "Normal_Scene":
+                RandomMax = 4;
+                break;
+            case "Hard_Scene":
+                RandomMax = 5;
+                break;
+        }
 
-        while (random >= 5)
-        {    //後のswith文で5以上の値は使わないのでそれが入ったら値を取得しなおす
-            random = Random.value * 5;          // ランダムな値を取得し10倍する
+        random = Random.value * RandomMax;          // ランダムな値を取得し5倍する(0~5の値をとるため)   0~1 0.2*5=1 0.2未満は0.99以下=小数点切り捨て
+
+        while (random >= RandomMax)
+        {    //後のswith文でRandomMax以上の値は使わないのでそれが入ったら値を取得しなおす
+            random = Random.value * RandomMax;          // ランダムな値を取得しRandomMax倍する   3の場合0.33 0.66 0.99を3倍することで0.99 1.98 2.98小数点切り捨てで0~3となる
         }
 
         flooredIntrandom = (int)Mathf.Floor(random);        //5倍したランダムな値の小数点を切り捨てる(random自体の範囲0f~1.0f)
@@ -117,6 +138,11 @@ public class GuestMove : MonoBehaviour
             if (ReturnCount >=11) GuestReturn(); //席につかず8秒たつとGuestReturnが呼ばれる
             //Debug.Log(LineReturn);
         }
+        if (Eat)
+        {
+            EatCount += Time.deltaTime;
+            if (EatCount >= 2) GuestReturn();   //2秒たったら食べ終わり帰る
+        }
         if (GuestNowPosition.z >= -2 && Order == false)  //席に着いたら処理
         {
 
@@ -128,27 +154,27 @@ public class GuestMove : MonoBehaviour
             {
                 case 0:
                     ItemScore = 100;
-                    ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     break;
                 case 1:
                     ItemScore = 100;
-                    ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
+                    ItemString = "Dish_T_Fish"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
                     OrderString = "魚てん";
                     break;
                 case 2:
                     ItemScore = 100;
-                    ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
+                    ItemString = "Dish_T_Potato"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
                     OrderString = "芋てん";
                     break;
                 case 3:
                     ItemScore = 100;
-                    ItemString = "ItemSara(Chicken)";
+                    ItemString = "Dish_K_Friedchicken";
                     OrderString = "唐揚げ";
                     break;
                 case 4:
                     ItemScore = 100;
-                    ItemString = "ItemSara(Quail)";
+                    ItemString = "Dish_K_Quail";
                     OrderString = "うずら";
                     break;
             }

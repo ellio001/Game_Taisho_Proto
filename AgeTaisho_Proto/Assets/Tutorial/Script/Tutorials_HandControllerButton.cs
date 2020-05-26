@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tutorials_HandControllerButton : MonoBehaviour
-{
+public class Tutorials_HandControllerButton : MonoBehaviour {
     //このスクリプトはControllerMouseClickと共存しない
     //このスクリプトはhandにいれる
 
@@ -17,6 +16,11 @@ public class Tutorials_HandControllerButton : MonoBehaviour
 
     GameObject C2;    // Camera_2を入れる変数
     Camera_2 C2_script; // Camera_2のscriptを入れる変数
+    Tutorial_Camera_3 TC3_script; // Camera_3のscriptを入れる変数
+
+    [SerializeField] GameObject Player; // プレイヤーの位置を保存
+    Vector3 Player_V;                   // プレイヤーの座標を保存する用
+    [System.NonSerialized] public Vector3 direction; // Rayの終点座標
 
     //ポーズ画面
     GameObject Pause;
@@ -25,26 +29,52 @@ public class Tutorials_HandControllerButton : MonoBehaviour
     public TutorialUI tutorialUI;
     int TextNumber;
 
-    /***** 矢印関連 *****/
+    bool ItemSara;  //アイテム名にSaraが含まれているか判定
+    bool KonaFlag = false; // XBox_joystick_Bを押すと粉に漬け、離すと手元に戻るようにするフラグ
+    [System.NonSerialized] public string TargetTag;//今見ているOBJのタグを保存する 
+    [System.NonSerialized] public GameObject TargetObj;//今見ているOBJのタグを保存する 
+    [System.NonSerialized] public bool ItemPowder; // 粉系を持っているかの判定フラグ
+    [System.NonSerialized] public bool MoveFlg = false; // スペースを押している間は移動できないようにするフラグ
+
+
+    /***** 矢印(アウトライン)関連 *****/
     [SerializeField] GameObject ArrowObj; // 矢印のObjを入れる変数
     bool ArrowFlg = false;                // 矢印が今出ているかの確認用
     bool DestroyFlg = false;              // 矢印を消すか判断する用
     Vector3 tmp;                          // カーソルの座標を仮に保存
+    // アウトラインのオンオフで使う
+    GameObject EbiBox;
+    GameObject Kona;
+    GameObject Tenpra_Nabe;
+    GameObject Sara;
+    GameObject Seki;
 
-    void Start()
-    {
+    void Start() {
+        EbiBox = GameObject.Find("EbiBox");
+        Kona = GameObject.Find("pannko");
+        Tenpra_Nabe = GameObject.Find("Tenpra_Nabe");
+        Sara = GameObject.Find("Sara");
+        Seki = GameObject.Find("Plate2");
+
         ClickObj = GameObject.Find("ControllerObjClick");
         HoldingFlg = false;
 
         C2 = GameObject.Find("Main Camera");
         C2_script = C2.GetComponent<Camera_2>();
+        TC3_script = C2.GetComponent<Tutorial_Camera_3>();
+
+        // プレイヤーの座標をVector3に変換
+        Player_V.x = Player.transform.position.x;
+        Player_V.y = Player.transform.position.y;
+        Player_V.z = Player.transform.position.z;
+        direction = TC3_script.Cursor_List[TC3_script.cursor].transform.position;
+
         //ポーズ画面
         Pause = GameObject.Find("Main Camera");
         script = Pause.GetComponent<Pause_Botton_Script>();
     }
 
-    void Update()
-    {
+    void Update() {
         if (script.PauseFlag) {
             return;
         }
@@ -55,104 +85,157 @@ public class Tutorials_HandControllerButton : MonoBehaviour
             RaycastHit hit = new RaycastHit();
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (TextNumber == 3 || TextNumber == 4 ||
-                TextNumber == 5 || TextNumber == 7 ||
-                TextNumber == 8 || TextNumber == 9) Move_arrow(); // 矢印を表示
+            // 今選択しているカーソルの位置を代入している
+            if (TC3_script.pot_flg)
+                direction = TC3_script.PCS_List[TC3_script.Pcursor].transform.position;
+            else
+                direction = TC3_script.Cursor_List[TC3_script.cursor].transform.position;
+
+
+            if ((TextNumber >= 3 && TextNumber <= 5) ||
+                (TextNumber >= 7 && TextNumber <= 9)) Move_arrow(); // 矢印を表示
 
             // 天ぷらが生成されたら次のテキストに進むTutorial_ItemTenpura
-            if (GameObject.Find("Tutorial_ItemTenpura") && TextNumber == 6) tutorialUI.TextNumber = 7;
+            if (GameObject.Find("Fried_T_Shrimp") && TextNumber == 6) tutorialUI.TextNumber = 7;
+            // スペースを離したときにカーソル移動ができるようにしている
+            if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("XBox_joystick_B")) MoveFlg = false;
 
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, 5f) && Input.GetKeyDown(KeyCode.Space) && C2_script.space_flg) {
-                if (HoldingFlg != true) // 手に何も持っていない時に入る
-                {
-                    if (hit.collider.gameObject.tag == "Box") {
-                        if (hit.collider.gameObject.name == "EbiBox" && TextNumber == 3) {
-                            Resource = (GameObject)Resources.Load("S_Resources/Tutorial_ItemEbi");   //Resourceフォルダのプレハブを読み込む
-                            clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
+
+            if (Physics.Linecast(Player_V, direction, out hit)) {
+                Debug.DrawLine(Player_V, direction, Color.red);
+
+                TargetTag = hit.collider.gameObject.tag; // 今見ているOBJのタグを保存
+                TargetObj = hit.collider.gameObject; // 今見ているOBJを保存(C3のアウトラインのオンオフで使う)
+
+                // てんぷら粉、ウズラの液と粉、を選択中はフラグを立てる
+                if( TC3_script.Cursor_List[TC3_script.cursor] == TC3_script.Cursor_List[2]  ||
+                    TC3_script.Cursor_List[TC3_script.cursor] == TC3_script.Cursor_List[11] ||
+                    TC3_script.Cursor_List[TC3_script.cursor] == TC3_script.Cursor_List[12] ||
+                    TC3_script.Cursor_List[TC3_script.cursor] == TC3_script.Cursor_List[14] ||
+                    TC3_script.Cursor_List[TC3_script.cursor] == TC3_script.Cursor_List[15]) KonaFlag = true;
+                else KonaFlag = false;
+
+
+                // フラグがたっていないとボタンが聞かな
+                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_joystick_B")) && TC3_script.space_flg) {
+                    MoveFlg = true;
+                    if (!HoldingFlg) // 手に何も持っていない時に入る
+                    {
+                        if (hit.collider.gameObject.tag == "Box") {
+                            if (hit.collider.gameObject.name == "EbiBox" && TextNumber == 3) 
+                                {
+                                Resource = (GameObject)Resources.Load("R_Resources/Item_Shrimp");   //Resourceフォルダのプレハブを読み込む
+                                clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
+                                HoldingFlg = true;
+                                tutorialUI.TextNumber = 4; // テキストを進める
+                                DestroyFlg = true; // 矢印を消すフラグを立てる
+                                KonaFlag = true;
+                                ColliderOut();//当たり判定をを外す
+                            }
+                            ItemSara = hit.collider.gameObject.name.Contains("Dish");
+                            ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
+                        }
+                        if (hit.collider.gameObject.tag == "Item" && (TextNumber != 6 && TextNumber != 9)) {
+                            clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
+                            clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                             HoldingFlg = true;
-                            tutorialUI.TextNumber = 4; // テキストを進める
-                            DestroyFlg = true; // 矢印を消すフラグを立てる
-                                               //当たり判定をを外す
+
+                            ItemSara = hit.collider.gameObject.name.Contains("Dish");
+                            ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
+
+                            //当たり判定をを外す
                             ColliderOut();
                         }
+
                     }
+                    else if ((TextNumber == 4 && hit.collider.gameObject.tag == "kona") || (TextNumber == 5 && hit.collider.gameObject.tag == "tenpuranabe") ||
+                             (TextNumber == 7 && hit.collider.gameObject.tag == "Sara") || (TextNumber == 8 && hit.collider.gameObject.name == "Plate2"))
+                    // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
+                    {
+                        ItemPowder = false; // 粉をつけたものを鍋に置いたときにFalse
+                        //当たり判定を入れる
+                        ColliderIn();
+                        ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
+                        clickedGameObject.transform.parent = null;              //手との親子付けを解除
 
-                    if (hit.collider.gameObject.tag == "Item" && (TextNumber != 6 && TextNumber != 9)) {
-                        clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
-                        clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
-                        HoldingFlg = true;
-                        //当たり判定をを外す
-                        ColliderOut();
+                        clickedGameObject.GetComponent<Rigidbody>().isKinematic = false;    //重力を有効
+
+                        clickedGameObject = null;   //対象を入れる箱を初期化
+                        Resource = null;            //生成するプレハブの箱を初期化
+
+                        HoldingFlg = false;
+                        tutorialUI.TextNumber += 1; // テキストを進める
+                        DestroyFlg = true;
                     }
-
+                    if (clickedGameObject != null)  //nullでないとき処理
+                    {
+                        clickedGameObject.transform.parent = ClickObj.gameObject.transform; //このスクリプトが入っているオブジェクトと親子付け
+                        clickedGameObject.GetComponent<Rigidbody>().isKinematic = true; //ヒットしたオブジェクトの重力を無効
+                    }
                 }
-                else if ((TextNumber == 4 && hit.collider.gameObject.tag == "kona") || (TextNumber == 5 && hit.collider.gameObject.tag == "tenpuranabe") ||
-                         (TextNumber == 7 && hit.collider.gameObject.tag == "Sara") || (TextNumber == 8 && hit.collider.gameObject.name == "Plate2"))
-                // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
+
+                // 粉系か皿に置くときに、ボタンを離すと手元に戻ってくるようにしている
+                if (KonaFlag && (hit.collider.gameObject.name.Contains("Dish") || hit.collider.gameObject.tag == "Item" ) && 
+                    (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("XBox_joystick_B")))
                 {
-                    //当たり判定を入れる
-                    ColliderIn();
-                    ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
-                    clickedGameObject.transform.parent = null;              //手との親子付けを解除
+                    if (hit.collider.gameObject.name.Contains("Dish")) ItemSara = true;
+                    else if (hit.collider.gameObject.tag == "Item") ItemPowder = true;
 
-                    clickedGameObject.GetComponent<Rigidbody>().isKinematic = false;    //重力を有効
+                    clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
+                    clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
+                    HoldingFlg = true;
 
-                    clickedGameObject = null;   //対象を入れる箱を初期化
-                    Resource = null;            //生成するプレハブの箱を初期化
-
-                    HoldingFlg = false;
-                    tutorialUI.TextNumber += 1; // テキストを進める
-                    DestroyFlg = true;
-                }
-                if (clickedGameObject != null)  //nullでないとき処理
-                {
+                    //当たり判定をを外す
+                    ColliderOut();
                     clickedGameObject.transform.parent = ClickObj.gameObject.transform; //このスクリプトが入っているオブジェクトと親子付け
                     clickedGameObject.GetComponent<Rigidbody>().isKinematic = true; //ヒットしたオブジェクトの重力を無効
                 }
-
             }
         }
     }
 
     //当たり判定を切る関数
-    void ColliderOut()
-    {
+    void ColliderOut() {
         clickedGameObject.GetComponent<Collider>().enabled = false;
     }
 
     //当たり判定を入れる関数
-    void ColliderIn()
-    {
+    void ColliderIn() {
         clickedGameObject.GetComponent<Collider>().enabled = true;
     }
 
-    void Move_arrow()
-    {
-        if (ArrowFlg == false && TextNumber != 9)
-        {
-            switch (TextNumber)
-            {
+    void Move_arrow() {
+        if (ArrowFlg == false && TextNumber != 9) {
+            switch (TextNumber) {
                 case 3:
-                    tmp = C2_script.Cursor_List[3].transform.position;
+                    //EbiBox.GetComponent<Outline>().enabled = true;
+                    tmp = TC3_script.Cursor_List[3].transform.position;
                     break;
                 case 4:
-                    tmp = C2_script.Cursor_List[2].transform.position;
+                    //EbiBox.GetComponent<Outline>().enabled = false;
+                    //Kona.GetComponent<Outline>().enabled = true;
+                    tmp = TC3_script.Cursor_List[2].transform.position;
                     break;
                 case 5:
-                    tmp = C2_script.Cursor_List[1].transform.position;
+                    //Kona.GetComponent<Outline>().enabled = false;
+                    //Tenpra_Nabe.GetComponent<Outline>().enabled = true;
+                    tmp = TC3_script.Cursor_List[1].transform.position;
                     break;
                 case 7:
-                    tmp = C2_script.Cursor_List[15].transform.position;
+                    //Tenpra_Nabe.GetComponent<Outline>().enabled = false;
+                    //Sara.GetComponent<Outline>().enabled = true;
+                    tmp = TC3_script.Cursor_List[15].transform.position;
                     break;
                 case 8:
-                    tmp = C2_script.Cursor_List[6].transform.position;
+                    //Sara.GetComponent<Outline>().enabled = false;
+                    //Seki.GetComponent<Outline>().enabled = true;
+                    tmp = TC3_script.Cursor_List[6].transform.position;
                     break;
             }
-            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z + 0.1f), Quaternion.identity);
+            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
             ArrowFlg = true; // 矢印が表示中のフラグ
         }
-        else if (DestroyFlg || TextNumber == 9)
-        {
+        else if (DestroyFlg || TextNumber == 9) {
             Destroy(GameObject.Find("Yajirusi(Clone)"));
             DestroyFlg = false;
             ArrowFlg = false;

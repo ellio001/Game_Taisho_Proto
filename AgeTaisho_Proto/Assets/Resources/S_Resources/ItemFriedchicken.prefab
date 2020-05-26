@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 6573910868765845639}
   - component: {fileID: 6512496507564913081}
   m_Layer: 0
-  m_Name: ItemFriedchicken 1
+  m_Name: ItemFriedchicken
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,7 +187,7 @@ Transform:
   m_GameObject: {fileID: 6629114915025785467}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 58460632916454605}
   m_Father: {fileID: 0}

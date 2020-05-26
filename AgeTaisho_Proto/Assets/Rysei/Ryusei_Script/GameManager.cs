@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
-
     public float GameTime;             //ゲーム開始の時間
     float GameFinishTime;       //ゲームのプレイ最大時間
     public float FiverTime;            //フィーバーの時間です
@@ -20,13 +19,18 @@ public class GameManager : MonoBehaviour {
     public float Taihi;
     public bool TaihiFlag;
 
-
     public static GameManager instance = null;
     public int score_num = 0; // スコア変数
     public GameObject score_object = null; // Textオブジェクト
+    public GameObject Pause_object = null;
+
+    bool Bad_Score;     //Bad_Scoreをいれる箱
+    bool Normal_Score;  //Nomal_Score1をいれる箱
+    bool Good_Score;    //Good_Scoreをいれる箱
+    //public Slider slider;    //Sliderを入れる
+    
 
     // プレファブ達をリスト化
-    
     [SerializeField] List<GameObject> Item_Resources = new List<GameObject>();
     [SerializeField] List<GameObject> Powder_Resources = new List<GameObject>();
     [SerializeField] List<GameObject> Fried_Resources = new List<GameObject>();
@@ -50,17 +54,30 @@ public class GameManager : MonoBehaviour {
         FiverFlag = false;
         TestSceneFlag = true;
         SceneManager.activeSceneChanged += ActiveSceneChanged;
+        ////Sliderを満タンにする。
+        //slider.value = 1;
+        GameTime = 0f;
+
+        Bad_Score = score_num < 1000;                           //スコア1000未満でBad_Score
+        Normal_Score = score_num >= 1000 && score_num < 2000;   //スコア1000以上2000未満でNormal_Score
+        Good_Score = score_num >= 2000;                         //スコア2000以上でGood_Score
+       
     }
 
     private void Update() {
 
+        //現在までのフレーム
         GameTime += Time.deltaTime;
+        ////ゲージを動かす
+        //slider.value = GameTime / GameFinishTime;
 
         if (TestSceneFlag) {
             // オブジェクトからTextコンポーネントを取得
             Text score_text = score_object.GetComponent<Text>();
+            Text Pause_text = Pause_object.GetComponent<Text>();
             // テキストの表示を入れ替える
             score_text.text = "Score:" + score_num;
+            Pause_text.text = "Optionボタン：ポーズ";
 
             //判定
             Judgment();
@@ -88,8 +105,6 @@ public class GameManager : MonoBehaviour {
                 case 0:
                     //1回目のフィーバー
                     if (GameTime >= GameFinishTime - 120f) {
-                        print("1回目のフィーバー");
-                        //
                         FiverNumber = 0;
                         FiverFlag = true;
                         Initial();
@@ -99,13 +114,33 @@ public class GameManager : MonoBehaviour {
                 case 1:
                     //２回目のフィーバー
                     if (GameTime >= GameFinishTime - 60f) {
-                        print("2回目のフィーバー");
                         FiverNumber = 1;
                         FiverFlag = true;
                         Initial();
                         FiverCountFlag++;
                     }
                     break;
+                    //case 0:
+
+                    //    //1回目のフィーバー
+                    //    if (GameTime >= GameFinishTime - 120f) {
+                    //        print("1回目のフィーバー");
+                    //        FiverNumber = 0;
+                    //        FiverFlag = true;
+                    //        Initial();
+                    //        FiverCountFlag++;
+                    //    }
+                    //    break;
+                    //case 1:
+                    //    //２回目のフィーバー
+                    //    if (GameTime >= GameFinishTime - 60f) {
+                    //        print("2回目のフィーバー");
+                    //        FiverNumber = 1;
+                    //        FiverFlag = true;
+                    //        Initial();
+                    //        FiverCountFlag++;
+                    //    }
+                    //    break;
             }
 
         }
@@ -122,7 +157,6 @@ public class GameManager : MonoBehaviour {
                     if (FiverTime >= FiverEvacuation) {
                         FiverFlag = false;
                         FiverNumber = 3;
-                        Debug.Log("フィーバータイム終了！");
                     }
                 }
                 break;
@@ -138,7 +172,6 @@ public class GameManager : MonoBehaviour {
                     if (FiverTime >= FiverEvacuation) {
                         FiverFlag = false;
                         FiverNumber = 3;
-                        Debug.Log("フィーバータイム終了！");
                     }
                 }
                 break;
@@ -146,6 +179,8 @@ public class GameManager : MonoBehaviour {
             case 3:
                 break;
         }
+        //ESCで終了
+        if (Input.GetKey(KeyCode.Tab)) Quit();
     }
 
     //変数を初期化するための関数
@@ -153,21 +188,33 @@ public class GameManager : MonoBehaviour {
         FiverTime = Time.deltaTime;
         FiverEvacuation = FiverTime + FiverFinishTime;
         FiverFlag = true;
+        print(FiverEvacuation);
     }
 
     public void ReadScene() {
-        //Endシーン読込
-        SceneManager.LoadScene("EndScene", LoadSceneMode.Single);
+
+        if (Bad_Score) SceneManager.LoadScene("Score_Bad_Scene");
+        else if (Normal_Score) SceneManager.LoadScene("Score_Normal_Scene");
+        else if (Good_Score) SceneManager.LoadScene("Score_Good_Scene");
+
         //処理を二度としないようにフラグで管理
         TestSceneFlag = false;
     }
 
-    void ActiveSceneChanged(Scene thisScene, Scene nextScene)
-    {
+    void ActiveSceneChanged(Scene thisScene, Scene nextScene) {
         score_object = GameObject.Find("ScoreText"); // Textオブジェクト
-        if (score_object != null)
-        {
+        Pause_object = GameObject.Find("PouseUIText");
+        if (score_object != null || Pause_object != null) {
             Text score_text = score_object.GetComponent<Text>();// オブジェクトからTextコンポーネントを取得
+            Text Pause_text = Pause_object.GetComponent<Text>();
         }
+    }
+
+    void Quit() {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
+          UnityEngine.Application.Quit();
+#endif
     }
 }

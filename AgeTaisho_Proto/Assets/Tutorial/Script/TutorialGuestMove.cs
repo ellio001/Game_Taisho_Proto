@@ -64,16 +64,21 @@ public class TutorialGuestMove : MonoBehaviour
 
             switch (SceneManager.GetActiveScene().name)
             {
-                case "Ryusei_Scene":
+
+                case "Easy_Tutorial_Scene":
                     ItemScore = 0;
-                    ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     break;
-                case "Tutorial_Scene":
+                case "Normal_Tutorial_Scene":
                     ItemScore = 0;
-                    ItemString = "Tutorial_ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
-                    OrderString = "えびてん";
-                    Debug.Log("tutorial");
+                    ItemString = "ItemSara(Chicken)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    OrderString = "からあげ";
+                    break;
+                case "Hard_Tutorial_Scene":
+                    ItemScore = 0;
+                    ItemString = "Dish_T_Quail"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    OrderString = "うずら";
                     break;
             }
             Text OrderText = OrderObject.GetComponent<Text>();            // オブジェクトからTextコンポーネントを取得
