@@ -36,7 +36,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
     bool ItemSara;  //アイテム名にSaraが含まれているか判定
     bool KonaFlag = false; // 〇を押すと粉に漬け、離すと手元に戻るようにするフラグ
     [System.NonSerialized] public string TargetTag;//今見ているOBJのタグを保存する 
-    [System.NonSerialized] public GameObject TargetObj;//今見ているOBJのタグを保存する 
+    [System.NonSerialized] public GameObject TargetObj;//今見ているOBJを保存する 
 
     [System.NonSerialized] public bool ItemPowder; // 粉系を持っているかの判定フラグ
     [System.NonSerialized] public bool MoveFlg = false; // スペースを押している間は移動できないようにするフラグ
@@ -82,8 +82,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
                 TargetTag = hit.collider.gameObject.tag; // 今見ているOBJのタグを保存
-                //TargetObj = hit.collider.gameObject; // 今見ているOBJを保存(C3のアウトラインのオンオフで使う)
-
+                TargetObj = hit.collider.gameObject; // 今見ているOBJを保存(C3のアウトラインのオンオフで使う)
+                Debug.Log(TargetObj);
                 // てんぷら粉、ウズラの液と粉、を選択中はフラグを立てる
                 if (C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[2] ||
                     C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[11] ||
@@ -158,6 +158,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                 ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
                             else ItemSara = false;
 
+
                             //当たり判定をを外す
                             ColliderOut();
                         }
@@ -187,6 +188,43 @@ public class HandControllerButton_S2 : MonoBehaviour {
                     {
                         clickedGameObject.transform.parent = ClickObj.gameObject.transform; //このスクリプトが入っているオブジェクトと親子付け
                         clickedGameObject.GetComponent<Rigidbody>().isKinematic = true; //ヒットしたオブジェクトの重力を無効
+                    }
+
+                    // 生の食材を持っている時、取った場所に戻せる処理
+                    if(hit.collider.gameObject.tag == "Box"){
+                        bool return_flg = false; // trueの時にBoxに戻す処理をする
+                        switch (clickedGameObject.name)
+                        {
+                            case "Item_Shrimp":
+                                if (hit.collider.gameObject.name.Contains("Ebi"))
+                                    return_flg = true;
+                                break;
+                            case "Item_Fish_v2":
+                                if (hit.collider.gameObject.name.Contains("Fish"))
+                                    return_flg = true;
+                                break;
+                            case "Item_Potato":
+                                if (hit.collider.gameObject.name.Contains("Potato"))
+                                    return_flg = true;
+                                break;
+                            case "Item_Friedchicken":
+                                if (hit.collider.gameObject.name.Contains("hicken"))
+                                    return_flg = true;
+                                break;
+                            case "Item_Quail":
+                                if (hit.collider.gameObject.name.Contains("Quail"))
+                                    return_flg = true;
+                                break;
+                            default:
+                                break;
+                        }
+                        if (return_flg)
+                        {
+                            Destroy(clickedGameObject); // 今持っているものを削除
+                            clickedGameObject = null;   //対象を入れる箱を初期化
+                            Resource = null;            //生成するプレハブの箱を初期化
+                            HoldingFlg = false;         //物を持っているかどうかをFalse
+                        }
                     }
                 }
 
