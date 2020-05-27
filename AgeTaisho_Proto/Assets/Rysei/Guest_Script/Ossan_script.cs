@@ -10,6 +10,7 @@ public class Ossan_script : MonoBehaviour
     float EatTime = 1;          //食べ終わるまでの時間
     float RowTime = 13;         //列に並んでいる時間
     float SitTime = 23;         //席に座っている時間
+    int Mistake = 5;            //間違えた時の時間の減量
 
     //-------------------------------------------------------
     Transform myTransform;
@@ -54,6 +55,10 @@ public class Ossan_script : MonoBehaviour
     [SerializeField] GameObject[] SideOrder;        //プレハブをいれる
     [SerializeField] Vector3[] DisplayPosition;     //位置をいれる
     [SerializeField] GameObject[] SideItems;        //シーン上に置くアイテムをいれる
+    [SerializeField] Image ReturnImage;           //客が帰るまでのゲージ
+    [SerializeField] Text ReturnText;               //客が帰るまでの秒数を表示するテキスト
+    int ReturnTime;                                 //客が帰るまでの秒数
+
     void Start()
     {
         //Display = GameObject.Find("SideDisplay"); //ディスプレイの追加
@@ -91,6 +96,9 @@ public class Ossan_script : MonoBehaviour
         OrderItems[0].SetActive(false);   //席につくまではパネルを表示しない
         OrderItems[1].SetActive(false);   //席につくまではパネルを表示しない
         OrderItems[2].SetActive(false);   //席につくまではパネルを表示しない
+        ReturnImage.enabled = false;      //帰るゲージをfalseに
+        ReturnText.enabled = false;      //テキストをfalseに
+        GetComponent<BoxCollider>().enabled = false;
     }
 
     // Update is called once per frame
@@ -133,10 +141,10 @@ public class Ossan_script : MonoBehaviour
                 }
             }
 
-            if (GuestNowPosition.x < GuestPosition[MyNumber].x - 0.1) GuestNowPosition.x += GuestSpeed;   //目的地よりz座標が小さければ-
-            else if (GuestNowPosition.x > GuestPosition[MyNumber].x + 0.1) GuestNowPosition.x -= GuestSpeed; //目的地よりz座標が大きければ+
-            if (GuestNowPosition.z < GuestPosition[MyNumber].z - 0.1) GuestNowPosition.z += GuestSpeed;   //目的地よりx座標が小さければ-
-            else if (GuestNowPosition.z > GuestPosition[MyNumber].z + 0.1) GuestNowPosition.z -= GuestSpeed; //目的地よりx座標が大きければ+
+            if (GuestNowPosition.x < GuestPosition[MyNumber].x - 0.03) GuestNowPosition.x += GuestSpeed;   //目的地よりz座標が小さければ-
+            else if (GuestNowPosition.x > GuestPosition[MyNumber].x + 0.03) GuestNowPosition.x -= GuestSpeed; //目的地よりz座標が大きければ+
+            if (GuestNowPosition.z < GuestPosition[MyNumber].z - 0.03) GuestNowPosition.z += GuestSpeed;   //目的地よりx座標が小さければ-
+            else if (GuestNowPosition.z > GuestPosition[MyNumber].z + 0.03) GuestNowPosition.z -= GuestSpeed; //目的地よりx座標が大きければ+
         }
 
         this.gameObject.transform.position = GuestNowPosition;  //現在の位置を更新
@@ -158,6 +166,9 @@ public class Ossan_script : MonoBehaviour
                 OrderItems[2].SetActive(false);
                 Destroy(SideItems[0]);
                 Destroy(SideItems[1]);
+                ReturnImage.enabled = false;      //Imageをfalseに
+                ReturnText.enabled = false;
+                GetComponent<BoxCollider>().enabled = false;
                 OneDelete = true;
             }
             if (EatCount >= EatTime) GuestReturn();   //5秒たったら食べ終わり帰る
@@ -168,6 +179,9 @@ public class Ossan_script : MonoBehaviour
             ReturnCount = 0;    //客が帰るまでの時間を初期化
             Order = true;
             Panel.SetActive(true);   //パネルを表示する
+            ReturnImage.enabled = true;      //Imageを表示
+            ReturnText.enabled = true;      //Textを表示する
+            GetComponent<BoxCollider>().enabled = true;
 
             switch (Osusume)
             {
@@ -201,6 +215,9 @@ public class Ossan_script : MonoBehaviour
         else if (Order == true)
         {
             ReturnCount += Time.deltaTime;
+            ReturnTime = (int)SitTime - (int)ReturnCount;
+            ReturnImage.fillAmount = 1 - ((ReturnCount / SitTime));
+            ReturnText.text = "" + ReturnTime;
             if (ReturnCount >= SitTime) GuestReturn(); //席について25秒たつとGuestReturnが呼ばれる
         }
 
@@ -223,6 +240,9 @@ public class Ossan_script : MonoBehaviour
                 OrderItems[2].SetActive(false);
                 Destroy(SideItems[0]);
                 Destroy(SideItems[1]);
+                ReturnImage.enabled = false;      //Imageをfalseに
+                ReturnText.enabled = false;
+                GetComponent<BoxCollider>().enabled = false;
                 OneDelete = true;
             }
             OneProces = true;   //この処理が2回目以降通らないようにする
@@ -238,6 +258,10 @@ public class Ossan_script : MonoBehaviour
             GameManager.instance.score_num += ItemScore; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
 
+        }
+        else
+        {
+            ReturnCount += Mistake;
         }
     }
 }
