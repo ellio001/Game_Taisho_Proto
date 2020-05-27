@@ -30,6 +30,8 @@ public class Time_limit : MonoBehaviour {
 
         slider.value = time;
         
+
+
         //print(time);
         //print(slider.value);
     }
