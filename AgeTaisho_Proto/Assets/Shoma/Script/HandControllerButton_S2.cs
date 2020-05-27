@@ -82,8 +82,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
                 TargetTag = hit.collider.gameObject.tag; // 今見ているOBJのタグを保存
-                //TargetObj = hit.collider.gameObject; // 今見ているOBJを保存(C3のアウトラインのオンオフで使う)
-
+                TargetObj = hit.collider.gameObject; // 今見ているOBJを保存(C3のアウトラインのオンオフで使う)
+                Debug.Log(TargetObj);
                 // てんぷら粉、ウズラの液と粉、を選択中はフラグを立てる
                 if (C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[2] ||
                     C3_script.Cursor_List[C3_script.cursor] == C3_script.Cursor_List[11] ||

@@ -151,6 +151,7 @@ public class Camera_3 : MonoBehaviour
                         {
                             cursor = 18;
                             AutSelect_flg = false;
+                            StockEX_flg = false;
                         }
                     }
                 }
