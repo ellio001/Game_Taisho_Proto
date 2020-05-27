@@ -2607,6 +2607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1150460415}
+  _maxScale: {x: 0.0005, y: 0.0005, z: 0.03}
 --- !u!222 &865142832
 CanvasRenderer:
   m_ObjectHideFlags: 0

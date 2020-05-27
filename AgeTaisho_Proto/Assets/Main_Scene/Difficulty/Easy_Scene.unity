@@ -3532,6 +3532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1917234655}
+  _maxScale: {x: 0.0007, y: 0.0007, z: 0.03}
 --- !u!222 &916413236
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7095,7 +7096,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917234653}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 0.33632022, y: 0.33631998, z: 0.33632028}
   m_Children:
   - {fileID: 916413233}
