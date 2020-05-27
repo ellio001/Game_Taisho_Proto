@@ -79,7 +79,7 @@ public class NotReturn_Script : MonoBehaviour
         OrderItems[0].SetActive(false);   //席につくまではオーダーを表示しない
         OrderItems[1].SetActive(false);   //席につくまではオーダーを表示しない
         OrderItems[2].SetActive(false);   //席につくまではオーダーを表示しない
-
+        GetComponent<BoxCollider>().enabled = false;
     }
 
     // Update is called once per frame
@@ -155,6 +155,7 @@ public class NotReturn_Script : MonoBehaviour
             OrderItems[0].SetActive(true);   //席につくまではオーダーを表示しない
             OrderItems[1].SetActive(true);   //席につくまではオーダーを表示しない
             OrderItems[2].SetActive(true);   //席につくまではオーダーを表示しない
+            GetComponent<BoxCollider>().enabled = true;
             SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber] + new Vector3(0,0.5f,0), Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
             SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3] + new Vector3(0, 0.5f, 0), Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
             SideItems[2] = Instantiate(OrderItems[1], DisplayPosition[MyNumber] + new Vector3(0, 0, 0.3f), transform.rotation);  //客生成(客番号,座標,回転)
@@ -191,6 +192,7 @@ public class NotReturn_Script : MonoBehaviour
             if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
             Panel.SetActive(false);   //パネルを表示しない
+            GetComponent<BoxCollider>().enabled = false;
             OneProces = true;   //この処理が2回目以降通らないようにする
         }
     }

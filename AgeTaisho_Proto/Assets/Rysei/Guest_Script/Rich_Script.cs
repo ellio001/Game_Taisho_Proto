@@ -10,6 +10,7 @@ public class Rich_Script : MonoBehaviour
     float EatTime = 4;          //食べ終わるまでの時間
     float RowTime = 10;         //列に並んでいる時間
     float SitTime = 18;         //席に座っている時間
+    int Mistake = 5;            //品を間違えた時の時間の減量
 
     int ScorePush = 2;        //スコアの倍率
     //-------------------------------------------------------
@@ -90,6 +91,7 @@ public class Rich_Script : MonoBehaviour
         OrderItems[2].SetActive(false);   //席につくまではパネルを表示しない
         ReturnImage.enabled = false;      //帰るゲージをfalseに
         ReturnText.enabled = false;      //テキストをfalseに
+        GetComponent<BoxCollider>().enabled = false;
     }
 
     // Update is called once per frame
@@ -159,6 +161,7 @@ public class Rich_Script : MonoBehaviour
                 Destroy(SideItems[1]);
                 ReturnImage.enabled = false;      //Imageをfalseに
                 ReturnText.enabled = false;
+                GetComponent<BoxCollider>().enabled = false;
                 OneDelete = true;
             }
             if (EatCount >= EatTime) GuestReturn();   //5秒たったら食べ終わり帰る
@@ -171,6 +174,7 @@ public class Rich_Script : MonoBehaviour
             Panel.SetActive(true);   //パネルを表示する
             ReturnImage.enabled = true;      //Imageを表示
             ReturnText.enabled = true;      //Textを表示する
+            GetComponent<BoxCollider>().enabled = true;
 
             switch (SceneManager.GetActiveScene().name)
             {
@@ -231,6 +235,7 @@ public class Rich_Script : MonoBehaviour
                 Destroy(SideItems[1]);
                 ReturnImage.enabled = false;      //Imageをfalseに
                 ReturnText.enabled = false;
+                GetComponent<BoxCollider>().enabled = false;
                 OneDelete = true;
             }
             OneProces = true;   //この処理が2回目以降通らないようにする
@@ -246,6 +251,10 @@ public class Rich_Script : MonoBehaviour
             GameManager.instance.score_num += ItemScore; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
 
+        }
+        else
+        {
+            ReturnCount += Mistake;
         }
     }
 }
