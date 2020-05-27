@@ -19,6 +19,7 @@ public class UIFollowTarget : MonoBehaviour
     Vector3 CanvasPos;
     Vector3 IconScale; // ひし形のアイコンのScaleを取得
     [SerializeField] Vector3 _maxScale;
+    Vector3 _PmaxScale;
     RectTransform rect_tra;
 
     int count;
@@ -40,6 +41,7 @@ public class UIFollowTarget : MonoBehaviour
         C3_script = C3.GetComponent<Camera_3>();
 
         IconScale = rectTransform.localScale;
+        _PmaxScale = new Vector3(_maxScale.x - 0.0002f, _maxScale.y - 0.0002f, _maxScale.z);
     }
 
     void Update()
@@ -57,7 +59,7 @@ public class UIFollowTarget : MonoBehaviour
         
         // カーソルアイコンの拡縮制御
         rectTransform.localScale =
-            (Mathf.Sin(1 * Mathf.PI * Time.time) + 3.5f) * 0.7f * _maxScale;
+            (Mathf.Sin(1 * Mathf.PI * Time.time) + 3.5f) * 0.55f * _maxScale;
 
     }
 
@@ -68,7 +70,7 @@ public class UIFollowTarget : MonoBehaviour
         if (C3_script.pot_flg)
         {
             target = C3_script.PCS_List[C3_script.Pcursor].transform;
-            _maxScale = new Vector3(_maxScale.x-0.0002f, _maxScale.y - 0.0002f, _maxScale.z);
+            _maxScale = new Vector3(_PmaxScale.x, _PmaxScale.y, _PmaxScale.z);
         }
         else
         {
