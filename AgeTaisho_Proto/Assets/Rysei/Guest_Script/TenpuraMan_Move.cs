@@ -10,6 +10,7 @@ public class TenpuraMan_Move : MonoBehaviour
     float EatTime = 2;          //食べ終わるまでの時間
     float RowTime = 20;         //列に並んでいる時間
     float SitTime = 30;         //席に座っている時間
+    int Mistake = 5;            //間違えた時の時間の減量
 
     float RandomMax = 3;    //ランダムの最大値を決める変数
     //-------------------------------------------------------
@@ -90,6 +91,7 @@ public class TenpuraMan_Move : MonoBehaviour
         OrderItems[2].SetActive(false);   //席につくまではパネルを表示しない
         ReturnImage.enabled = false;      //帰るゲージをfalseに
         ReturnText.enabled = false;      //テキストをfalseに
+        GetComponent<BoxCollider>().enabled = false;
     }
 
     // Update is called once per frame
@@ -159,6 +161,7 @@ public class TenpuraMan_Move : MonoBehaviour
                 Destroy(SideItems[1]);
                 ReturnImage.enabled = false;      //Imageをfalseに
                 ReturnText.enabled = false;
+                GetComponent<BoxCollider>().enabled = false;
                 OneDelete = true;
             }
             if (EatCount >= EatTime) GuestReturn();   //2秒たったら食べ終わり帰る
@@ -171,6 +174,7 @@ public class TenpuraMan_Move : MonoBehaviour
             Panel.SetActive(true);   //パネルを表示する
             ReturnImage.enabled = true;      //Imageを表示する
             ReturnText.enabled = true;      //Textを表示する
+            GetComponent<BoxCollider>().enabled = true;
 
             switch (flooredIntrandom)
             {
@@ -232,6 +236,7 @@ public class TenpuraMan_Move : MonoBehaviour
                 Destroy(SideItems[1]);
                 ReturnImage.enabled = false;
                 ReturnText.enabled = false;
+                GetComponent<BoxCollider>().enabled = false;
                 OneDelete = true;
             }
             OneProces = true;   //この処理が2回目以降通らないようにする
@@ -246,6 +251,10 @@ public class TenpuraMan_Move : MonoBehaviour
             Eat = true;      //客が商品を食べ始める
             GameManager.instance.score_num += ItemScore; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
+        }
+        else
+        {
+            ReturnCount += Mistake;
         }
     }
 }
