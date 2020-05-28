@@ -119,6 +119,8 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
                 // フラグがたっていないとボタンが聞かな
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_joystick_B")) && TC3_script.space_flg) {
                     MoveFlg = true;
+                    // ストックにsaraを置いたときtrue(C3のストック自動選択で使う)
+                    if (TC3_script.stock_flg && ItemSara) TC3_script.StockEX_flg = true;
                     if (!HoldingFlg) // 手に何も持っていない時に入る
                     {
                         if (hit.collider.gameObject.tag == "Box") {
@@ -152,6 +154,8 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
                              (TextNumber == 7 && hit.collider.gameObject.tag == "Sara") || (TextNumber == 8 && hit.collider.gameObject.name == "Plate2"))
                     // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                     {
+                        if (TC3_script.pot_flg) TC3_script.PotEX_flg = true;
+
                         ItemPowder = false; // 粉をつけたものを鍋に置いたときにFalse
                         //当たり判定を入れる
                         ColliderIn();
