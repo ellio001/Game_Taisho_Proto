@@ -57,6 +57,7 @@ public class Custmer_script : MonoBehaviour
 
     void Start()
     {
+        this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
         //Display = GameObject.Find("SideDisplay"); //ディスプレイの追加
         //S_Display = Display.GetComponent<SideDisplay>();    //SideDysplayスクリプトの追加
 
@@ -110,6 +111,7 @@ public class Custmer_script : MonoBehaviour
 
             if (MyNumber == 3 && (GuestNowPosition.x >= GuestPosition[3].x - 0.2)) //客がPosition[3]の許容範囲より左にきたら1~3へ通す
             {
+                this.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
                 if (GuestNumber[0] == null) MyNumber = 0; //0の席が空いていたら移動
                 else if (GuestNumber[1] == null) MyNumber = 1; //1の席が空いていたら移動
                 else if (GuestNumber[2] == null) MyNumber = 2; //2の席が空いていたら移動
@@ -245,8 +247,16 @@ public class Custmer_script : MonoBehaviour
 
     public void GuestReturn()  //客が帰る処理
     {
-        if (GuestNowPosition.z > -3) GuestNowPosition.z -= GuestSpeed;   //少し後ろに下がり
-        else GuestNowPosition.x += GuestSpeed;   //-左に帰っていく
+        if (GuestNowPosition.z > -3)
+        {
+            this.gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+            GuestNowPosition.z -= GuestSpeed;   //少し後ろに下がり
+        }
+        else
+        {
+            this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
+            GuestNowPosition.x += GuestSpeed;   //-左に帰っていく
+        }
 
         if (OneProces == false)
         {
