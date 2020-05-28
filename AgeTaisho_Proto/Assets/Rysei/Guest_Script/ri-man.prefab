@@ -102,11 +102,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3217924070195032518}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.8999996, y: 8, z: 0.63}
+  m_LocalPosition: {x: 1.3999995, y: 7.1599994, z: 0.63}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 7140198785762717950}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1823543055582653713
 SpriteRenderer:
@@ -190,7 +190,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.9, y: 7.84}
+  m_AnchoredPosition: {x: 1.4, y: 7}
   m_SizeDelta: {x: 640, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7469324862108202450
@@ -515,9 +515,9 @@ Transform:
   - {fileID: 7140198785762717944}
   - {fileID: 5652265889714625131}
   - {fileID: 5992833742458156525}
-  - {fileID: 866286111669857242}
-  - {fileID: 638872433927462684}
   - {fileID: 6446579662750774324}
+  - {fileID: 638872433927462684}
+  - {fileID: 866286111669857242}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -599,7 +599,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7617924742388505882}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9, y: 8, z: 0.63}
+  m_LocalPosition: {x: 1.3999996, y: 7.1599994, z: 0.63}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 7140198785762717950}
@@ -678,11 +678,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8851147443145631329}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9, y: 8, z: 0.63}
+  m_LocalPosition: {x: 1.3999996, y: 7.1599994, z: 0.63}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 7140198785762717950}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7510364152715288943
 SpriteRenderer:
