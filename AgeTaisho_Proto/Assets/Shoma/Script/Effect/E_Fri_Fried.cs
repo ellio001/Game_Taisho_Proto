@@ -5,8 +5,6 @@ using UnityEngine;
 public class E_Fri_Fried : MonoBehaviour
 {
     /*　変数　*/
-    float count = 100;
-    bool Powder_flg = false; // 徐々に泡が少なる処理を始めるフラグ
     bool Fried_flg = false;
 
     /*　Powderを揚げているときに使う変数　*/
@@ -45,21 +43,6 @@ public class E_Fri_Fried : MonoBehaviour
             PowderParticle.emission.SetBurst(0, burst);
            
             Fried_flg = true;
-        }
-
-    }
-
-    // 当たっている間 ------------------------------------------
-    void OnTriggerStay(Collider other)
-    {
-        
-
-        if (other.gameObject.name.Contains("Nabe") && Fried_flg)
-        {
-            Debug.Log("kita");
-            //PowderParticle.playbackSpeed = 2f;
-            //burst.count = 1f;
-            //PowderParticle.emission.SetBurst(0, burst);
         }
 
     }

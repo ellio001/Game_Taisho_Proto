@@ -131,7 +131,6 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
                                 HoldingFlg = true;
                                 tutorialUI.TextNumber = 4; // テキストを進める
                                 DestroyFlg = true; // 矢印を消すフラグを立てる
-                                KonaFlag = true;
                                 ColliderOut();//当たり判定をを外す
                             }
                             ItemSara = hit.collider.gameObject.name.Contains("Dish");

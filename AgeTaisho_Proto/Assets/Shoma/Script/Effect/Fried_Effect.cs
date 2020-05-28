@@ -91,9 +91,6 @@ public class Fried_Effect : MonoBehaviour
         if (other.gameObject.name.Contains("Fried") && Fried_flg)
         {
             Debug.Log("kita");
-            //PowderParticle.playbackSpeed = 2f;
-            //burst.count = 1f;
-            //PowderParticle.emission.SetBurst(0, burst);
         }
 
     }
@@ -101,7 +98,7 @@ public class Fried_Effect : MonoBehaviour
     // 当たり終わった後 ------------------------------------------
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name.Contains("Powder"))
+        if ( other.gameObject.name.Contains("Nabe"))
         {
             Debug.Log("粉消えた");
             Destroy(PowderParticle);
