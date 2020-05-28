@@ -189,8 +189,10 @@ public class Custmer_script : MonoBehaviour
                             ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                             OrderString = "えびてん";
                             OrderItems[0].SetActive(true);
-                            //SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
-                            //SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                            SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                            SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                            SideItems[0].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                            SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                             break;
                         case 1:
                         case 2:
@@ -200,8 +202,10 @@ public class Custmer_script : MonoBehaviour
                             ItemString = "ItemSara(Chicken)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                             OrderString = "からあげ";
                             OrderItems[1].SetActive(true);
-                            //SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
-                            //SideItems[1] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
+                            SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                            SideItems[1] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                            SideItems[0].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                            SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                             break;
                     }
                     break;
@@ -214,8 +218,10 @@ public class Custmer_script : MonoBehaviour
                             ItemString = "ItemSara(Chicken)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                             OrderString = "からあげ";
                             OrderItems[1].SetActive(true);
-                            //SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
-                            //SideItems[1] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
+                            SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                            SideItems[1] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                            SideItems[0].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                            SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                             break;
                         case 2:
                         case 3:
@@ -224,8 +230,10 @@ public class Custmer_script : MonoBehaviour
                             ItemString = "ItemSara(Quail)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                             OrderString = "うずら";
                             OrderItems[2].SetActive(true);
-                            //SideItems[0] = Instantiate(OrderItems[2], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
-                            //SideItems[1] = Instantiate(OrderItems[2], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
+                            SideItems[0] = Instantiate(OrderItems[2], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                            SideItems[1] = Instantiate(OrderItems[2], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                            SideItems[0].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                            SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                             break;
                     }
                     break;
