@@ -890,21 +890,21 @@ MonoBehaviour:
   Positionnumber: 0
   GuestSpawn: 0
   GuestType:
-  - {fileID: 1765017471589500, guid: bf804bcd94e422347b3908e05bce0b38, type: 3}
-  - {fileID: 1216312987813446, guid: bd99ef1846c4dcf4bbb787aac683adae, type: 3}
-  - {fileID: 1359249871301514, guid: 05474fd8a9002ad4cb028dbab3e21d9a, type: 3}
-  - {fileID: 4336478166042193470, guid: 21feee015b8a5814b9a491bac0c43f67, type: 3}
-  - {fileID: 4895790787510264172, guid: 1e7ccf3d10718f141ace556741a50931, type: 3}
-  - {fileID: 8832834541269859291, guid: cb3808f39613b6940b137f5e7c150d96, type: 3}
+  - {fileID: 1674699955365535662, guid: df6545c655c3a9145b070389348ce338, type: 3}
+  - {fileID: 5268481898791946015, guid: 9dad8a32ad2c29547bc5a253d55fc9cd, type: 3}
+  - {fileID: 7140198785762225374, guid: f2deeed7f1bc4374c83ac549da4e5605, type: 3}
+  - {fileID: 8210043388178175176, guid: a9ee99a61f5803e42b052b3564a88389, type: 3}
+  - {fileID: 69274130931520983, guid: 783fcce0e93b0344397f371216926b07, type: 3}
+  - {fileID: 2425375934565412205, guid: fbcf1d213d14aca4a9f9ead6b6ca8b0b, type: 3}
   Position:
-  - {x: -3, y: 5, z: -2}
-  - {x: -4.5, y: 5, z: -2}
-  - {x: -6, y: 5, z: -2}
-  - {x: -4.5, y: 5, z: -4}
-  - {x: -5.5, y: 5, z: -4}
-  - {x: -6.5, y: 5, z: -4}
-  - {x: -7.5, y: 5, z: -4}
-  - {x: -8.5, y: 5, z: -4}
+  - {x: -3, y: 3.8, z: -2}
+  - {x: -4.5, y: 3.8, z: -2}
+  - {x: -6, y: 3.8, z: -2}
+  - {x: -4.5, y: 3.8, z: -4}
+  - {x: -5.5, y: 3.8, z: -4}
+  - {x: -6.5, y: 3.8, z: -4}
+  - {x: -7.5, y: 3.8, z: -4}
+  - {x: -8.5, y: 3.8, z: -4}
   Guest:
   - {fileID: 0}
   - {fileID: 0}

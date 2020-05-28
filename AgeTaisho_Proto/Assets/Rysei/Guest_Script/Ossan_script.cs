@@ -190,24 +190,24 @@ public class Ossan_script : MonoBehaviour
                     ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     OrderItems[0].SetActive(true);
-                    SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
-                    SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                    //SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                    //SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
                     break;
                 case 3:
                     ItemScore = 100;
                     ItemString = "Dish_T_Fish"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
                     OrderString = "魚てん";
                     OrderItems[1].SetActive(true);
-                    SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
-                    SideItems[1] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
+                    //SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
+                    //SideItems[1] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
                     break;
                 case 1:
                     ItemScore = 100;
                     ItemString = "Dish_T_Potato"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
                     OrderString = "芋てん";
                     OrderItems[2].SetActive(true);
-                    SideItems[0] = Instantiate(OrderItems[2], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
-                    SideItems[1] = Instantiate(OrderItems[2], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
+                    //SideItems[0] = Instantiate(OrderItems[2], DisplayPosition[MyNumber], transform.rotation);  //客生成(客番号,座標,回転)
+                    //SideItems[1] = Instantiate(OrderItems[2], DisplayPosition[MyNumber + 3], transform.rotation);  //客生成(客番号,座標,回転)
                     break;
             }
 

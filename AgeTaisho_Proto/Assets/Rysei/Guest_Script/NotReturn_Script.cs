@@ -156,12 +156,12 @@ public class NotReturn_Script : MonoBehaviour
             OrderItems[1].SetActive(true);   //席につくまではオーダーを表示しない
             OrderItems[2].SetActive(true);   //席につくまではオーダーを表示しない
             GetComponent<BoxCollider>().enabled = true;
-            SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber] + new Vector3(0,0.5f,0), Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
-            SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3] + new Vector3(0, 0.5f, 0), Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
-            SideItems[2] = Instantiate(OrderItems[1], DisplayPosition[MyNumber] + new Vector3(0, 0, 0.3f), transform.rotation);  //客生成(客番号,座標,回転)
-            SideItems[3] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3] + new Vector3(0, 0, 0.3f), transform.rotation);  //客生成(客番号,座標,回転)
-            SideItems[4] = Instantiate(OrderItems[2], DisplayPosition[MyNumber] + new Vector3(0, 0, -0.3f), transform.rotation);  //客生成(客番号,座標,回転)
-            SideItems[5] = Instantiate(OrderItems[2], DisplayPosition[MyNumber + 3] + new Vector3(0, 0, -0.3f), transform.rotation);  //客生成(客番号,座標,回転)
+            //SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber] + new Vector3(0,0.5f,0), Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+            //SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3] + new Vector3(0, 0.5f, 0), Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+            //SideItems[2] = Instantiate(OrderItems[1], DisplayPosition[MyNumber] + new Vector3(0, 0, 0.3f), transform.rotation);  //客生成(客番号,座標,回転)
+            //SideItems[3] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3] + new Vector3(0, 0, 0.3f), transform.rotation);  //客生成(客番号,座標,回転)
+            //SideItems[4] = Instantiate(OrderItems[2], DisplayPosition[MyNumber] + new Vector3(0, 0, -0.3f), transform.rotation);  //客生成(客番号,座標,回転)
+            //SideItems[5] = Instantiate(OrderItems[2], DisplayPosition[MyNumber + 3] + new Vector3(0, 0, -0.3f), transform.rotation);  //客生成(客番号,座標,回転)
 
 
             ItemString[0] = "Dish_T_Shrimp";
