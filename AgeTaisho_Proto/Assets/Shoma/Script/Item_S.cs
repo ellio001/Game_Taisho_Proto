@@ -83,10 +83,10 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Potato");   //Resourceフォルダのプレハブを読み込む
                 }
                 //触れると焦げる
-                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");       //皿
-                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//鍋
-                if (other.gameObject.tag == "tenpuranabe") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//鍋
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//ゴミ場
+                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");       //皿
+                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");//鍋
+                if (other.gameObject.tag == "tenpuranabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");//鍋
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");//ゴミ場
                 break;
 
             case "Powder_Potato":
@@ -106,9 +106,9 @@ public class Item_S : MonoBehaviour {
                     }
                 }
                 //触れると焦げる
-                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");       //皿
-                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//唐揚げ鍋
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//ゴミ場
+                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");       //皿
+                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");//唐揚げ鍋
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");//ゴミ場
                 break;
 
             case "Fried_K_Potato":
@@ -118,9 +118,9 @@ public class Item_S : MonoBehaviour {
                     slider.value = AgeCount / KogeCountMax;
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");
                 if (AgeCount >= KogeCountMax) {
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");   //Resourceフォルダのプレハブを読み込む
                 }
                 if (other.gameObject.tag == "Sara") {
                     script.Taihi = AgeCount;
@@ -140,12 +140,19 @@ public class Item_S : MonoBehaviour {
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / StockCountMax;
                     if (AgeCount >= StockCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");
 
+                break;
+
+            case "Burn_Potato":
+                if (other.gameObject.tag == "Garbage can") {
+                    GameManager.instance.score_num -= 100;
+                    Destroy(gameObject);
+                }
                 break;
 
             case "Item_Fish":
@@ -153,13 +160,13 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Fish");   //Resourceフォルダのプレハブを読み込む
                 }
                 else if (other.gameObject.tag != "Click") {
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");   //Resourceフォルダのプレハブを読み込む
                 }
                 //触れると焦げる
-                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");       //皿
-                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//鍋
-                if (other.gameObject.tag == "tenpuranabe") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//鍋
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//ゴミ場
+                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");       //皿
+                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//鍋
+                if (other.gameObject.tag == "tenpuranabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//鍋
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//ゴミ場
                 break;
 
                 //テストコード
@@ -171,10 +178,10 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
                 }
                 //触れると焦げる
-                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");       //皿
-                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//鍋
-                if (other.gameObject.tag == "tenpuranabe") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//鍋
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//ゴミ場
+                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");       //皿
+                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//鍋
+                if (other.gameObject.tag == "tenpuranabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//鍋
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//ゴミ場
                 break;
 
             case "Powder_Fish":
@@ -194,8 +201,8 @@ public class Item_S : MonoBehaviour {
                     }
                 }
                 //皿に触れると焦げる
-                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//ゴミ場
+                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//ゴミ場
                 break;
 
                 //テストコード
@@ -216,8 +223,8 @@ public class Item_S : MonoBehaviour {
                     }
                 }
                 //皿に触れると焦げる
-                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//ゴミ場
+                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//ゴミ場
                 break;
 
             case "Fried_T_Fish":
@@ -228,9 +235,9 @@ public class Item_S : MonoBehaviour {
 
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");
                 if (AgeCount >= KogeCountMax) {
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");   //Resourceフォルダのプレハブを読み込む
                 }
                 if (other.gameObject.tag == "Sara") {
                     script.Taihi = AgeCount;
@@ -249,9 +256,9 @@ public class Item_S : MonoBehaviour {
 
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");
                 if (AgeCount >= KogeCountMax) {
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");   //Resourceフォルダのプレハブを読み込む
                 }
                 if (other.gameObject.tag == "Sara") {
                     script.Taihi = AgeCount;
@@ -272,11 +279,11 @@ public class Item_S : MonoBehaviour {
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / StockCountMax;
                     if (AgeCount >= StockCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");
                 break;
 
                 //テストコード
@@ -291,22 +298,29 @@ public class Item_S : MonoBehaviour {
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / StockCountMax;
                     if (AgeCount >= StockCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");
                 break;
                 
+            case "Burn_Fish":
+                if (other.gameObject.tag == "Garbage can") {
+                    GameManager.instance.score_num -= 100;
+                    Destroy(gameObject);
+                }
+                break;
+
             case "Item_Shrimp":
                 if (other.gameObject.tag == "kona") {
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Shrimp");   //Resourceフォルダのプレハブを読み込む
                 }
                 //触れると焦げる
-                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");       //皿
-                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//鍋
-                if (other.gameObject.tag == "tenpuranabe") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//鍋
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//ゴミ場
+                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");       //皿
+                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");//鍋
+                if (other.gameObject.tag == "tenpuranabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");//鍋
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");//ゴミ場
                 break;
 
             //case "Item_Shrimp_sub":
@@ -337,8 +351,8 @@ public class Item_S : MonoBehaviour {
                     }
                 }
                 //皿に触れると焦げる
-                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//ゴミ場
+                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");//ゴミ場
                 break;
 
             case "Fried_T_Shrimp":
@@ -349,9 +363,9 @@ public class Item_S : MonoBehaviour {
 
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");
                 if (AgeCount >= KogeCountMax) {
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");   //Resourceフォルダのプレハブを読み込む
                 }
                 if (other.gameObject.tag == "Sara") {
                     script.Taihi = AgeCount;
@@ -392,14 +406,21 @@ public class Item_S : MonoBehaviour {
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / StockCountMax;
                     if (AgeCount >= StockCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");
                 break;
                 
-            case "ItemChicken":
+            case "Burn_Shrimp":
+                if (other.gameObject.tag == "Garbage can") {
+                    GameManager.instance.score_num -= 100;
+                    Destroy(gameObject);
+                }
+                break;
+
+            case "Item_Chicken":
                 if (script.FiverFlag) {
                     AgeCountMax = 1;
                 }
@@ -413,14 +434,14 @@ public class Item_S : MonoBehaviour {
                     slider.value = AgeCount / AgeCountMax;
 
                     if (AgeCount >= AgeCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemFriedchicken");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("R_Resources/Fried_K_Chicken");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");//ゴミ場
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_chicken");//ゴミ場
                 break;
 
 
-            case "ItemFriedchicken":
+            case "Fried_K_Chicken":
 
                 AgeCount += Time.deltaTime;
                 slider.value = AgeCount / KogeCountMax;
@@ -430,7 +451,7 @@ public class Item_S : MonoBehaviour {
                     slider.value = AgeCount / KogeCountMax;
                 }
                 if (AgeCount >= KogeCountMax) {
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("R_Resources/Burn_chicken");   //Resourceフォルダのプレハブを読み込む
                 }
 
                 if (other.gameObject.tag == "Sara") {
@@ -439,33 +460,38 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("S_Resources/ItemSara(Chicken)");   //Resourceフォルダのプレハブを読み込む
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_chicken");
                 break;
 
-            case "ItemSara(Chicken)":
+            case "Dish_K_Chicken":
+                AgeCount += Time.deltaTime;
+                slider.value = AgeCount / KogeCountMax;
 
-                if (TaihiFlag == false) {
-                    AgeCount = script.Taihi;
-                    TaihiFlag = true;
-                }
-
-                //ストックされたら
-                if (other.gameObject.tag == "Stock") {
-                    AgeCount += Time.deltaTime;
-                    slider.value = AgeCount / StockCountMax;
-                    if (AgeCount >= StockCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
-                    }
-                }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_chicken");
+
+                if (other.gameObject.tag == "karaagenabe") {
+                    AgeCount += Time.deltaTime;
+                    slider.value = AgeCount / KogeCountMax;
+                }
+
+                if (AgeCount >= KogeCountMax) {
+                    Resource = (GameObject)Resources.Load("R_Resources/Burn_chicken");   //Resourceフォルダのプレハブを読み込む
+                }
+
+                if (other.gameObject.tag == "Sara") {
+                    script.Taihi = AgeCount;
+                    script.TaihiFlag = TaihiFlag;
+                    Resource = (GameObject)Resources.Load("R_Resources/Dish_K_Quail");   //Resourceフォルダのプレハブを読み込む
+                }
                 break;
 
             case "Item_Quail":
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
-                if (other.gameObject.tag == "liquid") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
-                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
+                if (other.gameObject.tag == "liquid") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
+                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
+                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
 
                 if (other.gameObject.tag == "Bread powder") { //粉１回目
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Quail1");   //Resourceフォルダのプレハブを読み込む
@@ -477,8 +503,9 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Quail2");   //Resourceフォルダのプレハブを読み込む
                 }
                 //ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
-                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
+                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
+                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
                 break;
 
             case "Powder_Quail2":
@@ -486,8 +513,9 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Quail3");   //Resourceフォルダのプレハブを読み込む
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
-                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
+                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
+                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
                 break;
 
             case "Powder_Quail3":
@@ -495,8 +523,9 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Quail4");   //Resourceフォルダのプレハブを読み込む
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
-                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
+                if (other.gameObject.tag == "Sara") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
+                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
                 break;
 
             case "Powder_Quail4":
@@ -516,7 +545,7 @@ public class Item_S : MonoBehaviour {
                     }
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
                 break;
 
             case "Fried_K_Quail":
@@ -524,7 +553,7 @@ public class Item_S : MonoBehaviour {
                 slider.value = AgeCount / KogeCountMax;
 
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
 
                 if (other.gameObject.tag == "karaagenabe") {
                     AgeCount += Time.deltaTime;
@@ -532,7 +561,7 @@ public class Item_S : MonoBehaviour {
                 }
 
                 if (AgeCount >= KogeCountMax) {
-                    Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                    Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");   //Resourceフォルダのプレハブを読み込む
                 }
 
                 if (other.gameObject.tag == "Sara") {
@@ -553,11 +582,12 @@ public class Item_S : MonoBehaviour {
                     AgeCount += Time.deltaTime;
                     slider.value = AgeCount / StockCountMax;
                     if (AgeCount >= StockCountMax) {
-                        Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");   //Resourceフォルダのプレハブを読み込む
+                        Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");   //Resourceフォルダのプレハブを読み込む
                     }
                 }
                 // ゴミ箱に当たると焦げになる
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("S_Resources/ItemKoge");
+                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
+                if (other.gameObject.tag == "karaagenabe") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
                 break;
                 
             default:
