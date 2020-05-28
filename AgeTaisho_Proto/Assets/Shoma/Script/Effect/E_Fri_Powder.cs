@@ -74,17 +74,9 @@ public class E_Fri_Powder : MonoBehaviour
         }
     }
 
-    // 当たり終わった後 ------------------------------------------
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.name.Contains("Nabe"))
-        {
-            Destroy(PowderParticle);
-        }
-    }
-
+    // 粉から揚げに変わった時にエフェクトを削除する
     private void OnDestroy()
     {
-        Destroy(PowderParticle);
+        Destroy(GameObject.Find("E_Frying(Clone)"));
     }
 }

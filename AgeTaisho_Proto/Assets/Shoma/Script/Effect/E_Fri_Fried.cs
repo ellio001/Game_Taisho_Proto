@@ -22,7 +22,8 @@ public class E_Fri_Fried : MonoBehaviour
 
     void Update()
     {
-        
+        Debug.Log("Fried_flg : "+ Fried_flg);
+
     }
 
     // 当たった瞬間 ------------------------------------------
@@ -44,20 +45,20 @@ public class E_Fri_Fried : MonoBehaviour
            
             Fried_flg = true;
         }
-
     }
 
-    // 当たり終わった後 ------------------------------------------
-    void OnTriggerExit(Collider other)
+    // 当たっている間 ------------------------------------------
+    void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.name.Contains("Nabe"))
+        if (!other.gameObject.name.Contains("Nabe")&& Fried_flg)
         {
             Destroy(PowderParticle);
         }
+
     }
 
     private void OnDestroy()
     {
-        Destroy(PowderParticle);
+        Destroy(GameObject.Find("E_Frying(Clone)"));
     }
 }

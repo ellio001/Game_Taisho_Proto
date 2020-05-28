@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 4009263379237432490}
   - component: {fileID: 4009263379237432501}
   - component: {fileID: 4009263379237432488}
+  - component: {fileID: 114254453629796506}
   m_Layer: 2
-  m_Name: Powder_Fride
+  m_Name: E_Frying
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4764,8 +4765,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4009263379237432500}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f7b1a1c584a76f4e84d8e3cdb2b57c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114254453629796506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4009263379237432500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933298fb2a75dad45a79e9b54110cd17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

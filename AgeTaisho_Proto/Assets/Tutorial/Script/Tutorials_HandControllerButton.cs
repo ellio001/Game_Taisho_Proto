@@ -199,7 +199,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
 
     //当たり判定を切る関数
     void ColliderOut() {
-        clickedGameObject.GetComponent<Collider>().enabled = false;
+        //clickedGameObject.GetComponent<Collider>().enabled = false;
     }
 
     //当たり判定を入れる関数
@@ -211,27 +211,18 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
         if (ArrowFlg == false && TextNumber != 9) {
             switch (TextNumber) {
                 case 3:
-                    //EbiBox.GetComponent<Outline>().enabled = true;
                     tmp = TC3_script.Cursor_List[3].transform.position;
                     break;
                 case 4:
-                    //EbiBox.GetComponent<Outline>().enabled = false;
-                    //Kona.GetComponent<Outline>().enabled = true;
                     tmp = TC3_script.Cursor_List[2].transform.position;
                     break;
                 case 5:
-                    //Kona.GetComponent<Outline>().enabled = false;
-                    //Tenpra_Nabe.GetComponent<Outline>().enabled = true;
                     tmp = TC3_script.Cursor_List[1].transform.position;
                     break;
                 case 7:
-                    //Tenpra_Nabe.GetComponent<Outline>().enabled = false;
-                    //Sara.GetComponent<Outline>().enabled = true;
                     tmp = TC3_script.Cursor_List[15].transform.position;
                     break;
                 case 8:
-                    //Sara.GetComponent<Outline>().enabled = false;
-                    //Seki.GetComponent<Outline>().enabled = true;
                     tmp = TC3_script.Cursor_List[6].transform.position;
                     break;
             }
