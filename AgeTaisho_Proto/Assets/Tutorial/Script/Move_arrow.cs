@@ -17,7 +17,7 @@ public class Move_arrow : MonoBehaviour
     {
         // その場で上下運動させている
         transform.position = new Vector3(transform.position.x, 
-            nowPosi + Mathf.PingPong(Time.time/2, UpDownSpeed) + 0.9f, transform.position.z);
+            nowPosi + Mathf.PingPong(Time.time/2, UpDownSpeed) , transform.position.z);
         // その場で回転させている
         transform.Rotate(new Vector3(0, RotationSpeed, 0) * Time.deltaTime, Space.World);
     }

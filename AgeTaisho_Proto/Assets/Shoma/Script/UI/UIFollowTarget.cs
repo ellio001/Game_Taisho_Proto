@@ -18,7 +18,7 @@ public class UIFollowTarget : MonoBehaviour
 
     [SerializeField] Vector3 _maxScale; // 鍋以外でのUIカーソルのScale
     Vector3 _PmaxScale;     // 鍋でのUIカーソルのScale
-    Vector3 _FInScale; // 最終的に決まったスケールを入れる
+    Vector3 _FinScale; // 最終的に決まったスケールを入れる
 
     const float Scale_val = 0.00001f; // 拡大縮小する値
 
@@ -59,7 +59,7 @@ public class UIFollowTarget : MonoBehaviour
         
         // カーソルアイコンの拡縮制御
         rectTransform.localScale =
-            (Mathf.Sin(1 * Mathf.PI * Time.time) + 3.5f) * 0.55f * _FInScale;
+            (Mathf.Sin(1 * Mathf.PI * Time.time) + 3.5f) * 0.55f * _FinScale;
 
     }
 
@@ -72,12 +72,12 @@ public class UIFollowTarget : MonoBehaviour
             if (TC3_script.pot_flg)
             {
                 target = TC3_script.PCS_List[TC3_script.Pcursor].transform;
-                _FInScale = new Vector3(_PmaxScale.x, _PmaxScale.y, _PmaxScale.z);
+                _FinScale = new Vector3(_PmaxScale.x, _PmaxScale.y, _PmaxScale.z);
             }
             else
             {
                 target = TC3_script.Cursor_List[TC3_script.cursor].transform;
-                _FInScale = new Vector3(_maxScale.x, _maxScale.y, _maxScale.z);
+                _FinScale = new Vector3(_maxScale.x, _maxScale.y, _maxScale.z);
             }
         }
         else
@@ -85,12 +85,12 @@ public class UIFollowTarget : MonoBehaviour
             if (C3_script.pot_flg)
             {
                 target = C3_script.PCS_List[C3_script.Pcursor].transform;
-                _FInScale = new Vector3(_PmaxScale.x, _PmaxScale.y, _PmaxScale.z);
+                _FinScale = new Vector3(_PmaxScale.x, _PmaxScale.y, _PmaxScale.z);
             }
             else
             {
                 target = C3_script.Cursor_List[C3_script.cursor].transform;
-                _FInScale = new Vector3(_maxScale.x, _maxScale.y, _maxScale.z);
+                _FinScale = new Vector3(_maxScale.x, _maxScale.y, _maxScale.z);
             }
         }
     }
