@@ -275,7 +275,6 @@ public class Camera_3 : MonoBehaviour
         // ↓押したとき
         else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
         {
-            //old_direction = HCBscript.direction;
             button_flg = true;
              /* ・焦げアイテムを持っているときに下を押すした時、
               * ・盛り付け場を見ているときに下を押した時
@@ -323,7 +322,6 @@ public class Camera_3 : MonoBehaviour
         // ↑押したとき
         else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
         {
-            //old_direction = HCBscript.direction;
             button_flg = true;
             // 盛り付け場を見ている時に↑を押したらストックの直前の場所を向く
             if (cursor == 14 || cursor == 15)
@@ -356,7 +354,6 @@ public class Camera_3 : MonoBehaviour
             gomi_flg = false;
             MoveLight();
         }
-
 
     }//DownKeyCheck()
 
