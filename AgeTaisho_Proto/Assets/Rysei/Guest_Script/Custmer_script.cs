@@ -240,12 +240,14 @@ public class Custmer_script : MonoBehaviour
             if (ReturnCount >= SitTime) GuestReturn(); //席について25秒たつとGuestReturnが呼ばれる
         }
 
-        if (GuestNowPosition.z <= -13) Destroy(gameObject);   //zが-13以下になったら消える
+        if (GuestNowPosition.x >= 5) Destroy(gameObject);   //xが5以上になったら消える
     }
 
     public void GuestReturn()  //客が帰る処理
     {
-        GuestNowPosition.z -= GuestSpeed;   //-z方向に移動しつづける
+        if (GuestNowPosition.z > -3) GuestNowPosition.z -= GuestSpeed;   //少し後ろに下がり
+        else GuestNowPosition.x += GuestSpeed;   //-左に帰っていく
+
         if (OneProces == false)
         {
             if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
