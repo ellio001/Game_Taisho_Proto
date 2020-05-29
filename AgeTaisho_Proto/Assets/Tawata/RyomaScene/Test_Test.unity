@@ -179,7 +179,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &408506469
 GameObject:
@@ -280,7 +280,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &452176594
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -4973,6 +4973,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tiga_Heart
       objectReference: {fileID: 0}
+    - target: {fileID: 7963103767320230136, guid: 9977e99e438f8b64f939f47b5915d2ed,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7963103767320230143, guid: 9977e99e438f8b64f939f47b5915d2ed,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5011,7 +5016,7 @@ PrefabInstance:
     - target: {fileID: 7963103767320230143, guid: 9977e99e438f8b64f939f47b5915d2ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7963103767320230143, guid: 9977e99e438f8b64f939f47b5915d2ed,
         type: 3}
@@ -5052,6 +5057,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tiga_Smoke_v2
       objectReference: {fileID: 0}
+    - target: {fileID: 7963103767320230136, guid: 9977e99e438f8b64f939f47b5915d2ed,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7963103767320230143, guid: 9977e99e438f8b64f939f47b5915d2ed,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5090,7 +5100,7 @@ PrefabInstance:
     - target: {fileID: 7963103767320230143, guid: 9977e99e438f8b64f939f47b5915d2ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7963103767320230143, guid: 9977e99e438f8b64f939f47b5915d2ed,
         type: 3}
@@ -5120,6 +5130,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tiga_ikari_v3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8360539031182200203, guid: 05ac42c4b44f4fe40be51b1750356778,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8360539031182200204, guid: 05ac42c4b44f4fe40be51b1750356778,
         type: 3}
@@ -5190,6 +5205,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Taveru
       objectReference: {fileID: 0}
+    - target: {fileID: 3954945223111974018, guid: 8540ee15dbcb1f643a66d2e802a69655,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3954945223111974047, guid: 8540ee15dbcb1f643a66d2e802a69655,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5258,6 +5278,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Smoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 4728308257732570585, guid: 58f8b41e06f83b142832578b11d3cc2c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4728308257732570588, guid: 58f8b41e06f83b142832578b11d3cc2c,
         type: 3}
@@ -5328,6 +5353,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tiga_Heart_v2
       objectReference: {fileID: 0}
+    - target: {fileID: 3226763588734781243, guid: 704c34c886e9c414393a6f3a4326a21e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3226763588734781244, guid: 704c34c886e9c414393a6f3a4326a21e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5397,6 +5427,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tiga_ikari_v2
       objectReference: {fileID: 0}
+    - target: {fileID: 6445977675060129515, guid: 8199243d749247d41a5aed966ff10bca,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6445977675060129516, guid: 8199243d749247d41a5aed966ff10bca,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5465,6 +5500,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tiga_Heart_prot
+      objectReference: {fileID: 0}
+    - target: {fileID: 113824521942677438, guid: 8642ba21b3e28da408ce0e549977fd43,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 113824521942677433, guid: 8642ba21b3e28da408ce0e549977fd43,
         type: 3}
