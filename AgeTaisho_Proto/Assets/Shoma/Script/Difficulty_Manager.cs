@@ -18,6 +18,7 @@ public class Difficulty_Manager : MonoBehaviour
 
     bool Button_Flg = false;
     float Button_Time;
+    
 
     void Start()
     {
@@ -37,7 +38,7 @@ public class Difficulty_Manager : MonoBehaviour
         hard_back_ui.SetActive(false);
     }
 
-    void Update()
+    public void Update()
     {
         if (Button_Flg) // 次のボタンが押せるまでのインターバル
         {
