@@ -162,6 +162,11 @@ public class Ossan_script : MonoBehaviour
             EatCount += Time.deltaTime;
             if (OneDelete == false)
             {
+                ///////////////////
+                ///////////////////
+                ///////////////////
+                ///////////////////
+
                 Panel.SetActive(false);   //パネルを表示しない
                 OrderItems[0].SetActive(false);
                 OrderItems[1].SetActive(false);
