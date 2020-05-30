@@ -43,7 +43,7 @@ public class Difficulty_Manager : MonoBehaviour
         if (Button_Flg) // 次のボタンが押せるまでのインターバル
         {
             Button_Time += Time.deltaTime;
-            if (Button_Time >= 0.2)
+            if (Button_Time >= 0.15)
             {
                 Button_Flg = false;
                 Button_Time = 0;
