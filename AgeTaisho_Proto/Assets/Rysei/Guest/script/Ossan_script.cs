@@ -41,7 +41,7 @@ public class Ossan_script : MonoBehaviour
     public float ReturnCount;   //客が帰るまでの時間をいれる箱
     public float EatCount;      //客が食べている間の時間をいれる
     public bool OneProces = false; //自分のいた箱を1回だけ初期化する
-    public bool Eat;            //提供された時trueにする
+    public bool Eat = false;            //提供された時trueにする
     bool OneDelete;             //注文を１回だけ消す
 
     string SceneName; // sceneの名前を記憶する変数
@@ -58,6 +58,19 @@ public class Ossan_script : MonoBehaviour
     [SerializeField] Image ReturnImage;           //客が帰るまでのゲージ
     [SerializeField] Text ReturnText;               //客が帰るまでの秒数を表示するテキスト
     int ReturnTime;                                 //客が帰るまでの秒数
+
+    /*　パーティクル変数　*/
+    bool effectflag = false;    //エフェクト
+
+
+    /*　パーティクル変数　*/
+    ParticleSystem.Burst burst;
+    ParticleSystem particle;  // PFFの<ParticleSystem>が入っている
+    GameObject P_effect;            // プレファブを入れる
+    Vector3 eff_pos;                    // 鍋に入った物の座標を入れる
+    Quaternion eff_rot;                 // エフェクトの回転を入れる
+    GameObject eff_PFF;                 // 表示したエフェクトを入れる
+    
 
     void Start()
     {
@@ -159,13 +172,11 @@ public class Ossan_script : MonoBehaviour
         }
         if (Eat)
         {
+            //エフェクトスタート
+            if (!effectflag) Start_Effect();
             EatCount += Time.deltaTime;
             if (OneDelete == false)
             {
-                ///////////////////
-                ///////////////////
-                ///////////////////
-                ///////////////////
 
                 Panel.SetActive(false);   //パネルを表示しない
                 OrderItems[0].SetActive(false);
@@ -239,6 +250,8 @@ public class Ossan_script : MonoBehaviour
 
     public void GuestReturn()  //客が帰る処理
     {
+        //エフェクト終了
+        if (effectflag) End_Effect();
         if (GuestNowPosition.z > -3)
         {
             this.gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -280,11 +293,28 @@ public class Ossan_script : MonoBehaviour
             Eat = true;      //客が商品を食べ始める
             GameManager.instance.score_num += ItemScore; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
-
+            //パーティクル
+            effectflag = true;//エフェクトが始まるフラグ
         }
         else
         {
             ReturnCount += Mistake;
         }
+    }
+
+    //エフェクトが生成、スタート
+    void Start_Effect() {
+        P_effect = (GameObject)Resources.Load("Effects/E_Taveru");   //Resourceフォルダのプレハブを読み込む
+        eff_pos = this.gameObject.transform.position;      // 粉の座標代入
+        eff_rot = P_effect.gameObject.transform.rotation;  // エフェクトの回転を代入
+        eff_PFF = Instantiate(P_effect, new Vector3(eff_pos.x , eff_pos.y + 1.7f, eff_pos.z + 0.4f), eff_rot); // プレハブを元にオブジェクトを生成する
+        particle = eff_PFF.GetComponent<ParticleSystem>();
+        effectflag = true;
+    }
+
+    //エフェクトを停止消去
+    void End_Effect() {
+        Destroy(GameObject.Find("E_Taveru(Clone)"));
+        effectflag = false;
     }
 }
