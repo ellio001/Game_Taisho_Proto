@@ -46,6 +46,18 @@ public class NotReturn_Script : MonoBehaviour
 
     [SerializeField] Vector3[] DisplayPosition;     //位置をいれる
     [SerializeField] GameObject[] SideItems;        //シーン上に置くアイテムをいれる
+
+    /*　パーティクル変数　*/
+    bool effectflag = false;    //エフェクト
+
+    /*　パーティクル変数　*/
+    ParticleSystem.Burst burst;
+    ParticleSystem particle;  // PFFの<ParticleSystem>が入っている
+    GameObject P_effect;            // プレファブを入れる
+    Vector3 eff_pos;                    // 鍋に入った物の座標を入れる
+    Quaternion eff_rot;                 // エフェクトの回転を入れる
+    GameObject eff_PFF;                 // 表示したエフェクトを入れる
+
     void Start()
     {
         this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -137,8 +149,11 @@ public class NotReturn_Script : MonoBehaviour
             if (ReturnCount >= RowTime) GuestReturn(); //席につかず20秒たつとGuestReturnが呼ばれる
             //Debug.Log(LineReturn);
         }
-        if (Eat)
+        if (Eat) 
         {
+            //エフェクトスタート
+            if (!effectflag) Start_Effect();
+
             EatCount += Time.deltaTime;
             if (EatCount >= EatTime)
             {
@@ -193,6 +208,10 @@ public class NotReturn_Script : MonoBehaviour
 
     public void GuestReturn()  //客が帰る処理
     {
+        
+        //エフェクトエンド
+        if (effectflag) End_Effect();
+
         if (GuestNowPosition.z > -3)
         {
             this.gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -247,5 +266,21 @@ public class NotReturn_Script : MonoBehaviour
             Destroy(SideItems[4]);
             Destroy(SideItems[5]);
         }
+    }
+
+    //エフェクトが生成、スタート
+    void Start_Effect() {
+        P_effect = (GameObject)Resources.Load("Effects/E_Taveru");   //Resourceフォルダのプレハブを読み込む
+        eff_pos = this.gameObject.transform.position;      // 粉の座標代入
+        eff_rot = P_effect.gameObject.transform.rotation;  // エフェクトの回転を代入
+        eff_PFF = Instantiate(P_effect, new Vector3(eff_pos.x + 0.2f, eff_pos.y + 1.7f, eff_pos.z+ 0.4f), eff_rot); // プレハブを元にオブジェクトを生成する
+        particle = eff_PFF.GetComponent<ParticleSystem>();
+        effectflag = true;
+    }
+
+    //エフェクトを停止消去
+    void End_Effect() {
+        Destroy(eff_PFF);
+        effectflag = false;
     }
 }

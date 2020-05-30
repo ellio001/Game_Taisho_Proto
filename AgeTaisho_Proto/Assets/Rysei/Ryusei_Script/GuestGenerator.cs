@@ -71,8 +71,8 @@ public class GuestGenerator : MonoBehaviour
 
             time = 0;
 
-            Debug.Log("Spawn"+GuestSpawnCount);
-            Debug.Log(Trainnumber);
+            //Debug.Log("Spawn"+GuestSpawnCount);
+            //Debug.Log(Trainnumber);
         }
     }
 }

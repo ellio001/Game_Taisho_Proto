@@ -55,6 +55,17 @@ public class Obaachan_script : MonoBehaviour
     [SerializeField] Text ReturnText;               //客が帰るまでの秒数を表示するテキスト
     int ReturnTime;                                 //客が帰るまでの秒数
 
+    /*　パーティクル変数　*/
+    bool effectflag = false;    //エフェクト
+
+    /*　パーティクル変数　*/
+    ParticleSystem.Burst burst;
+    ParticleSystem particle;  // PFFの<ParticleSystem>が入っている
+    GameObject P_effect;            // プレファブを入れる
+    Vector3 eff_pos;                    // 鍋に入った物の座標を入れる
+    Quaternion eff_rot;                 // エフェクトの回転を入れる
+    GameObject eff_PFF;                 // 表示したエフェクトを入れる
+
     void Start()
     {
         this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -151,6 +162,10 @@ public class Obaachan_script : MonoBehaviour
         }
         if (Eat)
         {
+            
+            //エフェクトスタート
+            if (!effectflag) Start_Effect();
+
             EatCount += Time.deltaTime;
             if (OneDelete == false)
             {
@@ -223,6 +238,10 @@ public class Obaachan_script : MonoBehaviour
 
     public void GuestReturn()  //客が帰る処理
     {
+        
+        //エフェクトエンド
+        if (effectflag) End_Effect();
+
         if (GuestNowPosition.z > -3)
         {
             this.gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -268,5 +287,21 @@ public class Obaachan_script : MonoBehaviour
         {
             ReturnCount += Mistake;
         }
+    }
+
+    //エフェクトが生成、スタート
+    void Start_Effect() {
+        P_effect = (GameObject)Resources.Load("Effects/E_Taveru");   //Resourceフォルダのプレハブを読み込む
+        eff_pos = this.gameObject.transform.position;      // 粉の座標代入
+        eff_rot = P_effect.gameObject.transform.rotation;  // エフェクトの回転を代入
+        eff_PFF = Instantiate(P_effect, new Vector3(eff_pos.x , eff_pos.y + 1.7f, eff_pos.z + 0.4f), eff_rot); // プレハブを元にオブジェクトを生成する
+        particle = eff_PFF.GetComponent<ParticleSystem>();
+        effectflag = true;
+    }
+
+    //エフェクトを停止消去
+    void End_Effect() {
+        Destroy(eff_PFF);
+        effectflag = false;
     }
 }
