@@ -118,7 +118,6 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
                 // フラグがたっていないとボタンが聞かな
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_joystick_B")) && TC3_script.space_flg) {
                     MoveFlg = true;
-                    Debug.Log("114514");
 
                     // ストックにsaraを置いたときtrue(C3のストック自動選択で使う)
                     if (TC3_script.stock_flg && ItemSara) TC3_script.StockEX_flg = true;

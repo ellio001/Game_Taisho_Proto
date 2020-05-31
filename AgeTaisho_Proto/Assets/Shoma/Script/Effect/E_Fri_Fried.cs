@@ -22,7 +22,6 @@ public class E_Fri_Fried : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Fried_flg : "+ Fried_flg);
 
     }
 

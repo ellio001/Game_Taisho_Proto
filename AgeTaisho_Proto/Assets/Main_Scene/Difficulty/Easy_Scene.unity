@@ -1792,7 +1792,7 @@ RectTransform:
   - {fileID: 1822164804}
   - {fileID: 266526176}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1865,75 +1865,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &531701722
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
-        type: 3}
-      propertyPath: m_Name
-      value: Yajirusi
-      objectReference: {fileID: 0}
-    - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.8685818
-      objectReference: {fileID: 0}
-    - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.82
-      objectReference: {fileID: 0}
-    - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.9617742
-      objectReference: {fileID: 0}
-    - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6291cb27c65f63e48a704359c96d2400, type: 3}
 --- !u!1 &539997405
 GameObject:
   m_ObjectHideFlags: 0
@@ -2695,7 +2626,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: aiouoeeeee
+  m_Text: "\u30B9\u30B3\u30A2\u3092\u8868\u793A\u3059\u308B"
 --- !u!222 &803603601
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3440,7 +3371,7 @@ PrefabInstance:
     - target: {fileID: 5545018861326911310, guid: 66cd8721cdde31a4c9c70a8453212651,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5545018861326911310, guid: 66cd8721cdde31a4c9c70a8453212651,
         type: 3}
@@ -5466,7 +5397,7 @@ PrefabInstance:
     - target: {fileID: 5545018861326911310, guid: 66cd8721cdde31a4c9c70a8453212651,
         type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5545018861326911310, guid: 66cd8721cdde31a4c9c70a8453212651,
         type: 3}
@@ -6101,7 +6032,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: "Start\u30DC\u30BF\u30F3\u3067\u30DD\u30FC\u30BA\n"
 --- !u!222 &1553261420
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6273,7 +6204,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1884597776}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!108 &1639382500
 Light:
@@ -7029,9 +6960,9 @@ Transform:
   - {fileID: 701469937}
   - {fileID: 108327956}
   - {fileID: 1459664997}
+  - {fileID: 1639382499}
   - {fileID: 1113262594}
   - {fileID: 140005424}
-  - {fileID: 1639382499}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8360,7 +8291,7 @@ Transform:
   - {fileID: 1350501969}
   - {fileID: 1524814383}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2125544769
 GameObject:

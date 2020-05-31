@@ -81,23 +81,34 @@ public class Title : MonoBehaviour
             }
         }
 
-        if ((Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("XBox_Pad_V")) && SelectNum == 0 && !Button_Flg)
-        {
-            Button_Flg = true;
-            SelectNum = 1;
-        }
-        else if ((Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("XBox_Pad_V")) && SelectNum == 1 && !Button_Flg)
-        {
-            Button_Flg = true;
-            SelectNum = 0;
-        }
+        //if ((Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("XBox_Pad_V")) && SelectNum == 0 && !Button_Flg)
+        //{
+        //    Button_Flg = true;
+        //    SelectNum = 1;
+        //}
+        //else if ((Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("XBox_Pad_V")) && SelectNum == 1 && !Button_Flg)
+        //{
+        //    Button_Flg = true;
+        //    SelectNum = 0;
+        //}
 
-        if ((Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("XBox_Pad_V")) && SelectNum == 0 && !Button_Flg)
+        //if ((Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("XBox_Pad_V")) && SelectNum == 0 && !Button_Flg)
+        //{
+        //    Button_Flg = true;
+        //    SelectNum = 1;
+        //}
+        //else if ((Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("XBox_Pad_V")) && SelectNum == 1 && !Button_Flg)
+        //{
+        //    Button_Flg = true;
+        //    SelectNum = 0;
+        //}
+
+        if (SelectNum == 0 && !Button_Flg &&(Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("XBox_Pad_V")))
         {
             Button_Flg = true;
             SelectNum = 1;
         }
-        else if ((Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("XBox_Pad_V")) && SelectNum == 1 && !Button_Flg)
+        else if (SelectNum == 1 && !Button_Flg &&(Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("XBox_Pad_V")))
         {
             Button_Flg = true;
             SelectNum = 0;
