@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class NotReturn_Script : MonoBehaviour
-{
+public class NotReturn_Script : MonoBehaviour {
     //金持ちステータス---------------------------------
     float EatTime = 1;          //食べ終わるまでの時間
     float RowTime = 180;         //列に並んでいる時間
@@ -19,8 +18,8 @@ public class NotReturn_Script : MonoBehaviour
     int flooredIntrandom;   //ランダムの変数を整数に変えて入れる箱
     float RandomMax = 10;    //ランダムの最大値を決める変数
     int WaitCount;  //客が帰るまでの時間
-    [SerializeField] string []ItemString;   //Resourceのアイテム名の文字列を入れる箱
-    [SerializeField] string []OrderString; //表示するアイテム名の文字列をいれる箱
+    [SerializeField] string[] ItemString;   //Resourceのアイテム名の文字列を入れる箱
+    [SerializeField] string[] OrderString; //表示するアイテム名の文字列をいれる箱
     public string NumberString;
     public int ItemScore;   //アイテムの「スコア
 
@@ -29,7 +28,7 @@ public class NotReturn_Script : MonoBehaviour
     int MyNumber;   //列番号
     public GameObject[] GuestNumber; //列番号を入れる箱
     public Vector3[] GuestPosition; //座標番号を入れる箱
-    [SerializeField] Text [] OrderText;              //Textをいれる箱
+    [SerializeField] Text[] OrderText;              //Textをいれる箱
     GameObject Panel;         //客についてるパネル
     [SerializeField] GameObject[] OrderItems;   //席についたとき注文
 
@@ -48,13 +47,16 @@ public class NotReturn_Script : MonoBehaviour
     [SerializeField] GameObject[] SideItems;        //シーン上に置くアイテムをいれる
 
     /*　パーティクル変数　*/
-    bool effectflag = false;    //エフェクト
-    
+    bool effectflag = false;            //エフェクト始めるフラグ
+    bool effectflag_angry = false;      //エフェクト始めるフラグ
+    bool angryflag = false;             //怒っているか判定フラグ
+
     /*　パーティクル情報　*/
 
     // プレファブを入れる
     GameObject obj_Tave;
     GameObject obj_Heart;
+    GameObject obj_Angry;
     // 鍋に入った物の座標を入れる
     Vector3 eff_pos;
     // エフェクトの回転を入れる
@@ -62,9 +64,10 @@ public class NotReturn_Script : MonoBehaviour
     // 表示したエフェクトを入れる
     GameObject eff_Tabe;
     GameObject eff_Heart;
+    GameObject eff_Angry;
 
-    void Start()
-    {
+
+    void Start() {
         this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
         Panel = this.gameObject.transform.Find("Canvas/Panel").gameObject; //子要素のPanelを取得
@@ -85,8 +88,7 @@ public class NotReturn_Script : MonoBehaviour
 
         random = Random.value * RandomMax;          // ランダムな値を取得し5倍する(0~5の値をとるため)   0~1 0.2*5=1 0.2未満は0.99以下=小数点切り捨て
 
-        while (random >= RandomMax)
-        {    //後のswith文でRandomMax以上の値は使わないのでそれが入ったら値を取得しなおす
+        while (random >= RandomMax) {    //後のswith文でRandomMax以上の値は使わないのでそれが入ったら値を取得しなおす
             random = Random.value * RandomMax;          // ランダムな値を取得しRandomMax倍する   3の場合0.33 0.66 0.99を3倍することで0.99 1.98 2.98小数点切り捨てで0~3となる
         }
 
@@ -100,8 +102,7 @@ public class NotReturn_Script : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
 
         if (Order == false && OneProces == false) //席についていない間実行
         {
@@ -148,20 +149,17 @@ public class NotReturn_Script : MonoBehaviour
 
         this.gameObject.transform.position = GuestNowPosition;  //現在の位置を更新
 
-        if (MyNumber >= 3)
-        {
+        if (MyNumber >= 3) {
             ReturnCount += Time.deltaTime;
             if (ReturnCount >= RowTime) GuestReturn(); //席につかず20秒たつとGuestReturnが呼ばれる
             //Debug.Log(LineReturn);
         }
-        if (Eat) 
-        {
+        if (Eat) {
             //エフェクトスタート
             if (!effectflag) Start_Effect();
 
             EatCount += Time.deltaTime;
-            if (EatCount >= EatTime)
-            {
+            if (EatCount >= EatTime) {
                 EatCount = 0;
                 Eat = false;
             }
@@ -201,35 +199,42 @@ public class NotReturn_Script : MonoBehaviour
             OrderString[2] = "芋てん";
 
         }
-        else if (Order == true)
-        {
+        else if (Order == true) {
+            //帰る時間を加算
             ReturnCount += Time.deltaTime;
-            if (ReturnCount >= SitTime) GuestReturn(); //席について25秒たつとGuestReturnが呼ばれる
+            //席について25秒たつとGuestReturnが呼ばれる
+            if (ReturnCount >= SitTime) {
+                GuestReturn();
+                angryflag = true;
+            }
             if (ItemString[0] == null && ItemString[1] == null && ItemString[2] == null) GuestReturn();
         }
 
-        if (GuestNowPosition.x >= 5) Destroy(gameObject);   //xが5以上になったら消える
+        if (GuestNowPosition.x >= 5) {
+            End_Effect_Angry();
+            //xが10以上になったら消える
+            Destroy(gameObject);
+        }
     }
 
     public void GuestReturn()  //客が帰る処理
     {
-        
+
         //エフェクトエンド
         if (effectflag) End_Effect();
+        //Angry'effectStart
+        if (!effectflag_angry && angryflag) Start_Effect_Angry();
 
-        if (GuestNowPosition.z > -3)
-        {
+        if (GuestNowPosition.z > -3) {
             this.gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
             GuestNowPosition.z -= GuestSpeed;   //少し後ろに下がり
         }
-        else
-        {
+        else {
             this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
             GuestNowPosition.x += GuestSpeed;   //-左に帰っていく
         }
 
-        if (OneProces == false)
-        {
+        if (OneProces == false) {
             if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
             Panel.SetActive(false);   //パネルを表示しない
@@ -238,11 +243,9 @@ public class NotReturn_Script : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
+    private void OnTriggerEnter(Collider other) {
 
-        if (other.gameObject.name == ItemString[0])
-        {
+        if (other.gameObject.name == ItemString[0]) {
             Eat = true;      //客が商品を食べ始める
             GameManager.instance.score_num += 100; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
@@ -251,8 +254,7 @@ public class NotReturn_Script : MonoBehaviour
             Destroy(SideItems[0]);
             Destroy(SideItems[1]);
         }
-        else if (other.gameObject.name == ItemString[1])
-        {
+        else if (other.gameObject.name == ItemString[1]) {
             Eat = true;      //客が商品を食べ始める
             GameManager.instance.score_num += 100; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
@@ -261,8 +263,7 @@ public class NotReturn_Script : MonoBehaviour
             Destroy(SideItems[2]);
             Destroy(SideItems[3]);
         }
-        else if (other.gameObject.name == ItemString[2])
-        {
+        else if (other.gameObject.name == ItemString[2]) {
             Eat = true;      //客が商品を食べ始める
             GameManager.instance.score_num += 100; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
@@ -273,9 +274,11 @@ public class NotReturn_Script : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ///エフェクトスタート
+    /// </summary>
     //エフェクトが生成、スタート
     void Start_Effect() {
-
         //Resourceフォルダのプレハブを読み込む
         obj_Tave = (GameObject)Resources.Load("Effects/E_Taveru");
         obj_Heart = (GameObject)Resources.Load("Effects/E_Heart");
@@ -289,13 +292,43 @@ public class NotReturn_Script : MonoBehaviour
         eff_Heart = Instantiate(obj_Heart, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),
             new Quaternion(eff_rot.x - 1f, eff_rot.y, eff_rot.z, eff_rot.w));
 
+        //二度読み防止
         effectflag = true;
     }
 
+    //AngryModeスタート
+    void Start_Effect_Angry() {
+        //Resourceフォルダのプレハブを読み込む
+        obj_Angry = (GameObject)Resources.Load("Effects/E_Angry");
+
+        //座標
+        eff_pos = gameObject.transform.position;
+        //角度
+        eff_rot = gameObject.transform.rotation;
+        //生成
+        eff_Angry = Instantiate(obj_Angry, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),
+            new Quaternion(eff_rot.x - 1f, eff_rot.y, eff_rot.z, eff_rot.w));
+
+        //二度読み防止
+        effectflag_angry = true;
+        angryflag = false;
+    }
+
+    /// <summary>
+    /// ///エフェクトエンド
+    /// </summary>
     //エフェクトを停止消去
     void End_Effect() {
         Destroy(eff_Tabe);
         Destroy(eff_Heart);
+        //二度読み防止
         effectflag = false;
+    }
+
+    //AngryMode終了
+    void End_Effect_Angry() {
+        Destroy(eff_Angry);
+        //二度読み防止
+        effectflag_angry = false;
     }
 }

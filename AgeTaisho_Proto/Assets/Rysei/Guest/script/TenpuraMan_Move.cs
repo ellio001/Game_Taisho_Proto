@@ -55,14 +55,16 @@ public class TenpuraMan_Move : MonoBehaviour {
     int ReturnTime;                                 //客が帰るまでの秒数
 
     /*　パーティクル変数　*/
-    bool effectflag = false;    //エフェクト
-
+    bool effectflag = false;    //エフェクト始めるフラグ
+    bool effectflag_angry = false;    //エフェクト始めるフラグ
+    bool angryflag = false;             //怒っているか判定フラグ
 
     /*　パーティクル情報　*/
 
     // プレファブを入れる
     GameObject obj_Tave;
     GameObject obj_Heart;
+    GameObject obj_Angry;
     // 鍋に入った物の座標を入れる
     Vector3 eff_pos;
     // エフェクトの回転を入れる
@@ -70,6 +72,7 @@ public class TenpuraMan_Move : MonoBehaviour {
     // 表示したエフェクトを入れる
     GameObject eff_Tabe;
     GameObject eff_Heart;
+    GameObject eff_Angry;
 
     void Start() {
         this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -226,15 +229,23 @@ public class TenpuraMan_Move : MonoBehaviour {
 
         }
         else if (Order == true) {
-            //S_Display.StartSideDisplay();
+            //帰る時間を加算
             ReturnCount += Time.deltaTime;
             ReturnTime = (int)SitTime - (int)ReturnCount;
             ReturnImage.fillAmount = 1 - ((ReturnCount / SitTime));
             ReturnText.text = "" + ReturnTime;
-            if (ReturnCount >= SitTime) GuestReturn(); //席について30秒たつとGuestReturnが呼ばれる
+            //席について30秒たつとGuestReturnが呼ばれる
+            if (ReturnCount >= SitTime) {
+                GuestReturn();
+                angryflag = true;
+            }
         }
 
-        if (GuestNowPosition.x >= 5) Destroy(gameObject);   //xが10以上になったら消える
+        if (GuestNowPosition.x >= 5) {
+            End_Effect_Angry();
+            //xが10以上になったら消える
+            Destroy(gameObject);
+        }
     }
 
     public void GuestReturn()  //客が帰る処理
@@ -242,6 +253,8 @@ public class TenpuraMan_Move : MonoBehaviour {
 
         //エフェクト終了
         if (effectflag) End_Effect();
+        //Angry'effectStart
+        if (!effectflag_angry && angryflag) Start_Effect_Angry();
 
         if (GuestNowPosition.z > -3) {
             this.gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -283,9 +296,11 @@ public class TenpuraMan_Move : MonoBehaviour {
         }
     }
 
+/// <summary>
+/// ///エフェクトスタート
+/// </summary>
     //エフェクトが生成、スタート
     void Start_Effect() {
-
         //Resourceフォルダのプレハブを読み込む
         obj_Tave = (GameObject)Resources.Load("Effects/E_Taveru");
         obj_Heart = (GameObject)Resources.Load("Effects/E_Heart");
@@ -299,13 +314,43 @@ public class TenpuraMan_Move : MonoBehaviour {
         eff_Heart = Instantiate(obj_Heart, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),
             new Quaternion(eff_rot.x - 1f, eff_rot.y, eff_rot.z, eff_rot.w));
 
+        //二度読み防止
         effectflag = true;
     }
 
+    //AngryModeスタート
+    void Start_Effect_Angry() {
+        //Resourceフォルダのプレハブを読み込む
+        obj_Angry = (GameObject)Resources.Load("Effects/E_Angry");
+
+        //座標
+        eff_pos = gameObject.transform.position;
+        //角度
+        eff_rot = gameObject.transform.rotation;
+        //生成
+        eff_Angry = Instantiate(obj_Angry, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),
+            new Quaternion(eff_rot.x - 1f, eff_rot.y, eff_rot.z, eff_rot.w));
+
+        //二度読み防止
+        effectflag_angry = true;
+        angryflag = false;
+    }
+
+/// <summary>
+/// ///エフェクトエンド
+/// </summary>
     //エフェクトを停止消去
     void End_Effect() {
         Destroy(eff_Tabe);
         Destroy(eff_Heart);
+        //二度読み防止
         effectflag = false;
+    }
+
+    //AngryMode終了
+    void End_Effect_Angry() {
+        Destroy(eff_Angry);
+        //二度読み防止
+        effectflag_angry = false;
     }
 }
