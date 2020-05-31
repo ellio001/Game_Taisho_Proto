@@ -122,6 +122,7 @@ public class Title : MonoBehaviour
                     SceneManager.LoadScene("Difficulty_Scene");
                 break;
             case 1:
+
                 End_Active();
                 if (Input.GetButtonUp("XBox_joystick_B"))
                     UnityEditor.EditorApplication.isPlaying = false;
