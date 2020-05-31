@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class TenpuraMan_Move : MonoBehaviour
-{
+public class TenpuraMan_Move : MonoBehaviour {
     //天ぷらマンステータス---------------------------------
     float EatTime = 2;          //食べ終わるまでの時間
     float RowTime = 20;         //列に並んでいる時間
@@ -56,19 +55,26 @@ public class TenpuraMan_Move : MonoBehaviour
     int ReturnTime;                                 //客が帰るまでの秒数
 
     /*　パーティクル変数　*/
-    bool effectflag = false;    //エフェクト
+    bool effectflag = false;    //エフェクト始めるフラグ
+    bool effectflag_angry = false;    //エフェクト始めるフラグ
+    bool angryflag = false;             //怒っているか判定フラグ
 
+    /*　パーティクル情報　*/
 
-    /*　パーティクル変数　*/
-    ParticleSystem.Burst burst;
-    ParticleSystem particle;  // PFFの<ParticleSystem>が入っている
-    GameObject P_effect;            // プレファブを入れる
-    Vector3 eff_pos;                    // 鍋に入った物の座標を入れる
-    Quaternion eff_rot;                 // エフェクトの回転を入れる
-    GameObject eff_PFF;                 // 表示したエフェクトを入れる
+    // プレファブを入れる
+    GameObject obj_Tave;
+    GameObject obj_Heart;
+    GameObject obj_Angry;
+    // 鍋に入った物の座標を入れる
+    Vector3 eff_pos;
+    // エフェクトの回転を入れる
+    Quaternion eff_rot;
+    // 表示したエフェクトを入れる
+    GameObject eff_Tabe;
+    GameObject eff_Heart;
+    GameObject eff_Angry;
 
-    void Start()
-    {
+    void Start() {
         this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
         //Display = GameObject.Find("SideDisplay"); //ディスプレイの追加
@@ -90,8 +96,7 @@ public class TenpuraMan_Move : MonoBehaviour
 
         random = Random.value * RandomMax;          // ランダムな値を取得し5倍する(0~5の値をとるため)   0~1 0.2*5=1 0.2未満は0.99以下=小数点切り捨て
 
-        while (random >= RandomMax)
-        {    //後のswith文でRandomMax以上の値は使わないのでそれが入ったら値を取得しなおす
+        while (random >= RandomMax) {    //後のswith文でRandomMax以上の値は使わないのでそれが入ったら値を取得しなおす
             random = Random.value * RandomMax;          // ランダムな値を取得しRandomMax倍する   3の場合0.33 0.66 0.99を3倍することで0.99 1.98 2.98小数点切り捨てで0~3となる
         }
 
@@ -107,8 +112,7 @@ public class TenpuraMan_Move : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
 
         if (Order == false && OneProces == false) //席についていない間実行
         {
@@ -155,21 +159,18 @@ public class TenpuraMan_Move : MonoBehaviour
 
         this.gameObject.transform.position = GuestNowPosition;  //現在の位置を更新
 
-        if (MyNumber >= 3)
-        {
+        if (MyNumber >= 3) {
             ReturnCount += Time.deltaTime;
             if (ReturnCount >= RowTime) GuestReturn(); //席につかず20秒たつとGuestReturnが呼ばれる
             //Debug.Log(LineReturn);
         }
-        if (Eat) 
-        {
-            
+        if (Eat) {
+
             //エフェクトスタート
             if (!effectflag) Start_Effect();
 
             EatCount += Time.deltaTime;
-            if (OneDelete == false)
-            {
+            if (OneDelete == false) {
                 Panel.SetActive(false);   //パネルを表示しない
                 OrderItems[0].SetActive(false);
                 OrderItems[1].SetActive(false);
@@ -193,8 +194,7 @@ public class TenpuraMan_Move : MonoBehaviour
             ReturnText.enabled = true;      //Textを表示する
             GetComponent<BoxCollider>().enabled = true;
 
-            switch (flooredIntrandom)
-            {
+            switch (flooredIntrandom) {
                 case 0:
                     ItemScore = 100;
                     ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
@@ -228,42 +228,47 @@ public class TenpuraMan_Move : MonoBehaviour
             }
 
         }
-        else if (Order == true)
-        {
-            //S_Display.StartSideDisplay();
+        else if (Order == true) {
+            //帰る時間を加算
             ReturnCount += Time.deltaTime;
             ReturnTime = (int)SitTime - (int)ReturnCount;
             ReturnImage.fillAmount = 1 - ((ReturnCount / SitTime));
             ReturnText.text = "" + ReturnTime;
-            if (ReturnCount >= SitTime) GuestReturn(); //席について30秒たつとGuestReturnが呼ばれる
+            //席について30秒たつとGuestReturnが呼ばれる
+            if (ReturnCount >= SitTime) {
+                GuestReturn();
+                angryflag = true;
+            }
         }
 
-        if (GuestNowPosition.x >= 5) Destroy(gameObject);   //xが10以上になったら消える
+        if (GuestNowPosition.x >= 5) {
+            End_Effect_Angry();
+            //xが10以上になったら消える
+            Destroy(gameObject);
+        }
     }
 
     public void GuestReturn()  //客が帰る処理
     {
-        
+
         //エフェクト終了
         if (effectflag) End_Effect();
+        //Angry'effectStart
+        if (!effectflag_angry && angryflag) Start_Effect_Angry();
 
-        if (GuestNowPosition.z > -3)
-        {
+        if (GuestNowPosition.z > -3) {
             this.gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
             GuestNowPosition.z -= GuestSpeed;   //少し後ろに下がり
         }
-        else
-        {
+        else {
             this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
             GuestNowPosition.x += GuestSpeed;   //-左に帰っていく
         }
-        if (OneProces == false)
-        {
+        if (OneProces == false) {
             if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
             GuestNumber[MyNumber] = null;   //ジェネレータの箱？
-            if (OneDelete == false)
-            {
+            if (OneDelete == false) {
                 Panel.SetActive(false);   //パネルを表示しない
                 OrderItems[0].SetActive(false);
                 OrderItems[1].SetActive(false);
@@ -279,34 +284,73 @@ public class TenpuraMan_Move : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == ItemString)
-        {
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.name == ItemString) {
             ReturnCount = 0; //客が帰るまでの時間を初期化
             Eat = true;      //客が商品を食べ始める
             GameManager.instance.score_num += ItemScore; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
         }
-        else
-        {
+        else {
             ReturnCount += Mistake;
         }
     }
 
+/// <summary>
+/// ///エフェクトスタート
+/// </summary>
     //エフェクトが生成、スタート
     void Start_Effect() {
-        P_effect = (GameObject)Resources.Load("Effects/E_Taveru");   //Resourceフォルダのプレハブを読み込む
-        eff_pos = this.gameObject.transform.position;      // 粉の座標代入
-        eff_rot = P_effect.gameObject.transform.rotation;  // エフェクトの回転を代入
-        eff_PFF = Instantiate(P_effect, new Vector3(eff_pos.x , eff_pos.y + 1.7f, eff_pos.z + 0.4f), eff_rot); // プレハブを元にオブジェクトを生成する
-        particle = eff_PFF.GetComponent<ParticleSystem>();
+        //Resourceフォルダのプレハブを読み込む
+        obj_Tave = (GameObject)Resources.Load("Effects/E_Taveru");
+        obj_Heart = (GameObject)Resources.Load("Effects/E_Heart");
+
+        //座標
+        eff_pos = gameObject.transform.position;
+        //角度
+        eff_rot = gameObject.transform.rotation;
+        //生成
+        eff_Tabe = Instantiate(obj_Tave, new Vector3(eff_pos.x, eff_pos.y + 1.7f, eff_pos.z + 0.4f), eff_rot);
+        eff_Heart = Instantiate(obj_Heart, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),
+            new Quaternion(eff_rot.x - 1f, eff_rot.y, eff_rot.z, eff_rot.w));
+
+        //二度読み防止
         effectflag = true;
     }
 
+    //AngryModeスタート
+    void Start_Effect_Angry() {
+        //Resourceフォルダのプレハブを読み込む
+        obj_Angry = (GameObject)Resources.Load("Effects/E_Angry");
+
+        //座標
+        eff_pos = gameObject.transform.position;
+        //角度
+        eff_rot = gameObject.transform.rotation;
+        //生成
+        eff_Angry = Instantiate(obj_Angry, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),
+            new Quaternion(eff_rot.x - 1f, eff_rot.y, eff_rot.z, eff_rot.w));
+
+        //二度読み防止
+        effectflag_angry = true;
+        angryflag = false;
+    }
+
+/// <summary>
+/// ///エフェクトエンド
+/// </summary>
     //エフェクトを停止消去
     void End_Effect() {
-        Destroy(eff_PFF);
+        Destroy(eff_Tabe);
+        Destroy(eff_Heart);
+        //二度読み防止
         effectflag = false;
+    }
+
+    //AngryMode終了
+    void End_Effect_Angry() {
+        Destroy(eff_Angry);
+        //二度読み防止
+        effectflag_angry = false;
     }
 }

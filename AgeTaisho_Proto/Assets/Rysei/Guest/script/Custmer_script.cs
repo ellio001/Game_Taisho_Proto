@@ -56,15 +56,25 @@ public class Custmer_script : MonoBehaviour
     int ReturnTime;                                 //客が帰るまでの秒数
 
     /*　パーティクル変数　*/
-    bool effectflag = false;    //エフェクト
+    bool effectflag = false;    //エフェクト始めるフラグ
+    bool effectflag_angry = false;    //エフェクト始めるフラグ
+    bool angryflag = false;             //怒っているか判定フラグ
 
-    /*　パーティクル変数　*/
-    ParticleSystem.Burst burst;
-    ParticleSystem particle;  // PFFの<ParticleSystem>が入っている
-    GameObject P_effect;            // プレファブを入れる
-    Vector3 eff_pos;                    // 鍋に入った物の座標を入れる
-    Quaternion eff_rot;                 // エフェクトの回転を入れる
-    GameObject eff_PFF;                 // 表示したエフェクトを入れる
+    /*　パーティクル情報　*/
+
+    // プレファブを入れる
+    GameObject obj_Tave;
+    GameObject obj_Heart;
+    GameObject obj_Angry;
+    // 鍋に入った物の座標を入れる
+    Vector3 eff_pos;
+    // エフェクトの回転を入れる
+    Quaternion eff_rot;
+    // 表示したエフェクトを入れる
+    GameObject eff_Tabe;
+    GameObject eff_Heart;
+    GameObject eff_Angry;
+
 
     void Start()
     {
@@ -262,10 +272,18 @@ public class Custmer_script : MonoBehaviour
             ReturnTime = (int)SitTime - (int)ReturnCount;
             ReturnImage.fillAmount = 1 - ((ReturnCount / SitTime));
             ReturnText.text = "" + ReturnTime;
-            if (ReturnCount >= SitTime) GuestReturn(); //席について25秒たつとGuestReturnが呼ばれる
+            //席について25秒たつとGuestReturnが呼ばれる
+            if (ReturnCount >= SitTime) {
+                GuestReturn();
+                angryflag = true;
+            }
         }
 
-        if (GuestNowPosition.x >= 5) Destroy(gameObject);   //xが5以上になったら消える
+        if (GuestNowPosition.x >= 5) {
+            End_Effect_Angry();
+            //xが10以上になったら消える
+            Destroy(gameObject);
+        }
     }
 
     public void GuestReturn()  //客が帰る処理
@@ -273,6 +291,8 @@ public class Custmer_script : MonoBehaviour
         
         //エフェクトエンド
         if (effectflag) End_Effect();
+        //Angry'effectStart
+        if (!effectflag_angry && angryflag) Start_Effect_Angry();
 
         if (GuestNowPosition.z > -3)
         {
@@ -322,19 +342,61 @@ public class Custmer_script : MonoBehaviour
         }
     }
 
+/// <summary>
+/// ///エフェクトスタート
+/// </summary>
     //エフェクトが生成、スタート
     void Start_Effect() {
-        P_effect = (GameObject)Resources.Load("Effects/E_Taveru");   //Resourceフォルダのプレハブを読み込む
-        eff_pos = this.gameObject.transform.position;      // 粉の座標代入
-        eff_rot = P_effect.gameObject.transform.rotation;  // エフェクトの回転を代入
-        eff_PFF = Instantiate(P_effect, new Vector3(eff_pos.x , eff_pos.y + 1.7f, eff_pos.z+ 0.4f), eff_rot); // プレハブを元にオブジェクトを生成する
-        particle = eff_PFF.GetComponent<ParticleSystem>();
+        //Resourceフォルダのプレハブを読み込む
+        obj_Tave = (GameObject)Resources.Load("Effects/E_Taveru");
+        obj_Heart = (GameObject)Resources.Load("Effects/E_Heart");
+
+        //座標
+        eff_pos = gameObject.transform.position;
+        //角度
+        eff_rot = gameObject.transform.rotation;
+        //生成
+        eff_Tabe = Instantiate(obj_Tave, new Vector3(eff_pos.x, eff_pos.y + 1.7f, eff_pos.z + 0.4f), eff_rot);
+        eff_Heart = Instantiate(obj_Heart, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),
+            new Quaternion(eff_rot.x - 1f, eff_rot.y, eff_rot.z, eff_rot.w));
+
+        //二度読み防止
         effectflag = true;
     }
 
+    //AngryModeスタート
+    void Start_Effect_Angry() {
+        //Resourceフォルダのプレハブを読み込む
+        obj_Angry = (GameObject)Resources.Load("Effects/E_Angry");
+
+        //座標
+        eff_pos = gameObject.transform.position;
+        //角度
+        eff_rot = gameObject.transform.rotation;
+        //生成
+        eff_Angry = Instantiate(obj_Angry, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),
+            new Quaternion(eff_rot.x - 1f, eff_rot.y, eff_rot.z, eff_rot.w));
+
+        //二度読み防止
+        effectflag_angry = true;
+        angryflag = false;
+    }
+
+/// <summary>
+/// ///エフェクトエンド
+/// </summary>
     //エフェクトを停止消去
     void End_Effect() {
-        Destroy(eff_PFF);
+        Destroy(eff_Tabe);
+        Destroy(eff_Heart);
+        //二度読み防止
         effectflag = false;
+    }
+
+    //AngryMode終了
+    void End_Effect_Angry() {
+        Destroy(eff_Angry);
+        //二度読み防止
+        effectflag_angry = false;
     }
 }
