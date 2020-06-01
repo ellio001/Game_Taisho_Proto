@@ -100,8 +100,6 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
                 // フラグがたっていないとボタンが効かない
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_joystick_B")) && C3_script.space_flg) {
-                    //サウンド再生
-                    sounds.Play();
                     MoveFlg = true;
                     // ストックにsaraを置いたときtrue(C3のストック自動選択で使う)
                     if (C3_script.stock_flg && ItemSara) C3_script.StockEX_flg = true;
@@ -116,6 +114,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                     ColliderFlag = 0;
                                     //当たり判定をを外す
                                     ColliderOut();
+                                    //サウンド再生
+                                    sounds.Play();
                                     break;
                                 case "ChickenBox":
                                     Resource = (GameObject)Resources.Load("R_Resources/Item_Chicken");   //Resourceフォルダのプレハブを読み込む
@@ -125,6 +125,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                     ColliderFlag = 1;
                                     //当たり判定をを外す
                                     ColliderOut();
+                                    //サウンド再生
+                                    sounds.Play();
                                     break;
                                 case "FishBox":
                                     Resource = (GameObject)Resources.Load("R_Resources/Item_Fish_v2");   //Resourceフォルダのプレハブを読み込む
@@ -133,6 +135,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                     ColliderFlag = 2;
                                     //当たり判定をを外す
                                     ColliderOut();
+                                    //サウンド再生
+                                    sounds.Play();
                                     break;
                                 case "PotatoBox":
                                     Resource = (GameObject)Resources.Load("R_Resources/Item_Potato");   //Resourceフォルダのプレハブを読み込む
@@ -141,6 +145,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                     ColliderFlag = 3;
                                     //当たり判定をを外す
                                     ColliderOut();
+                                    //サウンド再生
+                                    sounds.Play();
                                     break;
                                 case "QuailBox":
                                     Resource = (GameObject)Resources.Load("R_Resources/Item_Quail");   //Resourceフォルダのプレハブを読み込む
@@ -149,6 +155,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                     ColliderFlag = 4;
                                     //当たり判定をを外す
                                     ColliderOut();
+                                    //サウンド再生
+                                    sounds.Play();
                                     break;
 
                             }
@@ -169,6 +177,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
                             //当たり判定をを外す
                             ColliderOut();
+                            //サウンド再生
+                            sounds.Play();
                         }
 
                         //ClickObj2.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -191,6 +201,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                         Resource = null;            //生成するプレハブの箱を初期化
 
                         HoldingFlg = false;
+                        //サウンド再生
+                        sounds.Play();
                     }
                     if (clickedGameObject != null)  //nullでないとき処理
                     {
@@ -206,22 +218,32 @@ public class HandControllerButton_S2 : MonoBehaviour {
                             case "Item_Shrimp":
                                 if (hit.collider.gameObject.name.Contains("Ebi"))
                                     return_flg = true;
+                                //サウンド再生
+                                sounds.Play();
                                 break;
                             case "Item_Fish_v2":
                                 if (hit.collider.gameObject.name.Contains("Fish"))
                                     return_flg = true;
+                                //サウンド再生
+                                sounds.Play();
                                 break;
                             case "Item_Potato":
                                 if (hit.collider.gameObject.name.Contains("Potato"))
                                     return_flg = true;
+                                //サウンド再生
+                                sounds.Play();
                                 break;
                             case "Item_Friedchicken":
                                 if (hit.collider.gameObject.name.Contains("hicken"))
                                     return_flg = true;
+                                //サウンド再生
+                                sounds.Play();
                                 break;
                             case "Item_Quail":
                                 if (hit.collider.gameObject.name.Contains("Quail"))
                                     return_flg = true;
+                                //サウンド再生
+                                sounds.Play();
                                 break;
                             default:
                                 break;
