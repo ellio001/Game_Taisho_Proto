@@ -76,8 +76,8 @@ public class GameManager : MonoBehaviour {
             Text score_text = score_object.GetComponent<Text>();
             Text Pause_text = Pause_object.GetComponent<Text>();
             // テキストの表示を入れ替える
-            score_text.text = "Score:" + score_num;
-            Pause_text.text = "Optionボタン：ポーズ";
+            score_text.text = "得点:" + score_num;
+            Pause_text.text = "STARTボタン：ポーズ";
 
             //判定
             Judgment();

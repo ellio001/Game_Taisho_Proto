@@ -10,11 +10,14 @@ public class TutorialUI : MonoBehaviour
     private Text TutorialTextArea;  //Text型のTutorialTextをいれる
     [System.NonSerialized] public List<string> TutorialTextList = new List<string>(); //テキストのリスト
 
-    [System.NonSerialized]  public int TextNumber = 0; //TextNumber番地のテキストをみる
+    [System.NonSerialized] public int TextNumber = 0; //TextNumber番地のテキストをみる
     private int StringCount;    //TextNumberがいくつまであるか
     private float TutorialTime; //Time.deltatimeをいれる
 
     string SceneName; // sceneの名前を記憶する変数
+
+    GameObject TGG;
+    TutorialGuestGenerator TGGscript;
 
     /* 師匠のアイコンをセリフごとで切り替える */
     [SerializeField] public GameObject Sisho;      // 師匠のアイコン入れる
@@ -22,8 +25,12 @@ public class TutorialUI : MonoBehaviour
 
     void Start()
     {
+        TGG = GameObject.Find("GuestGenerator");
+        TGGscript = TGG.GetComponent<TutorialGuestGenerator>();
+
+
         SceneName = SceneManager.GetActiveScene().name; // scene名を記憶
-        
+
         switch (SceneName)// 各難易度の師匠のセリフをリストに追加する
         {
             case "Easy_Tutorial_Scene":
@@ -61,6 +68,18 @@ public class TutorialUI : MonoBehaviour
     void Update()
     {
         TutorialTime += Time.deltaTime;
+
+        //次のテキストがあればzキーを押してテキストを進める
+        if ((Input.GetKeyDown(KeyCode.Z) || Input.GetButtonDown("XBox_joystick_A")) && (StringCount >= TextNumber))
+        {
+            if (TextNumber == 9) ReadScene();
+            if (!(TextNumber >= 3 && TextNumber <= 8))
+            {
+                TextNumber += 1;    //表示するテキストの番地を+1する
+                TutorialTextArea.text = TutorialTextList[TextNumber];   //テキストを更新
+            }
+
+        }
         switch (SceneName)
         {
             case "Easy_Tutorial_Scene":
@@ -73,29 +92,15 @@ public class TutorialUI : MonoBehaviour
                 HardTutorial();
                 break;
         }
-
-        //次のテキストがあればzキーを押してテキストを進める
-        if (Input.GetKeyDown(KeyCode.Z) && (StringCount > TextNumber))
-        {
-            TextNumber += 1;    //表示するテキストの番地を+1する
-            TutorialTextArea.text = TutorialTextList[TextNumber];   //テキストを更新
-        }
     }
 
- /*----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     void EasyTutorial()
     {
         switch (TextNumber)
         {
-            case 0:
             case 1:
-            case 2:
-                if (TutorialTime >= 5)
-                {
-                    TextNumber += 1;    //表示するテキストの番地を+1する
-                    TutorialTextArea.text = TutorialTextList[TextNumber];   //テキストを更新
-                    TutorialTime = 0;
-                }
+                TGGscript.GuestSpawn = 7;
                 break;
             case 3:
             case 4:
@@ -108,11 +113,6 @@ public class TutorialUI : MonoBehaviour
                 break;
             case 9:
                 TutorialTextArea.text = TutorialTextList[TextNumber];   //テキストを更新
-                if (TutorialTime >= 5)
-                {
-                    TutorialTime = 0;
-                    ReadScene();
-                }
                 break;
             default:
                 break;
@@ -122,7 +122,7 @@ public class TutorialUI : MonoBehaviour
         {
             case 3: // 箸持ち師匠を表示
                 Sisho.gameObject.SetActive(false);
-                Sisho_Hasi.gameObject.SetActive(true); 
+                Sisho_Hasi.gameObject.SetActive(true);
                 break;
             case 6: // 普通の師匠を表示
                 Sisho.gameObject.SetActive(true);
@@ -136,7 +136,7 @@ public class TutorialUI : MonoBehaviour
                 Sisho.gameObject.SetActive(true);
                 Sisho_Hasi.gameObject.SetActive(false);
                 break;
-        }       
+        }
     }
 
     /*------------------------------------------*/
@@ -193,9 +193,10 @@ public class TutorialUI : MonoBehaviour
                 break;
         }
     }
- /*----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    public void ReadScene() {
+    public void ReadScene()
+    {
         //Endシーン読込
         switch (SceneName)
         {
