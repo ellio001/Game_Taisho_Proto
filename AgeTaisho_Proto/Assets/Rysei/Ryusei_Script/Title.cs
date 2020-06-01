@@ -23,6 +23,9 @@ public class Title : MonoBehaviour
     bool Button_Flg = false;
     float Button_Time;
 
+    //オーディオ
+    AudioSource sounds;
+    
     void Start()
     {
         // ファイル名を取得
@@ -32,6 +35,8 @@ public class Title : MonoBehaviour
         Text Update_text = Update_object.GetComponent<Text>();
         // テキストの表示を入れ替える
         Update_text.text = dt.ToString("yyyy/MM/dd hh:mm");
+        //オーディオの情報取得
+        sounds = GetComponent<AudioSource>();
 
         SelectNum = 0;
         //オブジェクトの取得
@@ -58,6 +63,7 @@ public class Title : MonoBehaviour
         {
             if (Input.GetButtonUp("XBox_joystick_B"))
             {
+                sounds.Play();
                 First_Text.SetActive(false); //[Bボタン～]を非表示
                 First_flg = false;
                 Next_flg = true;
@@ -103,13 +109,15 @@ public class Title : MonoBehaviour
         //    SelectNum = 0;
         //}
 
-        if (SelectNum == 0 && !Button_Flg &&(Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("XBox_Pad_V")))
+        if (SelectNum == 0 && !Button_Flg &&(Input.GetKeyDown(KeyCode.DownArrow) || 0 > Input.GetAxisRaw("XBox_Pad_V"))) 
         {
+            sounds.Play();
             Button_Flg = true;
             SelectNum = 1;
         }
         else if (SelectNum == 1 && !Button_Flg &&(Input.GetKeyDown(KeyCode.UpArrow) || 0 < Input.GetAxisRaw("XBox_Pad_V")))
         {
+            sounds.Play();
             Button_Flg = true;
             SelectNum = 0;
         }
