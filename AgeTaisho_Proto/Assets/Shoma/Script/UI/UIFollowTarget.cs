@@ -1,41 +1,47 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class UIFollowTarget : MonoBehaviour
 {
     RectTransform rectTransform = null;
     Transform target = null;
-
     [SerializeField]
     Canvas canvas;
 
     GameObject C3;
     Camera_3 C3_script;
-    Vector3 CursorPos;
 
-    Vector2 IconSize;
-    Vector3 CanvasPos;
-    RectTransform rect_tra;
+    GameObject TC3;
+    Tutorial_Camera_3 TC3_script;
 
-    int count;
+    [SerializeField] Vector3 _maxScale; // 鍋以外でのUIカーソルのScale
+    Vector3 _PmaxScale;     // 鍋でのUIカーソルのScale
+    Vector3 _FinScale; // 最終的に決まったスケールを入れる
+
     const float Scale_val = 0.00001f; // 拡大縮小する値
-    const int Count_return = 120; // 拡大縮小の一往復するまでのカウント値
 
-    int tmp_cursor;
-    bool flg=false;
+    bool Tuto_flg = false; // 今このsceneがチュートリアルならフラグを立てる
 
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        IconSize = GetComponent<RectTransform>().sizeDelta;
-        //CanvasPos = this.transform.parent.GetComponent<RectTransform>().anchoredPosition;
-        rect_tra = this.transform.parent.GetComponent<RectTransform>();
         canvas = GetComponent<Graphic>().canvas;
+        if (SceneManager.GetActiveScene().name.Contains("Tutorial"))
+        {
+            TC3 = GameObject.Find("Main Camera");
+            TC3_script = TC3.GetComponent<Tutorial_Camera_3>();
+            Tuto_flg = true;
+        }
+        else
+        {
+            C3 = GameObject.Find("Main Camera");
+            C3_script = C3.GetComponent<Camera_3>();
+            Tuto_flg = false;
+        }
 
-        C3 = GameObject.Find("Main Camera");
-        C3_script = C3.GetComponent<Camera_3>();
+        _PmaxScale = new Vector3(_maxScale.x - 0.0002f, _maxScale.y - 0.0002f, _maxScale.z);
     }
 
     void Update()
@@ -51,62 +57,42 @@ public class UIFollowTarget : MonoBehaviour
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, uiCamera, out pos);
         rectTransform.localPosition = pos;
         
-        ScalOperation();
+        // カーソルアイコンの拡縮制御
+        rectTransform.localScale =
+            (Mathf.Sin(1 * Mathf.PI * Time.time) + 3.5f) * 0.55f * _FinScale;
+
     }
+
 
 
     void TargetSelect()
     {
-        if (tmp_cursor != C3_script.cursor || C3_script.pot_flg)
+        if (Tuto_flg)
         {
-            tmp_cursor = C3_script.cursor;
+            if (TC3_script.pot_flg)
+            {
+                target = TC3_script.PCS_List[TC3_script.Pcursor].transform;
+                _FinScale = new Vector3(_PmaxScale.x, _PmaxScale.y, _PmaxScale.z);
+            }
+            else
+            {
+                target = TC3_script.Cursor_List[TC3_script.cursor].transform;
+                _FinScale = new Vector3(_maxScale.x, _maxScale.y, _maxScale.z);
+            }
+        }
+        else
+        {
             if (C3_script.pot_flg)
-            { // 鍋の中はPcursorをターゲットにしている
+            {
                 target = C3_script.PCS_List[C3_script.Pcursor].transform;
-                if (!flg)
-                {
-                    IconSize.x = 390;
-                    IconSize.y = 170;
-                    GetComponent<RectTransform>().sizeDelta = IconSize;
-                    rect_tra.Translate(new Vector3(-0.917f, -0.815f, -0.361f));
-                    flg = true;
-                }
+                _FinScale = new Vector3(_PmaxScale.x, _PmaxScale.y, _PmaxScale.z);
             }
             else
             {
                 target = C3_script.Cursor_List[C3_script.cursor].transform;
-                if (flg)
-                {
-                    IconSize.x = 640;
-                    IconSize.y = 420;
-                    GetComponent<RectTransform>().sizeDelta = IconSize;
-                    rect_tra.Translate(new Vector3(+0.917f, +0.815f, +0.361f));
-                    flg = false;
-                }
-                // Saraを選択したときにカーソルが隠れないように位置調整している
-                if (C3_script.cursor == 14 || C3_script.cursor == 15)
-                {
-                    rect_tra.Translate(new Vector3(-0.917f, -0.815f, -0.361f));
-                    flg = true;
-                }
-                
-                this.transform.parent.GetComponent<RectTransform>().anchoredPosition = CanvasPos;
+                _FinScale = new Vector3(_maxScale.x, _maxScale.y, _maxScale.z);
             }
         }
     }
 
-    void ScalOperation()
-    {// UIの拡大縮小をしている
-        if (count <= Count_return/2)
-        {
-            rectTransform.localScale += new Vector3(Scale_val, Scale_val, Scale_val);
-            count += 1;
-        }
-        else if (count <= Count_return)
-        {
-            rectTransform.localScale -= new Vector3(Scale_val, Scale_val, Scale_val);
-            count += 1;
-            if (count == Count_return) count = 0;
-        }
-    }
 }

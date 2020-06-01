@@ -38,6 +38,7 @@ public class E_Fri_Powder : MonoBehaviour
         PowderParticle.playbackSpeed = 2f;
     }
 
+    // 当たった瞬間 ------------------------------------------
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name.Contains("Nabe"))
@@ -72,19 +73,14 @@ public class E_Fri_Powder : MonoBehaviour
             burst.count = count;
             PowderParticle.emission.SetBurst(0, burst);
         }
-    }
 
-    // 当たり終わった後 ------------------------------------------
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.name.Contains("Nabe"))
-        {
+        if (!other.gameObject.name.Contains("Nabe") && Powder_flg)
             Destroy(PowderParticle);
-        }
     }
 
+    // 粉から揚げに変わった時にエフェクトを削除する
     private void OnDestroy()
     {
-        Destroy(PowderParticle);
+        Destroy(GameObject.Find("E_Frying(Clone)"));
     }
 }

@@ -40,10 +40,10 @@ public class Recommended : MonoBehaviour {
         RondemNumber = 0;
         Flame = 0;
         FlameMin = 0;
-        FlameMax = 200;
-        FlameMax2 = 30;
-        RandomMin = 100;
-        RandomMax = 200;
+        FlameMax = 3;
+        FlameMax2 = 60;
+        RandomMin = 15;
+        RandomMax = 30;
         CountMax = Random.Range(RandomMin, RandomMax);
         Count = 0;
         CountMin = 0;
@@ -54,50 +54,36 @@ public class Recommended : MonoBehaviour {
         ebi_image_object.SetActive(false);
         imo_image_object.SetActive(false);
         sakana_image_object.SetActive(false);
-        panel_object.SetActive(false);
+        panel_object.SetActive(true);
         Decision_Text.SetActive(false);
     }
 
     // Update is called once per frame
     void Update() {
 
+        //描画
+        Jugment();
+
         //ルーレット処理
         if (NumberFlag == false) {
-            RondemNumber++;
-            if (Count++ < CountMax) {
-                if (Flame++ <= FlameMax) {
-                    //エビ
-                    if (RondemNumber == 1) {
-                        ebi_image_object.SetActive(true);
-                        imo_image_object.SetActive(false);
-                        sakana_image_object.SetActive(false);
-                    }
-                    //サカナ
-                    else if (RondemNumber == 2) {
-                        ebi_image_object.SetActive(false);
-                        imo_image_object.SetActive(false);
-                        sakana_image_object.SetActive(true);
-                    }
-                    //イモ
-                    else if (RondemNumber == 3) {
-                        ebi_image_object.SetActive(false);
-                        imo_image_object.SetActive(true);
-                        sakana_image_object.SetActive(false);
-                        RondemNumber = 0;
-                    }
-                    Flame = FlameMin;
+            if (Flame++ >= FlameMax) {
+                if (Count++ < CountMax) {
+                    RondemNumber++;
+                    //描画
+                    Jugment();
                 }
-            }
-            else if (Count++ >= CountMax) {
-                NumberFlag = true;
-                FlashingFlag = true;
-                if (NumberFlag) NumberTaihi = RondemNumber;
+                else if (Count++ >= CountMax) {
+                    NumberFlag = true;
+                    FlashingFlag = true;
+                    if (NumberFlag) NumberTaihi = RondemNumber;
+                }
+                Flame = FlameMin;
             }
         }
 
         //ルーレット後の処理
         else if (NumberFlag) {
-            panel_object.SetActive(true);
+            panel_object.SetActive(false);
 
             Flame++;
             //文字点滅処理
@@ -128,5 +114,28 @@ public class Recommended : MonoBehaviour {
     }
     public static int getNumberTaihi() {
         return NumberTaihi;
+    }
+
+    void Jugment() {
+
+        //エビ
+        if (RondemNumber == 1) {
+            ebi_image_object.SetActive(true);
+            imo_image_object.SetActive(false);
+            sakana_image_object.SetActive(false);
+        }
+        //サカナ
+        else if (RondemNumber == 2) {
+            ebi_image_object.SetActive(false);
+            imo_image_object.SetActive(false);
+            sakana_image_object.SetActive(true);
+        }
+        //イモ
+        else if (RondemNumber == 3) {
+            ebi_image_object.SetActive(false);
+            imo_image_object.SetActive(true);
+            sakana_image_object.SetActive(false);
+            RondemNumber = 0;
+        }
     }
 }

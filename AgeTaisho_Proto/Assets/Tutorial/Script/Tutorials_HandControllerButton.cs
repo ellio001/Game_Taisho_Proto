@@ -100,7 +100,6 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
             // スペースを離したときにカーソル移動ができるようにしている
             if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("XBox_joystick_B")) MoveFlg = false;
 
-
             if (Physics.Linecast(Player_V, direction, out hit)) {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
@@ -119,6 +118,9 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
                 // フラグがたっていないとボタンが聞かな
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_joystick_B")) && TC3_script.space_flg) {
                     MoveFlg = true;
+
+                    // ストックにsaraを置いたときtrue(C3のストック自動選択で使う)
+                    if (TC3_script.stock_flg && ItemSara) TC3_script.StockEX_flg = true;
                     if (!HoldingFlg) // 手に何も持っていない時に入る
                     {
                         if (hit.collider.gameObject.tag == "Box") {
@@ -129,7 +131,6 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
                                 HoldingFlg = true;
                                 tutorialUI.TextNumber = 4; // テキストを進める
                                 DestroyFlg = true; // 矢印を消すフラグを立てる
-                                KonaFlag = true;
                                 ColliderOut();//当たり判定をを外す
                             }
                             ItemSara = hit.collider.gameObject.name.Contains("Dish");
@@ -152,6 +153,8 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
                              (TextNumber == 7 && hit.collider.gameObject.tag == "Sara") || (TextNumber == 8 && hit.collider.gameObject.name == "Plate2"))
                     // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                     {
+                        if (TC3_script.pot_flg) TC3_script.PotEX_flg = true;
+
                         ItemPowder = false; // 粉をつけたものを鍋に置いたときにFalse
                         //当たり判定を入れる
                         ColliderIn();
@@ -196,7 +199,7 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
 
     //当たり判定を切る関数
     void ColliderOut() {
-        clickedGameObject.GetComponent<Collider>().enabled = false;
+        //clickedGameObject.GetComponent<Collider>().enabled = false;
     }
 
     //当たり判定を入れる関数
@@ -208,27 +211,18 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
         if (ArrowFlg == false && TextNumber != 9) {
             switch (TextNumber) {
                 case 3:
-                    //EbiBox.GetComponent<Outline>().enabled = true;
                     tmp = TC3_script.Cursor_List[3].transform.position;
                     break;
                 case 4:
-                    //EbiBox.GetComponent<Outline>().enabled = false;
-                    //Kona.GetComponent<Outline>().enabled = true;
                     tmp = TC3_script.Cursor_List[2].transform.position;
                     break;
                 case 5:
-                    //Kona.GetComponent<Outline>().enabled = false;
-                    //Tenpra_Nabe.GetComponent<Outline>().enabled = true;
                     tmp = TC3_script.Cursor_List[1].transform.position;
                     break;
                 case 7:
-                    //Tenpra_Nabe.GetComponent<Outline>().enabled = false;
-                    //Sara.GetComponent<Outline>().enabled = true;
                     tmp = TC3_script.Cursor_List[15].transform.position;
                     break;
                 case 8:
-                    //Sara.GetComponent<Outline>().enabled = false;
-                    //Seki.GetComponent<Outline>().enabled = true;
                     tmp = TC3_script.Cursor_List[6].transform.position;
                     break;
             }

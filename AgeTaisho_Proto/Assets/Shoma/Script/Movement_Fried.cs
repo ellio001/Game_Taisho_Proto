@@ -44,7 +44,6 @@ public class Movement_Fried : MonoBehaviour
             // その場で回転させている
             transform.Rotate(new Vector3(0, RotationSpeed, 0) * Time.deltaTime, Space.World);
 
-
         }
     }
 
