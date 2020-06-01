@@ -6040,7 +6040,7 @@ PrefabInstance:
     - target: {fileID: 5545018861327014766, guid: 66cd8721cdde31a4c9c70a8453212651,
         type: 3}
       propertyPath: m_Name
-      value: Garbage_can_v2 (1)
+      value: Garbage_can_v2
       objectReference: {fileID: 0}
     - target: {fileID: 5545018861326911310, guid: 66cd8721cdde31a4c9c70a8453212651,
         type: 3}

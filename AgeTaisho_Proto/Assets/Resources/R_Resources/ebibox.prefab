@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9148775634465040352}
   - component: {fileID: 9148775634467240239}
   m_Layer: 0
-  m_Name: EbiBox
+  m_Name: Ebibox
   m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
