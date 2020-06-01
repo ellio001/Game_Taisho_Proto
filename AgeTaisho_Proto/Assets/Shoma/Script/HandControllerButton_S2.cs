@@ -41,6 +41,9 @@ public class HandControllerButton_S2 : MonoBehaviour {
     [System.NonSerialized] public bool ItemPowder; // 粉系を持っているかの判定フラグ
     [System.NonSerialized] public bool MoveFlg = false; // スペースを押している間は移動できないようにするフラグ
 
+    //オーディオ
+    AudioSource sounds;
+
     void Start() {
         ClickObj = GameObject.Find("ControllerObjClick");
         HoldingFlg = false;
@@ -59,6 +62,9 @@ public class HandControllerButton_S2 : MonoBehaviour {
         //ポーズ画面
         Pause = GameObject.Find("Main Camera");
         script = Pause.GetComponent<Pause_Botton_Script>();
+
+        //オーディオの情報取得
+        sounds = GetComponent<AudioSource>();
     }
 
     void Update() {
@@ -94,6 +100,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
                 // フラグがたっていないとボタンが効かない
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_joystick_B")) && C3_script.space_flg) {
+                    //サウンド再生
+                    sounds.Play();
                     MoveFlg = true;
                     // ストックにsaraを置いたときtrue(C3のストック自動選択で使う)
                     if (C3_script.stock_flg && ItemSara) C3_script.StockEX_flg = true;
@@ -110,7 +118,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                     ColliderOut();
                                     break;
                                 case "ChickenBox":
-                                    Resource = (GameObject)Resources.Load("S_Resources/ItemChicken");   //Resourceフォルダのプレハブを読み込む
+                                    Resource = (GameObject)Resources.Load("R_Resources/Item_Chicken");   //Resourceフォルダのプレハブを読み込む
                                     clickedGameObject = Instantiate(Resource, ClickObj.gameObject.transform.position, Quaternion.identity); // プレハブを元にオブジェクトを生成する
                                     HoldingFlg = true;
                                     ItemPowder = true;
@@ -231,6 +239,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 // 粉系か皿に置くときに、ボタンを離すと手元に戻ってくるようにしている
                 if (KonaFlag && (hit.collider.gameObject.name.Contains("Dish") || hit.collider.gameObject.tag == "Item") &&
                     (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("XBox_joystick_B"))) {
+                    //サウンド再生
+                    sounds.Play();
                     if (hit.collider.gameObject.name.Contains("Dish")) ItemSara = true;
                     else if (hit.collider.gameObject.tag == "Item") ItemPowder = true;
 
