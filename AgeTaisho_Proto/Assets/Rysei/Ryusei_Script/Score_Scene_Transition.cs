@@ -16,7 +16,7 @@ public class Score_Scene_Transition : MonoBehaviour
         // オブジェクトからTextコンポーネントを取得
         Text score_text = score_object.GetComponent<Text>();
         // テキストの表示を入れ替える
-        score_text.text = "TotalScore:" + GameManager.instance.score_num;
+        score_text.text = GameManager.instance.score_num + "円";
         NextText.SetActive(false);
     }
 
