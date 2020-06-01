@@ -132,8 +132,8 @@ public class Title : MonoBehaviour
             case 1:
 
                 End_Active();
-                if (Input.GetButtonUp("XBox_joystick_B"))
-                    UnityEditor.EditorApplication.isPlaying = false;
+                //if (Input.GetButtonUp("XBox_joystick_B"))
+                //    UnityEditor.EditorApplication.isPlaying = false;
                 break;
         }
     }
