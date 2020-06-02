@@ -120,27 +120,6 @@ public class GameManager : MonoBehaviour {
                         FiverCountFlag++;
                     }
                     break;
-                    //case 0:
-
-                    //    //1回目のフィーバー
-                    //    if (GameTime >= GameFinishTime - 120f) {
-                    //        print("1回目のフィーバー");
-                    //        FiverNumber = 0;
-                    //        FiverFlag = true;
-                    //        Initial();
-                    //        FiverCountFlag++;
-                    //    }
-                    //    break;
-                    //case 1:
-                    //    //２回目のフィーバー
-                    //    if (GameTime >= GameFinishTime - 60f) {
-                    //        print("2回目のフィーバー");
-                    //        FiverNumber = 1;
-                    //        FiverFlag = true;
-                    //        Initial();
-                    //        FiverCountFlag++;
-                    //    }
-                    //    break;
             }
 
         }
@@ -193,9 +172,21 @@ public class GameManager : MonoBehaviour {
 
     public void ReadScene() {
 
-        if (Bad_Score) SceneManager.LoadScene("Score_Bad_Scene");
-        else if (Normal_Score) SceneManager.LoadScene("Score_Normal_Scene");
-        else if (Good_Score) SceneManager.LoadScene("Score_Good_Scene");
+        if (Bad_Score) {
+            //テキストデータ初期化
+            Initial_Scene();
+            SceneManager.LoadScene("Score_Bad_Scene");
+        }
+        else if (Normal_Score) {
+            //テキストデータ初期化
+            Initial_Scene();
+            SceneManager.LoadScene("Score_Normal_Scene");
+        }
+        else if (Good_Score) {
+            //テキストデータ初期化
+            Initial_Scene();
+            SceneManager.LoadScene("Score_Good_Scene");
+        }
 
         //処理を二度としないようにフラグで管理
         TestSceneFlag = false;
@@ -208,6 +199,11 @@ public class GameManager : MonoBehaviour {
             Text score_text = score_object.GetComponent<Text>();// オブジェクトからTextコンポーネントを取得
             Text Pause_text = Pause_object.GetComponent<Text>();
         }
+    }
+
+    void Initial_Scene() {
+        score_object = null;
+        Pause_object = null;
     }
 
     void Quit() {

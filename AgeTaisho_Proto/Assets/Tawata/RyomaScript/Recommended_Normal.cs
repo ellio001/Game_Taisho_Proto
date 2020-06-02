@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Recommended : MonoBehaviour {
+public class Recommended_Normal : MonoBehaviour {
 
     public static int NumberTaihi;  //確定した品番
     int RondemNumber;               //本日のおすすめ品番
@@ -23,6 +23,7 @@ public class Recommended : MonoBehaviour {
     GameObject ebi_image_object = null;
     GameObject imo_image_object = null;
     GameObject sakana_image_object = null;
+    GameObject karaage_image_object = null;
     GameObject panel_object = null;
     GameObject Decision_Text = null;
 
@@ -33,6 +34,7 @@ public class Recommended : MonoBehaviour {
         ebi_image_object = GameObject.Find("EbiImage");      // Imageオブジェクト
         imo_image_object = GameObject.Find("ImoImage");      // Imageオブジェクト
         sakana_image_object = GameObject.Find("SakanaImage");// Imageオブジェクト
+        karaage_image_object = GameObject.Find("KaraageImage");// Imageオブジェクト
         panel_object = GameObject.Find("PanelImage");        // Panelオブジェクト
         Decision_Text = GameObject.Find("DecisionText");     // Textオブジェクト
 
@@ -54,6 +56,7 @@ public class Recommended : MonoBehaviour {
         ebi_image_object.SetActive(false);
         imo_image_object.SetActive(false);
         sakana_image_object.SetActive(false);
+        karaage_image_object.SetActive(false);
         panel_object.SetActive(true);
         Decision_Text.SetActive(false);
     }
@@ -65,7 +68,7 @@ public class Recommended : MonoBehaviour {
         Jugment();
 
         //ルーレット処理
-        if (NumberFlag == false) {
+        if (!NumberFlag) {
             if (Flame++ >= FlameMax) {
                 if (Count++ < CountMax) {
                     RondemNumber++;
@@ -123,18 +126,28 @@ public class Recommended : MonoBehaviour {
             ebi_image_object.SetActive(true);
             imo_image_object.SetActive(false);
             sakana_image_object.SetActive(false);
+            karaage_image_object.SetActive(false);
         }
         //サカナ
         else if (RondemNumber == 2) {
             ebi_image_object.SetActive(false);
             imo_image_object.SetActive(false);
             sakana_image_object.SetActive(true);
+            karaage_image_object.SetActive(false);
         }
         //イモ
         else if (RondemNumber == 3) {
             ebi_image_object.SetActive(false);
             imo_image_object.SetActive(true);
             sakana_image_object.SetActive(false);
+            karaage_image_object.SetActive(false);
+        }
+        //唐揚げ
+        else if (RondemNumber == 4) {
+            ebi_image_object.SetActive(false);
+            imo_image_object.SetActive(false);
+            sakana_image_object.SetActive(false);
+            karaage_image_object.SetActive(true);
             RondemNumber = 0;
         }
     }

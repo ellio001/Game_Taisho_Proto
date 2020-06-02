@@ -91,7 +91,7 @@ public class Ossan_script : MonoBehaviour
         //S_Display = Display.GetComponent<SideDisplay>();    //SideDysplayスクリプトの追加
         //Recommended = GameObject.Find("Directional Light");
         //testruret = Recommended.GetComponent<TestRuret>();
-        Osusume = Recommended.getNumberTaihi();
+        Osusume = Recommended_Easy.getNumberTaihi();
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
         Panel = this.gameObject.transform.Find("Canvas/Panel").gameObject; //子要素のPanelを取得
