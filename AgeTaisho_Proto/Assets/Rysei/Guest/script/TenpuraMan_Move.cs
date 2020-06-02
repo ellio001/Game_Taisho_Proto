@@ -58,9 +58,10 @@ public class TenpuraMan_Move : MonoBehaviour {
     bool effectflag = false;    //エフェクト始めるフラグ
     bool effectflag_angry = false;    //エフェクト始めるフラグ
     bool angryflag = false;             //怒っているか判定フラグ
-
+    
     /*　パーティクル情報　*/
-
+    //親子付けオブジェ
+    private GameObject Child;
     // プレファブを入れる
     GameObject obj_Tave;
     GameObject obj_Heart;
@@ -322,15 +323,16 @@ public class TenpuraMan_Move : MonoBehaviour {
     void Start_Effect_Angry() {
         //Resourceフォルダのプレハブを読み込む
         obj_Angry = (GameObject)Resources.Load("Effects/E_Angry");
-
         //座標
         eff_pos = gameObject.transform.position;
         //角度
-        eff_rot = gameObject.transform.rotation;
+        eff_rot = Quaternion.identity;
         //生成
-        eff_Angry = Instantiate(obj_Angry, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),
-            new Quaternion(eff_rot.x - 1f, eff_rot.y, eff_rot.z, eff_rot.w));
-
+        eff_Angry = Instantiate(obj_Angry, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),eff_rot);
+        //親子付け
+        Child = eff_Angry;
+        Child.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        Child.transform.parent = gameObject.transform;
         //二度読み防止
         effectflag_angry = true;
         angryflag = false;
