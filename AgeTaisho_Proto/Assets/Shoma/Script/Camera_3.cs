@@ -92,7 +92,7 @@ public class Camera_3 : MonoBehaviour
         if (button_flg) // 連続でボタンを押せないようにインターバルを設定
         {
             button_time += Time.deltaTime;
-            if (button_time >= 0.15)
+            if (button_time >= 0.1)
             {
                 button_flg = false;
                 button_time = 0;
