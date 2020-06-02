@@ -68,6 +68,8 @@ public class NotReturn_Script : MonoBehaviour {
     GameObject eff_Heart;
     GameObject eff_Angry;
 
+    //オーディオ
+    AudioSource sounds;
 
     void Start() {
         this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -101,6 +103,9 @@ public class NotReturn_Script : MonoBehaviour {
         OrderItems[1].SetActive(false);   //席につくまではオーダーを表示しない
         OrderItems[2].SetActive(false);   //席につくまではオーダーを表示しない
         GetComponent<BoxCollider>().enabled = false;
+
+        //オーディオの情報取得
+        sounds = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -315,6 +320,8 @@ public class NotReturn_Script : MonoBehaviour {
         //二度読み防止
         effectflag_angry = true;
         angryflag = false;
+        //サウンド再生
+        Start_Sound();
     }
 
     /// <summary>
@@ -333,5 +340,10 @@ public class NotReturn_Script : MonoBehaviour {
         Destroy(eff_Angry);
         //二度読み防止
         effectflag_angry = false;
+    }
+
+    void Start_Sound() {
+        //サウンド再生
+        sounds.Play();
     }
 }

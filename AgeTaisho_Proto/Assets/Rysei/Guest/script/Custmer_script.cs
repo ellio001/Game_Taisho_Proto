@@ -77,6 +77,8 @@ public class Custmer_script : MonoBehaviour
     GameObject eff_Heart;
     GameObject eff_Angry;
 
+    //オーディオ
+    AudioSource sounds;
 
     void Start()
     {
@@ -116,6 +118,9 @@ public class Custmer_script : MonoBehaviour
         ReturnImage.enabled = false;      //帰るゲージをfalseに
         ReturnText.enabled = false;      //テキストをfalseに
         GetComponent<BoxCollider>().enabled = false;
+
+        //オーディオの情報取得
+        sounds = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -383,6 +388,8 @@ public class Custmer_script : MonoBehaviour
         //二度読み防止
         effectflag_angry = true;
         angryflag = false;
+        //サウンド再生
+        Start_Sound();
     }
 
     /// <summary>
@@ -401,5 +408,10 @@ public class Custmer_script : MonoBehaviour
         Destroy(eff_Angry);
         //二度読み防止
         effectflag_angry = false;
+    }
+
+    void Start_Sound() {
+        //サウンド再生
+        sounds.Play();
     }
 }

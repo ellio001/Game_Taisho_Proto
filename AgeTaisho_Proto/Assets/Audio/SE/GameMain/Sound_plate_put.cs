@@ -18,11 +18,11 @@ public class Sound_plate_put : MonoBehaviour {
 
 
     private void OnTriggerEnter(Collider other) {
-        if (flag == false) {
+        if (!flag) {
             flag = true;
             AudioSource.PlayOneShot(Audio_Dust);
         }
-        if (!AudioSource.isPlaying) {
+        if (flag) {
             flag = false;
         }
     }

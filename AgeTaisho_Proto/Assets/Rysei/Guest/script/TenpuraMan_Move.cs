@@ -39,7 +39,7 @@ public class TenpuraMan_Move : MonoBehaviour {
     bool Retrun = false;    //帰る処理になったかどうか
     public float ReturnCount;   //客が帰るまでの時間をいれる箱
     public float EatCount;      //客が食べている間の時間をいれる
-    public bool OneProces = false; //自分のいた箱を1回だけ初期化する
+    public bool OneProces = false; //自分のいFた箱を1回だけ初期化する
     public bool Eat;            //提供された時trueにする
     bool OneDelete;             //注文を１回だけ消す
 
@@ -74,6 +74,9 @@ public class TenpuraMan_Move : MonoBehaviour {
     GameObject eff_Tabe;
     GameObject eff_Heart;
     GameObject eff_Angry;
+
+    //オーディオ
+    AudioSource sounds;
 
     void Start() {
         this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -110,6 +113,9 @@ public class TenpuraMan_Move : MonoBehaviour {
         ReturnImage.enabled = false;      //帰るゲージをfalseに
         ReturnText.enabled = false;      //テキストをfalseに
         GetComponent<BoxCollider>().enabled = false;
+
+        //オーディオの情報取得
+        sounds = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -336,6 +342,8 @@ public class TenpuraMan_Move : MonoBehaviour {
         //二度読み防止
         effectflag_angry = true;
         angryflag = false;
+        //サウンド再生
+        Start_Sound();
     }
 
 /// <summary>
@@ -354,5 +362,10 @@ public class TenpuraMan_Move : MonoBehaviour {
         Destroy(eff_Angry);
         //二度読み防止
         effectflag_angry = false;
+    }
+
+    void Start_Sound() {
+        //サウンド再生
+        sounds.Play();
     }
 }
