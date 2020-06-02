@@ -128,7 +128,6 @@ public class Ossan_script : MonoBehaviour
 
         //オーディオの情報取得
         sounds = GetComponents<AudioSource>();
-        print(sounds);
     }
 
     // Update is called once per frame

@@ -19,6 +19,8 @@ public class Recommended_Hard : MonoBehaviour {
     int CountMax;                   //処理の最大値
     int RandomMin;                  //ランダムの最小値
     int RandomMax;                  //ランダムの最大値
+    bool soundflag;                 //サウンドフラグ
+    bool soundflag2;                 //サウンドフラグ
     GameObject Recommended_object = null;
     GameObject ebi_image_object = null;
     GameObject imo_image_object = null;
@@ -27,6 +29,9 @@ public class Recommended_Hard : MonoBehaviour {
     GameObject uzura_image_object = null;
     GameObject panel_object = null;
     GameObject Decision_Text = null;
+
+    //オーディオ
+    AudioSource[] sounds;
 
     // Start is called before the first frame update
     void Start() {
@@ -46,8 +51,8 @@ public class Recommended_Hard : MonoBehaviour {
         FlameMin = 0;
         FlameMax = 3;
         FlameMax2 = 60;
-        RandomMin = 15;
-        RandomMax = 30;
+        RandomMin = 30;
+        RandomMax = 50;
         CountMax = Random.Range(RandomMin, RandomMax);
         Count = 0;
         CountMin = 0;
@@ -62,6 +67,9 @@ public class Recommended_Hard : MonoBehaviour {
         uzura_image_object.SetActive(false);
         panel_object.SetActive(true);
         Decision_Text.SetActive(false);
+
+        //オーディオの情報取得
+        sounds = GetComponents<AudioSource>();
     }
 
     // Update is called once per frame
@@ -69,9 +77,12 @@ public class Recommended_Hard : MonoBehaviour {
 
         //描画
         Jugment();
-
         //ルーレット処理
         if (!NumberFlag) {
+            if (!soundflag && !soundflag2) {
+                //ロールスタート
+                Start_Sound();
+            }
             if (Flame++ >= FlameMax) {
                 if (Count++ < CountMax) {
                     RondemNumber++;
@@ -88,9 +99,16 @@ public class Recommended_Hard : MonoBehaviour {
         }
 
         //ルーレット後の処理
-        else if (NumberFlag) {
+        else {
             panel_object.SetActive(false);
-
+            if (soundflag && !soundflag2) {
+                //ロールストップ
+                Stop_Sound();
+            }
+            else if (soundflag && soundflag2) {
+                //ドドンスタート
+                Start_Sound_Ddon();
+            }
             Flame++;
             //文字点滅処理
             if (Flame > FlameMax2) {
@@ -106,6 +124,7 @@ public class Recommended_Hard : MonoBehaviour {
             }
 
             if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("XBox_joystick_B")) {
+                //シーン遷移
                 SceneManager.LoadScene("Hard_Scene");
             }
         }
@@ -165,5 +184,27 @@ public class Recommended_Hard : MonoBehaviour {
             uzura_image_object.SetActive(true);
             RondemNumber = 0;
         }
+    }
+
+    //ロールスタート
+    void Start_Sound() {
+        //サウンド再生
+        sounds[0].Play();
+        soundflag = true;
+    }
+
+    //ロール終了
+    void Stop_Sound() {
+        //サウンド再生
+        sounds[0].Stop();
+        soundflag2 = true;
+    }
+
+    //ドドンスタート
+    void Start_Sound_Ddon() {
+        //サウンド再生
+        sounds[1].Play();
+        soundflag = false;
+        soundflag2 = false;
     }
 }
