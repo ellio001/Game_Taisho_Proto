@@ -255,7 +255,6 @@ public class Obaachan_script : MonoBehaviour
         }
 
         if (GuestNowPosition.x >= 5) {
-            End_Effect_Angry();
             //xが10以上になったら消える
             Destroy(gameObject);
         }
@@ -264,8 +263,6 @@ public class Obaachan_script : MonoBehaviour
     public void GuestReturn()  //客が帰る処理
     {
         
-        //エフェクトエンド
-        if (effectflag) End_Effect();
         //Angry'effectStart
         if (!effectflag_angry && angryflag) Start_Effect_Angry();
 
@@ -315,9 +312,9 @@ public class Obaachan_script : MonoBehaviour
             ReturnCount += Mistake;
         }
     }
-/// <summary>
-/// ///エフェクトスタート
-/// </summary>
+    /// <summary>
+    /// ///エフェクトスタート
+    /// </summary>
     //エフェクトが生成、スタート
     void Start_Effect() {
         //Resourceフォルダのプレハブを読み込む
@@ -332,7 +329,10 @@ public class Obaachan_script : MonoBehaviour
         eff_Tabe = Instantiate(obj_Tave, new Vector3(eff_pos.x, eff_pos.y + 1.7f, eff_pos.z + 0.4f), eff_rot);
         eff_Heart = Instantiate(obj_Heart, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),
             new Quaternion(eff_rot.x - 1f, eff_rot.y, eff_rot.z, eff_rot.w));
-
+        //エフェクト停止
+        End_Effect();
+        //サウンド再生
+        Start_Sound();
         //二度読み防止
         effectflag = true;
     }
@@ -351,11 +351,13 @@ public class Obaachan_script : MonoBehaviour
         Child = eff_Angry;
         Child.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         Child.transform.parent = gameObject.transform;
+        //エフェクト停止
+        End_Effect_Angry();
         //二度読み防止
         effectflag_angry = true;
         angryflag = false;
         //サウンド再生
-        Start_Sound();
+        Start_Sound_Angry();
     }
 
     /// <summary>
@@ -363,15 +365,15 @@ public class Obaachan_script : MonoBehaviour
     /// </summary>
     //エフェクトを停止消去
     void End_Effect() {
-        Destroy(eff_Tabe);
-        Destroy(eff_Heart);
+        Destroy(eff_Tabe, 3f);
+        Destroy(eff_Heart, 3f);
         //二度読み防止
         effectflag = false;
     }
 
     //AngryMode終了
     void End_Effect_Angry() {
-        Destroy(eff_Angry);
+        Destroy(eff_Angry, 3f);
         //二度読み防止
         effectflag_angry = false;
     }

@@ -103,7 +103,7 @@ public class Recommended_Normal : MonoBehaviour {
             }
 
             if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("XBox_joystick_B")) {
-                SceneManager.LoadScene("Easy_Scene");
+                SceneManager.LoadScene("Normal_Scene");
             }
         }
 

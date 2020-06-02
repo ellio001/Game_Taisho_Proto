@@ -135,7 +135,6 @@ public class Recommended_Easy : MonoBehaviour {
             ebi_image_object.SetActive(false);
             imo_image_object.SetActive(true);
             sakana_image_object.SetActive(false);
-            RondemNumber = 0;
         }
     }
 }
