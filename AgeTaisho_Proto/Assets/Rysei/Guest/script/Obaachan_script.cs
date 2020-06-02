@@ -62,6 +62,8 @@ public class Obaachan_script : MonoBehaviour
 
     /*　パーティクル情報　*/
 
+    //親子付けオブジェ
+    private GameObject Child;
     // プレファブを入れる
     GameObject obj_Tave;
     GameObject obj_Heart;
@@ -75,6 +77,8 @@ public class Obaachan_script : MonoBehaviour
     GameObject eff_Heart;
     GameObject eff_Angry;
 
+    //オーディオ
+    AudioSource[] sounds;
 
     void Start()
     {
@@ -113,6 +117,9 @@ public class Obaachan_script : MonoBehaviour
         ReturnImage.enabled = false;      //帰るゲージをfalseに
         ReturnText.enabled = false;      //テキストをfalseに
         GetComponent<BoxCollider>().enabled = false;
+
+        //オーディオの情報取得
+        sounds = GetComponents<AudioSource>();
     }
 
     // Update is called once per frame
@@ -334,23 +341,26 @@ public class Obaachan_script : MonoBehaviour
     void Start_Effect_Angry() {
         //Resourceフォルダのプレハブを読み込む
         obj_Angry = (GameObject)Resources.Load("Effects/E_Angry");
-
         //座標
         eff_pos = gameObject.transform.position;
         //角度
-        eff_rot = gameObject.transform.rotation;
+        eff_rot = Quaternion.identity;
         //生成
-        eff_Angry = Instantiate(obj_Angry, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),
-            new Quaternion(eff_rot.x - 1f, eff_rot.y, eff_rot.z, eff_rot.w));
-
+        eff_Angry = Instantiate(obj_Angry, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z), eff_rot);
+        //親子付け
+        Child = eff_Angry;
+        Child.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        Child.transform.parent = gameObject.transform;
         //二度読み防止
         effectflag_angry = true;
         angryflag = false;
+        //サウンド再生
+        Start_Sound();
     }
 
-/// <summary>
-/// ///エフェクトエンド
-/// </summary>
+    /// <summary>
+    /// ///エフェクトエンド
+    /// </summary>
     //エフェクトを停止消去
     void End_Effect() {
         Destroy(eff_Tabe);
@@ -364,5 +374,17 @@ public class Obaachan_script : MonoBehaviour
         Destroy(eff_Angry);
         //二度読み防止
         effectflag_angry = false;
+    }
+
+    //食べた音
+    void Start_Sound() {
+        //サウンド再生
+        sounds[0].Play();
+    }
+
+    //怒った音
+    void Start_Sound_Angry() {
+        //サウンド再生
+        sounds[1].Play();
     }
 }
