@@ -933,6 +933,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8768253398625917141}
     m_Modifications:
+    - target: {fileID: 3501878319983286616, guid: 63624e5169533b34192bef393f05486c,
+        type: 3}
+      propertyPath: m_Name
+      value: circlefill
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501878319983286616, guid: 63624e5169533b34192bef393f05486c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501878319983286618, guid: 63624e5169533b34192bef393f05486c,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501878319983286618, guid: 63624e5169533b34192bef393f05486c,
+        type: 3}
+      propertyPath: m_FillOrigin
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501878319983286618, guid: 63624e5169533b34192bef393f05486c,
+        type: 3}
+      propertyPath: m_FillClockwise
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3501878319983286619, guid: 63624e5169533b34192bef393f05486c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1052,31 +1077,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3501878319983286618, guid: 63624e5169533b34192bef393f05486c,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3501878319983286618, guid: 63624e5169533b34192bef393f05486c,
-        type: 3}
-      propertyPath: m_FillOrigin
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3501878319983286618, guid: 63624e5169533b34192bef393f05486c,
-        type: 3}
-      propertyPath: m_FillClockwise
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3501878319983286616, guid: 63624e5169533b34192bef393f05486c,
-        type: 3}
-      propertyPath: m_Name
-      value: circlefill
-      objectReference: {fileID: 0}
-    - target: {fileID: 3501878319983286616, guid: 63624e5169533b34192bef393f05486c,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63624e5169533b34192bef393f05486c, type: 3}

@@ -853,6 +853,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8210043388177680616}
     m_Modifications:
+    - target: {fileID: 5335241039083882934, guid: efbdba2ac24a40d4abc21dc14122192f,
+        type: 3}
+      propertyPath: m_Name
+      value: Fried_K_Potato
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335241039083882934, guid: efbdba2ac24a40d4abc21dc14122192f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335241039083882934, guid: efbdba2ac24a40d4abc21dc14122192f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5098099989068020631, guid: efbdba2ac24a40d4abc21dc14122192f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -923,21 +938,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 13.500008
       objectReference: {fileID: 0}
-    - target: {fileID: 5335241039083882934, guid: efbdba2ac24a40d4abc21dc14122192f,
-        type: 3}
-      propertyPath: m_Name
-      value: Fried_K_Potato
-      objectReference: {fileID: 0}
-    - target: {fileID: 5335241039083882934, guid: efbdba2ac24a40d4abc21dc14122192f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5335241039083882934, guid: efbdba2ac24a40d4abc21dc14122192f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efbdba2ac24a40d4abc21dc14122192f, type: 3}
 --- !u!4 &67977895046863160 stripped
@@ -953,6 +953,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7778873465727996984}
     m_Modifications:
+    - target: {fileID: 3501878319983286616, guid: 63624e5169533b34192bef393f05486c,
+        type: 3}
+      propertyPath: m_Name
+      value: circlefill
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501878319983286616, guid: 63624e5169533b34192bef393f05486c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501878319983286618, guid: 63624e5169533b34192bef393f05486c,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501878319983286618, guid: 63624e5169533b34192bef393f05486c,
+        type: 3}
+      propertyPath: m_FillOrigin
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501878319983286618, guid: 63624e5169533b34192bef393f05486c,
+        type: 3}
+      propertyPath: m_FillClockwise
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3501878319983286619, guid: 63624e5169533b34192bef393f05486c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1073,31 +1098,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 3501878319983286618, guid: 63624e5169533b34192bef393f05486c,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3501878319983286618, guid: 63624e5169533b34192bef393f05486c,
-        type: 3}
-      propertyPath: m_FillOrigin
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3501878319983286618, guid: 63624e5169533b34192bef393f05486c,
-        type: 3}
-      propertyPath: m_FillClockwise
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3501878319983286616, guid: 63624e5169533b34192bef393f05486c,
-        type: 3}
-      propertyPath: m_Name
-      value: circlefill
-      objectReference: {fileID: 0}
-    - target: {fileID: 3501878319983286616, guid: 63624e5169533b34192bef393f05486c,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63624e5169533b34192bef393f05486c, type: 3}
 --- !u!224 &7938868778069980015 stripped
@@ -1125,6 +1125,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8210043388177680616}
     m_Modifications:
+    - target: {fileID: 3116378258014384086, guid: a4510063e20226e43b58925a6ff5168a,
+        type: 3}
+      propertyPath: m_Name
+      value: Fried_T_Fish
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116378258014384086, guid: a4510063e20226e43b58925a6ff5168a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116378258014384086, guid: a4510063e20226e43b58925a6ff5168a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 355281918061377294, guid: a4510063e20226e43b58925a6ff5168a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1194,21 +1209,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 3116378258014384086, guid: a4510063e20226e43b58925a6ff5168a,
-        type: 3}
-      propertyPath: m_Name
-      value: Fried_T_Fish
-      objectReference: {fileID: 0}
-    - target: {fileID: 3116378258014384086, guid: a4510063e20226e43b58925a6ff5168a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3116378258014384086, guid: a4510063e20226e43b58925a6ff5168a,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4510063e20226e43b58925a6ff5168a, type: 3}

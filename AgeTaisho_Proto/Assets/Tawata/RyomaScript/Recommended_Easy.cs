@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Recommended : MonoBehaviour {
+public class Recommended_Easy : MonoBehaviour {
 
     public static int NumberTaihi;  //確定した品番
     int RondemNumber;               //本日のおすすめ品番
@@ -65,7 +65,7 @@ public class Recommended : MonoBehaviour {
         Jugment();
 
         //ルーレット処理
-        if (NumberFlag == false) {
+        if (!NumberFlag) {
             if (Flame++ >= FlameMax) {
                 if (Count++ < CountMax) {
                     RondemNumber++;
@@ -135,7 +135,6 @@ public class Recommended : MonoBehaviour {
             ebi_image_object.SetActive(false);
             imo_image_object.SetActive(true);
             sakana_image_object.SetActive(false);
-            RondemNumber = 0;
         }
     }
 }
