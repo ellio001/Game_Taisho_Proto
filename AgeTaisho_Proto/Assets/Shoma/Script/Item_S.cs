@@ -35,6 +35,20 @@ public class Item_S : MonoBehaviour {
     //オーディオ
     AudioSource sounds;
 
+    /*　パーティクル変数　*/
+    bool effectflag = false;    //エフェクト始めるフラグ
+
+    /*　パーティクル情報　*/
+
+    // プレファブを入れる
+    GameObject obj_Burn;
+    // 鍋に入った物の座標を入れる
+    Vector3 eff_pos;
+    // エフェクトの回転を入れる
+    Quaternion eff_rot;
+    // 表示したエフェクトを入れる
+    GameObject eff_Burn;
+
     // Use this for initialization
     void Start() {
         gameobject = this.gameObject;   //このオブジェクトの情報をいれる
@@ -172,13 +186,21 @@ public class Item_S : MonoBehaviour {
                 Burnflag = true;
                 if (other.gameObject.tag == "Garbage can") {
                     GameManager.instance.score_num -= 100;
+                    if (effectflag) {
+                        //エフェクトエンド
+                        End_Effect();
+                    }
                     Destroy(gameObject);
                 }
-                if (Burnflag&&Burnflag2) {
+                if (Burnflag && Burnflag2) {
                     //サウンド再生
                     sounds.Play();
                     Burnflag = false;
                     Burnflag2 = false;
+                    if (!effectflag) {
+                        //エフェクトスタート
+                        Start_Effect();
+                    }
                 }
                 break;
 
@@ -347,6 +369,10 @@ public class Item_S : MonoBehaviour {
                 Burnflag = true;
                 if (other.gameObject.tag == "Garbage can") {
                     GameManager.instance.score_num -= 100;
+                    if (effectflag) {
+                        //エフェクトエンド
+                        End_Effect();
+                    }
                     Destroy(gameObject);
                 }
                 if (Burnflag && Burnflag2) {
@@ -354,6 +380,10 @@ public class Item_S : MonoBehaviour {
                     sounds.Play();
                     Burnflag = false;
                     Burnflag2 = false;
+                    if (!effectflag) {
+                        //エフェクトスタート
+                        Start_Effect();
+                    }
                 }
                 break;
 
@@ -439,6 +469,10 @@ public class Item_S : MonoBehaviour {
                 Burnflag = true;
                 if (other.gameObject.tag == "Garbage can") {
                     GameManager.instance.score_num -= 100;
+                    if (effectflag) {
+                        //エフェクトエンド
+                        End_Effect();
+                    }
                     Destroy(gameObject);
                 }
                 if (Burnflag && Burnflag2) {
@@ -446,6 +480,10 @@ public class Item_S : MonoBehaviour {
                     sounds.Play();
                     Burnflag = false;
                     Burnflag2 = false;
+                    if (!effectflag) {
+                        //エフェクトスタート
+                        Start_Effect();
+                    }
                 }
                 break;
 
@@ -526,6 +564,10 @@ public class Item_S : MonoBehaviour {
                 Burnflag = true;
                 if (other.gameObject.tag == "Garbage can") {
                     GameManager.instance.score_num -= 100;
+                    if (effectflag) {
+                        //エフェクトエンド
+                        End_Effect();
+                    }
                     Destroy(gameObject);
                 }
                 if (Burnflag && Burnflag2) {
@@ -533,8 +575,11 @@ public class Item_S : MonoBehaviour {
                     sounds.Play();
                     Burnflag = false;
                     Burnflag2 = false;
+                    if (!effectflag) {
+                        //エフェクトスタート
+                        Start_Effect();
+                    }
                 }
-
                 break;
             case "Item_Quail":
                 // ゴミ箱に当たると焦げになる
@@ -663,6 +708,10 @@ public class Item_S : MonoBehaviour {
                 Burnflag = true;
                 if (other.gameObject.tag == "Garbage can") {
                     GameManager.instance.score_num -= 100;
+                    if (effectflag) {
+                        //エフェクトエンド
+                        End_Effect();
+                    }
                     Destroy(gameObject);
                 }
                 if (Burnflag && Burnflag2) {
@@ -670,8 +719,11 @@ public class Item_S : MonoBehaviour {
                     sounds.Play();
                     Burnflag = false;
                     Burnflag2 = false;
+                    if (!effectflag) {
+                        //エフェクトスタート
+                        Start_Effect();
+                    }
                 }
-
                 break;
 
             default:
@@ -685,7 +737,33 @@ public class Item_S : MonoBehaviour {
             gameobject = (GameObject)Instantiate(Resource, this.gameObject.transform.position, this.gameObject.transform.rotation); //焼きあがった(焦げた)オブジェクト生成
         }
     }
+
+    //エフェクトが生成、スタート
+    void Start_Effect() {
+        //Resourceフォルダのプレハブを読み込む
+        obj_Burn = (GameObject)Resources.Load("Effects/E_Burn");
+        //座標
+        eff_pos = gameObject.transform.position;
+        //角度
+        eff_rot = Quaternion.identity;
+        //生成
+        eff_Burn = Instantiate(obj_Burn, new Vector3(eff_pos.x, eff_pos.y, eff_pos.z), eff_rot);
+
+        //二度読み防止
+        effectflag = true;
+    }
+
+    /// <summary>
+    /// ///エフェクトエンド
+    /// </summary>
+    //エフェクトを停止消去
+    void End_Effect() {
+        Destroy(eff_Burn);
+        //二度読み防止
+        effectflag = false;
+    }
 }
+
 //using System.Collections;
 //using System.Collections.Generic;
 //using UnityEngine;
