@@ -62,7 +62,8 @@ public class Camera_3 : MonoBehaviour
     string SceneName; // sceneの名前を記憶する変数
     Vector3 old_direction;
 
-    GameObject ScareTxet;// 正面を向いた時だけスコアを出すようにする
+    [SerializeField] GameObject ScoreText; // 正面を向いた時だけスコアを出すようにする
+    [SerializeField] GameObject StockText; // 左右の向いてるときだけ、ストックを出す
 
     void Start()
     {
@@ -84,7 +85,6 @@ public class Camera_3 : MonoBehaviour
         Vector3 tmp = Cursor_List[cursor].transform.position;
         CursorObj.transform.position = new Vector3(tmp.x, tmp.y, tmp.z);
 
-        ScareTxet = GameObject.Find("ScoreText");
     }
 
     void Update()
@@ -520,7 +520,8 @@ public class Camera_3 : MonoBehaviour
             var aim = this.CP_List[0].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
-            ScareTxet.gameObject.SetActive(false);
+            ScoreText.gameObject.SetActive(false);
+            StockText.gameObject.SetActive(true);
         }
         /* お客側 */
         else if (cursor >= 6 && cursor <= 8)
@@ -528,7 +529,8 @@ public class Camera_3 : MonoBehaviour
             var aim = this.CP_List[1].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
-            ScareTxet.gameObject.SetActive(true);
+            ScoreText.gameObject.SetActive(true);
+            StockText.gameObject.SetActive(false);
         }
         /* 揚げ物側 */
         else if (cursor >= 9 && cursor <= 13 || cursor == 14)
@@ -536,7 +538,8 @@ public class Camera_3 : MonoBehaviour
             var aim = this.CP_List[2].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
-            ScareTxet.gameObject.SetActive(false);
+            ScoreText.gameObject.SetActive(false);
+            StockText.gameObject.SetActive(true);
         }
         /* 油もの側のゴミ箱 */
         if (cursor == 22)
