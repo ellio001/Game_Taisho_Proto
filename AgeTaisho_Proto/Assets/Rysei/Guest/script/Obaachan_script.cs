@@ -78,7 +78,7 @@ public class Obaachan_script : MonoBehaviour
     GameObject eff_Angry;
 
     //オーディオ
-    AudioSource sounds;
+    AudioSource[] sounds;
 
     void Start()
     {
@@ -119,7 +119,7 @@ public class Obaachan_script : MonoBehaviour
         GetComponent<BoxCollider>().enabled = false;
 
         //オーディオの情報取得
-        sounds = GetComponent<AudioSource>();
+        sounds = GetComponents<AudioSource>();
     }
 
     // Update is called once per frame
@@ -376,8 +376,15 @@ public class Obaachan_script : MonoBehaviour
         effectflag_angry = false;
     }
 
+    //食べた音
     void Start_Sound() {
         //サウンド再生
-        sounds.Play();
+        sounds[0].Play();
+    }
+
+    //怒った音
+    void Start_Sound_Angry() {
+        //サウンド再生
+        sounds[1].Play();
     }
 }

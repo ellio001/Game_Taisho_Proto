@@ -76,7 +76,7 @@ public class TenpuraMan_Move : MonoBehaviour {
     GameObject eff_Angry;
 
     //オーディオ
-    AudioSource sounds;
+    AudioSource[] sounds;
 
     void Start() {
         this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -115,7 +115,7 @@ public class TenpuraMan_Move : MonoBehaviour {
         GetComponent<BoxCollider>().enabled = false;
 
         //オーディオの情報取得
-        sounds = GetComponent<AudioSource>();
+        sounds = GetComponents<AudioSource>();
     }
 
     // Update is called once per frame
@@ -321,6 +321,8 @@ public class TenpuraMan_Move : MonoBehaviour {
         eff_Heart = Instantiate(obj_Heart, new Vector3(eff_pos.x, eff_pos.y + 2.0f, eff_pos.z),
             new Quaternion(eff_rot.x - 1f, eff_rot.y, eff_rot.z, eff_rot.w));
 
+        //サウンド再生
+        Start_Sound();
         //二度読み防止
         effectflag = true;
     }
@@ -343,7 +345,7 @@ public class TenpuraMan_Move : MonoBehaviour {
         effectflag_angry = true;
         angryflag = false;
         //サウンド再生
-        Start_Sound();
+        Start_Sound_Angry();
     }
 
 /// <summary>
@@ -364,8 +366,15 @@ public class TenpuraMan_Move : MonoBehaviour {
         effectflag_angry = false;
     }
 
+    //食べた音
     void Start_Sound() {
         //サウンド再生
-        sounds.Play();
+        sounds[0].Play();
+    }
+
+    //怒った音
+    void Start_Sound_Angry() {
+        //サウンド再生
+        sounds[1].Play();
     }
 }

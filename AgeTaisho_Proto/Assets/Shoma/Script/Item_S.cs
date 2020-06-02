@@ -33,7 +33,7 @@ public class Item_S : MonoBehaviour {
     public Canvas canvas;
 
     //オーディオ
-    AudioSource sounds;
+    AudioSource[] sounds;
 
     /*　パーティクル変数　*/
     bool effectflag = false;    //エフェクト始めるフラグ
@@ -77,7 +77,7 @@ public class Item_S : MonoBehaviour {
         script = GM.GetComponent<GameManager>();
 
         //オーディオの情報取得
-        sounds = GetComponent<AudioSource>();
+        sounds = GetComponents<AudioSource>();
     }
 
     // Update is called once per frame
@@ -186,15 +186,12 @@ public class Item_S : MonoBehaviour {
                 Burnflag = true;
                 if (other.gameObject.tag == "Garbage can") {
                     GameManager.instance.score_num -= 100;
-                    if (effectflag) {
-                        //エフェクトエンド
-                        End_Effect();
-                    }
                     Destroy(gameObject);
                 }
                 if (Burnflag && Burnflag2) {
                     //サウンド再生
-                    sounds.Play();
+                    sounds[0].Play();
+                    sounds[1].Play();
                     Burnflag = false;
                     Burnflag2 = false;
                     if (!effectflag) {
@@ -369,15 +366,12 @@ public class Item_S : MonoBehaviour {
                 Burnflag = true;
                 if (other.gameObject.tag == "Garbage can") {
                     GameManager.instance.score_num -= 100;
-                    if (effectflag) {
-                        //エフェクトエンド
-                        End_Effect();
-                    }
                     Destroy(gameObject);
                 }
                 if (Burnflag && Burnflag2) {
                     //サウンド再生
-                    sounds.Play();
+                    sounds[0].Play();
+                    sounds[1].Play();
                     Burnflag = false;
                     Burnflag2 = false;
                     if (!effectflag) {
@@ -469,15 +463,12 @@ public class Item_S : MonoBehaviour {
                 Burnflag = true;
                 if (other.gameObject.tag == "Garbage can") {
                     GameManager.instance.score_num -= 100;
-                    if (effectflag) {
-                        //エフェクトエンド
-                        End_Effect();
-                    }
                     Destroy(gameObject);
                 }
                 if (Burnflag && Burnflag2) {
                     //サウンド再生
-                    sounds.Play();
+                    sounds[0].Play();
+                    sounds[1].Play();
                     Burnflag = false;
                     Burnflag2 = false;
                     if (!effectflag) {
@@ -564,15 +555,12 @@ public class Item_S : MonoBehaviour {
                 Burnflag = true;
                 if (other.gameObject.tag == "Garbage can") {
                     GameManager.instance.score_num -= 100;
-                    if (effectflag) {
-                        //エフェクトエンド
-                        End_Effect();
-                    }
                     Destroy(gameObject);
                 }
                 if (Burnflag && Burnflag2) {
                     //サウンド再生
-                    sounds.Play();
+                    sounds[0].Play();
+                    sounds[1].Play();
                     Burnflag = false;
                     Burnflag2 = false;
                     if (!effectflag) {
@@ -708,15 +696,12 @@ public class Item_S : MonoBehaviour {
                 Burnflag = true;
                 if (other.gameObject.tag == "Garbage can") {
                     GameManager.instance.score_num -= 100;
-                    if (effectflag) {
-                        //エフェクトエンド
-                        End_Effect();
-                    }
                     Destroy(gameObject);
                 }
                 if (Burnflag && Burnflag2) {
                     //サウンド再生
-                    sounds.Play();
+                    sounds[0].Play();
+                    sounds[1].Play();
                     Burnflag = false;
                     Burnflag2 = false;
                     if (!effectflag) {
@@ -751,6 +736,7 @@ public class Item_S : MonoBehaviour {
 
         //二度読み防止
         effectflag = true;
+        End_Effect();
     }
 
     /// <summary>
@@ -758,7 +744,7 @@ public class Item_S : MonoBehaviour {
     /// </summary>
     //エフェクトを停止消去
     void End_Effect() {
-        Destroy(eff_Burn);
+        Destroy(eff_Burn,3f);
         //二度読み防止
         effectflag = false;
     }
