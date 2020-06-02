@@ -8,7 +8,7 @@ public class TutorialGuestGenerator : MonoBehaviour
     [SerializeField]
     private GameObject Guest;   //チュートリアルのゲスト
 
-    private float GuestSpawn;   //ゲストの出現時間
+    [System.NonSerialized] public float GuestSpawn;   //ゲストの出現時間
     public bool GuestCount = false;    //最初の客が出現したか
 
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class TutorialGuestGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GuestSpawn += Time.deltaTime;
+        //GuestSpawn += Time.deltaTime;
 
         if (GuestSpawn >= 7 && !GuestCount) //GuestCoutで1回だけ呼ばれる処理
         {

@@ -71,23 +71,23 @@ public class Difficulty_Manager : MonoBehaviour
             Button_Flg = true;
             Difficulty += 1;
         }
-
+        
         switch (Difficulty)
         {
             case 0:
                 Easy_Active();
                 if (Input.GetButtonUp("XBox_joystick_B"))
-                    SceneManager.LoadScene("Easy_Tutorial_Scene");
+                    SceneManager.LoadScene("Recommendation_Easy_Scene");
                 break;
             case 1:
                 Normal_Active();
                 if (Input.GetButtonUp("XBox_joystick_B"))
-                    SceneManager.LoadScene("Normal_Tutorial_Scene");
+                    SceneManager.LoadScene("Recommendation_Normal_Scene");
                 break;
             case 2:
                 Hard_Active();
                 if (Input.GetButtonUp("XBox_joystick_B"))
-                    SceneManager.LoadScene("Hard_Tutorial_Scene");
+                    SceneManager.LoadScene("Recommendation_Hard_Scene");
                 break;
         }
     }
