@@ -220,7 +220,7 @@ public class Obaachan_script : MonoBehaviour
                 case 6:
                 case 7:
                 case 8:
-                    ItemScore = 100;
+                    ItemScore = 180;
                     ItemString = "Dish_T_Fish"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
                     OrderString = "魚てん";
                     OrderItems[0].SetActive(true);
@@ -230,7 +230,7 @@ public class Obaachan_script : MonoBehaviour
                     SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                     break;
                 case 9:
-                    ItemScore = 100;
+                    ItemScore = 180;
                     ItemString = "Dish_T_Potato"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
                     OrderString = "芋てん";
                     OrderItems[1].SetActive(true);

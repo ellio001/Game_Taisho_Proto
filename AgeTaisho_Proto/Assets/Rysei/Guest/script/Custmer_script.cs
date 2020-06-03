@@ -217,7 +217,7 @@ public class Custmer_script : MonoBehaviour
                     switch (flooredIntrandom)
                     {
                         case 0:
-                            ItemScore = 100;
+                            ItemScore = 180;
                             ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                             OrderString = "えびてん";
                             OrderItems[0].SetActive(true);
@@ -230,7 +230,7 @@ public class Custmer_script : MonoBehaviour
                         case 2:
                         case 3:
                         case 4:
-                            ItemScore = 100;
+                            ItemScore = 150;
                             ItemString = "ItemSara(Chicken)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                             OrderString = "からあげ";
                             OrderItems[1].SetActive(true);
@@ -246,7 +246,7 @@ public class Custmer_script : MonoBehaviour
                     {
                         case 0:
                         case 1:
-                            ItemScore = 100;
+                            ItemScore = 150;
                             ItemString = "ItemSara(Chicken)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                             OrderString = "からあげ";
                             OrderItems[1].SetActive(true);
@@ -258,7 +258,7 @@ public class Custmer_script : MonoBehaviour
                         case 2:
                         case 3:
                         case 4:
-                            ItemScore = 100;
+                            ItemScore = 300;
                             ItemString = "ItemSara(Quail)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                             OrderString = "うずら";
                             OrderItems[2].SetActive(true);

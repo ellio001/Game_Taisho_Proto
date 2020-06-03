@@ -203,7 +203,7 @@ public class TenpuraMan_Move : MonoBehaviour {
 
             switch (flooredIntrandom) {
                 case 0:
-                    ItemScore = 100;
+                    ItemScore = 180;
                     ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     OrderItems[0].SetActive(true);
@@ -213,7 +213,7 @@ public class TenpuraMan_Move : MonoBehaviour {
                     SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                     break;
                 case 1:
-                    ItemScore = 100;
+                    ItemScore = 180;
                     ItemString = "Dish_T_Fish"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
                     OrderString = "魚てん";
                     OrderItems[1].SetActive(true);
@@ -223,7 +223,7 @@ public class TenpuraMan_Move : MonoBehaviour {
                     SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                     break;
                 case 2:
-                    ItemScore = 100;
+                    ItemScore = 180;
                     ItemString = "Dish_T_Potato"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
                     OrderItems[2].SetActive(true);
                     OrderString = "芋てん";
