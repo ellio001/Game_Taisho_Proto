@@ -214,7 +214,7 @@ public class Rich_Script : MonoBehaviour
             {
                 case "Ryusei_Scene":
                 case "Easy_Scene":
-                    ItemScore = 100*ScorePush;
+                    ItemScore = 180*ScorePush;
                     ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "えびてん";
                     OrderItems[0].SetActive(true);
@@ -224,7 +224,7 @@ public class Rich_Script : MonoBehaviour
                     SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                     break;
                 case "Normal_Scene":
-                    ItemScore = 100*ScorePush;
+                    ItemScore = 180*ScorePush;
                     ItemString = "ItemSara(Chicken)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "からあげ";
                     OrderItems[1].SetActive(true);
@@ -234,7 +234,7 @@ public class Rich_Script : MonoBehaviour
                     SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                     break;
                 case "Hard_Scene":
-                    ItemScore = 100*ScorePush;
+                    ItemScore = 180*ScorePush;
                     ItemString = "Dish_K_Quail"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "うずら";
                     OrderItems[2].SetActive(true);

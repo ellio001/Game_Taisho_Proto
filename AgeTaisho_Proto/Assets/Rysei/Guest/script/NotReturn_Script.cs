@@ -251,7 +251,7 @@ public class NotReturn_Script : MonoBehaviour {
 
         if (other.gameObject.name == ItemString[0]) {
             Eat = true;      //客が商品を食べ始める
-            GameManager.instance.score_num += 100; //点数を加算する
+            GameManager.instance.score_num += 180; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
             ItemString[0] = null;
             OrderItems[0].SetActive(false);   //席につくまではオーダーを表示しない
@@ -260,7 +260,7 @@ public class NotReturn_Script : MonoBehaviour {
         }
         else if (other.gameObject.name == ItemString[1]) {
             Eat = true;      //客が商品を食べ始める
-            GameManager.instance.score_num += 100; //点数を加算する
+            GameManager.instance.score_num += 180; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
             ItemString[1] = null;
             OrderItems[1].SetActive(false);   //席につくまではオーダーを表示しない
@@ -269,7 +269,7 @@ public class NotReturn_Script : MonoBehaviour {
         }
         else if (other.gameObject.name == ItemString[2]) {
             Eat = true;      //客が商品を食べ始める
-            GameManager.instance.score_num += 100; //点数を加算する
+            GameManager.instance.score_num += 180; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
             ItemString[2] = null;
             OrderItems[2].SetActive(false);   //席につくまではオーダーを表示しない
