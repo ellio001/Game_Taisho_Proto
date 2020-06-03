@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
 
     public float GameTime;             //ゲーム開始の時間
     float GameFinishTime;       //ゲームのプレイ最大時間
-    public float FiverTime;            //フィーバーの時間です
+    float FiverTime;            //フィーバーの時間です
     float FiverEvacuation;      //フィーバーの退避エリア
     float FiverFinishTime;      //フィーバータイム最大時間
     int FiverNumber;            //スイッチ文で使うフィーバーフラグ
@@ -27,8 +27,8 @@ public class GameManager : MonoBehaviour {
     bool Bad_Score;     //Bad_Scoreをいれる箱
     bool Normal_Score;  //Nomal_Score1をいれる箱
     bool Good_Score;    //Good_Scoreをいれる箱
-    //public Slider slider;    //Sliderを入れる
-    
+                        //public Slider slider;    //Sliderを入れる
+
 
     // プレファブ達をリスト化
     [SerializeField] List<GameObject> Item_Resources = new List<GameObject>();
@@ -54,24 +54,22 @@ public class GameManager : MonoBehaviour {
         FiverFlag = false;
         TestSceneFlag = true;
         SceneManager.activeSceneChanged += ActiveSceneChanged;
-        ////Sliderを満タンにする。
-        //slider.value = 1;
         GameTime = 0f;
 
         Bad_Score = score_num < 1000;                           //スコア1000未満でBad_Score
         Normal_Score = score_num >= 1000 && score_num < 2000;   //スコア1000以上2000未満でNormal_Score
         Good_Score = score_num >= 2000;                         //スコア2000以上でGood_Score
-       
+
     }
 
     private void Update() {
 
-        //現在までのフレーム
-        GameTime += Time.deltaTime;
-        ////ゲージを動かす
-        //slider.value = GameTime / GameFinishTime;
+        if (SceneManager.GetActiveScene().name == "Easy_Scene" ||
+            SceneManager.GetActiveScene().name == "Normal_Scene" ||
+            SceneManager.GetActiveScene().name == "Hard_Scene") { // hogehogeシーンでのみやりたい処理
+                                                                  //現在までのフレーム
+            GameTime += Time.deltaTime;
 
-        if (TestSceneFlag) {
             // オブジェクトからTextコンポーネントを取得
             Text score_text = score_object.GetComponent<Text>();
             Text Pause_text = Pause_object.GetComponent<Text>();
@@ -81,6 +79,15 @@ public class GameManager : MonoBehaviour {
 
             //判定
             Judgment();
+        }
+        else if (SceneManager.GetActiveScene().name != "Easy_Scene" ||
+            SceneManager.GetActiveScene().name != "Normal_Scene" ||
+            SceneManager.GetActiveScene().name != "Hard_Scene") {
+            print("メイン以外"+TestSceneFlag);
+            if (TestSceneFlag) {
+                print("初期化");
+                Initial_Variable();
+            }
         }
     }
 
@@ -93,7 +100,6 @@ public class GameManager : MonoBehaviour {
     public void Judgment() {
         //ゲーム時間を判定
         if (GameTime >= GameFinishTime) {
-            Debug.Log("ゲーム終了！");
             //Scene読込
             ReadScene();
         }
@@ -188,8 +194,6 @@ public class GameManager : MonoBehaviour {
             SceneManager.LoadScene("Score_Good_Scene");
         }
 
-        //処理を二度としないようにフラグで管理
-        TestSceneFlag = false;
     }
 
     void ActiveSceneChanged(Scene thisScene, Scene nextScene) {
@@ -201,9 +205,27 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    //初期化シーン
     void Initial_Scene() {
+        print("来てる？");
         score_object = null;
         Pause_object = null;
+        TestSceneFlag = true;
+    }
+
+    //初期化変数
+    void Initial_Variable() {
+        GameFinishTime = 180f;
+        FiverFinishTime = 30f;
+        FiverNumber = 3;
+        FiverFlag = false;
+        TestSceneFlag = false;
+        GameTime = 0f;
+        FiverTime = 0f;
+
+         Bad_Score = score_num < 1000;                           //スコア1000未満でBad_Score
+        Normal_Score = score_num >= 1000 && score_num < 2000;   //スコア1000以上2000未満でNormal_Score
+        Good_Score = score_num >= 2000;                         //スコア2000以上でGood_Score
     }
 
     void Quit() {
