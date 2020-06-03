@@ -134,7 +134,7 @@ public class Recommended_Easy : MonoBehaviour {
         }
     }
     public static int getNumberTaihi() {
-        return NumberTaihi;
+        return GameManager.instance.Osusume = NumberTaihi;
     }
 
     void Jugment() {
