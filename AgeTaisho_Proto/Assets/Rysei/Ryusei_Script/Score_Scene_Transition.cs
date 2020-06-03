@@ -8,7 +8,7 @@ public class Score_Scene_Transition : MonoBehaviour
 {
     [SerializeField] GameObject score_object;    // Textオブジェクトをいれる箱
     [SerializeField] GameObject NextText;        //Bボタンで移動　のテキスト
-    [SerializeField] GameObject Panel;           //パネルをいれる箱
+    [SerializeField] GameObject[] Panel;           //パネルをいれる箱
     Vector3 PanelPos;   //パネルの位置
 
     int Difficulty = 0;     //選択の変数
@@ -21,7 +21,7 @@ public class Score_Scene_Transition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PanelPos = Panel.transform.position;    //パネルの座標をいれる
+        //PanelPos = Panel.transform.position;    //パネルの座標をいれる
         // オブジェクトからTextコンポーネントを取得
         Text score_text = score_object.GetComponent<Text>();
         // テキストの表示を入れ替える
@@ -66,17 +66,20 @@ public class Score_Scene_Transition : MonoBehaviour
         switch (Difficulty)
         {
             case 0:
-                PanelPos.y = 156.5f;
+                Panel[0].SetActive(true);   //パネルを表示する
+                Panel[1].SetActive(false);   //パネルを表示する
                 if (Input.GetButtonUp("XBox_joystick_B"))
                     SceneManager.LoadScene("Title_Scene");
                 break;
             case 1:
+                Panel[0].SetActive(false);   //パネルを表示する
+                Panel[1].SetActive(true);   //パネルを表示する
                 PanelPos.y = 56.5f;
                 if (Input.GetButtonUp("XBox_joystick_B"))
                     SceneManager.LoadScene("Difficulty_Scene");
                 break;
         }
 
-        Panel.transform.position = PanelPos;    //パネルの座標をいれる
+        //Panel.transform.position = PanelPos;    //パネルの座標をいれる
     }
 }
