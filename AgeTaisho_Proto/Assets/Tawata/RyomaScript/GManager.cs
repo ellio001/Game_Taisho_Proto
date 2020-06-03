@@ -42,7 +42,6 @@ public class GManager : MonoBehaviour {
 
     public static GManager instance = null;
 
-
     private void Awake()    //スタートよりも最初に呼ばれる
     {
 
