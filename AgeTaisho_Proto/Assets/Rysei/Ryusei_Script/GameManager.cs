@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour {
     public GameObject score_object = null; // Textオブジェクト
     public GameObject Pause_object = null;
 
+    public int Osusume;
     bool Bad_Score;     //Bad_Scoreをいれる箱
     bool Normal_Score;  //Nomal_Score1をいれる箱
     bool Good_Score;    //Good_Scoreをいれる箱
@@ -56,13 +57,13 @@ public class GameManager : MonoBehaviour {
         SceneManager.activeSceneChanged += ActiveSceneChanged;
         GameTime = 0f;
 
-        Bad_Score = score_num < 1000;                           //スコア1000未満でBad_Score
-        Normal_Score = score_num >= 1000 && score_num < 2000;   //スコア1000以上2000未満でNormal_Score
-        Good_Score = score_num >= 2000;                         //スコア2000以上でGood_Score
-
     }
 
     private void Update() {
+
+        Bad_Score = score_num < 700;                           //スコア700未満でBad_Score
+        Normal_Score = score_num >= 700 && score_num < 1400;   //スコア700以上1400未満でNormal_Score
+        Good_Score = score_num >= 1400;                         //スコア1400以上でGood_Score
 
         if (SceneManager.GetActiveScene().name == "Easy_Scene" ||
             SceneManager.GetActiveScene().name == "Normal_Scene" ||
@@ -178,20 +179,20 @@ public class GameManager : MonoBehaviour {
 
     public void ReadScene() {
 
-        if (Bad_Score) {
+        if (Good_Score) {
             //テキストデータ初期化
             Initial_Scene();
-            SceneManager.LoadScene("Score_Bad_Scene");
+            SceneManager.LoadScene("Score_Good_Scene");
         }
         else if (Normal_Score) {
             //テキストデータ初期化
             Initial_Scene();
             SceneManager.LoadScene("Score_Normal_Scene");
         }
-        else if (Good_Score) {
+        else if (Bad_Score) {
             //テキストデータ初期化
             Initial_Scene();
-            SceneManager.LoadScene("Score_Good_Scene");
+            SceneManager.LoadScene("Score_Bad_Scene");
         }
 
     }
