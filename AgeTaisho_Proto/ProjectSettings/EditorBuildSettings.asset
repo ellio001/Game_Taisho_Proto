@@ -33,11 +33,11 @@ EditorBuildSettings:
     path: Assets/Main_Scene/Difficulty/Recommendation_Easy_Scene.unity
     guid: 8d65b930b2581574880cdb26b9ed6421
   - enabled: 1
-    path: Assets/Main_Scene/Difficulty/Recommendation_Normal_Scene.unity
-    guid: e2b9fd283c35dd043998716e33c428d6
-  - enabled: 1
     path: Assets/Main_Scene/Difficulty/Recommendation_Hard_Scene.unity
     guid: edf5f1720bda626478b9a29219f4f604
+  - enabled: 1
+    path: Assets/Main_Scene/Difficulty/Recommendation_Normal_Scene.unity
+    guid: e2b9fd283c35dd043998716e33c428d6
   - enabled: 1
     path: Assets/Main_Scene/Difficulty/Easy_Scene.unity
     guid: 175db003c9766ab47989a1857b418cc1
