@@ -66,7 +66,7 @@ public class Score_Scene_Transition : MonoBehaviour
         switch (Difficulty)
         {
             case 0:
-                PanelPos.y = 106.5f;
+                PanelPos.y = 156.5f;
                 if (Input.GetButtonUp("XBox_joystick_B"))
                     SceneManager.LoadScene("Title_Scene");
                 break;
