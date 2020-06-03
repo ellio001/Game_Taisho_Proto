@@ -138,7 +138,7 @@ public class Recommended_Hard : MonoBehaviour {
         }
     }
     public static int getNumberTaihi() {
-        return NumberTaihi;
+        return GameManager.instance.Osusume = NumberTaihi;
     }
 
     void Jugment() {
@@ -159,16 +159,8 @@ public class Recommended_Hard : MonoBehaviour {
             karaage_image_object.SetActive(false);
             uzura_image_object.SetActive(false);
         }
-        //イモ
-        else if (RondemNumber == 3) {
-            ebi_image_object.SetActive(false);
-            imo_image_object.SetActive(true);
-            sakana_image_object.SetActive(false);
-            karaage_image_object.SetActive(false);
-            uzura_image_object.SetActive(false);
-        }
         //唐揚げ
-        else if (RondemNumber == 4) {
+        else if (RondemNumber == 3) {
             ebi_image_object.SetActive(false);
             imo_image_object.SetActive(false);
             sakana_image_object.SetActive(false);
@@ -176,12 +168,21 @@ public class Recommended_Hard : MonoBehaviour {
             uzura_image_object.SetActive(false);
         }
         //うずら
-        else if (RondemNumber == 5) {
+        else if (RondemNumber == 4) {
             ebi_image_object.SetActive(false);
             imo_image_object.SetActive(false);
             sakana_image_object.SetActive(false);
             karaage_image_object.SetActive(false);
             uzura_image_object.SetActive(true);
+        }
+        //イモ
+        else if (RondemNumber == 5)
+        {
+            ebi_image_object.SetActive(false);
+            imo_image_object.SetActive(true);
+            sakana_image_object.SetActive(false);
+            karaage_image_object.SetActive(false);
+            uzura_image_object.SetActive(false);
             RondemNumber = 0;
         }
     }

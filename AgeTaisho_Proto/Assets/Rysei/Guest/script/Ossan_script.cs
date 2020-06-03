@@ -122,6 +122,8 @@ public class Ossan_script : MonoBehaviour
         OrderItems[0].SetActive(false);   //席につくまではパネルを表示しない
         OrderItems[1].SetActive(false);   //席につくまではパネルを表示しない
         OrderItems[2].SetActive(false);   //席につくまではパネルを表示しない
+        OrderItems[3].SetActive(false);   //席につくまではパネルを表示しない
+        OrderItems[4].SetActive(false);   //席につくまではパネルを表示しない
         ReturnImage.enabled = false;      //帰るゲージをfalseに
         ReturnText.enabled = false;      //テキストをfalseに
         GetComponent<BoxCollider>().enabled = false;
@@ -197,6 +199,8 @@ public class Ossan_script : MonoBehaviour
                 OrderItems[0].SetActive(false);
                 OrderItems[1].SetActive(false);
                 OrderItems[2].SetActive(false);
+                OrderItems[3].SetActive(false);   //席につくまではパネルを表示しない
+                OrderItems[4].SetActive(false);   //席につくまではパネルを表示しない
                 Destroy(SideItems[0]);
                 Destroy(SideItems[1]);
                 ReturnImage.enabled = false;      //Imageをfalseに
@@ -216,7 +220,7 @@ public class Ossan_script : MonoBehaviour
             ReturnText.enabled = true;      //Textを表示する
             GetComponent<BoxCollider>().enabled = true;
 
-            switch (Osusume)
+            switch (GameManager.instance.Osusume)
             {
                 case 1:
                     ItemScore = 180;
@@ -235,6 +239,26 @@ public class Ossan_script : MonoBehaviour
                     OrderItems[1].SetActive(true);
                     SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
                     SideItems[1] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                    SideItems[0].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    break;
+                case 3:
+                    ItemScore = 150;
+                    ItemString = "ItemSara(Chicken)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    OrderString = "からあげ";
+                    OrderItems[3].SetActive(true);
+                    SideItems[0] = Instantiate(OrderItems[3], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[3], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                    SideItems[0].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    break;
+                case 4:
+                    ItemScore = 300;
+                    ItemString = "ItemSara(Quail)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    OrderString = "うずら";
+                    OrderItems[4].SetActive(true);
+                    SideItems[0] = Instantiate(OrderItems[4], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
+                    SideItems[1] = Instantiate(OrderItems[4], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
                     SideItems[0].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                     SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                     break;
@@ -297,6 +321,8 @@ public class Ossan_script : MonoBehaviour
                 OrderItems[0].SetActive(false);
                 OrderItems[1].SetActive(false);
                 OrderItems[2].SetActive(false);
+                OrderItems[3].SetActive(false);   //席につくまではパネルを表示しない
+                OrderItems[4].SetActive(false);   //席につくまではパネルを表示しない
                 Destroy(SideItems[0]);
                 Destroy(SideItems[1]);
                 ReturnImage.enabled = false;      //Imageをfalseに
