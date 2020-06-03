@@ -127,6 +127,7 @@ public class Ossan_script : MonoBehaviour
         ReturnImage.enabled = false;      //帰るゲージをfalseに
         ReturnText.enabled = false;      //テキストをfalseに
         GetComponent<BoxCollider>().enabled = false;
+        effectflag = false;    
 
         //オーディオの情報取得
         sounds = GetComponents<AudioSource>();
@@ -187,8 +188,8 @@ public class Ossan_script : MonoBehaviour
             if (ReturnCount >= RowTime) GuestReturn(); //席につかず20秒たつとGuestReturnが呼ばれる
             //Debug.Log(LineReturn);
         }
-        if (Eat)
-        {
+        if (Eat) {
+            print(effectflag);
             //エフェクトスタート
             if (!effectflag) Start_Effect();
             EatCount += Time.deltaTime;
@@ -343,7 +344,7 @@ public class Ossan_script : MonoBehaviour
             GameManager.instance.score_num += ItemScore; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
             //パーティクル
-            effectflag = true;//エフェクトが始まるフラグ
+            effectflag = false;//エフェクトが始まるフラグ
         }
         else
         {
@@ -351,9 +352,9 @@ public class Ossan_script : MonoBehaviour
         }
     }
 
-/// <summary>
-/// ///エフェクトスタート
-/// </summary>
+    /// <summary>
+    /// ///エフェクトスタート
+    /// </summary>
     //エフェクトが生成、スタート
     void Start_Effect() {
         //Resourceフォルダのプレハブを読み込む
