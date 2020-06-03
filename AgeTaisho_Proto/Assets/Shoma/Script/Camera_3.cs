@@ -63,7 +63,8 @@ public class Camera_3 : MonoBehaviour
     Vector3 old_direction;
 
     [SerializeField] GameObject ScoreText; // 正面を向いた時だけスコアを出すようにする
-    [SerializeField] GameObject StockText; // 左右の向いてるときだけ、ストックを出す
+    [SerializeField] GameObject StockText_T; // 天ぷら側向いてるときだけ、ストックを出す
+    [SerializeField] GameObject StockText_A; // 揚げ物側向いてるときだけ、ストックを出す
 
     void Start()
     {
@@ -521,7 +522,7 @@ public class Camera_3 : MonoBehaviour
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
             ScoreText.gameObject.SetActive(false);
-            StockText.gameObject.SetActive(true);
+            StockText_T.gameObject.SetActive(true);
         }
         /* お客側 */
         else if (cursor >= 6 && cursor <= 8)
@@ -530,7 +531,8 @@ public class Camera_3 : MonoBehaviour
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
             ScoreText.gameObject.SetActive(true);
-            StockText.gameObject.SetActive(false);
+            StockText_T.gameObject.SetActive(false);
+            StockText_A.gameObject.SetActive(false);
         }
         /* 揚げ物側 */
         else if (cursor >= 9 && cursor <= 13 || cursor == 14)
@@ -539,7 +541,7 @@ public class Camera_3 : MonoBehaviour
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
             ScoreText.gameObject.SetActive(false);
-            StockText.gameObject.SetActive(true);
+            StockText_A.gameObject.SetActive(true);
         }
         /* 油もの側のゴミ箱 */
         if (cursor == 22)
