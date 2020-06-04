@@ -40,7 +40,6 @@ public class BGM_Manager : MonoBehaviour {
                 BGM_Stop();
                 //BGM_Titoleスタート
                 sounds[0].Play();
-                print("なってる音：" + sounds[0]);
             }
         }
         //Easy_Scene
@@ -50,7 +49,6 @@ public class BGM_Manager : MonoBehaviour {
                 BGM_Stop();
                 //BGM_Easyスタート
                 sounds[1].Play();
-                print("なってる音：" + sounds[1]);
             }
         }
         //Normal_Scene
@@ -60,7 +58,6 @@ public class BGM_Manager : MonoBehaviour {
                 BGM_Stop();
                 //BGM_Normalスタート
                 sounds[2].Play();
-                print("なってる音：" + sounds[2]);
             }
         }
         //Hard_Scene
@@ -70,7 +67,6 @@ public class BGM_Manager : MonoBehaviour {
                 BGM_Stop();
                 //Hardスタート
                 sounds[3].Play();
-                print("なってる音：" + sounds[3]);
             }
         }
         else {
@@ -81,7 +77,6 @@ public class BGM_Manager : MonoBehaviour {
 
     //サウンドの初期化
     void BGM_Stop() {
-        print("ストップサウンド");
         for(int i = 0; i < 4; i++) {
             sounds[i].Stop();
         }
