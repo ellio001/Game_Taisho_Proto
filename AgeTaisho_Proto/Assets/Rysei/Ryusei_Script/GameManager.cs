@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
     public bool TaihiFlag;
 
     public static GameManager instance = null;
-    public int score_num = 0; // スコア変数
+    public int score_num; // スコア変数
     public GameObject score_object = null; // Textオブジェクト
     public GameObject Pause_object = null;
 
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour {
         TestSceneFlag = true;
         SceneManager.activeSceneChanged += ActiveSceneChanged;
         GameTime = 0f;
-
+        score_num = 0;
     }
 
     private void Update() {
@@ -222,6 +222,7 @@ public class GameManager : MonoBehaviour {
         TestSceneFlag = false;
         GameTime = 0f;
         FiverTime = 0f;
+        score_num = 0;
 
          Bad_Score = score_num < 1000;                           //スコア1000未満でBad_Score
         Normal_Score = score_num >= 1000 && score_num < 2000;   //スコア1000以上2000未満でNormal_Score
