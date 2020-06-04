@@ -16,7 +16,7 @@ public class Title_Logo_Moving : MonoBehaviour {
     public bool fadeIn = true; // trueの場合はフェードイン
     public float fadeSpeed = 1f; // フェード速度指定
 
-    [SerializeField] GameObject sisyo;
+    //[SerializeField] GameObject sisyo;
 
     void Start() {
         cnt = Particle_List.Count;// listの最後の要素数を入れている
@@ -61,9 +61,9 @@ public class Title_Logo_Moving : MonoBehaviour {
             tmp.a = tmp.a + (Time.deltaTime * fadeSpeed);
             me.GetComponent<Image>().color = tmp;
 
-            UnityEngine.Color tmp2 = sisyo.GetComponent<Image>().color;
-            tmp2.a = tmp2.a + (Time.deltaTime * fadeSpeed);
-            sisyo.GetComponent<Image>().color = tmp2;
+            //UnityEngine.Color tmp2 = sisyo.GetComponent<Image>().color;
+            //tmp2.a = tmp2.a + (Time.deltaTime * fadeSpeed);
+            //sisyo.GetComponent<Image>().color = tmp2;
         }
     }
 }
