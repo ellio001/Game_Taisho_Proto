@@ -189,7 +189,6 @@ public class Ossan_script : MonoBehaviour
             //Debug.Log(LineReturn);
         }
         if (Eat) {
-            print(effectflag);
             //エフェクトスタート
             if (!effectflag) Start_Effect();
             EatCount += Time.deltaTime;
