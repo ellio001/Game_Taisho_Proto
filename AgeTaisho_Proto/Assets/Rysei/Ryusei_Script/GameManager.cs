@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour {
 
         if (SceneManager.GetActiveScene().name == "Easy_Scene" ||
             SceneManager.GetActiveScene().name == "Normal_Scene" ||
-            SceneManager.GetActiveScene().name == "Hard_Scene") { // hogehogeシーンでのみやりたい処理
+            SceneManager.GetActiveScene().name == "Hard_Scene") { // 各シーンでのみやりたい処理
                                                                   //現在までのフレーム
             GameTime += Time.deltaTime;
 
@@ -208,7 +208,6 @@ public class GameManager : MonoBehaviour {
 
     //初期化シーン
     void Initial_Scene() {
-        print("来てる？");
         score_object = null;
         Pause_object = null;
         TestSceneFlag = true;
