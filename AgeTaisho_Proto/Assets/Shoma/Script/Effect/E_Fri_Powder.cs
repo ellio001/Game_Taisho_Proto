@@ -82,5 +82,6 @@ public class E_Fri_Powder : MonoBehaviour
     private void OnDestroy()
     {
         Destroy(GameObject.Find("E_Frying(Clone)"));
+        Destroy(PowderParticle);
     }
 }
