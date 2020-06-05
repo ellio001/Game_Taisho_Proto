@@ -206,6 +206,7 @@ public class Ossan_script : MonoBehaviour
                 ReturnImage.enabled = false;      //Imageをfalseに
                 ReturnText.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
+                GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
                 OneDelete = true;
             }
             if (EatCount >= EatTime) GuestReturn();   //5秒たったら食べ終わり帰る
@@ -274,6 +275,8 @@ public class Ossan_script : MonoBehaviour
                     break;
             }
 
+            GameManager.instance.ItemName[MyNumber, 0] = ItemString;    //[席,1つめ]にアイテム名をいれる
+            //Debug.Log(MyNumber + ",0" + GameManager.instance.ItemName[MyNumber, 0]);
         }
         else if (Order == true)
         {
@@ -312,7 +315,11 @@ public class Ossan_script : MonoBehaviour
 
         if (OneProces == false)
         {
-            if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
+            if (Order == true)
+            {
+                GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
+                GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
+            }
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
             GuestNumber[MyNumber] = null;   //ジェネレータの箱？
             if (OneDelete == false)
