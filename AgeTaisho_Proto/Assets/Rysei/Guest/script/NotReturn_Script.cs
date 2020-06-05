@@ -206,6 +206,13 @@ public class NotReturn_Script : MonoBehaviour {
             ItemString[2] = "Dish_T_Potato";
             OrderString[2] = "芋てん";
 
+            GameManager.instance.ItemName[MyNumber, 0] = ItemString[0];    //[席,1つめ]をnullに
+            GameManager.instance.ItemName[MyNumber, 1] = ItemString[1];    //[席,1つめ]をnullに
+            GameManager.instance.ItemName[MyNumber, 2] = ItemString[2];    //[席,1つめ]をnullに
+            //Debug.Log(MyNumber + ",0" + GameManager.instance.ItemName[MyNumber, 0]);
+            //Debug.Log(MyNumber + ",1" + GameManager.instance.ItemName[MyNumber, 1]);
+            //Debug.Log(MyNumber + ",2" + GameManager.instance.ItemName[MyNumber, 2]);
+
         }
         else if (Order == true) {
             //帰る時間を加算
@@ -255,6 +262,7 @@ public class NotReturn_Script : MonoBehaviour {
             GameManager.instance.score_num += 180; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
             ItemString[0] = null;
+            GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
             OrderItems[0].SetActive(false);   //席につくまではオーダーを表示しない
             Destroy(SideItems[0]);
             Destroy(SideItems[1]);
@@ -264,6 +272,7 @@ public class NotReturn_Script : MonoBehaviour {
             GameManager.instance.score_num += 180; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
             ItemString[1] = null;
+            GameManager.instance.ItemName[MyNumber, 1] = null;    //[席,1つめ]をnullに
             OrderItems[1].SetActive(false);   //席につくまではオーダーを表示しない
             Destroy(SideItems[2]);
             Destroy(SideItems[3]);
@@ -273,6 +282,7 @@ public class NotReturn_Script : MonoBehaviour {
             GameManager.instance.score_num += 180; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
             ItemString[2] = null;
+            GameManager.instance.ItemName[MyNumber, 2] = null;    //[席,1つめ]をnullに
             OrderItems[2].SetActive(false);   //席につくまではオーダーを表示しない
             Destroy(SideItems[4]);
             Destroy(SideItems[5]);

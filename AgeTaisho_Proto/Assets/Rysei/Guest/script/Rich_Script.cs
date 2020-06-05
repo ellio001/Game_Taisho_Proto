@@ -196,6 +196,7 @@ public class Rich_Script : MonoBehaviour
                 ReturnImage.enabled = false;      //Imageをfalseに
                 ReturnText.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
+                GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
                 OneDelete = true;
             }
             if (EatCount >= EatTime) GuestReturn();   //5秒たったら食べ終わり帰る
@@ -245,6 +246,8 @@ public class Rich_Script : MonoBehaviour
                     break;
             }
 
+            GameManager.instance.ItemName[MyNumber, 0] = ItemString;    //[席,1つめ]をnullに
+            Debug.Log(MyNumber + ",0" + GameManager.instance.ItemName[MyNumber, 0]);
         }
         else if (Order == true)
         {
@@ -283,7 +286,11 @@ public class Rich_Script : MonoBehaviour
 
         if (OneProces == false)
         {
-            if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
+            if (Order == true)
+            {
+                GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
+                GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
+            }
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
             if (OneDelete == false)
             {
