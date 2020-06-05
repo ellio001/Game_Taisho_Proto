@@ -21,7 +21,7 @@ public class Camera_3 : MonoBehaviour
     /*----------------------------------------------------------------------------------------------------*/
 
     /*------------------------------------------＜フラグ＞--------------------------------------------------*/
-    [System.NonSerialized] public bool gomi_flg = false;   // ゴミ箱を向くときに使う
+    [System.NonSerialized] public bool gomi_flg = false;   // 焦げを持ったときTrue,ゴミ箱を向くとFalse
     [System.NonSerialized] public bool stock_flg = false;  // ストックを見ているときはtrue
     [System.NonSerialized] public bool pot_flg = false; // 鍋を見るかのフラグ
     [System.NonSerialized] public bool space_flg = false; // 移動中にスペースキーが反応しないようにするフラグ
@@ -90,6 +90,10 @@ public class Camera_3 : MonoBehaviour
 
     void Update()
     {
+        // 手に何か持っていてそれが「焦げ」ならgomi_flgを立てる
+        if (HCBscript.HoldingFlg && ClickObj.transform.GetChild(0).gameObject.name.Contains("Burn"))
+            gomi_flg = true;
+
         if (button_flg) // 連続でボタンを押せないようにインターバルを設定
         {
             button_time += Time.deltaTime;
@@ -103,17 +107,21 @@ public class Camera_3 : MonoBehaviour
         if (script.PauseFlag) return;
         else if (!HCBscript.MoveFlg) // スペースを離しているかの判定
         {
-            if (!pot_flg)
-            {
-                AutPSelect_flg = true;
-                DownKeyCheck(); // 押されたボタンの処理をする
-                if (cursor == 1 || cursor == 13) pot_flg = true;
-                //MoveLight();    // カーソルの移動についての処理
+            // 移動したときにゴミ箱を向くようにする処理へ
+            if (gomi_flg) GomibakoSelect();
+            else{
+                if (!pot_flg)
+                {
+                    AutPSelect_flg = true;
+                    DownKeyCheck(); // 押されたボタンの処理をする
+                    if (cursor == 1 || cursor == 13) pot_flg = true;
+                    //MoveLight();    // カーソルの移動についての処理
+                }
+                // 鍋を見ているときに４つの座標から選択できるようにしている
+                if (pot_flg) PotSelect();
+                if (!stock_flg) AutSelect_flg = true;
             }
-            // 鍋を見ているときに４つの座標から選択できるようにしている
-            if (pot_flg) PotSelect();
-            if (!stock_flg) AutSelect_flg = true;
-
+             
             MoveCamera(); // カメラを移動させる処理
             // 移動を滑らかにする処理
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, SPEED * Time.deltaTime);
@@ -127,72 +135,10 @@ public class Camera_3 : MonoBehaviour
         }
     }
 
+
     /*----------------------------------------------------------------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------------------------------------------------------------*/
 
-    void AutoCursorSelect()
-    {
-        // ストックから物を取るときの自動選択
-        if (!HCBscript.HoldingFlg)
-        {
-            if (stock_flg && AutSelect_flg){
-                if (HCBscript.TargetTag != "Item")
-                {// その場に取れるものがなかった時
-                    if (cursor <= 21 && cursor >= 19)// 油もの側
-                    {
-                        if (cursor != 19) cursor -= 1;
-                        else // ストック全体に取れるものがなかった場合
-                        {
-                            cursor = 21;
-                            AutSelect_flg = false;
-                            StockEX_flg = false;
-                        }
-                    }
-                    else if (cursor <= 18 && cursor >= 16)// 揚げ物側
-                    {
-                        if (cursor != 16) cursor -= 1;
-                        else
-                        {
-                            cursor = 18;
-                            AutSelect_flg = false;
-                            StockEX_flg = false;
-                        }
-                    }
-                }
-                else AutSelect_flg = false;
-            }
-        }
-
-        // ストックする時空いてる場所を自動選択
-        if (HCBscript.HoldingFlg)
-        {
-            if (stock_flg && AutSelect_flg){
-                if (HCBscript.TargetTag != "Stock")
-                {
-                    if (cursor <= 21 && cursor >= 19)
-                    {
-                        if (cursor != 19) cursor -= 1;
-                        else
-                        {
-                            cursor = 21;
-                            AutSelect_flg = false;
-                        }
-                    }
-                    else if (cursor <= 18 && cursor >= 16)
-                    {
-                        if (cursor != 16) cursor -= 1;
-                        else
-                        {
-                            cursor = 18;
-                            AutSelect_flg = false;
-                        }
-                    }
-                }
-                else AutSelect_flg = false;
-            }
-        }
-
-    } //AutoCursorSelect()
 
     void DownKeyCheck()
     {
@@ -233,8 +179,6 @@ public class Camera_3 : MonoBehaviour
                 }
             }
 
-            gomi_flg = false;
-            MoveLight();
         }
 
         // →押したとき
@@ -272,27 +216,17 @@ public class Camera_3 : MonoBehaviour
 
                 }
             }
-            gomi_flg = false;
-            MoveLight();
         }
 
         // ↓押したとき
         else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
         {
             button_flg = true;
-             /* ・焦げアイテムを持っているときに下を押すした時、
-              * ・盛り付け場を見ているときに下を押した時
-              *　　ゴミ箱を向く  */
-            if (cursor == 15 || (HCBscript.HoldingFlg && ClickObj.transform.GetChild(0).name == "ItemKoge"))
-            {
-                cursor = 22;
-                gomi_flg = true;
-            }
-            else if (cursor == 14 || (HCBscript.HoldingFlg && ClickObj.transform.GetChild(0).name == "ItemKoge"))
-            {
-                cursor = 23;
-                gomi_flg = true;
-            }
+            /* ・盛り付け場を見ているときに下を押した時,ゴミ箱を向く  */
+            //(HCBscript.HoldingFlg && ClickObj.transform.GetChild(0).gameObject.name.Contains("Burn"))
+                 if (cursor == 15)　cursor = 22;
+            else if (cursor == 14)　cursor = 23;
+            
             else
             {
                 // ストックを見ている時に↓を押したらストックの直前の場所を向く
@@ -317,10 +251,8 @@ public class Camera_3 : MonoBehaviour
                         cursor = 14;
                     }
 
-                    gomi_flg = true;
                 }
             }
-            MoveLight();
         }
 
         // ↑押したとき
@@ -355,8 +287,6 @@ public class Camera_3 : MonoBehaviour
                 }
                 stock_flg = true;
             }
-            gomi_flg = false;
-            MoveLight();
         }
 
     }//DownKeyCheck()
@@ -382,13 +312,11 @@ public class Camera_3 : MonoBehaviour
                     pot_flg = false;
                     cursor = 2;
                 }
-                MoveLight();
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg))
             {
                 button_flg = true;
                 if (Pcursor != 1 && Pcursor != 3) Pcursor += 1;
-                MoveLight();
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
             {
@@ -396,19 +324,16 @@ public class Camera_3 : MonoBehaviour
                 if (Pcursor != 0 && Pcursor != 1) Pcursor -= 2;
                 else
                 {
-                    gomi_flg = true;
                     potfast_flg = false;
                     pot_flg = false;
                     tmp_cursor = cursor;
                     cursor = 15;
                 }
-                MoveLight();
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
             {
                 button_flg = true;
                 if (Pcursor != 2 && Pcursor != 3) Pcursor += 2;
-                MoveLight();
             }
         }
 
@@ -423,7 +348,6 @@ public class Camera_3 : MonoBehaviour
             {
                 button_flg = true;
                 if (Pcursor != 5 && Pcursor != 7) Pcursor += 1;
-                MoveLight();
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) || (0 < Input.GetAxisRaw("XBox_Pad_H") && !button_flg))
             {
@@ -435,7 +359,6 @@ public class Camera_3 : MonoBehaviour
                     pot_flg = false;
                     cursor = 12;
                 }
-                MoveLight();
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
             {
@@ -443,19 +366,16 @@ public class Camera_3 : MonoBehaviour
                 if (Pcursor != 4 && Pcursor != 5) Pcursor -= 2;
                 else
                 {
-                    gomi_flg = true;
                     potfast_flg = false;
                     pot_flg = false;
                     tmp_cursor = cursor;
                     cursor = 14;
                 }
-                MoveLight();
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
             {
                 button_flg = true;
                 if (Pcursor != 6 && Pcursor != 7) Pcursor += 2;
-                MoveLight();
             }
 
         }
@@ -480,7 +400,6 @@ public class Camera_3 : MonoBehaviour
                 potfast_flg = false;
                 pot_flg = false;
             }
-            MoveLight();
         }
         else if (PotEX_flg && AutPSelect_flg &&
                 !HCBscript.HoldingFlg && HCBscript.TargetTag != "Item")
@@ -501,12 +420,10 @@ public class Camera_3 : MonoBehaviour
                 AutPSelect_flg = false;
                 PotEX_flg = false;
             }
-            MoveLight();
         }
         else
         {
             AutPSelect_flg = false;
-            MoveLight();
         }
 
     }//PotSelect()
@@ -549,6 +466,8 @@ public class Camera_3 : MonoBehaviour
             var aim = this.CP_List[3].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
+            gomi_flg = false;
+            pot_flg = false;
         }
         /* 揚げ物側ゴミ箱側 */
         if (cursor == 23)
@@ -556,6 +475,8 @@ public class Camera_3 : MonoBehaviour
             var aim = this.CP_List[4].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
+            gomi_flg = false;
+            pot_flg = false;
         }
 
 
@@ -573,7 +494,6 @@ public class Camera_3 : MonoBehaviour
                 cursor = 7;
                 tmp_cursor = 0;
                 potfast_flg = false;
-                gomi_flg = false;
                 stock_flg = false;
                 pot_flg = false;
 
@@ -587,9 +507,7 @@ public class Camera_3 : MonoBehaviour
                 //old_direction = HCBscript.direction;
                 cursor = 11;
                 tmp_cursor = 0;
-                gomi_flg = false;
             }
-            MoveLight();
         }
 
         // 右へカメラごとの移動
@@ -604,7 +522,6 @@ public class Camera_3 : MonoBehaviour
                 //old_direction = HCBscript.direction;
                 cursor = 3;
                 tmp_cursor = 0;
-                gomi_flg = false;
             }
             /* 揚げ物側～お客側へ */
             else if ((cursor >= 9 && cursor <= 13) || cursor == 14 || (cursor >= 16 && cursor <= 18) || cursor == 23)
@@ -616,27 +533,101 @@ public class Camera_3 : MonoBehaviour
                 cursor = 7;
                 tmp_cursor = 0;
                 potfast_flg = false;
-                gomi_flg = false;
                 stock_flg = false;
                 pot_flg = false;
             }
-            MoveLight();
         }
     }//MoveCamera()
 
-
-    void MoveLight()
+    void GomibakoSelect()
     {
-        //if (cursor == 1 || cursor == 13)
-        //{
-        //    Vector3 tmp = PCS_List[Pcursor].transform.position;
-        //    CursorObj.transform.position = new Vector3(tmp.x, tmp.y, tmp.z);
-        //}
-        //else
-        //{
-        //    Vector3 tmp = Cursor_List[cursor].transform.position;
-        //    CursorObj.transform.position = new Vector3(tmp.x, tmp.y, tmp.z);
-        //}
+        // 上下左右どこか押した時
+        if ((Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg)) ||
+           (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg)) ||
+           (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg)) ||
+           (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_Pad_V") && !button_flg)))
+        {
+            button_flg = true;
+            /* 天ぷら側 */
+            if (cursor >= 1 && cursor <= 5 || cursor == 15 || cursor >= 19 && cursor <= 21)
+            {
+                cursor = 22;
+                tmp_cursor = 3;
+            }
+            /* 揚げ物側 */
+            else if (cursor >= 9 && cursor <= 13 || cursor == 14 || cursor >= 16 && cursor <= 18)
+            {
+                cursor = 23;
+                tmp_cursor = 10;
+            }
+        }
     }
+
+    void AutoCursorSelect()
+    {
+        // ストックから物を取るときの自動選択
+        if (!HCBscript.HoldingFlg)
+        {
+            if (stock_flg && AutSelect_flg)
+            {
+                if (HCBscript.TargetTag != "Item")
+                {// その場に取れるものがなかった時
+                    if (cursor <= 21 && cursor >= 19)// 油もの側
+                    {
+                        if (cursor != 19) cursor -= 1;
+                        else // ストック全体に取れるものがなかった場合
+                        {
+                            cursor = 21;
+                            AutSelect_flg = false;
+                            StockEX_flg = false;
+                        }
+                    }
+                    else if (cursor <= 18 && cursor >= 16)// 揚げ物側
+                    {
+                        if (cursor != 16) cursor -= 1;
+                        else
+                        {
+                            cursor = 18;
+                            AutSelect_flg = false;
+                            StockEX_flg = false;
+                        }
+                    }
+                }
+                else AutSelect_flg = false;
+            }
+        }
+
+        // ストックする時空いてる場所を自動選択
+        if (HCBscript.HoldingFlg)
+        {
+            if (stock_flg && AutSelect_flg)
+            {
+                if (HCBscript.TargetTag != "Stock")
+                {
+                    if (cursor <= 21 && cursor >= 19)
+                    {
+                        if (cursor != 19) cursor -= 1;
+                        else
+                        {
+                            cursor = 21;
+                            AutSelect_flg = false;
+                        }
+                    }
+                    else if (cursor <= 18 && cursor >= 16)
+                    {
+                        if (cursor != 16) cursor -= 1;
+                        else
+                        {
+                            cursor = 18;
+                            AutSelect_flg = false;
+                        }
+                    }
+                }
+                else AutSelect_flg = false;
+            }
+        }
+
+    } //AutoCursorSelect()
+
 
 }
