@@ -590,9 +590,18 @@ public class Item_S : MonoBehaviour {
                 }
                 // ゴミ箱に当たると焦げになる
                 if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
-                if (other.gameObject.tag == "Bread powder") { //粉１回目
+                if (other.gameObject.tag == "Bread powder") { 
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");   //Resourceフォルダのプレハブを読み込む
                 }
+                //二度付け
+                if (FastOneflag) {
+                    if (other.gameObject.tag == "liquid") {
+                        Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
+                    }
+                }
+                print(AgeCount);
+                print(other.gameObject.tag);
+                FastOneflag = true;
                 break;
 
             case "Fried_K_Quail":

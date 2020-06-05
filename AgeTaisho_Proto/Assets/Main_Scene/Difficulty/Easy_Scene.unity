@@ -4496,7 +4496,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd1d0909c5453c46aabcd1cdfafca2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DontDestroyEnabled: 1
 --- !u!82 &1020218669
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9305,8 +9304,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.076864325, y: 0.035287112, z: 0.018832792}
-  m_Center: {x: -0.023552794, y: 0.0025754017, z: 0.008039242}
+  m_Size: {x: 0.076864354, y: 0.035287112, z: 0.035505585}
+  m_Center: {x: -0.023552798, y: 0.0025754017, z: 0.016375637}
 --- !u!1 &1764052373
 GameObject:
   m_ObjectHideFlags: 0
@@ -11818,8 +11817,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.08666596, y: 0.047637768, z: 0.031864654}
-  m_Center: {x: -0.019394662, y: -0.0044304305, z: 0.0030230698}
+  m_Size: {x: 0.08666597, y: 0.04763779, z: 0.047036912}
+  m_Center: {x: -0.01939467, y: -0.0044304314, z: 0.01060919}
 --- !u!4 &3769985109480197150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7725792687799094898, guid: 3810366521e0fea4f8ae4faca359b331,
