@@ -169,6 +169,7 @@ public class NotReturn_Script : MonoBehaviour {
             if (EatCount >= EatTime) {
                 EatCount = 0;
                 Eat = false;
+                effectflag = false;
             }
             //if (EatCount >= EatTime) GuestReturn();   //5秒たったら食べ終わり帰る
         }
@@ -331,8 +332,8 @@ public class NotReturn_Script : MonoBehaviour {
     /// </summary>
     //エフェクトを停止消去
     void End_Effect() {
-        Destroy(eff_Tabe, 3f);
-        Destroy(eff_Heart, 3f);
+        Destroy(eff_Tabe, EatTime);
+        Destroy(eff_Heart, EatTime);
         //二度読み防止
         effectflag = false;
     }

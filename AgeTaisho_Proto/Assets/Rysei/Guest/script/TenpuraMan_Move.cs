@@ -354,8 +354,8 @@ public class TenpuraMan_Move : MonoBehaviour {
     /// </summary>
     //エフェクトを停止消去
     void End_Effect() {
-        Destroy(eff_Tabe, 3f);
-        Destroy(eff_Heart, 3f);
+        Destroy(eff_Tabe, EatTime);
+        Destroy(eff_Heart, EatTime);
         //二度読み防止
         effectflag = false;
     }
