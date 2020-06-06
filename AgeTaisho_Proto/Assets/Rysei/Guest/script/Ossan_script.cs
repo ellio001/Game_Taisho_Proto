@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 public class Ossan_script : MonoBehaviour
 {
     //おっさんステータス---------------------------------
-    float EatTime = 1;          //食べ終わるまでの時間
-    float RowTime = 13;         //列に並んでいる時間
-    float SitTime = 23;         //席に座っている時間
+    float EatTime = 1f;          //食べ終わるまでの時間
+    float RowTime = 13f;         //列に並んでいる時間
+    float SitTime = 23f;         //席に座っている時間
     int Mistake = 5;            //間違えた時の時間の減量
 
     //-------------------------------------------------------
@@ -206,6 +206,7 @@ public class Ossan_script : MonoBehaviour
                 ReturnImage.enabled = false;      //Imageをfalseに
                 ReturnText.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
+                GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
                 OneDelete = true;
             }
             if (EatCount >= EatTime) GuestReturn();   //5秒たったら食べ終わり帰る
@@ -274,6 +275,8 @@ public class Ossan_script : MonoBehaviour
                     break;
             }
 
+            GameManager.instance.ItemName[MyNumber, 0] = ItemString;    //[席,1つめ]にアイテム名をいれる
+            //Debug.Log(MyNumber + ",0" + GameManager.instance.ItemName[MyNumber, 0]);
         }
         else if (Order == true)
         {
@@ -312,7 +315,11 @@ public class Ossan_script : MonoBehaviour
 
         if (OneProces == false)
         {
-            if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
+            if (Order == true)
+            {
+                GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
+                GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
+            }
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
             GuestNumber[MyNumber] = null;   //ジェネレータの箱？
             if (OneDelete == false)
@@ -404,8 +411,8 @@ public class Ossan_script : MonoBehaviour
     /// </summary>
     //エフェクトを停止消去
     void End_Effect() {
-        Destroy(eff_Tabe, 3f);
-        Destroy(eff_Heart, 3f);
+        Destroy(eff_Tabe, EatTime);
+        Destroy(eff_Heart, EatTime);
         //二度読み防止
         effectflag = false;
     }

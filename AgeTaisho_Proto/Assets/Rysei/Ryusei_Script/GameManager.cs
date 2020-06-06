@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] List<GameObject> Fried_Resources = new List<GameObject>();
     [SerializeField] List<GameObject> Dish_Resources = new List<GameObject>();
 
+    public string[,] ItemName = new string[3,3];        //客の席と注文をいれる二次元配列
     private void Awake()    //スタートよりも最初に呼ばれる
     {
         if (instance == null) {

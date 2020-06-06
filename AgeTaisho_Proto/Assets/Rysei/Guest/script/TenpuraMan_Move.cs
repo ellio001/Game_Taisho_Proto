@@ -187,6 +187,7 @@ public class TenpuraMan_Move : MonoBehaviour {
                 ReturnImage.enabled = false;      //Imageをfalseに
                 ReturnText.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
+                GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
                 OneDelete = true;
             }
             if (EatCount >= EatTime) GuestReturn();   //2秒たったら食べ終わり帰る
@@ -234,6 +235,8 @@ public class TenpuraMan_Move : MonoBehaviour {
                     break;
             }
 
+            GameManager.instance.ItemName[MyNumber, 0] = ItemString;    //[席,1つめ]をnullに
+            //Debug.Log(MyNumber + ",0" + GameManager.instance.ItemName[MyNumber, 0]);
         }
         else if (Order == true) {
             //帰る時間を加算
@@ -269,8 +272,12 @@ public class TenpuraMan_Move : MonoBehaviour {
             GuestNowPosition.x += GuestSpeed;   //-左に帰っていく
         }
         if (OneProces == false) {
-            if (Order == true) GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
-            Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
+            if (Order == true)
+            {
+                GuestNowPosition.y += 0.5f;  //席に着いたとき沈めた客を戻す
+                GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
+            }
+                Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
             GuestNumber[MyNumber] = null;   //ジェネレータの箱？
             if (OneDelete == false) {
                 Panel.SetActive(false);   //パネルを表示しない
@@ -354,8 +361,8 @@ public class TenpuraMan_Move : MonoBehaviour {
     /// </summary>
     //エフェクトを停止消去
     void End_Effect() {
-        Destroy(eff_Tabe, 3f);
-        Destroy(eff_Heart, 3f);
+        Destroy(eff_Tabe, EatTime);
+        Destroy(eff_Heart, EatTime);
         //二度読み防止
         effectflag = false;
     }
