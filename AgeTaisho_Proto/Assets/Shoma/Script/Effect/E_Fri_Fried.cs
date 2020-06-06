@@ -15,9 +15,14 @@ public class E_Fri_Fried : MonoBehaviour
     Quaternion rot;      // エフェクトの回転を入れる
     GameObject PFF; // 表示したエフェクトを入れる
 
+    GameObject HCB;
+    HandControllerButton_S2 HCBscript;
+
     void Start()
     {
-        
+        HCB = GameObject.Find("hand");
+        HCBscript = HCB.GetComponent<HandControllerButton_S2>();
+        HCBscript.AgeCount += 1;
     }
 
     void Update()
@@ -41,7 +46,6 @@ public class E_Fri_Fried : MonoBehaviour
             PowderParticle.playbackSpeed = 2f; // エフェクトの再生速度
             burst.count = 2f; // 泡が同時に出る数
             PowderParticle.emission.SetBurst(0, burst);
-           
             Fried_flg = true;
         }
     }
@@ -59,5 +63,6 @@ public class E_Fri_Fried : MonoBehaviour
     private void OnDestroy()
     {
         Destroy(GameObject.Find("E_Frying(Clone)"));
+        HCBscript.AgeCount -= 1;
     }
 }

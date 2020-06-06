@@ -17,6 +17,9 @@ TagManager:
   - Item
   - Seki
   - Yajirusi
+  - kona_Arrow
+  - tennabe_Arrow
+  - sara_Arrow
   layers:
   - Default
   - TransparentFX
