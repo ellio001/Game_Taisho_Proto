@@ -22,7 +22,6 @@ public class E_Fri_Fried : MonoBehaviour
     {
         HCB = GameObject.Find("hand");
         HCBscript = HCB.GetComponent<HandControllerButton_S2>();
-        HCBscript.AgeCount += 1;
     }
 
     void Update()
@@ -47,6 +46,9 @@ public class E_Fri_Fried : MonoBehaviour
             burst.count = 2f; // 泡が同時に出る数
             PowderParticle.emission.SetBurst(0, burst);
             Fried_flg = true;
+
+            HCBscript.AgeCount += 1;
+
         }
     }
 
@@ -60,9 +62,17 @@ public class E_Fri_Fried : MonoBehaviour
 
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name.Contains("Nabe"))
+        {
+            HCBscript.AgeCount -= 1;
+            Debug.Log("aaaaa");
+        }
+    }
+
     private void OnDestroy()
     {
         Destroy(GameObject.Find("E_Frying(Clone)"));
-        HCBscript.AgeCount -= 1;
     }
 }

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+
 
 public class HandControllerButton_S2 : MonoBehaviour {
     //このスクリプトはControllerMouseClickと共存しない
@@ -41,21 +43,33 @@ public class HandControllerButton_S2 : MonoBehaviour {
     [System.NonSerialized] public bool ItemPowder; // 粉系を持っているかの判定フラグ
     [System.NonSerialized] public bool MoveFlg = false; // スペースを押している間は移動できないようにするフラグ
 
-    /***** 矢印(アウトライン)関連 *****/
+    /*------- 矢印関連 -------*/
     [SerializeField] GameObject ArrowObj; // 矢印のObjを入れる変数
-    bool ArrowFlg = false;                // 矢印が今出ているかの確認用
     bool DestroyFlg = false;              // 矢印を消すか判断する用
     Vector3 tmp;                          // カーソルの座標を仮に保存
-    int ArrowTurn = 0;
-    int tmp_Turn = 0;
-    int Destroy_count = 0;
     [System.NonSerialized] public int AgeCount;//鍋でFrideになっている数をカウント（鍋に矢印を出すときに使う）
-    bool NabeArrow_flg = false; // true=鍋に矢印表示中
+    bool NabeArrow_flg = false; // true = 鍋に矢印表示中
+    GameObject GM;
+    GameManager GMscript;
+    int Shrimp_order;
+    int Fish_order;
+    int Potato_order;
+    bool Offer_flg = false;
+    bool tekitou_flg = false;
+
+    // 席について注文を記憶する=true, 席から離れる=false
+    bool Audience0_flg = false; // 0番目の席用
+    bool Audience1_flg = false; // 1番目の席用
+    bool Audience2_flg = false; // 2番目の席用
+    [SerializeField] List<GameObject> Arrow_List = new List<GameObject>(); // カメラの場所を入れるリスト
+
 
     //オーディオ
     AudioSource sounds;
 
     void Start() {
+        
+
         ClickObj = GameObject.Find("ControllerObjClick");
         HoldingFlg = false;
         ColliderFlag = 0;
@@ -74,9 +88,18 @@ public class HandControllerButton_S2 : MonoBehaviour {
         Pause = GameObject.Find("Main Camera");
         script = Pause.GetComponent<Pause_Botton_Script>();
 
+        GM = GameObject.Find("GameManager");
+        GMscript = GM.GetComponent<GameManager>();
+
         //オーディオの情報取得
         sounds = GetComponent<AudioSource>();
         Move_arrow();
+
+        // Arrow_Listの矢印を全て非表示にしている
+        for (int i = 0; i < Arrow_List.Count; i++)
+        {
+            Arrow_List[i].SetActive(false);
+        }
     }
 
     void Update() {
@@ -97,23 +120,73 @@ public class HandControllerButton_S2 : MonoBehaviour {
             if (Physics.Linecast(Player_V, direction, out hit)) {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
+                // 手に何か持っていたら矢印を出す
+                if(0< ClickObj2.gameObject.transform.childCount && !tekitou_flg)
+                    Arrow_Control();
+                else if(0 == ClickObj2.gameObject.transform.childCount && tekitou_flg)
+                    {
 
-                /*******************************************************************/
-                Debug.Log(NabeArrow_flg);
-                if (AgeCount >= 1 && !NabeArrow_flg)
+                        tekitou_flg = false;
+                        for (int i = 0; i < Arrow_List.Count-3; i++)
+                        {
+                            Arrow_List[i].SetActive(false);
+                        }
+                }
+
+                /*-----------------------------------------------------------------*/
+                Debug.Log("AgeCount = " + AgeCount);
+                //Debug.Log("[0,1] = " + GMscript.ItemName[0, 1]);
+                //Debug.Log("[0,2] = " + GMscript.ItemName[0, 2]);
+
+                if (AgeCount >= 1 && !Arrow_List[0].activeSelf) // 鍋にFrideが一つ以上あれば鍋上に矢印を出す
                 {
-                    tmp = C3_script.Cursor_List[1].transform.position;
-                    ArrowObj.tag = "tennabe_Arrow";
-                    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+                    Arrow_List[0].SetActive(true);
                     NabeArrow_flg = true;
                 }
-                else if (DestroyFlg)
-                {
-                    Destroy(GameObject.FindGameObjectWithTag("tennabe_Arrow"));
-                    DestroyFlg = false;
-                }
-                /*******************************************************************/
+                //else if (AgeCount == 0 && NabeArrow_flg)
+                //{
+                //    NabeArrow_flg = false;
+                //    Arrow_List[0].SetActive(false);
+                //}
 
+                //Debug.Log("エビ注文数："+ Shrimp_order);
+                //Debug.Log("さかな注文数："+ Fish_order);
+                //Debug.Log("イモ注文数："+ Potato_order);
+                // 左席の注文を確認
+                if (GMscript.ItemName[0, 0] != null && !Audience0_flg)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (GMscript.ItemName[0, i] == "Dish_T_Shrimp") Shrimp_order += 1;
+                        else if (GMscript.ItemName[0, i] == "Dish_T_Fish") Fish_order += 1;
+                        else if (GMscript.ItemName[0, i] == "Dish_T_Potato") Potato_order += 1;
+                    }
+
+                    Box_Arrow();
+                    Audience0_flg = true; // 客が席についた時一度だけ注文の内容を記憶するため
+                }
+                else if (GMscript.ItemName[0, 0] == null) Audience0_flg = false;
+                
+                // 盛り付けたものを持った時客がその商品を注文してるか確認
+                if(HoldingFlg && ClickObj2.GetChild(0).gameObject.name.Contains("Dish") && !Offer_flg)
+                {
+                    for (int i = 0; i < 3; i++){
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (GMscript.ItemName[i, j] == ClickObj2.GetChild(0).gameObject.name)
+                            {// 客が注文していたら客席向けの矢印をだして、注文している客席に矢印を出す
+                                tmp = C3_script.Cursor_List[16].transform.position;
+                                Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 1f, tmp.z), Quaternion.Euler(90, 0, 0));
+                                tmp = C3_script.Cursor_List[21].transform.position;
+                                Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 1f, tmp.z), Quaternion.Euler(90, 0, 0));
+                                Offer_flg = true;
+                                return;
+                            }
+
+                        }
+                    }
+                }
+            /*-----------------------------------------------------------------*/
 
                 TargetTag = hit.collider.gameObject.tag; // 今見ているOBJのタグを保存
                 TargetObj = hit.collider.gameObject; // 今見ているOBJを保存(C3のアウトラインのオンオフで使う)
@@ -129,7 +202,6 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 // フラグがたっていないとボタンが効かない
                 if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_joystick_B")) && C3_script.space_flg) {
                     MoveFlg = true;
-                    Arrow_Control();
 
                     // ストックにsaraを置いたときtrue(C3のストック自動選択で使う)
                     if (C3_script.stock_flg && ItemSara) C3_script.StockEX_flg = true;
@@ -306,6 +378,14 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 }
             }
 
+            if((Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("XBox_joystick_B")) && !HoldingFlg)
+            {
+                // 注文のBoxの上に矢印を出す
+                //Debug.Log("↓↓↓");
+                Offer_flg = false;
+                Box_Arrow();
+            }
+
         }
     }
 
@@ -321,49 +401,106 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
     void Arrow_Control()
     {
-        // 天ぷら粉に矢印
-        if(!HoldingFlg && TargetTag == "Box")
+        tekitou_flg = true;
+
+        //天ぷら粉に矢印
+        if (ClickObj2.GetChild(0).gameObject.name.Contains("Item"))
         {
-            tmp = C3_script.Cursor_List[2].transform.position;
-            ArrowObj.tag = "kona_Arrow";
-            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
-        }
-        // 天ぷら鍋に矢印
-        else if (HoldingFlg && ClickObj2.GetChild(0).gameObject.name.Contains("Item")&& TargetTag == "kona")
-        {
-            Destroy(GameObject.FindGameObjectWithTag("kona_Arrow"));
-            tmp = C3_script.Cursor_List[1].transform.position;
-            if (!NabeArrow_flg)
+            for (int i = 0; i < Arrow_List.Count-3; i++)
             {
-                NabeArrow_flg = true;
-                ArrowObj.tag = "tennabe_Arrow";
-                Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+                Arrow_List[i].SetActive(false);
             }
+            Arrow_List[1].SetActive(true);
+            //tekitou_flg = true;
         }
-        // Powderを鍋に入れると鍋の矢印を消去
-        else if(HoldingFlg && ClickObj2.GetChild(0).gameObject.name.Contains("Powder") && TargetTag == "tenpuranabe")
+        //鍋に矢印
+        if (ClickObj2.GetChild(0).gameObject.name.Contains("Powder"))
         {
-            if (AgeCount == 0)
+            for (int i = 0; i < Arrow_List.Count - 3; i++)
             {
-                Destroy(GameObject.FindGameObjectWithTag("tennabe_Arrow"));
-                NabeArrow_flg = false;
+                Arrow_List[i].SetActive(false);
             }
+            Arrow_List[0].SetActive(true);
+            //tekitou_flg = true;
         }
-        // 鍋からFriedを取るとSaraに矢印
-        else if(!HoldingFlg && TargetObj.name.Contains("Fried"))
+        //皿に矢印
+        if (ClickObj2.GetChild(0).gameObject.name.Contains("Fried"))
         {
-            if (AgeCount == 1) DestroyFlg = true;
-            tmp = C3_script.Cursor_List[15].transform.position;
-            ArrowObj.tag = "sara_Arrow";
-            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+            for (int i = 0; i < Arrow_List.Count - 3; i++)
+            {
+                Arrow_List[i].SetActive(false);
+            }
+            Arrow_List[2].SetActive(true);
+            //tekitou_flg = true;
         }
-        else if (HoldingFlg && ClickObj2.GetChild(0).gameObject.name.Contains("Fried") && TargetTag == "Sara")
-        {
-            if (AgeCount == 1) NabeArrow_flg = false;
-            Destroy(GameObject.FindGameObjectWithTag("sara_Arrow"));
-        }
+        //// 天ぷら粉に矢印
+        //if(!HoldingFlg && TargetTag == "Box")
+        //{
+        //    Destroy(GameObject.FindGameObjectWithTag("box_Arrow"));
+        //    tmp = C3_script.Cursor_List[2].transform.position;
+        //    ArrowObj.tag = "kona_Arrow";
+        //    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+        //}
+        //// 天ぷら鍋に矢印
+        //else if (HoldingFlg && ClickObj2.GetChild(0).gameObject.name.Contains("Item")&& TargetTag == "kona")
+        //{
+        //    Destroy(GameObject.FindGameObjectWithTag("kona_Arrow"));
+        //    tmp = C3_script.Cursor_List[1].transform.position;
+        //    if (!NabeArrow_flg)
+        //    {
+        //        NabeArrow_flg = true;
+        //        ArrowObj.tag = "tennabe_Arrow";
+        //        Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+        //    }
+        //}
+        //// Powderを鍋に入れると鍋の矢印を消す
+        //else if(HoldingFlg && ClickObj2.GetChild(0).gameObject.name.Contains("Powder") && TargetTag == "tenpuranabe")
+        //{
+        //    if (AgeCount == 0)
+        //    {
+        //        Destroy(GameObject.FindGameObjectWithTag("tennabe_Arrow"));
+        //        NabeArrow_flg = false;
+        //    }
+        //}
+        //// 鍋からFriedを取るとSaraに矢印
+        //else if(!HoldingFlg && TargetObj.name.Contains("Fried"))
+        //{
+        //    if (AgeCount == 1) DestroyFlg = true;
+        //    tmp = C3_script.Cursor_List[15].transform.position;
+        //    ArrowObj.tag = "sara_Arrow";
+        //    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+        //}
+        //// Friedを盛り付けると皿上の矢印を消す
+        //else if (HoldingFlg && ClickObj2.GetChild(0).gameObject.name.Contains("Fried") && TargetTag == "Sara")
+        //{
+        //    if (AgeCount == 1) NabeArrow_flg = false;
+        //    Destroy(GameObject.FindGameObjectWithTag("sara_Arrow"));
+        //}
 
 
+    }
+
+    // Boxの上に矢印を出させる処理
+    void Box_Arrow()
+    {
+        if (Shrimp_order != 0)
+        {
+            tmp = C3_script.Cursor_List[3].transform.position;
+            ArrowObj.tag = "box_Arrow";
+            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+        }
+        if (Fish_order != 0)
+        {
+            tmp = C3_script.Cursor_List[4].transform.position;
+            ArrowObj.tag = "box_Arrow";
+            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+        }
+        if (Potato_order != 0)
+        {
+            tmp = C3_script.Cursor_List[5].transform.position;
+            ArrowObj.tag = "box_Arrow";
+            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+        }
     }
 
     void Move_arrow()
