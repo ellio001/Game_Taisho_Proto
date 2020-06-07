@@ -25,7 +25,7 @@ public class GuestGenerator : MonoBehaviour
 
     void Start()
     {
-        GuestSpawn = 15; //最初の客生成の間隔　数値/秒
+        GuestSpawn = 60; //最初の客生成の間隔　数値/秒
         FirstGuest = false;
         GM = GameObject.Find("GameManager");
         script = GM.GetComponent<GameManager>();

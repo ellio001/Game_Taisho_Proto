@@ -10,15 +10,15 @@ public class SideMove_Arrow : MonoBehaviour
 
     void Start()
     {
-        nowPosi = this.transform.position.y;
+        nowPosi = this.transform.position.z;
     }
 
     void Update()
     {
         // その場で上下運動させている
-        transform.position = new Vector3(transform.position.x,
-            nowPosi + Mathf.PingPong(Time.time / 2, UpDownSpeed), transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y
+            , nowPosi + Mathf.PingPong(Time.time / 2, UpDownSpeed));
         // その場で回転させている
-        transform.Rotate(new Vector3(RotationSpeed, 0, 0) * Time.deltaTime, Space.World);
+        transform.Rotate(new Vector3(0, 0, RotationSpeed) * Time.deltaTime, Space.World);
     }
 }
