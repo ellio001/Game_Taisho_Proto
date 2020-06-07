@@ -86,7 +86,7 @@ public class TenpuraMan_Move : MonoBehaviour {
     int ShrimpCount = 0;
     int FishCount = 0;
     int PotatoCount = 0;
-        ;
+
     void Start() {
         this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
