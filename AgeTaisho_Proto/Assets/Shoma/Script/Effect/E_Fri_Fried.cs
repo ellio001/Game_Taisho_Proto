@@ -26,7 +26,6 @@ public class E_Fri_Fried : MonoBehaviour
 
     void Update()
     {
-
     }
 
     // 当たった瞬間 ------------------------------------------
@@ -62,17 +61,20 @@ public class E_Fri_Fried : MonoBehaviour
 
     }
 
+    // 出た瞬間 ------------------------------------------
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name.Contains("Nabe"))
-        {
+        if (other.gameObject.name.Contains("Nabe")){
+            if (this.gameObject.name.Contains("Burn"))
+                HCBscript.AgeCount -= 1;
             HCBscript.AgeCount -= 1;
-            Debug.Log("aaaaa");
+
         }
     }
 
     private void OnDestroy()
     {
+
         Destroy(GameObject.Find("E_Frying(Clone)"));
     }
 }

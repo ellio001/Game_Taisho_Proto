@@ -531,6 +531,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fish_Arrow
       objectReference: {fileID: 0}
+    - target: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
+        type: 3}
+      propertyPath: m_TagString
+      value: Yajirusi
+      objectReference: {fileID: 0}
     - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2443,6 +2448,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kona_Arrow
       objectReference: {fileID: 0}
+    - target: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
+        type: 3}
+      propertyPath: m_TagString
+      value: Yajirusi
+      objectReference: {fileID: 0}
     - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2616,6 +2626,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shrimp_Arrow
       objectReference: {fileID: 0}
+    - target: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
+        type: 3}
+      propertyPath: m_TagString
+      value: Yajirusi
+      objectReference: {fileID: 0}
     - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2785,6 +2800,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Potato_Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
+        type: 3}
+      propertyPath: m_TagString
+      value: Yajirusi
       objectReference: {fileID: 0}
     - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
         type: 3}
@@ -3617,6 +3637,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Seki2_Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
+        type: 3}
+      propertyPath: m_TagString
+      value: Yajirusi
       objectReference: {fileID: 0}
     - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
         type: 3}
@@ -4707,6 +4732,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Seki1_Arrow
       objectReference: {fileID: 0}
+    - target: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
+        type: 3}
+      propertyPath: m_TagString
+      value: Yajirusi
+      objectReference: {fileID: 0}
     - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5384,6 +5414,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Nabe_Arrow
       objectReference: {fileID: 0}
+    - target: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
+        type: 3}
+      propertyPath: m_TagString
+      value: Yajirusi
+      objectReference: {fileID: 0}
     - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5840,6 +5875,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Seki0_Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
+        type: 3}
+      propertyPath: m_TagString
+      value: Yajirusi
       objectReference: {fileID: 0}
     - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
         type: 3}
@@ -6556,6 +6596,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1422522772}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1160952680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160952678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8562a95e0631b784d9a632776ce95d29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1174053853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6567,6 +6619,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sara_Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
+        type: 3}
+      propertyPath: m_TagString
+      value: Yajirusi
       objectReference: {fileID: 0}
     - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
         type: 3}
@@ -7925,7 +7982,12 @@ PrefabInstance:
     - target: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
         type: 3}
       propertyPath: m_Name
-      value: Seki_Arrow
+      value: Side_Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 4312253840589014741, guid: 6291cb27c65f63e48a704359c96d2400,
+        type: 3}
+      propertyPath: m_TagString
+      value: Yajirusi
       objectReference: {fileID: 0}
     - target: {fileID: 4312253840588593909, guid: 6291cb27c65f63e48a704359c96d2400,
         type: 3}
@@ -7982,7 +8044,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114864611917786614, guid: 6291cb27c65f63e48a704359c96d2400, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6291cb27c65f63e48a704359c96d2400, type: 3}
 --- !u!1 &1446721345
 GameObject:

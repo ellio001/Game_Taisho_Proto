@@ -168,24 +168,24 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 else if (GMscript.ItemName[0, 0] == null) Audience0_flg = false;
                 
                 // 盛り付けたものを持った時客がその商品を注文してるか確認
-                if(HoldingFlg && ClickObj2.GetChild(0).gameObject.name.Contains("Dish") && !Offer_flg)
-                {
-                    for (int i = 0; i < 3; i++){
-                        for (int j = 0; j < 3; j++)
-                        {
-                            if (GMscript.ItemName[i, j] == ClickObj2.GetChild(0).gameObject.name)
-                            {// 客が注文していたら客席向けの矢印をだして、注文している客席に矢印を出す
-                                tmp = C3_script.Cursor_List[16].transform.position;
-                                Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 1f, tmp.z), Quaternion.Euler(90, 0, 0));
-                                tmp = C3_script.Cursor_List[21].transform.position;
-                                Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 1f, tmp.z), Quaternion.Euler(90, 0, 0));
-                                Offer_flg = true;
-                                return;
-                            }
+                //if(HoldingFlg && ClickObj2.GetChild(0).gameObject.name.Contains("Dish") && !Offer_flg)
+                //{
+                //    for (int i = 0; i < 3; i++){
+                //        for (int j = 0; j < 3; j++)
+                //        {
+                //            if (GMscript.ItemName[i, j] == ClickObj2.GetChild(0).gameObject.name)
+                //            {// 客が注文していたら客席向けの矢印をだして、注文している客席に矢印を出す
+                //                tmp = C3_script.Cursor_List[16].transform.position;
+                //                Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 1f, tmp.z), Quaternion.Euler(90, 0, 0));
+                //                tmp = C3_script.Cursor_List[21].transform.position;
+                //                Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 1f, tmp.z), Quaternion.Euler(90, 0, 0));
+                //                Offer_flg = true;
+                //                return;
+                //            }
 
-                        }
-                    }
-                }
+                //        }
+                //    }
+                //}
             /*-----------------------------------------------------------------*/
 
                 TargetTag = hit.collider.gameObject.tag; // 今見ているOBJのタグを保存
@@ -284,10 +284,12 @@ public class HandControllerButton_S2 : MonoBehaviour {
                         }
 
                     }
-                    else if ((ItemSara && (hit.collider.gameObject.tag == "Stock" || hit.collider.gameObject.tag == "Seki" || hit.collider.gameObject.tag == "Garbage can")) ||
-                            (!ItemSara && hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" && hit.collider.gameObject.tag != "Stock"))
+                    else if ((ClickObj2.GetChild(0).gameObject.name.Contains("Burn") && hit.collider.gameObject.tag == "Garbage can") ||
+                            (ItemSara && (hit.collider.gameObject.tag == "Stock" || hit.collider.gameObject.tag == "Seki" || hit.collider.gameObject.tag == "Garbage can")) ||
+                            ((!ItemSara && !ClickObj2.GetChild(0).gameObject.name.Contains("Burn")) && hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" && hit.collider.gameObject.tag != "Stock")) 
                     // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
                     {
+                        Debug.Log("きたよよよｙ");
                         if (C3_script.pot_flg) C3_script.PotEX_flg = true;
 
                         ItemPowder = false; // 粉をつけたものを鍋に置いたときにFalse
@@ -322,7 +324,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                 //サウンド再生
                                 sounds.Play();
                                 break;
-                            case "Item_Fish_v2":
+                            case "Item_Fish":
                                 if (hit.collider.gameObject.name.Contains("Fish"))
                                     return_flg = true;
                                 //サウンド再生
@@ -433,6 +435,24 @@ public class HandControllerButton_S2 : MonoBehaviour {
             Arrow_List[2].SetActive(true);
             //tekitou_flg = true;
         }
+
+        //皿に矢印
+        if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[0, 0])
+        {
+            for (int i = 0; i < Arrow_List.Count - 3; i++)
+            {
+                Arrow_List[i].SetActive(false);
+            }
+            Arrow_List[3].SetActive(true);
+        }
+
+        if (ClickObj2.GetChild(0).gameObject.name.Contains("Burn") )
+        {
+            for (int i = 0; i < Arrow_List.Count - 3; i++)
+            {
+                Arrow_List[i].SetActive(false);
+            }
+        }
         //// 天ぷら粉に矢印
         //if(!HoldingFlg && TargetTag == "Box")
         //{
@@ -483,24 +503,24 @@ public class HandControllerButton_S2 : MonoBehaviour {
     // Boxの上に矢印を出させる処理
     void Box_Arrow()
     {
-        if (Shrimp_order != 0)
-        {
-            tmp = C3_script.Cursor_List[3].transform.position;
-            ArrowObj.tag = "box_Arrow";
-            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
-        }
-        if (Fish_order != 0)
-        {
-            tmp = C3_script.Cursor_List[4].transform.position;
-            ArrowObj.tag = "box_Arrow";
-            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
-        }
-        if (Potato_order != 0)
-        {
-            tmp = C3_script.Cursor_List[5].transform.position;
-            ArrowObj.tag = "box_Arrow";
-            Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
-        }
+        //if (Shrimp_order != 0)
+        //{
+        //    tmp = C3_script.Cursor_List[3].transform.position;
+        //    ArrowObj.tag = "box_Arrow";
+        //    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+        //}
+        //if (Fish_order != 0)
+        //{
+        //    tmp = C3_script.Cursor_List[4].transform.position;
+        //    ArrowObj.tag = "box_Arrow";
+        //    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+        //}
+        //if (Potato_order != 0)
+        //{
+        //    tmp = C3_script.Cursor_List[5].transform.position;
+        //    ArrowObj.tag = "box_Arrow";
+        //    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
+        //}
     }
 
     void Move_arrow()
