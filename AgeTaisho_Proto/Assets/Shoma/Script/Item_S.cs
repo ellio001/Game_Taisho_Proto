@@ -50,6 +50,11 @@ public class Item_S : MonoBehaviour {
     // 表示したエフェクトを入れる
     GameObject eff_Burn;
 
+    //ハンドコントローラをいれる
+    GameObject H_Controller;
+    //ハンドコントローラのスクリプトをいれる
+    HandControllerButton_S2 H_Controller_Script;
+
     // Use this for initialization
     void Start() {
         gameobject = this.gameObject;   //このオブジェクトの情報をいれる
@@ -80,6 +85,9 @@ public class Item_S : MonoBehaviour {
 
         //オーディオの情報取得
         sounds = GetComponents<AudioSource>();
+
+        H_Controller = GameObject.Find("hand");
+        H_Controller_Script = H_Controller.GetComponent<HandControllerButton_S2>();
     }
 
     // Update is called once per frame
@@ -160,6 +168,7 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");//鍋
                 }
                 if (other.gameObject.tag == "tenpuranabe") {
+                    H_Controller_Script.AgeCount += 1;
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");//鍋
                 }
                 if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");//ゴミ場
@@ -261,6 +270,7 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//鍋
                 }
                 if (other.gameObject.tag == "tenpuranabe") {
+                    H_Controller_Script.AgeCount += 1;
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//鍋
                 }
                 if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//ゴミ場
@@ -362,6 +372,7 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");//鍋
                 }
                 if (other.gameObject.tag == "tenpuranabe") {
+                    H_Controller_Script.AgeCount += 1;
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");//鍋
                 }
                 if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");//ゴミ場
