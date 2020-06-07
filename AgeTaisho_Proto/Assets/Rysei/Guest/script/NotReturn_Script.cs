@@ -71,6 +71,15 @@ public class NotReturn_Script : MonoBehaviour {
     //オーディオ
     AudioSource[] sounds;
 
+    //ハンドコントローラをいれる
+    GameObject H_Controller;
+    //ハンドコントローラのスクリプトをいれる
+    HandControllerButton_S2 H_Controller_Script;
+
+    int ShrimpCount = 0;
+    int FishCount = 0;
+    int PotatoCount = 0;
+
     void Start() {
         this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
@@ -106,6 +115,10 @@ public class NotReturn_Script : MonoBehaviour {
 
         //オーディオの情報取得
         sounds = GetComponents<AudioSource>();
+
+        //ハンドとそのスクリプトを取得
+        H_Controller = GameObject.Find("hand");
+        H_Controller_Script = H_Controller.GetComponent<HandControllerButton_S2>();
     }
 
     // Update is called once per frame
@@ -209,9 +222,10 @@ public class NotReturn_Script : MonoBehaviour {
             GameManager.instance.ItemName[MyNumber, 0] = ItemString[0];    //[席,1つめ]をnullに
             GameManager.instance.ItemName[MyNumber, 1] = ItemString[1];    //[席,1つめ]をnullに
             GameManager.instance.ItemName[MyNumber, 2] = ItemString[2];    //[席,1つめ]をnullに
-            //Debug.Log(MyNumber + ",0" + GameManager.instance.ItemName[MyNumber, 0]);
-            //Debug.Log(MyNumber + ",1" + GameManager.instance.ItemName[MyNumber, 1]);
-            //Debug.Log(MyNumber + ",2" + GameManager.instance.ItemName[MyNumber, 2]);
+
+            ShrimpCount = 1;
+            FishCount = 1;
+            PotatoCount = 1;
 
         }
         else if (Order == true) {
@@ -264,6 +278,7 @@ public class NotReturn_Script : MonoBehaviour {
             ItemString[0] = null;
             GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
             OrderItems[0].SetActive(false);   //席につくまではオーダーを表示しない
+            H_Controller_Script.Shrimp_order -= ShrimpCount;
             Destroy(SideItems[0]);
             Destroy(SideItems[1]);
         }
@@ -274,6 +289,7 @@ public class NotReturn_Script : MonoBehaviour {
             ItemString[1] = null;
             GameManager.instance.ItemName[MyNumber, 1] = null;    //[席,1つめ]をnullに
             OrderItems[1].SetActive(false);   //席につくまではオーダーを表示しない
+            H_Controller_Script.Fish_order -= FishCount;
             Destroy(SideItems[2]);
             Destroy(SideItems[3]);
         }
@@ -284,6 +300,7 @@ public class NotReturn_Script : MonoBehaviour {
             ItemString[2] = null;
             GameManager.instance.ItemName[MyNumber, 2] = null;    //[席,1つめ]をnullに
             OrderItems[2].SetActive(false);   //席につくまではオーダーを表示しない
+            H_Controller_Script.Potato_order -= PotatoCount;
             Destroy(SideItems[4]);
             Destroy(SideItems[5]);
         }
