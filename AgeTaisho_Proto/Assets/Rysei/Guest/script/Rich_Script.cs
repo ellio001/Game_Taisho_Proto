@@ -81,6 +81,15 @@ public class Rich_Script : MonoBehaviour
     //オーディオ
     AudioSource[] sounds;
 
+    //ハンドコントローラをいれる
+    GameObject H_Controller;
+    //ハンドコントローラのスクリプトをいれる
+    HandControllerButton_S2 H_Controller_Script;
+
+    int ShrimpCount = 0;
+    int FishCount = 0;
+    int PotatoCount = 0;
+
     void Start()
     {
         this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -121,6 +130,11 @@ public class Rich_Script : MonoBehaviour
 
         //オーディオの情報取得
         sounds = GetComponents<AudioSource>();
+
+        //ハンドとそのスクリプトを取得
+        H_Controller = GameObject.Find("hand");
+        H_Controller_Script = H_Controller.GetComponent<HandControllerButton_S2>();
+
     }
 
     // Update is called once per frame
@@ -197,6 +211,9 @@ public class Rich_Script : MonoBehaviour
                 ReturnText.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
                 GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
+                H_Controller_Script.Shrimp_order -= ShrimpCount;
+                H_Controller_Script.Fish_order -= FishCount;
+                H_Controller_Script.Potato_order -= PotatoCount;
                 OneDelete = true;
             }
             if (EatCount >= EatTime) GuestReturn();   //5秒たったら食べ終わり帰る
@@ -223,6 +240,7 @@ public class Rich_Script : MonoBehaviour
                     SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
                     SideItems[0].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                     SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    ShrimpCount = 1;
                     break;
                 case "Normal_Scene":
                     ItemScore = 180*ScorePush;
@@ -303,6 +321,9 @@ public class Rich_Script : MonoBehaviour
                 ReturnImage.enabled = false;      //Imageをfalseに
                 ReturnText.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
+                H_Controller_Script.Shrimp_order -= ShrimpCount;
+                H_Controller_Script.Fish_order -= FishCount;
+                H_Controller_Script.Potato_order -= PotatoCount;
                 OneDelete = true;
             }
             OneProces = true;   //この処理が2回目以降通らないようにする
