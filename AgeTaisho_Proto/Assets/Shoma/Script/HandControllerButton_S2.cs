@@ -51,9 +51,9 @@ public class HandControllerButton_S2 : MonoBehaviour {
     bool NabeArrow_flg = false; // true = 鍋に矢印表示中
     GameObject GM;
     GameManager GMscript;
-    int Shrimp_order;
-    int Fish_order;
-    int Potato_order;
+    [System.NonSerialized] public int Shrimp_order;
+    [System.NonSerialized] public int Fish_order;
+    [System.NonSerialized] public int Potato_order;
     bool Offer_flg = false;
     bool tekitou_flg = false;
     bool DEBU_flg = false; // デブが席に着いくとtrue
@@ -95,7 +95,6 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
         //オーディオの情報取得
         sounds = GetComponent<AudioSource>();
-        Move_arrow();
 
         // Arrow_Listの矢印を全て非表示にしている
         for (int i = 0; i < Arrow_List.Count; i++)
@@ -129,7 +128,6 @@ public class HandControllerButton_S2 : MonoBehaviour {
             if (Physics.Linecast(Player_V, direction, out hit)) {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
-                Debug.Log("添付＝ " + TmpFood);
                 // 手に何か持っていたら矢印を出す
                 if(0< ClickObj2.gameObject.transform.childCount && !tekitou_flg)
                     Arrow_Control();
@@ -147,7 +145,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 }
 
                 /*-----------------------------------------------------------------*/
-                Debug.Log("AgeCount = " + AgeCount);
+                //Debug.Log("AgeCount = " + AgeCount);
                 //Debug.Log("[0,1] = " + GMscript.ItemName[0, 1]);
                 //Debug.Log("[0,2] = " + GMscript.ItemName[0, 2]);
 
@@ -455,14 +453,6 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 }
             }
 
-            if((Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("XBox_joystick_B")) && !HoldingFlg)
-            {
-                // 注文のBoxの上に矢印を出す
-                //Debug.Log("↓↓↓");
-                Offer_flg = false;
-                Box_Arrow();
-            }
-
         }
     }
 
@@ -593,75 +583,9 @@ public class HandControllerButton_S2 : MonoBehaviour {
         if (Potato_order >= 1 && !Arrow_List[9].activeSelf) // イモが一つ以上注文されているとBox上に矢印を出す
             Arrow_List[9].SetActive(true);
         
-        //if (Shrimp_order != 0)
-        //{
-        //    tmp = C3_script.Cursor_List[3].transform.position;
-        //    ArrowObj.tag = "box_Arrow";
-        //    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
-        //}
-        //if (Fish_order != 0)
-        //{
-        //    tmp = C3_script.Cursor_List[4].transform.position;
-        //    ArrowObj.tag = "box_Arrow";
-        //    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
-        //}
-        //if (Potato_order != 0)
-        //{
-        //    tmp = C3_script.Cursor_List[5].transform.position;
-        //    ArrowObj.tag = "box_Arrow";
-        //    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
-        //}
     }
 
-    void Move_arrow()
-    {
-        //ArrowTurn += 1;
-        //switch (ArrowTurn)
-        //{
-        //    case 1:
-        //        tmp = C3_script.Cursor_List[3].transform.position;
-        //        Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
-        //        tmp = C3_script.Cursor_List[4].transform.position;
-        //        Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
-        //        tmp = C3_script.Cursor_List[5].transform.position;
-        //        break;
-        //    case 2:
-        //        tmp = C3_script.Cursor_List[2].transform.position;
-        //        Destroy_count = 0;
-        //        break;
-        //    case 3:
-        //        Destroy(GameObject.Find("Yajirusi(Clone)"));
-        //        tmp = C3_script.Cursor_List[1].transform.position;
-        //        break;
-        //    case 4:
-        //        Destroy(GameObject.Find("Yajirusi(Clone)"));
-        //        break;
-        //    case 5:
-        //        tmp = C3_script.Cursor_List[1].transform.position;
-        //        break;
-        //    case 6:
-        //        Destroy(GameObject.Find("Yajirusi(Clone)"));
-        //        tmp = C3_script.Cursor_List[1].transform.position;
-        //        break;
-        //    case 7:
-        //        Destroy(GameObject.Find("Yajirusi(Clone)"));
-        //        tmp = C3_script.Cursor_List[15].transform.position;
-        //        break;
-        //}
-        //if(ArrowTurn != 4)
-        //Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
 
-        //tmp_Turn = ArrowTurn;
-
-
-
-        //else if (DestroyFlg || ArrowTurn == 9)
-        //{
-        //    Destroy(GameObject.Find("Yajirusi(Clone)"));
-        //    DestroyFlg = false;
-        //    ArrowFlg = false;
-        //}
-    }
 }
 //using UnityEngine;
 
