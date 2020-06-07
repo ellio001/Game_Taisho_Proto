@@ -503,6 +503,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
             Arrow_List[3].SetActive(true);
         }
 
+        // 焦げを持っているときは矢印を全部消す（Box以外）
         if (ClickObj2.GetChild(0).gameObject.name.Contains("Burn") )
         {
             for (int i = 0; i < Arrow_List.Count - 3; i++)
@@ -510,50 +511,18 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 Arrow_List[i].SetActive(false);
             }
         }
-        //// 天ぷら粉に矢印
-        //if(!HoldingFlg && TargetTag == "Box")
-        //{
-        //    Destroy(GameObject.FindGameObjectWithTag("box_Arrow"));
-        //    tmp = C3_script.Cursor_List[2].transform.position;
-        //    ArrowObj.tag = "kona_Arrow";
-        //    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
-        //}
-        //// 天ぷら鍋に矢印
-        //else if (HoldingFlg && ClickObj2.GetChild(0).gameObject.name.Contains("Item")&& TargetTag == "kona")
-        //{
-        //    Destroy(GameObject.FindGameObjectWithTag("kona_Arrow"));
-        //    tmp = C3_script.Cursor_List[1].transform.position;
-        //    if (!NabeArrow_flg)
-        //    {
-        //        NabeArrow_flg = true;
-        //        ArrowObj.tag = "tennabe_Arrow";
-        //        Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
-        //    }
-        //}
-        //// Powderを鍋に入れると鍋の矢印を消す
-        //else if(HoldingFlg && ClickObj2.GetChild(0).gameObject.name.Contains("Powder") && TargetTag == "tenpuranabe")
-        //{
-        //    if (AgeCount == 0)
-        //    {
-        //        Destroy(GameObject.FindGameObjectWithTag("tennabe_Arrow"));
-        //        NabeArrow_flg = false;
-        //    }
-        //}
-        //// 鍋からFriedを取るとSaraに矢印
-        //else if(!HoldingFlg && TargetObj.name.Contains("Fried"))
-        //{
-        //    if (AgeCount == 1) DestroyFlg = true;
-        //    tmp = C3_script.Cursor_List[15].transform.position;
-        //    ArrowObj.tag = "sara_Arrow";
-        //    Instantiate(ArrowObj, tmp = new Vector3(tmp.x, tmp.y + 0.2f, tmp.z), Quaternion.identity);
-        //}
-        //// Friedを盛り付けると皿上の矢印を消す
-        //else if (HoldingFlg && ClickObj2.GetChild(0).gameObject.name.Contains("Fried") && TargetTag == "Sara")
-        //{
-        //    if (AgeCount == 1) NabeArrow_flg = false;
-        //    Destroy(GameObject.FindGameObjectWithTag("sara_Arrow"));
-        //}
 
+        // 今持っているものを注文している客席に矢印を出す
+        if (ClickObj2.GetChild(0).gameObject.name.Contains("Dish"))
+        {
+            for(int i = 0; i < 3; i++){
+                for (int j = 0; j < 3; j++)
+                {
+                    if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[i, j])
+                        Arrow_List[i+4].SetActive(true);
+                }
+            }          
+        }
 
     }
 
