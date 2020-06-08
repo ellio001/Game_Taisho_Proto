@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 9088462835995172287}
   - component: {fileID: 7430673588713152632}
   - component: {fileID: 626195162719191269}
+  - component: {fileID: 114464612350480542}
+  - component: {fileID: 114945684198528140}
   m_Layer: 0
   m_Name: Powder_Quail4
   m_TagString: Item
@@ -124,6 +126,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 5885129795035678075}
   canvas: {fileID: 2278534984950749648}
+--- !u!114 &114464612350480542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489630624014092594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 065113436d4e4034cadc6aa6eacad363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114945684198528140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489630624014092594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8a5a4990737b54090625d5e0d563e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1994681231376184717
 GameObject:
   m_ObjectHideFlags: 0

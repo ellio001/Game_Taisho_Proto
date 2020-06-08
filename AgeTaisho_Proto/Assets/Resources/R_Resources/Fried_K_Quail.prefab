@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 5215462737542400096}
   - component: {fileID: 6139704368492390931}
   - component: {fileID: 23958553873802557}
+  - component: {fileID: 114029681904333072}
   m_Layer: 0
   m_Name: Fried_K_Quail
   m_TagString: Item
@@ -380,6 +381,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 8993104566527476516}
   canvas: {fileID: 9096451322913410941}
+--- !u!114 &114029681904333072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5446347406067225191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cda9cfe639b7c8409abf08830dbfb52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6578688566067431285
 GameObject:
   m_ObjectHideFlags: 0
