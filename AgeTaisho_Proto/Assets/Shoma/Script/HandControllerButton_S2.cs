@@ -130,7 +130,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
             if (Physics.Linecast(Player_V, direction, out hit)) {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
-                /*---------------------------------------------------------------------------------------------------------------------------------------*/
+                /*----------------------------------------------<矢印の処理>------------------------------------------------------------------------------------*/
                 if (EasyScene)
                 {
                     // 手に何か持っていたら矢印を出す
@@ -332,8 +332,6 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
                             if (hit.collider.gameObject.name.Contains("Dish"))
                                 ItemSara = hit.collider.gameObject.name.Contains("Dish");
-                            else if (hit.collider.gameObject.name.Contains("Sara"))
-                                ItemSara = hit.collider.gameObject.name.Contains("Sara"); // 後で消す
                             else ItemSara = false;
 
 
@@ -344,10 +342,14 @@ public class HandControllerButton_S2 : MonoBehaviour {
                         }
 
                     }
+
+                    /* ・焦げを持っていてゴミ箱でスペースを押したら
+                       ・Dishを持ているとき、ストック・席・ゴミ箱以外に置けないようにしている
+                       ・Dishと焦げ以外を持っているとき、アイテム・Box・ストック・席に置けないようにしている
+                        */
                     else if ((ClickObj2.GetChild(0).gameObject.name.Contains("Burn") && hit.collider.gameObject.tag == "Garbage can") ||
                             (ItemSara && (hit.collider.gameObject.tag == "Stock" || hit.collider.gameObject.tag == "Seki" || hit.collider.gameObject.tag == "Garbage can")) ||
-                            ((!ItemSara && !ClickObj2.GetChild(0).gameObject.name.Contains("Burn")) && hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" && hit.collider.gameObject.tag != "Stock")) 
-                    // 粉や鍋にすでに食材があるなら食材を置けないようにしている(唐揚げは何個でも置ける)
+                            ((!ItemSara && !ClickObj2.GetChild(0).gameObject.name.Contains("Burn")) && hit.collider.gameObject.tag != "Item" && hit.collider.gameObject.tag != "Box" && hit.collider.gameObject.tag != "Stock"  && hit.collider.gameObject.tag != "Seki")) 
                     {
                         if (C3_script.pot_flg) C3_script.PotEX_flg = true;
 
