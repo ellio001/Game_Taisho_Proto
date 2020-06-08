@@ -219,7 +219,7 @@ public class Custmer_script : MonoBehaviour
                     {
                         case 0:
                             ItemScore = 180;
-                            ItemString = "ItemSara(Tenpura)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                            ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                             OrderString = "えびてん";
                             OrderItems[0].SetActive(true);
                             SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
@@ -232,7 +232,7 @@ public class Custmer_script : MonoBehaviour
                         case 3:
                         case 4:
                             ItemScore = 150;
-                            ItemString = "ItemSara(Chicken)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                            ItemString = "Dish_K_Chicken"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                             OrderString = "からあげ";
                             OrderItems[1].SetActive(true);
                             SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
@@ -248,7 +248,7 @@ public class Custmer_script : MonoBehaviour
                         case 0:
                         case 1:
                             ItemScore = 150;
-                            ItemString = "ItemSara(Chicken)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                            ItemString = "Dish_K_Chicken"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                             OrderString = "からあげ";
                             OrderItems[1].SetActive(true);
                             SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
@@ -260,7 +260,7 @@ public class Custmer_script : MonoBehaviour
                         case 3:
                         case 4:
                             ItemScore = 300;
-                            ItemString = "ItemSara(Quail)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                            ItemString = "Dish_K_Quail"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                             OrderString = "うずら";
                             OrderItems[2].SetActive(true);
                             SideItems[0] = Instantiate(OrderItems[2], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
