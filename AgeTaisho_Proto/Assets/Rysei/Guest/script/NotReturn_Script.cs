@@ -236,7 +236,7 @@ public class NotReturn_Script : MonoBehaviour {
                 GuestReturn();
                 angryflag = true;
             }
-            if (ItemString[0] == null && ItemString[1] == null && ItemString[2] == null) GuestReturn();
+            if (EatCount == 0 && (ItemString[0] == null && ItemString[1] == null && ItemString[2] == null)) GuestReturn();
         }
 
         if (GuestNowPosition.x >= 5) {
