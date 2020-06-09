@@ -140,9 +140,11 @@ public class HandControllerButton_S2 : MonoBehaviour {
                     if (TmpFood.Contains("Shrimp")) Shrimp_order += 1;
                     if (TmpFood.Contains("Fish")) Fish_order += 1;
                     if (TmpFood.Contains("Potato")) Potato_order += 1;
+                    if (TmpFood.Contains("Chicken")) Chicken_order += 1;
+                    if (TmpFood.Contains("Quail")) Quail_order += 1;
                     tekitou_flg = false;
                     TmpFood = null;
-                    for (int i = 0; i < Arrow_List.Count - 3; i++)
+                    for (int i = 0; i < Arrow_List.Count - 5; i++)
                     {
                         Arrow_List[i].SetActive(false);
                     }
@@ -160,6 +162,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 {
                     for (int i = 0; i < 3; i++)
                     {
+
                         if (GMscript.ItemName[0, i] == "Dish_T_Shrimp")
                         {
                             Shrimp_order += 1;
@@ -464,34 +467,119 @@ public class HandControllerButton_S2 : MonoBehaviour {
         if(Chicken_order <= 0) Arrow_List[15].SetActive(false);
         if(Quail_order <= 0)   Arrow_List[16].SetActive(false);
 
-        //天ぷら粉に矢印
-        if (ClickObj2.GetChild(0).gameObject.name.Contains("Item"))
-        {
-            for (int i = 0; i < Arrow_List.Count-5; i++)
-            {
-                Arrow_List[i].SetActive(false);
-            }
-            Arrow_List[1].SetActive(true);
-            //tekitou_flg = true;
+
+        switch (ClickObj2.GetChild(0).gameObject.name) {
+            case "Item_Shrimp":
+            case "Item_Potato":
+            case "Item_Fish":
+                for (int i = 0; i < Arrow_List.Count - 5; i++)
+                {
+                    Arrow_List[i].SetActive(false);
+                }
+                Arrow_List[1].SetActive(true);
+                break;
+            case "Powder_Shrimp":
+            case "Powder_Potato":
+            case "Powder_Fish":
+                for (int i = 0; i < Arrow_List.Count - 5; i++)
+                {
+                    Arrow_List[i].SetActive(false);
+                }
+                Arrow_List[0].SetActive(true);
+                break;
+            case "Item_Chicken":
+                for (int i = 0; i < Arrow_List.Count - 5; i++)
+                {
+                    Arrow_List[i].SetActive(false);
+                }
+                Arrow_List[7].SetActive(true);
+                break;
+            case "Fried_T_Shrimp":
+            case "Fried_T_Potato":
+            case "Fried_T_Fish":
+            case "Fried_K_Chicken":
+            case "Fried_K_Quail":
+                for (int i = 0; i < Arrow_List.Count - 5; i++)
+                {
+                    Arrow_List[i].SetActive(false);
+                }
+                Arrow_List[2].SetActive(true); // 天ぷら側の皿
+                Arrow_List[10].SetActive(true); // 揚げ物側の皿
+                break;
+            case "Burn_Shrimp":
+            case "Burn_Potato":
+            case "Burn_Fish":
+            case "Burn_Chicken":
+            case "Burn_Quail":
+                for (int i = 0; i < Arrow_List.Count - 5; i++)
+                {
+                    Arrow_List[i].SetActive(false);
+                }
+                break;
+            case "Dish_T_Shrimp":
+            case "Dish_T_Potato":
+            case "Dish_T_Fish":
+            case "Dish_K_Chicken":
+            case "Dish_K_Quail":
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[i, j])
+                        {
+                            Arrow_List[3].SetActive(true);//正面を向かせる用の矢印
+                            Arrow_List[11].SetActive(true);
+                            Arrow_List[i + 4].SetActive(true); // 注文している客に矢印
+                        }
+                    }
+                }
+                break;
+                
         }
-        //鍋に矢印
-        if (ClickObj2.GetChild(0).gameObject.name.Contains("Powder"))
-        {
-            for (int i = 0; i < Arrow_List.Count - 5; i++)
-            {
-                Arrow_List[i].SetActive(false);
-            }
-            Arrow_List[0].SetActive(true);
-        }
+
+
+        ////天ぷら粉に矢印
+        //if (ClickObj2.GetChild(0).gameObject.name.Contains("Item"))
+        //{
+        //    for (int i = 0; i < Arrow_List.Count-5; i++)
+        //    {
+        //        Arrow_List[i].SetActive(false);
+        //    }
+        //    Arrow_List[1].SetActive(true);
+        //    //tekitou_flg = true;
+        //}
+
+
+        //天ぷら側 鍋に矢印
+        //if (ClickObj2.GetChild(0).gameObject.name.Contains("Powder"))
+        //{
+        //    for (int i = 0; i < Arrow_List.Count - 5; i++)
+        //    {
+        //        Arrow_List[i].SetActive(false);
+        //    }
+        //    Arrow_List[0].SetActive(true);
+        //}
+        
+        // 揚げ物側 鍋に矢印
+        //if (ClickObj2.GetChild(0).gameObject.name.Contains("Chicken"))
+        //{
+        //    for (int i = 0; i < Arrow_List.Count - 5; i++)
+        //    {
+        //        Arrow_List[i].SetActive(false);
+        //    }
+        //    Arrow_List[7].SetActive(true);
+        //}
+
         //皿に矢印
-        if (ClickObj2.GetChild(0).gameObject.name.Contains("Fried"))
-        {
-            for (int i = 0; i < Arrow_List.Count - 5; i++)
-            {
-                Arrow_List[i].SetActive(false);
-            }
-            Arrow_List[2].SetActive(true);
-        }
+        //if (ClickObj2.GetChild(0).gameObject.name.Contains("Fried"))
+        //{
+        //    for (int i = 0; i < Arrow_List.Count - 5; i++)
+        //    {
+        //        Arrow_List[i].SetActive(false);
+        //    }
+        //    Arrow_List[2].SetActive(true); // 天ぷら側の皿
+        //    Arrow_List[10].SetActive(true); // 揚げ物側の皿
+        //}
 
         ////正面を向かせる用の矢印
         //if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[0, 0])
@@ -504,29 +592,31 @@ public class HandControllerButton_S2 : MonoBehaviour {
         //}
 
         // 焦げを持っているときは矢印を全部消す（Box以外）
-        if (ClickObj2.GetChild(0).gameObject.name.Contains("Burn") )
-        {
-            for (int i = 0; i < Arrow_List.Count - 3; i++)
-            {
-                Arrow_List[i].SetActive(false);
-            }
-        }
+        //if (ClickObj2.GetChild(0).gameObject.name.Contains("Burn") )
+        //{
+        //    for (int i = 0; i < Arrow_List.Count - 3; i++)
+        //    {
+        //        Arrow_List[i].SetActive(false);
+        //    }
+        //}
+
+
 
         // 今持っているものを注文している客席に矢印を出す
-        if (ClickObj2.GetChild(0).gameObject.name.Contains("Dish"))
-        {
-            for(int i = 0; i < 3; i++){
-                for (int j = 0; j < 3; j++)
-                {
-                    if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[i, j])
-                    {
-                        Arrow_List[3].SetActive(true);//正面を向かせる用の矢印
-                        Arrow_List[11].SetActive(true);
-                        Arrow_List[i + 4].SetActive(true); // 注文している客に矢印
-                    }
-                }
-            }          
-        }
+        //if (ClickObj2.GetChild(0).gameObject.name.Contains("Dish"))
+        //{
+        //    for(int i = 0; i < 3; i++){
+        //        for (int j = 0; j < 3; j++)
+        //        {
+        //            if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[i, j])
+        //            {
+        //                Arrow_List[3].SetActive(true);//正面を向かせる用の矢印
+        //                Arrow_List[11].SetActive(true);
+        //                Arrow_List[i + 4].SetActive(true); // 注文している客に矢印
+        //            }
+        //        }
+        //    }          
+        //}
 
     }
 
