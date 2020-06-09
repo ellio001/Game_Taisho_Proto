@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 114556849647735370}
   - component: {fileID: 114926750050416472}
   m_Layer: 0
-  m_Name: Powder_Fish_v2
+  m_Name: Powder_Fish
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -294,7 +294,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &266747438891108131
 MonoBehaviour:
