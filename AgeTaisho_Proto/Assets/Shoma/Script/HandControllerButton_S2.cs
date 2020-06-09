@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class HandControllerButton_S2 : MonoBehaviour {
@@ -45,34 +46,33 @@ public class HandControllerButton_S2 : MonoBehaviour {
 
     /*------- 矢印関連 -------*/
     [SerializeField] GameObject ArrowObj; // 矢印のObjを入れる変数
-    bool DestroyFlg = false;              // 矢印を消すか判断する用
-    Vector3 tmp;                          // カーソルの座標を仮に保存
     [System.NonSerialized] public int AgeCount;//鍋でFrideになっている数をカウント（鍋に矢印を出すときに使う）
     bool NabeArrow_flg = false; // true = 鍋に矢印表示中
     GameObject GM;
     GameManager GMscript;
-    [System.NonSerialized] public int Shrimp_order;
+    [System.NonSerialized] public int Shrimp_order;  // 各注文数を記憶させる
     [System.NonSerialized] public int Fish_order;
     [System.NonSerialized] public int Potato_order;
-    bool Offer_flg = false;
+    [System.NonSerialized] public int Chicken_order;
+    [System.NonSerialized] public int Quail_order;
     bool tekitou_flg = false;
-    bool DEBU_flg = false; // デブが席に着いくとtrue
+    bool DEBU_flg = false; // デブが席に着くとtrue
 
     // 席について注文を記憶する=true, 席から離れる=false
     bool Audience0_flg = false; // 0番目の席用
     bool Audience1_flg = false; // 1番目の席用
     bool Audience2_flg = false; // 2番目の席用
-    bool[,] OrderCount= new bool[3, 3]; // [席番号, 0=エビ・1=サカナ・2=イモ]
-    [SerializeField] List<GameObject> Arrow_List = new List<GameObject>(); // カメラの場所を入れるリスト
+    bool[,] OrderCount= new bool[3, 5]; // [席番号, 0=エビ・1=サカナ・2=イモ・3=唐揚げ・4=うずら]
+    [SerializeField] List<GameObject> Arrow_List = new List<GameObject>(); // 矢印の場所を入れるリスト
 
-    bool EasyScene = false; // 現在がEasySceneだったらTrue
+    string SceneName; // 現在のscene名を入れる
 
     //オーディオ
     AudioSource sounds;
 
     void Start() {
-        // 現在のシーンを確認
-        if (SceneManager.GetActiveScene().name == "Easy_Scene") EasyScene = true;
+        // 現在のscene名を入れている
+        SceneName = SceneManager.GetActiveScene().name;
 
          ClickObj = GameObject.Find("ControllerObjClick");
         HoldingFlg = false;
@@ -131,113 +131,112 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 Debug.DrawLine(Player_V, direction, Color.red);
 
                 /*----------------------------------------------<矢印の処理>------------------------------------------------------------------------------------*/
-                if (EasyScene)
+                
+                // 手に何か持っていたら矢印を出す
+                if (0 < ClickObj2.gameObject.transform.childCount && !tekitou_flg)
+                    Arrow_Control();
+                else if (0 == ClickObj2.gameObject.transform.childCount && tekitou_flg && TmpFood != null)
                 {
-                    // 手に何か持っていたら矢印を出す
-                    if (0 < ClickObj2.gameObject.transform.childCount && !tekitou_flg)
-                        Arrow_Control();
-                    else if (0 == ClickObj2.gameObject.transform.childCount && tekitou_flg && TmpFood != null)
+                    if (TmpFood.Contains("Shrimp")) Shrimp_order += 1;
+                    if (TmpFood.Contains("Fish")) Fish_order += 1;
+                    if (TmpFood.Contains("Potato")) Potato_order += 1;
+                    tekitou_flg = false;
+                    TmpFood = null;
+                    for (int i = 0; i < Arrow_List.Count - 3; i++)
                     {
-                        if (TmpFood.Contains("Shrimp")) Shrimp_order += 1;
-                        if (TmpFood.Contains("Fish")) Fish_order += 1;
-                        if (TmpFood.Contains("Potato")) Potato_order += 1;
-                        tekitou_flg = false;
-                        TmpFood = null;
-                        for (int i = 0; i < Arrow_List.Count - 3; i++)
-                        {
-                            Arrow_List[i].SetActive(false);
-                        }
+                        Arrow_List[i].SetActive(false);
                     }
-                    //Debug.Log("AgeCount = " + AgeCount);
-
-                    if (AgeCount >= 1 && !Arrow_List[0].activeSelf) // 鍋にFrideが一つ以上あれば鍋上に矢印を出す
-                    {
-                        Arrow_List[0].SetActive(true);
-                        NabeArrow_flg = true;
-                    }
-
-                    // 左席の注文を確認---------------------------------------------------------------------
-                    if (GMscript.ItemName[0, 0] != null && !Audience0_flg)
-                    {
-                        for (int i = 0; i < 3; i++)
-                        {
-                            if (GMscript.ItemName[0, i] == "Dish_T_Shrimp")
-                            {
-                                Shrimp_order += 1;
-                                OrderCount[0, 0] = true;
-                            }
-                            else if (GMscript.ItemName[0, i] == "Dish_T_Fish")
-                            {
-                                Fish_order += 1;
-                                OrderCount[0, 1] = true;
-                            }
-                            else if (GMscript.ItemName[0, i] == "Dish_T_Potato")
-                            {
-                                Potato_order += 1;
-                                OrderCount[0, 2] = true;
-                            }
-                        }
-                        if (GMscript.ItemName[0, 2] != null) DEBU_flg = true;
-                        Box_Arrow();
-                        Audience0_flg = true; // 客が席についた時一度だけ注文の内容を記憶するため
-                    }
-                    else if (GMscript.ItemName[0, 0] == null) Audience0_flg = false;
-
-
-                    //　中央席の注文を確認---------------------------------------------------------------------
-                    if (GMscript.ItemName[1, 0] != null && !Audience1_flg)
-                    {
-                        for (int i = 0; i < 3; i++)
-                        {
-                            if (GMscript.ItemName[1, i] == "Dish_T_Shrimp")
-                            {
-                                Shrimp_order += 1;
-                                OrderCount[1, 0] = true;
-                            }
-                            else if (GMscript.ItemName[1, i] == "Dish_T_Fish")
-                            {
-                                Fish_order += 1;
-                                OrderCount[1, 1] = true;
-                            }
-                            else if (GMscript.ItemName[1, i] == "Dish_T_Potato")
-                            {
-                                Potato_order += 1;
-                                OrderCount[1, 2] = true;
-                            }
-                        }
-
-                        Box_Arrow();
-                        Audience1_flg = true; // 客が席についた時一度だけ注文の内容を記憶するため
-                    }
-                    else if (GMscript.ItemName[1, 0] == null) Audience1_flg = false;
-
-                    // 右席の注文を確認---------------------------------------------------------------------
-                    if (GMscript.ItemName[2, 0] != null && !Audience2_flg)
-                    {
-                        for (int i = 0; i < 3; i++)
-                        {
-                            if (GMscript.ItemName[2, i] == "Dish_T_Shrimp")
-                            {
-                                Shrimp_order += 1;
-                                OrderCount[2, 0] = true;
-                            }
-                            else if (GMscript.ItemName[2, i] == "Dish_T_Fish")
-                            {
-                                Fish_order += 1;
-                                OrderCount[2, 1] = true;
-                            }
-                            else if (GMscript.ItemName[2, i] == "Dish_T_Potato")
-                            {
-                                Potato_order += 1;
-                                OrderCount[2, 2] = true;
-                            }
-                        }
-
-                        Box_Arrow();
-                        Audience2_flg = true; // 客が席についた時一度だけ注文の内容を記憶するため
-                    }
-                    else if (GMscript.ItemName[2, 0] == null) Audience2_flg = false;
                 }
+                //Debug.Log("AgeCount = " + AgeCount);
+
+                if (AgeCount >= 1 && !Arrow_List[0].activeSelf) // 鍋にFrideが一つ以上あれば鍋上に矢印を出す
+                {
+                    Arrow_List[0].SetActive(true);
+                    NabeArrow_flg = true;
+                }
+
+                // 左席の注文を確認---------------------------------------------------------------------
+                if (GMscript.ItemName[0, 0] != null && !Audience0_flg)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (GMscript.ItemName[0, i] == "Dish_T_Shrimp")
+                        {
+                            Shrimp_order += 1;
+                            OrderCount[0, 0] = true;
+                        }
+                        else if (GMscript.ItemName[0, i] == "Dish_T_Fish")
+                        {
+                            Fish_order += 1;
+                            OrderCount[0, 1] = true;
+                        }
+                        else if (GMscript.ItemName[0, i] == "Dish_T_Potato")
+                        {
+                            Potato_order += 1;
+                            OrderCount[0, 2] = true;
+                        }
+                    }
+                    if (GMscript.ItemName[0, 2] != null) DEBU_flg = true;
+                    Box_Arrow();
+                    Audience0_flg = true; // 客が席についた時一度だけ注文の内容を記憶するため
+                }
+                else if (GMscript.ItemName[0, 0] == null) Audience0_flg = false;
+
+
+                //　中央席の注文を確認---------------------------------------------------------------------
+                if (GMscript.ItemName[1, 0] != null && !Audience1_flg)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (GMscript.ItemName[1, i] == "Dish_T_Shrimp")
+                        {
+                            Shrimp_order += 1;
+                            OrderCount[1, 0] = true;
+                        }
+                        else if (GMscript.ItemName[1, i] == "Dish_T_Fish")
+                        {
+                            Fish_order += 1;
+                            OrderCount[1, 1] = true;
+                        }
+                        else if (GMscript.ItemName[1, i] == "Dish_T_Potato")
+                        {
+                            Potato_order += 1;
+                            OrderCount[1, 2] = true;
+                        }
+                    }
+
+                    Box_Arrow();
+                    Audience1_flg = true; // 客が席についた時一度だけ注文の内容を記憶するため
+                }
+                else if (GMscript.ItemName[1, 0] == null) Audience1_flg = false;
+
+                // 右席の注文を確認---------------------------------------------------------------------
+                if (GMscript.ItemName[2, 0] != null && !Audience2_flg)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (GMscript.ItemName[2, i] == "Dish_T_Shrimp")
+                        {
+                            Shrimp_order += 1;
+                            OrderCount[2, 0] = true;
+                        }
+                        else if (GMscript.ItemName[2, i] == "Dish_T_Fish")
+                        {
+                            Fish_order += 1;
+                            OrderCount[2, 1] = true;
+                        }
+                        else if (GMscript.ItemName[2, i] == "Dish_T_Potato")
+                        {
+                            Potato_order += 1;
+                            OrderCount[2, 2] = true;
+                        }
+                    }
+
+                    Box_Arrow();
+                    Audience2_flg = true; // 客が席についた時一度だけ注文の内容を記憶するため
+                }
+                else if (GMscript.ItemName[2, 0] == null) Audience2_flg = false;
+                
 
             /*---------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -451,18 +450,24 @@ public class HandControllerButton_S2 : MonoBehaviour {
     {
         TmpFood = ClickObj2.GetChild(0).gameObject.name;
         tekitou_flg = true;
+        // 今持っているもののオーダーを一時的に-1している
         if(ClickObj2.GetChild(0).gameObject.name.Contains("Shrimp"))Shrimp_order -= 1;
         if(ClickObj2.GetChild(0).gameObject.name.Contains("Fish")) Fish_order -= 1;
         if(ClickObj2.GetChild(0).gameObject.name.Contains("Potato")) Potato_order -= 1;
+        if(ClickObj2.GetChild(0).gameObject.name.Contains("Chicken")) Chicken_order -= 1;
+        if(ClickObj2.GetChild(0).gameObject.name.Contains("Quail")) Quail_order -= 1;
 
-        if(Shrimp_order <= 0) Arrow_List[7].SetActive(false);
-        if(Fish_order <= 0) Arrow_List[8].SetActive(false);
-        if(Potato_order <= 0) Arrow_List[9].SetActive(false);
+        // 各オーダーが0以下になったら各Boxの矢印を非表示にする
+        if(Shrimp_order <= 0)  Arrow_List[12].SetActive(false);
+        if(Fish_order <= 0)    Arrow_List[13].SetActive(false);
+        if(Potato_order <= 0)  Arrow_List[14].SetActive(false);
+        if(Chicken_order <= 0) Arrow_List[15].SetActive(false);
+        if(Quail_order <= 0)   Arrow_List[16].SetActive(false);
 
         //天ぷら粉に矢印
         if (ClickObj2.GetChild(0).gameObject.name.Contains("Item"))
         {
-            for (int i = 0; i < Arrow_List.Count-3; i++)
+            for (int i = 0; i < Arrow_List.Count-5; i++)
             {
                 Arrow_List[i].SetActive(false);
             }
@@ -472,7 +477,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
         //鍋に矢印
         if (ClickObj2.GetChild(0).gameObject.name.Contains("Powder"))
         {
-            for (int i = 0; i < Arrow_List.Count - 3; i++)
+            for (int i = 0; i < Arrow_List.Count - 5; i++)
             {
                 Arrow_List[i].SetActive(false);
             }
@@ -481,22 +486,22 @@ public class HandControllerButton_S2 : MonoBehaviour {
         //皿に矢印
         if (ClickObj2.GetChild(0).gameObject.name.Contains("Fried"))
         {
-            for (int i = 0; i < Arrow_List.Count - 3; i++)
+            for (int i = 0; i < Arrow_List.Count - 5; i++)
             {
                 Arrow_List[i].SetActive(false);
             }
             Arrow_List[2].SetActive(true);
         }
 
-        //皿に矢印
-        if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[0, 0])
-        {
-            for (int i = 0; i < Arrow_List.Count - 3; i++)
-            {
-                Arrow_List[i].SetActive(false);
-            }
-            Arrow_List[3].SetActive(true);
-        }
+        ////正面を向かせる用の矢印
+        //if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[0, 0])
+        //{
+        //    for (int i = 0; i < Arrow_List.Count - 3; i++)
+        //    {
+        //        Arrow_List[i].SetActive(false);
+        //    }
+        //    Arrow_List[3].SetActive(true);
+        //}
 
         // 焦げを持っているときは矢印を全部消す（Box以外）
         if (ClickObj2.GetChild(0).gameObject.name.Contains("Burn") )
@@ -514,7 +519,11 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 for (int j = 0; j < 3; j++)
                 {
                     if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[i, j])
-                        Arrow_List[i+4].SetActive(true);
+                    {
+                        Arrow_List[3].SetActive(true);//正面を向かせる用の矢印
+                        Arrow_List[11].SetActive(true);
+                        Arrow_List[i + 4].SetActive(true); // 注文している客に矢印
+                    }
                 }
             }          
         }
