@@ -100,7 +100,6 @@ public class Ossan_script : MonoBehaviour
         //S_Display = Display.GetComponent<SideDisplay>();    //SideDysplayスクリプトの追加
         //Recommended = GameObject.Find("Directional Light");
         //testruret = Recommended.GetComponent<TestRuret>();
-        Osusume = Recommended_Easy.getNumberTaihi();
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
         Panel = this.gameObject.transform.Find("Canvas/Panel").gameObject; //子要素のPanelを取得
@@ -144,6 +143,20 @@ public class Ossan_script : MonoBehaviour
         //ハンドとそのスクリプトを取得
         H_Controller = GameObject.Find("hand");
         H_Controller_Script = H_Controller.GetComponent<HandControllerButton_S2>();
+
+        switch (SceneManager.GetActiveScene().name) //本日のおすすめをいれる
+        {
+            case "Ryusei_Scene":
+            case "Easy_Scene":
+                Osusume = Recommended_Easy.getNumberTaihi();
+                break;
+            case "Normal_Scene":
+                Osusume = Recommended_Normal.getNumberTaihi();
+                break;
+            case "Hard_Scene":
+                Osusume = Recommended_Hard.getNumberTaihi();
+                break;
+        }
     }
 
 
@@ -264,7 +277,7 @@ public class Ossan_script : MonoBehaviour
                     break;
                 case 3:
                     ItemScore = 150;
-                    ItemString = "ItemSara(Chicken)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    ItemString = "Dish_K_Chicken"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "からあげ";
                     OrderItems[3].SetActive(true);
                     SideItems[0] = Instantiate(OrderItems[3], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
@@ -274,7 +287,7 @@ public class Ossan_script : MonoBehaviour
                     break;
                 case 4:
                     ItemScore = 300;
-                    ItemString = "ItemSara(Quail)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    ItemString = "Dish_K_Quail"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "うずら";
                     OrderItems[4].SetActive(true);
                     SideItems[0] = Instantiate(OrderItems[4], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
