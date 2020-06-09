@@ -85,7 +85,6 @@ public class Obaachan_script : MonoBehaviour
     //ハンドコントローラのスクリプトをいれる
     HandControllerButton_S2 H_Controller_Script;
 
-    int ShrimpCount = 0;
     int FishCount = 0;
     int PotatoCount = 0;
 
@@ -209,7 +208,6 @@ public class Obaachan_script : MonoBehaviour
                 ReturnText.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
                 GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
-                H_Controller_Script.Shrimp_order -= ShrimpCount;
                 H_Controller_Script.Fish_order -= FishCount;
                 H_Controller_Script.Potato_order -= PotatoCount;
                 OneDelete = true;
@@ -318,7 +316,6 @@ public class Obaachan_script : MonoBehaviour
                 ReturnImage.enabled = false;      //Imageをfalseに
                 ReturnText.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
-                H_Controller_Script.Shrimp_order -= ShrimpCount;
                 H_Controller_Script.Fish_order -= FishCount;
                 H_Controller_Script.Potato_order -= PotatoCount;
                 OneDelete = true;
