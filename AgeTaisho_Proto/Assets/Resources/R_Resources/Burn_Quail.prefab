@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 65060265888932108}
   - component: {fileID: 6816636875706724767}
   - component: {fileID: 514545681564700660}
+  - component: {fileID: 114262041758477336}
   - component: {fileID: 82904558397134416}
   - component: {fileID: 82037988703129870}
   m_Layer: 0
@@ -126,6 +127,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 2401188309982198392}
   canvas: {fileID: 642614323114586872}
+--- !u!114 &114262041758477336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275146463691274491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cda9cfe639b7c8409abf08830dbfb52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &82904558397134416
 AudioSource:
   m_ObjectHideFlags: 0
