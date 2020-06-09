@@ -264,7 +264,7 @@ public class Ossan_script : MonoBehaviour
                     break;
                 case 3:
                     ItemScore = 150;
-                    ItemString = "ItemSara(Chicken)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    ItemString = "Dish_K_Chicken"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "からあげ";
                     OrderItems[3].SetActive(true);
                     SideItems[0] = Instantiate(OrderItems[3], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
@@ -274,7 +274,7 @@ public class Ossan_script : MonoBehaviour
                     break;
                 case 4:
                     ItemScore = 300;
-                    ItemString = "ItemSara(Quail)"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    ItemString = "Dish_K_Quail"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
                     OrderString = "うずら";
                     OrderItems[4].SetActive(true);
                     SideItems[0] = Instantiate(OrderItems[4], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
