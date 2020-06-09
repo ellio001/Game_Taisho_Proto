@@ -35,7 +35,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
     GameObject Pause;
     Pause_Botton_Script script;
 
-    bool ItemSara;  //アイテム名にSaraが含まれているか判定
+    [System.NonSerialized] public bool ItemSara;  //アイテム名にSaraが含まれているか判定
     bool KonaFlag = false; // 〇を押すと粉に漬け、離すと手元に戻るようにするフラグ
     [System.NonSerialized] public string TargetTag;//今見ているOBJのタグを保存する 
     [System.NonSerialized] public GameObject TargetObj;//今見ているOBJを保存する 

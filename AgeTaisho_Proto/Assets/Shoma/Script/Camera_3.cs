@@ -7,6 +7,7 @@ using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 
+
 public class Camera_3 : MonoBehaviour
 {
     /*------------------------------------------＜リスト＞--------------------------------------------------*/
@@ -62,9 +63,13 @@ public class Camera_3 : MonoBehaviour
     string SceneName; // sceneの名前を記憶する変数
     Vector3 old_direction;
 
+
+    // UI参照
     [SerializeField] GameObject ScoreText; // 正面を向いた時だけスコアを出すようにする
     [SerializeField] GameObject StockText_T; // 天ぷら側向いてるときだけ、ストックを出す
     [SerializeField] GameObject StockText_A; // 揚げ物側向いてるときだけ、ストックを出す
+    [SerializeField] GameObject Batu_Easy;  // EasySceneで揚げ物側全体の×を入れる
+    [SerializeField] GameObject Batu_Normal;// NormalSceneでうずらだけの×を入れる
 
     void Start()
     {
@@ -86,6 +91,9 @@ public class Camera_3 : MonoBehaviour
         Vector3 tmp = Cursor_List[cursor].transform.position;
         CursorObj.transform.position = new Vector3(tmp.x, tmp.y, tmp.z);
 
+        SceneName = SceneManager.GetActiveScene().name; // 現在のscene名を記憶
+        if (SceneName == "Easy_Scene") Batu_Easy.SetActive(true);
+        if (SceneName == "Normal_Scene") Batu_Normal.SetActive(true);
     }
 
     void Update()
@@ -439,7 +447,10 @@ public class Camera_3 : MonoBehaviour
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
             ScoreText.gameObject.SetActive(false);
-            StockText_T.gameObject.SetActive(true);
+            // 手に皿を持っているときだけ、ストックテキストを表示
+            if(0 < ClickObj.gameObject.transform.childCount && HCBscript.ItemSara)
+                StockText_T.gameObject.SetActive(true);
+            else StockText_T.gameObject.SetActive(false);
         }
         /* お客側 */
         else if (cursor >= 6 && cursor <= 8)
@@ -450,6 +461,8 @@ public class Camera_3 : MonoBehaviour
             ScoreText.gameObject.SetActive(true);
             StockText_T.gameObject.SetActive(false);
             StockText_A.gameObject.SetActive(false);
+            Batu_Easy.SetActive(false);
+            Batu_Normal.SetActive(false);
         }
         /* 揚げ物側 */
         else if (cursor >= 9 && cursor <= 13 || cursor == 14)
@@ -458,7 +471,11 @@ public class Camera_3 : MonoBehaviour
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
             ScoreText.gameObject.SetActive(false);
-            StockText_A.gameObject.SetActive(true);
+            if (SceneName == "Easy_Scene") Batu_Easy.SetActive(true); // 「かんたん」の時揚げ物側全体に×を出す
+            else if (0 < ClickObj.gameObject.transform.childCount && HCBscript.ItemSara)
+                StockText_A.gameObject.SetActive(true);
+            else StockText_A.gameObject.SetActive(false);
+            if (SceneName == "Normal_Scene") Batu_Normal.SetActive(true);// 「ふつう」の時うずらに×を出す
         }
         /* 油もの側のゴミ箱 */
         if (cursor == 22)
@@ -468,8 +485,9 @@ public class Camera_3 : MonoBehaviour
             target = look; // 目的座標を保存
             gomi_flg = false;
             pot_flg = false;
+            StockText_T.gameObject.SetActive(false);
         }
-        /* 揚げ物側ゴミ箱側 */
+        /* 揚げ物側ゴミ箱 */
         if (cursor == 23)
         {
             var aim = this.CP_List[4].transform.position - this.transform.position;
@@ -477,6 +495,9 @@ public class Camera_3 : MonoBehaviour
             target = look; // 目的座標を保存
             gomi_flg = false;
             pot_flg = false;
+            StockText_A.gameObject.SetActive(false);
+            Batu_Easy.SetActive(false);
+            Batu_Normal.SetActive(false);
         }
 
 
