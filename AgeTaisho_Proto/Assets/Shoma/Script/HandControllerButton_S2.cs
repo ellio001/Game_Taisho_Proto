@@ -148,20 +148,13 @@ public class HandControllerButton_S2 : MonoBehaviour {
                             Arrow_List[i].SetActive(false);
                         }
                     }
-
-                    Debug.Log("AgeCount = " + AgeCount);
-                    //Debug.Log("[0,1] = " + GMscript.ItemName[0, 1]);
-                    //Debug.Log("[0,2] = " + GMscript.ItemName[0, 2]);
+                    //Debug.Log("AgeCount = " + AgeCount);
 
                     if (AgeCount >= 1 && !Arrow_List[0].activeSelf) // 鍋にFrideが一つ以上あれば鍋上に矢印を出す
                     {
                         Arrow_List[0].SetActive(true);
                         NabeArrow_flg = true;
                     }
-
-                    //Debug.Log("Shrimp = " + Shrimp_order);
-                    //Debug.Log("Fish = " + Fish_order);
-                    //Debug.Log("Potato = " + Potato_order);
 
                     // 左席の注文を確認---------------------------------------------------------------------
                     if (GMscript.ItemName[0, 0] != null && !Audience0_flg)
