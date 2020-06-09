@@ -46,8 +46,18 @@ public class E_Fri_Fried : MonoBehaviour
             PowderParticle.emission.SetBurst(0, burst);
             Fried_flg = true;
 
-            if(this.gameObject.name.Contains("_T_"))HCBscript.AgeCount += 1;
-            else if(this.gameObject.name.Contains("_K_"))HCBscript.AgeCount2 += 1;
+            switch (this.gameObject.name)
+            {
+                case "Fried_T_Shrimp":
+                case "Fried_K_Potato":
+                case "Fried_T_Fish":
+                    HCBscript.AgeCount += 1;
+                    break;
+                case "Fried_K_Chicken":
+                case "Fried_K_Quail":
+                    HCBscript.AgeCount2 += 1;
+                    break;
+            }
 
         }
     }
@@ -84,7 +94,7 @@ public class E_Fri_Fried : MonoBehaviour
             switch (this.gameObject.name)
             {
                 case "Fried_T_Shrimp":
-                case "Fried_T_Potato":
+                case "Fried_K_Potato":
                 case "Fried_T_Fish":
                     HCBscript.AgeCount -= 1;
                     break;

@@ -151,7 +151,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                     }
                 }
                 //Debug.Log("AgeCount = " + AgeCount);
-                //Debug.Log("AgeCount2 = " + AgeCount2);
+                //Debug.Log("ポテト = " + Potato_order);
 
                 if (AgeCount >= 1 && !Arrow_List[0].activeSelf) // 天ぷら鍋にFrideが一つ以上あれば鍋上に矢印を出す
                     Arrow_List[0].SetActive(true);
@@ -532,59 +532,56 @@ public class HandControllerButton_S2 : MonoBehaviour {
         if(Chicken_order <= 0) Arrow_List[15].SetActive(false);
         if(Quail_order <= 0)   Arrow_List[16].SetActive(false);
 
+        for (int i = 0; i < Arrow_List.Count - 5; i++)
+        {
+            Arrow_List[i].SetActive(false);
+        }
 
         switch (ClickObj2.GetChild(0).gameObject.name) {
             // 天ぷら粉に矢印
             case "Item_Shrimp":
             case "Item_Potato":
             case "Item_Fish":
-                for (int i = 0; i < Arrow_List.Count - 5; i++)
-                {
-                    Arrow_List[i].SetActive(false);
-                }
                 Arrow_List[1].SetActive(true);
                 break;
+            // うずらの粉
+            case "Item_Quail":
+            case "Powder_Quail2":
+                Arrow_List[9].SetActive(true);
+                break;
+            // うずらの液
+            case "Powder_Quail1":
+            case "Powder_Quail3":
+                Arrow_List[8].SetActive(true);
+                break;
+
             //天ぷら側 鍋に矢印
             case "Powder_Shrimp":
             case "Powder_Potato":
             case "Powder_Fish":
-                for (int i = 0; i < Arrow_List.Count - 5; i++)
-                {
-                    Arrow_List[i].SetActive(false);
-                }
                 Arrow_List[0].SetActive(true);
                 break;
             // 揚げ物側 鍋に矢印
             case "Item_Chicken":
-                for (int i = 0; i < Arrow_List.Count - 5; i++)
-                {
-                    Arrow_List[i].SetActive(false);
-                }
+            case "Powder_Quail4":
                 Arrow_List[7].SetActive(true);
                 break;
             // 皿に矢印
             case "Fried_T_Shrimp":
-            case "Fried_T_Potato":
+            case "Fried_K_Potato":
             case "Fried_T_Fish":
             case "Fried_K_Chicken":
             case "Fried_K_Quail":
-                for (int i = 0; i < Arrow_List.Count - 5; i++)
-                {
-                    Arrow_List[i].SetActive(false);
-                }
                 Arrow_List[2].SetActive(true); // 天ぷら側の皿
                 Arrow_List[10].SetActive(true); // 揚げ物側の皿
                 break;
+
             // 焦げを持っているときは矢印を全部消す（Box以外）
             case "Burn_Shrimp":
             case "Burn_Potato":
             case "Burn_Fish":
             case "Burn_Chicken":
             case "Burn_Quail":
-                for (int i = 0; i < Arrow_List.Count - 5; i++)
-                {
-                    Arrow_List[i].SetActive(false);
-                }
                 break;
             // 正面を向かせる用の矢印
             case "Dish_T_Shrimp":
