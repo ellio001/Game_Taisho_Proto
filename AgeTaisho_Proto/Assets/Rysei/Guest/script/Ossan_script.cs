@@ -92,6 +92,8 @@ public class Ossan_script : MonoBehaviour
     int ShrimpCount = 0;
     int FishCount = 0;
     int PotatoCount = 0;
+    int ChickenCount = 0;
+    int QuailCount = 0;
 
     void Start()
     {
@@ -237,6 +239,8 @@ public class Ossan_script : MonoBehaviour
                 H_Controller_Script.Shrimp_order -= ShrimpCount;
                 H_Controller_Script.Fish_order -= FishCount;
                 H_Controller_Script.Potato_order -= PotatoCount;
+                H_Controller_Script.Chicken_order -= ChickenCount;
+                H_Controller_Script.Quail_order -= QuailCount;
                 OneDelete = true;
             }
             if (EatCount >= EatTime) GuestReturn();   //5秒たったら食べ終わり帰る
@@ -284,6 +288,7 @@ public class Ossan_script : MonoBehaviour
                     SideItems[1] = Instantiate(OrderItems[3], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
                     SideItems[0].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                     SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    ChickenCount = 1;
                     break;
                 case 4:
                     ItemScore = 300;
@@ -294,6 +299,7 @@ public class Ossan_script : MonoBehaviour
                     SideItems[1] = Instantiate(OrderItems[4], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
                     SideItems[0].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                     SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    QuailCount = 1;
                     break;
                 case 0:
                     ItemScore = 180;
@@ -371,6 +377,8 @@ public class Ossan_script : MonoBehaviour
                 H_Controller_Script.Shrimp_order -= ShrimpCount;
                 H_Controller_Script.Fish_order -= FishCount;
                 H_Controller_Script.Potato_order -= PotatoCount;
+                H_Controller_Script.Chicken_order -= ChickenCount;
+                H_Controller_Script.Quail_order -= QuailCount;
                 OneDelete = true;
             }
             OneProces = true;   //この処理が2回目以降通らないようにする
