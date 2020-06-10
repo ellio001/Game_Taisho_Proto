@@ -4,15 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Obaachan_script : MonoBehaviour
+public class MoveiOssan : MonoBehaviour
 {
-    //おばあちゃんステータス---------------------------------
-    float EatTime = 5;          //食べ終わるまでの時間
-    float RowTime = 20;         //列に並んでいる時間
-    float SitTime = 25;         //席に座っている時間
+    //おっさんステータス---------------------------------
+    float EatTime = 1f;          //食べ終わるまでの時間
+    float RowTime = 13f;         //列に並んでいる時間
+    float SitTime = 23f;         //席に座っている時間
     int Mistake = 5;            //間違えた時の時間の減量
 
-    float RandomMax = 10;    //ランダムの最大値を決める変数
     //-------------------------------------------------------
     Transform myTransform;
     public Vector3 pos;
@@ -20,6 +19,7 @@ public class Obaachan_script : MonoBehaviour
     bool Collider;  //Colliderにあたっているかあたっていないか
     float random;   //注文のランダム変数
     int flooredIntrandom;   //ランダムの変数を整数に変えて入れる箱
+    float RandomMax = 10;    //ランダムの最大値を決める変数
     int WaitCount;  //客が帰るまでの時間
     public string ItemString;   //Resourceのアイテム名の文字列を入れる箱
     private string OrderString; //表示するアイテム名の文字列をいれる箱
@@ -32,7 +32,7 @@ public class Obaachan_script : MonoBehaviour
     public GameObject[] GuestNumber; //列番号を入れる箱
     public Vector3[] GuestPosition; //座標番号を入れる箱
     GameObject Panel;         //客についてるパネル
-    [SerializeField] GameObject[] OrderItems;   //席についたとき注文
+    [SerializeField] GameObject[] OrderItems; //席についたとき注文
 
     public float GuestSpeed;   //客の移動速度をいれる箱
     public Vector3 GuestNowPosition;   //客の現在位置の仮決定をいれる箱
@@ -41,14 +41,18 @@ public class Obaachan_script : MonoBehaviour
     public float ReturnCount;   //客が帰るまでの時間をいれる箱
     public float EatCount;      //客が食べている間の時間をいれる
     public bool OneProces = false; //自分のいた箱を1回だけ初期化する
-    public bool Eat;            //提供された時trueにする
+    public bool Eat = false;            //提供された時trueにする
     bool OneDelete;             //注文を１回だけ消す
 
     string SceneName; // sceneの名前を記憶する変数
 
+    int Osusume;
+    //GameObject Recommended;
+    //TestRuret testruret;
+
     //GameObject Display;
     //SideDisplay S_Display;
-    //[SerializeField] GameObject[] SideOrder;        //プレハブをいれる
+    [SerializeField] GameObject[] SideOrder;        //プレハブをいれる
     [SerializeField] Vector3[] DisplayPosition;     //位置をいれる
     [SerializeField] GameObject[] SideItems;        //シーン上に置くアイテムをいれる
     [SerializeField] Image ReturnImage;           //客が帰るまでのゲージ
@@ -85,14 +89,19 @@ public class Obaachan_script : MonoBehaviour
     //ハンドコントローラのスクリプトをいれる
     HandControllerButton_S2 H_Controller_Script;
 
+    int ShrimpCount = 0;
     int FishCount = 0;
     int PotatoCount = 0;
+    int ChickenCount = 0;
+    int QuailCount = 0;
 
     void Start()
     {
         this.gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
         //Display = GameObject.Find("SideDisplay"); //ディスプレイの追加
         //S_Display = Display.GetComponent<SideDisplay>();    //SideDysplayスクリプトの追加
+        //Recommended = GameObject.Find("Directional Light");
+        //testruret = Recommended.GetComponent<TestRuret>();
 
         GuestGenerator = GameObject.Find("GuestGenerator"); //GuestGeneratorがはいったgameobject
         Panel = this.gameObject.transform.Find("Canvas/Panel").gameObject; //子要素のPanelを取得
@@ -122,9 +131,13 @@ public class Obaachan_script : MonoBehaviour
         Panel.SetActive(false);   //席につくまではパネルを表示しない
         OrderItems[0].SetActive(false);   //席につくまではパネルを表示しない
         OrderItems[1].SetActive(false);   //席につくまではパネルを表示しない
+        OrderItems[2].SetActive(false);   //席につくまではパネルを表示しない
+        OrderItems[3].SetActive(false);   //席につくまではパネルを表示しない
+        OrderItems[4].SetActive(false);   //席につくまではパネルを表示しない
         ReturnImage.enabled = false;      //帰るゲージをfalseに
         ReturnText.enabled = false;      //テキストをfalseに
         GetComponent<BoxCollider>().enabled = false;
+        effectflag = false;
 
         //オーディオの情報取得
         sounds = GetComponents<AudioSource>();
@@ -133,7 +146,21 @@ public class Obaachan_script : MonoBehaviour
         H_Controller = GameObject.Find("hand");
         H_Controller_Script = H_Controller.GetComponent<HandControllerButton_S2>();
 
+        switch (SceneManager.GetActiveScene().name) //本日のおすすめをいれる
+        {
+            case "Ryusei_Scene":
+            case "Easy_Scene":
+                Osusume = Recommended_Easy.getNumberTaihi();
+                break;
+            case "Normal_Scene":
+                Osusume = Recommended_Normal.getNumberTaihi();
+                break;
+            case "Hard_Scene":
+                Osusume = Recommended_Hard.getNumberTaihi();
+                break;
+        }
     }
+
 
     // Update is called once per frame
     void Update()
@@ -192,24 +219,29 @@ public class Obaachan_script : MonoBehaviour
         }
         if (Eat)
         {
-            
             //エフェクトスタート
             if (!effectflag) Start_Effect();
-
             EatCount += Time.deltaTime;
             if (OneDelete == false)
             {
+
                 Panel.SetActive(false);   //パネルを表示しない
                 OrderItems[0].SetActive(false);
                 OrderItems[1].SetActive(false);
+                OrderItems[2].SetActive(false);
+                OrderItems[3].SetActive(false);   //席につくまではパネルを表示しない
+                OrderItems[4].SetActive(false);   //席につくまではパネルを表示しない
                 Destroy(SideItems[0]);
                 Destroy(SideItems[1]);
                 ReturnImage.enabled = false;      //Imageをfalseに
                 ReturnText.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
                 GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
+                H_Controller_Script.Shrimp_order -= ShrimpCount;
                 H_Controller_Script.Fish_order -= FishCount;
                 H_Controller_Script.Potato_order -= PotatoCount;
+                H_Controller_Script.Chicken_order -= ChickenCount;
+                H_Controller_Script.Quail_order -= QuailCount;
                 OneDelete = true;
             }
             if (EatCount >= EatTime) GuestReturn();   //5秒たったら食べ終わり帰る
@@ -223,43 +255,27 @@ public class Obaachan_script : MonoBehaviour
             ReturnImage.enabled = true;      //Imageを表示
             ReturnText.enabled = true;      //Textを表示する
             GetComponent<BoxCollider>().enabled = true;
-            
 
-            switch (flooredIntrandom)
+            switch (GameManager.instance.Osusume)
             {
-                case 0:
                 case 1:
                 case 2:
                 case 3:
                 case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
+                case 0:
                     ItemScore = 180;
-                    ItemString = "Dish_T_Fish"; //*(エビ、魚、ポテトの処理が同じなので) 後々魚フライを入れる
-                    OrderString = "魚てん";
+                    ItemString = "Dish_T_Shrimp"; //*(エビ、魚、ポテトの処理が同じなので) 後々エビフライを入れる
+                    OrderString = "えびてん";
                     OrderItems[0].SetActive(true);
                     SideItems[0] = Instantiate(OrderItems[0], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
                     SideItems[1] = Instantiate(OrderItems[0], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
                     SideItems[0].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                     SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                    FishCount = 1;
-                    break;
-                case 9:
-                    ItemScore = 180;
-                    ItemString = "Dish_T_Potato"; //*(エビ、魚、ポテトの処理が同じなので) 後々ポテトフライを入れる
-                    OrderString = "芋てん";
-                    OrderItems[1].SetActive(true);
-                    SideItems[0] = Instantiate(OrderItems[1], DisplayPosition[MyNumber], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
-                    SideItems[1] = Instantiate(OrderItems[1], DisplayPosition[MyNumber + 3], Quaternion.Euler(0, 90, 0));  //客生成(客番号,座標,回転)
-                    SideItems[0].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                    SideItems[1].transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                    PotatoCount = 1;
+                    ShrimpCount = 1;
                     break;
             }
 
-            GameManager.instance.ItemName[MyNumber, 0] = ItemString;    //[席,1つめ]をnullに
+            GameManager.instance.ItemName[MyNumber, 0] = ItemString;    //[席,1つめ]にアイテム名をいれる
             //Debug.Log(MyNumber + ",0" + GameManager.instance.ItemName[MyNumber, 0]);
         }
         else if (Order == true)
@@ -269,13 +285,15 @@ public class Obaachan_script : MonoBehaviour
             ReturnImage.fillAmount = 1 - ((ReturnCount / SitTime));
             ReturnText.text = "" + ReturnTime;
             //席について25秒たつとGuestReturnが呼ばれる
-            if (ReturnCount >= SitTime) {
+            if (ReturnCount >= SitTime)
+            {
                 GuestReturn();
                 angryflag = true;
             }
         }
 
-        if (GuestNowPosition.x >= 5) {
+        if (GuestNowPosition.x >= 5)
+        {
             //xが10以上になったら消える
             Destroy(gameObject);
         }
@@ -283,7 +301,6 @@ public class Obaachan_script : MonoBehaviour
 
     public void GuestReturn()  //客が帰る処理
     {
-        
         //Angry'effectStart
         if (!effectflag_angry && angryflag) Start_Effect_Angry();
 
@@ -306,18 +323,25 @@ public class Obaachan_script : MonoBehaviour
                 GameManager.instance.ItemName[MyNumber, 0] = null;    //[席,1つめ]をnullに
             }
             Number.Guest[MyNumber] = null;  //さっきまでいた席をnull
+            GuestNumber[MyNumber] = null;   //ジェネレータの箱？
             if (OneDelete == false)
             {
                 Panel.SetActive(false);   //パネルを表示しない
                 OrderItems[0].SetActive(false);
                 OrderItems[1].SetActive(false);
+                OrderItems[2].SetActive(false);
+                OrderItems[3].SetActive(false);   //席につくまではパネルを表示しない
+                OrderItems[4].SetActive(false);   //席につくまではパネルを表示しない
                 Destroy(SideItems[0]);
                 Destroy(SideItems[1]);
                 ReturnImage.enabled = false;      //Imageをfalseに
                 ReturnText.enabled = false;
                 GetComponent<BoxCollider>().enabled = false;
+                H_Controller_Script.Shrimp_order -= ShrimpCount;
                 H_Controller_Script.Fish_order -= FishCount;
                 H_Controller_Script.Potato_order -= PotatoCount;
+                H_Controller_Script.Chicken_order -= ChickenCount;
+                H_Controller_Script.Quail_order -= QuailCount;
                 OneDelete = true;
             }
             OneProces = true;   //この処理が2回目以降通らないようにする
@@ -332,18 +356,21 @@ public class Obaachan_script : MonoBehaviour
             Eat = true;      //客が商品を食べ始める
             GameManager.instance.score_num += ItemScore; //点数を加算する
             Destroy(other.gameObject);  //客が商品を食べる
-
+            //パーティクル
+            effectflag = false;//エフェクトが始まるフラグ
         }
         else
         {
             ReturnCount += Mistake;
         }
     }
+
     /// <summary>
     /// ///エフェクトスタート
     /// </summary>
     //エフェクトが生成、スタート
-    void Start_Effect() {
+    void Start_Effect()
+    {
         //Resourceフォルダのプレハブを読み込む
         obj_Tave = (GameObject)Resources.Load("Effects/E_Taveru");
         obj_Heart = (GameObject)Resources.Load("Effects/E_Heart");
@@ -365,7 +392,8 @@ public class Obaachan_script : MonoBehaviour
     }
 
     //AngryModeスタート
-    void Start_Effect_Angry() {
+    void Start_Effect_Angry()
+    {
         //Resourceフォルダのプレハブを読み込む
         obj_Angry = (GameObject)Resources.Load("Effects/E_Angry");
         //座標
@@ -391,28 +419,32 @@ public class Obaachan_script : MonoBehaviour
     /// ///エフェクトエンド
     /// </summary>
     //エフェクトを停止消去
-    void End_Effect() {
-        Destroy(eff_Tabe, 3f);
-        Destroy(eff_Heart, 3f);
+    void End_Effect()
+    {
+        Destroy(eff_Tabe, EatTime);
+        Destroy(eff_Heart, EatTime);
         //二度読み防止
         effectflag = false;
     }
 
     //AngryMode終了
-    void End_Effect_Angry() {
+    void End_Effect_Angry()
+    {
         Destroy(eff_Angry, 3f);
         //二度読み防止
         effectflag_angry = false;
     }
 
     //食べた音
-    void Start_Sound() {
+    void Start_Sound()
+    {
         //サウンド再生
         sounds[0].Play();
     }
 
     //怒った音
-    void Start_Sound_Angry() {
+    void Start_Sound_Angry()
+    {
         //サウンド再生
         sounds[1].Play();
     }
