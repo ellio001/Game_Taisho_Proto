@@ -9,11 +9,11 @@ public class GameManager : MonoBehaviour {
 
     public float GameTime;             //ゲーム開始の時間
     float GameFinishTime;       //ゲームのプレイ最大時間
-    float FiverTime;            //フィーバーの時間です
+    public float FiverTime;            //フィーバーの時間です
     float FiverEvacuation;      //フィーバーの退避エリア
     float FiverFinishTime;      //フィーバータイム最大時間
     int FiverNumber;            //スイッチ文で使うフィーバーフラグ
-    int FiverCountFlag = 0;     //何回目のフィーバーか判定フラグ
+    int FiverCountFlag;     //何回目のフィーバーか判定フラグ
     public bool FiverFlag;             //フィーバーかどうかの判定フラグ
     bool TestSceneFlag;         //シーンを飛ぶ用のフラグ
     public float Taihi;
@@ -52,7 +52,9 @@ public class GameManager : MonoBehaviour {
     private void Start() {
         GameFinishTime = 180f;
         FiverFinishTime = 30f;
+        FiverCountFlag = 0;
         FiverNumber = 3;
+        FiverTime = 0f;
         FiverFlag = false;
         TestSceneFlag = true;
         SceneManager.activeSceneChanged += ActiveSceneChanged;
@@ -107,7 +109,7 @@ public class GameManager : MonoBehaviour {
         }
 
 
-        if (FiverFlag == false) {
+        if (!FiverFlag) {
             //何回目のフィーバーか判定
             switch (FiverCountFlag) {
                 case 0:
@@ -134,11 +136,11 @@ public class GameManager : MonoBehaviour {
         switch (FiverNumber) {
             //1回目のフィーバー
             case 0:
-                if (FiverFlag == false) {
+                if (!FiverFlag) {
                     //変数初期化
                     Initial();
                 }
-                if (FiverFlag) {
+                else if (FiverFlag) {
                     FiverTime += Time.deltaTime;
                     //フィーバータイム終了
                     if (FiverTime >= FiverEvacuation) {
@@ -149,11 +151,11 @@ public class GameManager : MonoBehaviour {
                 break;
             //２回目のフィーバー
             case 1:
-                if (FiverFlag == false) {
+                if (!FiverFlag) {
                     //変数初期化
                     Initial();
                 }
-                if (FiverFlag) {
+                else if (FiverFlag) {
                     FiverTime += Time.deltaTime;
                     //フィーバータイム終了
                     if (FiverTime >= FiverEvacuation) {
@@ -222,6 +224,7 @@ public class GameManager : MonoBehaviour {
         FiverFlag = false;
         TestSceneFlag = false;
         GameTime = 0f;
+        FiverCountFlag = 0;
         FiverTime = 0f;
         score_num = 0;
 
