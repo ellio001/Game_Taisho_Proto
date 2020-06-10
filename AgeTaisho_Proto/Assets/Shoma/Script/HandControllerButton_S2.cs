@@ -21,7 +21,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
      * 4QuailBox*/
     public int ColliderFlag;
     public Transform ClickObj2;
-    string TmpFood; // 手に持っている物の名前を記憶
+    [System.NonSerialized] public string TmpFood; // 手に持っている物の名前を記憶
     private GameObject TmpObj; // レイで当たっているObjを入れる
 
     GameObject C2;    // Camera_2を入れる変数
@@ -104,11 +104,11 @@ public class HandControllerButton_S2 : MonoBehaviour {
         {
             Arrow_List[i].SetActive(false);
         }
-
         for (int i=0; i < 3; i++){
             for(int j = 0; j < 5; j++)
             {
                 OrderCount[i, j] = false;
+                if(j < 3) GMscript.ItemName[i, j] = null;
             }
         }
     }
@@ -150,8 +150,10 @@ public class HandControllerButton_S2 : MonoBehaviour {
                         Arrow_List[i].SetActive(false);
                     }
                 }
-                //Debug.Log("AgeCount = " + AgeCount);
+                //Debug.Log("今持っているものの名前 = " + TmpFood);
                 //Debug.Log("ポテト = " + Potato_order);
+                //Debug.Log("サカナ = " + Fish_order);
+                //Debug.Log("エビ = " + Shrimp_order);
 
                 if (SceneName == "Easy_Scene" && AgeCount >= 1 && !Arrow_List[0].activeSelf) // 天ぷら鍋にFrideが一つ以上あれば鍋上に矢印を出す
                     Arrow_List[0].SetActive(true);
@@ -181,21 +183,6 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                     OrderCount[0, 2] = true;
                                     break;
                             }
-                            //if (GMscript.ItemName[0, i] == "Dish_T_Shrimp")
-                            //{
-                            //    Shrimp_order += 1;
-                            //    OrderCount[0, 0] = true;
-                            //}
-                            //else if (GMscript.ItemName[0, i] == "Dish_T_Fish")
-                            //{
-                            //    Fish_order += 1;
-                            //    OrderCount[0, 1] = true;
-                            //}
-                            //else if (GMscript.ItemName[0, i] == "Dish_T_Potato")
-                            //{
-                            //    Potato_order += 1;
-                            //    OrderCount[0, 2] = true;
-                            //}
                         }
                         else // NormalかHardだった場合
                         {
@@ -320,7 +307,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 else KonaFlag = false;
 
                 // フラグがたっていないとボタンが効かない
-                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_joystick_B")) && C3_script.space_flg) {
+                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("XBox_joystick_B")) && C3_script.space_flg && TargetTag != "BATU") {
                     MoveFlg = true;
 
                     // ストックにsaraを置いたときtrue(C3のストック自動選択で使う)

@@ -98,9 +98,10 @@ public class Camera_3 : MonoBehaviour
 
     void Update()
     {
-        // 手に何か持っていてそれが「焦げ」ならgomi_flgを立てる
+        // 手に持っている物が「焦げ」ならgomi_flgを立てる
         if (HCBscript.HoldingFlg && ClickObj.transform.GetChild(0).gameObject.name.Contains("Burn"))
             gomi_flg = true;
+        else gomi_flg = false;
 
         if (button_flg) // 連続でボタンを押せないようにインターバルを設定
         {
@@ -483,7 +484,6 @@ public class Camera_3 : MonoBehaviour
             var aim = this.CP_List[3].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
-            gomi_flg = false;
             pot_flg = false;
             StockText_T.gameObject.SetActive(false);
         }
@@ -493,7 +493,6 @@ public class Camera_3 : MonoBehaviour
             var aim = this.CP_List[4].transform.position - this.transform.position;
             var look = Quaternion.LookRotation(aim);
             target = look; // 目的座標を保存
-            gomi_flg = false;
             pot_flg = false;
             StockText_A.gameObject.SetActive(false);
             Batu_Easy.SetActive(false);
@@ -503,7 +502,7 @@ public class Camera_3 : MonoBehaviour
 
         // CP_Listごとで移動する処理
         // 左へカメラごとの移動
-        if (Input.GetKeyDown("a") || Input.GetButtonDown("PS4_L1"))
+        if ((Input.GetKeyDown("a") || Input.GetButtonDown("PS4_L1"))&& !gomi_flg)
         {
             /* 天ぷら側～お客側へ */
             if ((cursor >= 1 && cursor <= 5) || cursor == 15 || (cursor >= 19 && cursor <= 21) || cursor == 22)
@@ -532,7 +531,7 @@ public class Camera_3 : MonoBehaviour
         }
 
         // 右へカメラごとの移動
-        else if (Input.GetKeyDown("d") || Input.GetButtonDown("PS4_R1"))
+        else if ((Input.GetKeyDown("d") || Input.GetButtonDown("PS4_R1"))&& !gomi_flg)
         {
             /* お客側～油もの側へ */
             if (cursor == 0 || (cursor >= 6 && cursor <= 8))
@@ -562,11 +561,13 @@ public class Camera_3 : MonoBehaviour
 
     void GomibakoSelect()
     {
-        // 上下左右どこか押した時
+        // 上下左右LRどこか押した時
         if ((Input.GetKeyDown(KeyCode.LeftArrow) || (-1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg)) ||
            (Input.GetKeyDown(KeyCode.RightArrow) || (1 == Input.GetAxisRaw("XBox_Pad_H") && !button_flg)) ||
            (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg)) ||
-           (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_Pad_V") && !button_flg)))
+           (Input.GetKeyDown(KeyCode.UpArrow) || (0 < Input.GetAxisRaw("XBox_Pad_V") && !button_flg)) ||
+           (Input.GetKeyDown("d") || Input.GetButtonDown("PS4_R1"))|| 
+           (Input.GetKeyDown("a") || Input.GetButtonDown("PS4_L1")))
         {
             button_flg = true;
             /* 天ぷら側 */
