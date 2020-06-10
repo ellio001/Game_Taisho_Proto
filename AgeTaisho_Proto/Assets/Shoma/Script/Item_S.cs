@@ -539,28 +539,25 @@ public class Item_S : MonoBehaviour {
                     }
                 }
                 break;
+
             case "Item_Quail":
-                if (other.gameObject.tag == "Bread powder") { //粉１回目
+                if (other.gameObject.tag == "Bread powder" && other.gameObject.tag != "Click") { //粉１回目
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Quail1");   //Resourceフォルダのプレハブを読み込む
                 }
-
-                if (other.gameObject.tag != "Bread powder" && other.gameObject.tag != "Click") {
+                else if (other.gameObject.tag != "Bread powder" && other.gameObject.tag != "Click") {
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");
                 }
-                
-
+                //print(other.gameObject.tag);
                 break;
 
             case "Powder_Quail1":
                 if (other.gameObject.tag == "liquid") { //液1回目
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Quail2");   //Resourceフォルダのプレハブを読み込む
                 }
-
                 //焦げる
-                if (other.gameObject.tag != "liquid" && other.gameObject.tag != "Click") { 
+                else if (other.gameObject.tag != "liquid" && other.gameObject.tag != "Click" && other.gameObject.tag != "Bread powder") { 
                     Resource =(GameObject)Resources.Load("R_Resources/Burn_Quail"); ;   //Resourceフォルダのプレハブを読み込む
                 }
-
                 FastOneflag = true;
                 break;
 
@@ -568,10 +565,9 @@ public class Item_S : MonoBehaviour {
                 if (other.gameObject.tag == "Bread powder") {//粉２回目
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Quail3");   //Resourceフォルダのプレハブを読み込む
                 }
-
                 //焦げる
-                if (other.gameObject.tag != "Bread powder" && other.gameObject.tag != "Click") {
-                    Resource = (GameObject)Resources.Load("R_Resources/Powder_Quail3");   //Resourceフォルダのプレハブを読み込む
+                else if (other.gameObject.tag != "liquid" && other.gameObject.tag != "Click" && other.gameObject.tag != "Bread powder") {
+                    Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");   //Resourceフォルダのプレハブを読み込む
                 }
                 FastOneflag = true;
                 break;
@@ -580,10 +576,9 @@ public class Item_S : MonoBehaviour {
                 if (other.gameObject.tag == "liquid") { //液２回目
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Quail4");   //Resourceフォルダのプレハブを読み込む
                 }
-
                 //焦げる
-                if (other.gameObject.tag != "liquid" && other.gameObject.tag != "Click") {
-                    Resource = (GameObject)Resources.Load("R_Resources/Powder_Quail3");   //Resourceフォルダのプレハブを読み込む
+                else if (other.gameObject.tag != "liquid" && other.gameObject.tag != "Click" && other.gameObject.tag != "Bread powder") {
+                    Resource = (GameObject)Resources.Load("R_Resources/Burn_Quail");   //Resourceフォルダのプレハブを読み込む
                 }
                 FastOneflag = true;
                 break;
