@@ -153,7 +153,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                 //Debug.Log("AgeCount = " + AgeCount);
                 //Debug.Log("ポテト = " + Potato_order);
 
-                if (AgeCount >= 1 && !Arrow_List[0].activeSelf) // 天ぷら鍋にFrideが一つ以上あれば鍋上に矢印を出す
+                if (SceneName == "Easy_Scene" && AgeCount >= 1 && !Arrow_List[0].activeSelf) // 天ぷら鍋にFrideが一つ以上あれば鍋上に矢印を出す
                     Arrow_List[0].SetActive(true);
                 if (AgeCount2 >= 1 && !Arrow_List[7].activeSelf) // 揚げ物鍋に　〃
                     Arrow_List[7].SetActive(true);
@@ -537,173 +537,294 @@ public class HandControllerButton_S2 : MonoBehaviour {
             Arrow_List[i].SetActive(false);
         }
 
-        switch (ClickObj2.GetChild(0).gameObject.name) {
-            // 天ぷら粉に矢印
-            case "Item_Shrimp":
-            case "Item_Potato":
-            case "Item_Fish":
-                Arrow_List[1].SetActive(true);
-                break;
-            // うずらの粉
-            case "Item_Quail":
-            case "Powder_Quail2":
-                Arrow_List[9].SetActive(true);
-                break;
-            // うずらの液
-            case "Powder_Quail1":
-            case "Powder_Quail3":
-                Arrow_List[8].SetActive(true);
-                break;
-
-            //天ぷら側 鍋に矢印
-            case "Powder_Shrimp":
-            case "Powder_Potato":
-            case "Powder_Fish":
-                Arrow_List[0].SetActive(true);
-                break;
-            // 揚げ物側 鍋に矢印
-            case "Item_Chicken":
-            case "Powder_Quail4":
-                Arrow_List[7].SetActive(true);
-                break;
-            // 皿に矢印
-            case "Fried_T_Shrimp":
-            case "Fried_K_Potato":
-            case "Fried_T_Fish":
-            case "Fried_K_Chicken":
-            case "Fried_K_Quail":
-                Arrow_List[2].SetActive(true); // 天ぷら側の皿
-                Arrow_List[10].SetActive(true); // 揚げ物側の皿
-                break;
-
-            // 焦げを持っているときは矢印を全部消す（Box以外）
-            case "Burn_Shrimp":
-            case "Burn_Potato":
-            case "Burn_Fish":
-            case "Burn_Chicken":
-            case "Burn_Quail":
-                break;
-            // 正面を向かせる用の矢印
-            case "Dish_T_Shrimp":
-            case "Dish_T_Potato":
-            case "Dish_T_Fish":
-            case "Dish_K_Chicken":
-            case "Dish_K_Quail":
-                for (int i = 0; i < 3; i++)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[i, j])
+        // Easyで天ぷら関連だけの矢印操作
+        if (SceneName == "Easy_Scene")
+        {
+            switch (ClickObj2.GetChild(0).gameObject.name)
+            {
+                // 天ぷら粉に矢印
+                case "Item_Shrimp":
+                case "Item_Potato":
+                case "Item_Fish":
+                    Arrow_List[1].SetActive(true);
+                    break;
+                //天ぷら側 鍋に矢印
+                case "Powder_Shrimp":
+                case "Powder_Potato":
+                case "Powder_Fish":
+                    Arrow_List[0].SetActive(true);
+                    break;
+                // 皿に矢印
+                case "Fried_T_Shrimp":
+                case "Fried_K_Potato":
+                case "Fried_T_Fish":
+                    Arrow_List[2].SetActive(true); // 天ぷら側の皿
+                    break;
+                // 正面を向かせる用の矢印
+                case "Dish_T_Shrimp":
+                case "Dish_T_Potato":
+                case "Dish_T_Fish":
+                    for (int i = 0; i < 3; i++){
+                        for (int j = 0; j < 3; j++)
                         {
-                            Arrow_List[3].SetActive(true);//正面を向かせる用の矢印
-                            Arrow_List[11].SetActive(true);
-                            Arrow_List[i + 4].SetActive(true); // 注文している客に矢印
+                            if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[i, j])
+                            {
+                                Arrow_List[3].SetActive(true);//正面を向かせる用の矢印
+                                Arrow_List[i + 4].SetActive(true); // 注文している客に矢印
+                            }
                         }
                     }
-                }
-                break;
-                
+                    break;
+            }
         }
+        // Normalで唐揚げ関連だけの矢印操作
+        else if (SceneName == "Normal_Scene")
+        {
+            switch (ClickObj2.GetChild(0).gameObject.name)
+            {
+                // 揚げ物側 鍋に矢印
+                case "Item_Chicken":
+                    Arrow_List[7].SetActive(true);
+                    break;
+                // 皿に矢印
+                case "Fried_K_Chicken":
+                    Arrow_List[2].SetActive(true); // 天ぷら側の皿
+                    Arrow_List[10].SetActive(true); // 揚げ物側の皿
+                    break;
+                // 正面を向かせる用の矢印
+                case "Dish_K_Chicken":
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[i, j])
+                            {
+                                Arrow_List[3].SetActive(true);//正面を向かせる用の矢印
+                                Arrow_List[11].SetActive(true);
+                                Arrow_List[i + 4].SetActive(true); // 注文している客に矢印
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+        // Hardでうずら関連だけの矢印操作
+        else if (SceneName == "Hard_Scene")
+        {
+            switch (ClickObj2.GetChild(0).gameObject.name)
+            {
+                // うずらの粉
+                case "Item_Quail":
+                case "Powder_Quail2":
+                    Arrow_List[9].SetActive(true);
+                    break;
+                // うずらの液
+                case "Powder_Quail1":
+                case "Powder_Quail3":
+                    Arrow_List[8].SetActive(true);
+                    break;
+                // 揚げ物側 鍋に矢印
+                case "Powder_Quail4":
+                    Arrow_List[7].SetActive(true);
+                    break;
+                // 皿に矢印
+                case "Fried_K_Quail":
+                    Arrow_List[2].SetActive(true); // 天ぷら側の皿
+                    Arrow_List[10].SetActive(true); // 揚げ物側の皿
+                    break;
+
+                // 正面を向かせる用の矢印
+                case "Dish_K_Quail":
+                    for (int i = 0; i < 3; i++){
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[i, j])
+                            {
+                                Arrow_List[3].SetActive(true);//正面を向かせる用の矢印
+                                Arrow_List[11].SetActive(true);
+                                Arrow_List[i + 4].SetActive(true); // 注文している客に矢印
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+            //switch (ClickObj2.GetChild(0).gameObject.name) {
+            //    // 天ぷら粉に矢印
+            //    case "Item_Shrimp":
+            //    case "Item_Potato":
+            //    case "Item_Fish":
+            //        Arrow_List[1].SetActive(true);
+            //        break;
+            //    // うずらの粉
+            //    case "Item_Quail":
+            //    case "Powder_Quail2":
+            //        Arrow_List[9].SetActive(true);
+            //        break;
+            //    // うずらの液
+            //    case "Powder_Quail1":
+            //    case "Powder_Quail3":
+            //        Arrow_List[8].SetActive(true);
+            //        break;
+
+            //    //天ぷら側 鍋に矢印
+            //    case "Powder_Shrimp":
+            //    case "Powder_Potato":
+            //    case "Powder_Fish":
+            //        Arrow_List[0].SetActive(true);
+            //        break;
+            //    // 揚げ物側 鍋に矢印
+            //    case "Item_Chicken":
+            //    case "Powder_Quail4":
+            //        Arrow_List[7].SetActive(true);
+            //        break;
+            //    // 皿に矢印
+            //    case "Fried_T_Shrimp":
+            //    case "Fried_K_Potato":
+            //    case "Fried_T_Fish":
+            //    case "Fried_K_Chicken":
+            //    case "Fried_K_Quail":
+            //        Arrow_List[2].SetActive(true); // 天ぷら側の皿
+            //        Arrow_List[10].SetActive(true); // 揚げ物側の皿
+            //        break;
+
+            //    // 焦げを持っているときは矢印を全部消す（Box以外）
+            //    case "Burn_Shrimp":
+            //    case "Burn_Potato":
+            //    case "Burn_Fish":
+            //    case "Burn_Chicken":
+            //    case "Burn_Quail":
+            //        break;
+            //    // 正面を向かせる用の矢印
+            //    case "Dish_T_Shrimp":
+            //    case "Dish_T_Potato":
+            //    case "Dish_T_Fish":
+            //    case "Dish_K_Chicken":
+            //    case "Dish_K_Quail":
+            //        for (int i = 0; i < 3; i++)
+            //        {
+            //            for (int j = 0; j < 3; j++)
+            //            {
+            //                if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[i, j])
+            //                {
+            //                    Arrow_List[3].SetActive(true);//正面を向かせる用の矢印
+            //                    Arrow_List[11].SetActive(true);
+            //                    Arrow_List[i + 4].SetActive(true); // 注文している客に矢印
+            //                }
+            //            }
+            //        }
+            //        break;
+
+            //}
 
 
-        ////天ぷら粉に矢印
-        //if (ClickObj2.GetChild(0).gameObject.name.Contains("Item"))
-        //{
-        //    for (int i = 0; i < Arrow_List.Count-5; i++)
-        //    {
-        //        Arrow_List[i].SetActive(false);
-        //    }
-        //    Arrow_List[1].SetActive(true);
-        //    //tekitou_flg = true;
-        //}
+            ////天ぷら粉に矢印
+            //if (ClickObj2.GetChild(0).gameObject.name.Contains("Item"))
+            //{
+            //    for (int i = 0; i < Arrow_List.Count-5; i++)
+            //    {
+            //        Arrow_List[i].SetActive(false);
+            //    }
+            //    Arrow_List[1].SetActive(true);
+            //    //tekitou_flg = true;
+            //}
 
 
-        //天ぷら側 鍋に矢印
-        //if (ClickObj2.GetChild(0).gameObject.name.Contains("Powder"))
-        //{
-        //    for (int i = 0; i < Arrow_List.Count - 5; i++)
-        //    {
-        //        Arrow_List[i].SetActive(false);
-        //    }
-        //    Arrow_List[0].SetActive(true);
-        //}
-        
-        // 揚げ物側 鍋に矢印
-        //if (ClickObj2.GetChild(0).gameObject.name.Contains("Chicken"))
-        //{
-        //    for (int i = 0; i < Arrow_List.Count - 5; i++)
-        //    {
-        //        Arrow_List[i].SetActive(false);
-        //    }
-        //    Arrow_List[7].SetActive(true);
-        //}
+            //天ぷら側 鍋に矢印
+            //if (ClickObj2.GetChild(0).gameObject.name.Contains("Powder"))
+            //{
+            //    for (int i = 0; i < Arrow_List.Count - 5; i++)
+            //    {
+            //        Arrow_List[i].SetActive(false);
+            //    }
+            //    Arrow_List[0].SetActive(true);
+            //}
 
-        //皿に矢印
-        //if (ClickObj2.GetChild(0).gameObject.name.Contains("Fried"))
-        //{
-        //    for (int i = 0; i < Arrow_List.Count - 5; i++)
-        //    {
-        //        Arrow_List[i].SetActive(false);
-        //    }
-        //    Arrow_List[2].SetActive(true); // 天ぷら側の皿
-        //    Arrow_List[10].SetActive(true); // 揚げ物側の皿
-        //}
+            // 揚げ物側 鍋に矢印
+            //if (ClickObj2.GetChild(0).gameObject.name.Contains("Chicken"))
+            //{
+            //    for (int i = 0; i < Arrow_List.Count - 5; i++)
+            //    {
+            //        Arrow_List[i].SetActive(false);
+            //    }
+            //    Arrow_List[7].SetActive(true);
+            //}
 
-        ////正面を向かせる用の矢印
-        //if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[0, 0])
-        //{
-        //    for (int i = 0; i < Arrow_List.Count - 3; i++)
-        //    {
-        //        Arrow_List[i].SetActive(false);
-        //    }
-        //    Arrow_List[3].SetActive(true);
-        //}
+            //皿に矢印
+            //if (ClickObj2.GetChild(0).gameObject.name.Contains("Fried"))
+            //{
+            //    for (int i = 0; i < Arrow_List.Count - 5; i++)
+            //    {
+            //        Arrow_List[i].SetActive(false);
+            //    }
+            //    Arrow_List[2].SetActive(true); // 天ぷら側の皿
+            //    Arrow_List[10].SetActive(true); // 揚げ物側の皿
+            //}
 
-        // 焦げを持っているときは矢印を全部消す（Box以外）
-        //if (ClickObj2.GetChild(0).gameObject.name.Contains("Burn") )
-        //{
-        //    for (int i = 0; i < Arrow_List.Count - 3; i++)
-        //    {
-        //        Arrow_List[i].SetActive(false);
-        //    }
-        //}
+            ////正面を向かせる用の矢印
+            //if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[0, 0])
+            //{
+            //    for (int i = 0; i < Arrow_List.Count - 3; i++)
+            //    {
+            //        Arrow_List[i].SetActive(false);
+            //    }
+            //    Arrow_List[3].SetActive(true);
+            //}
+
+            // 焦げを持っているときは矢印を全部消す（Box以外）
+            //if (ClickObj2.GetChild(0).gameObject.name.Contains("Burn") )
+            //{
+            //    for (int i = 0; i < Arrow_List.Count - 3; i++)
+            //    {
+            //        Arrow_List[i].SetActive(false);
+            //    }
+            //}
 
 
 
-        // 今持っているものを注文している客席に矢印を出す
-        //if (ClickObj2.GetChild(0).gameObject.name.Contains("Dish"))
-        //{
-        //    for(int i = 0; i < 3; i++){
-        //        for (int j = 0; j < 3; j++)
-        //        {
-        //            if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[i, j])
-        //            {
-        //                Arrow_List[3].SetActive(true);//正面を向かせる用の矢印
-        //                Arrow_List[11].SetActive(true);
-        //                Arrow_List[i + 4].SetActive(true); // 注文している客に矢印
-        //            }
-        //        }
-        //    }          
-        //}
+            // 今持っているものを注文している客席に矢印を出す
+            //if (ClickObj2.GetChild(0).gameObject.name.Contains("Dish"))
+            //{
+            //    for(int i = 0; i < 3; i++){
+            //        for (int j = 0; j < 3; j++)
+            //        {
+            //            if (ClickObj2.GetChild(0).gameObject.name == GMscript.ItemName[i, j])
+            //            {
+            //                Arrow_List[3].SetActive(true);//正面を向かせる用の矢印
+            //                Arrow_List[11].SetActive(true);
+            //                Arrow_List[i + 4].SetActive(true); // 注文している客に矢印
+            //            }
+            //        }
+            //    }          
+            //}
 
-    }
+        }
 
     // Boxの上に矢印を出させる処理
     void Box_Arrow()
     {
-        if (Shrimp_order >= 1 && !Arrow_List[12].activeSelf) // エビが一つ以上注文されているとBox上に矢印を出す
-            Arrow_List[12].SetActive(true);
-        
-        if (Fish_order >= 1 && !Arrow_List[13].activeSelf) // 魚が一つ以上注文されているとBox上に矢印を出す
-            Arrow_List[13].SetActive(true);
-        
-        if (Potato_order >= 1 && !Arrow_List[14].activeSelf) // イモが一つ以上注文されているとBox上に矢印を出す
-            Arrow_List[14].SetActive(true);
+        // Easyでは天ぷら系のBoxにだけ矢印を出す
+         if (SceneName == "Easy_Scene")
+         {
+            if (Shrimp_order >= 1 && !Arrow_List[12].activeSelf) // エビが一つ以上注文されているとBox上に矢印を出す
+                Arrow_List[12].SetActive(true);
 
-        if (Chicken_order >= 1 && !Arrow_List[15].activeSelf) // 唐揚げが一つ以上注文されているとBox上に矢印を出す
+            if (Fish_order >= 1 && !Arrow_List[13].activeSelf) // 魚が一つ以上注文されているとBox上に矢印を出す
+                Arrow_List[13].SetActive(true);
+
+            if (Potato_order >= 1 && !Arrow_List[14].activeSelf) // イモが一つ以上注文されているとBox上に矢印を出す
+                Arrow_List[14].SetActive(true);
+
+         }
+
+         // Normalでは唐揚げBoxだけに矢印を出す
+         else if (SceneName == "Normal_Scene")
+            if (Chicken_order >= 1 && !Arrow_List[15].activeSelf) // 唐揚げが一つ以上注文されているとBox上に矢印を出す
             Arrow_List[15].SetActive(true);
 
-        if (Quail_order >= 1 && !Arrow_List[16].activeSelf) // うずらが一つ以上注文されているとBox上に矢印を出す
+         // HardではうずらBoxだけに矢印を出す
+         else if (SceneName == "Hard_Scene")
+            if (Quail_order >= 1 && !Arrow_List[16].activeSelf) // うずらが一つ以上注文されているとBox上に矢印を出す
             Arrow_List[16].SetActive(true);
         
     }
