@@ -457,8 +457,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                                 //サウンド再生
                                 sounds.Play();
                                 break;
-                            case "Item_Friedchicken":
-                                if (hit.collider.gameObject.name.Contains("hicken"))
+                            case "Item_Chicken":
+                                if (hit.collider.gameObject.name.Contains("Chicken"))
                                     return_flg = true;
                                 //サウンド再生
                                 sounds.Play();
