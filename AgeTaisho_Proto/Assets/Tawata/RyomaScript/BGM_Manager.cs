@@ -88,6 +88,7 @@ public class BGM_Manager : MonoBehaviour {
     //シーンをロードしたら呼ばれる
     void OnSceneLoaded(Scene nextScene, LoadSceneMode mode) {
         Scene_switch();
+        Stopflag = false;
     }
 
     // Update is called once per frame
@@ -108,25 +109,45 @@ public class BGM_Manager : MonoBehaviour {
 
             //Easy_Scene
             case 1:
-                if (!sounds[1].isPlaying) {
-                    if (!Stopflag) {
-                        //BGM初期化
-                        BGM_Stop();
+                if (!script.FiverFlag) {
+                    if (!sounds[1].isPlaying) {
+                        if (!Stopflag) {
+                            //BGM初期化
+                            BGM_Stop();
+                        }
+                        //BGM_Easyスタート
+                        sounds[1].Play();
                     }
-                    //BGM_Easyスタート
-                    sounds[1].Play();
+                    //BGM_Titoleスタート
+                    sounds[4].Stop();
                 }
-                //フィーバーかどうか判定
-                BGM_Peak_Judg();
+                else if (script.FiverFlag) {
+                    //BGM_Easyスタート
+                    sounds[1].Stop();
+                    //フィーバーかどうか判定
+                    BGM_Peak_Judg();
+                }
                 break;
 
             //Normal_Scene
             case 2:
-                if (!sounds[2].isPlaying) {
-                    //BGM初期化
-                    BGM_Stop();
-                    //BGM_Normalスタート
-                    sounds[2].Play();
+                if (!script.FiverFlag) {
+                    if (!sounds[2].isPlaying) {
+                        if (!Stopflag) {
+                            //BGM初期化
+                            BGM_Stop();
+                        }
+                        //BGM_Normalスタート
+                        sounds[2].Play();
+                    }
+                    //BGM_Titoleスタート
+                    sounds[4].Stop();
+                }
+                else if (script.FiverFlag) {
+                    //BGM_Easyスタート
+                    sounds[2].Stop();
+                    //フィーバーかどうか判定
+                    BGM_Peak_Judg();
                 }
                 //フィーバーかどうか判定
                 BGM_Peak_Judg();
@@ -134,11 +155,23 @@ public class BGM_Manager : MonoBehaviour {
 
             //Hard_Scene
             case 3:
-                if (!sounds[3].isPlaying) {
-                    //BGM初期化
-                    BGM_Stop();
-                    //Hardスタート
-                    sounds[3].Play();
+                if (!script.FiverFlag) {
+                    if (!sounds[3].isPlaying) {
+                        if (!Stopflag) {
+                            //BGM初期化
+                            BGM_Stop();
+                        }
+                        //Hardスタート
+                        sounds[3].Play();
+                    }
+                    //BGM_Titoleスタート
+                    sounds[4].Stop();
+                }
+                else if (script.FiverFlag) {
+                    //BGM_Easyスタート
+                    sounds[3].Stop();
+                    //フィーバーかどうか判定
+                    BGM_Peak_Judg();
                 }
                 //フィーバーかどうか判定
                 BGM_Peak_Judg();
@@ -153,6 +186,7 @@ public class BGM_Manager : MonoBehaviour {
             sounds[i].Stop();
         }
         Peakflag = false;
+        Stopflag = true;
     }
 
     //ピーク時かどうか判定
@@ -168,21 +202,24 @@ public class BGM_Manager : MonoBehaviour {
             }
         }
 
-        //フィーバータイムじゃないとき
-        if (!script.FiverFlag) {
-            //止めているBGMを再生
-            switch (SceneFlag) {
-                case 1:
-                    sounds[1].UnPause();
-                    break;
-                case 2:
-                    sounds[2].UnPause();
-                    break;
-                case 3:
-                    sounds[3].UnPause();
-                    break;
+        //二度読み防止
+        else if (Peakflag) {
+            //フィーバータイムじゃないとき
+            if (!script.FiverFlag) {
+                //止めているBGMを再生
+                switch (SceneFlag) {
+                    case 1:
+                        sounds[1].UnPause();
+                        break;
+                    case 2:
+                        sounds[2].UnPause();
+                        break;
+                    case 3:
+                        sounds[3].UnPause();
+                        break;
+                }
+                Peakflag = false;
             }
-            Peakflag = false;
         }
     }
 
@@ -192,7 +229,7 @@ public class BGM_Manager : MonoBehaviour {
         switch (SceneFlag) {
             case 1:
                 print("Easy");
-                sounds[1].Pause();
+                sounds[1].Stop();
                 if (!sounds[4].isPlaying) {
                     //Hardスタート
                     sounds[4].Play();
@@ -200,7 +237,7 @@ public class BGM_Manager : MonoBehaviour {
                 break;
             case 2:
                 print("Nomal");
-                sounds[2].Pause();
+                sounds[2].Stop();
                 if (!sounds[4].isPlaying) {
                     //Hardスタート
                     sounds[4].Play();
@@ -208,7 +245,7 @@ public class BGM_Manager : MonoBehaviour {
                 break;
             case 3:
                 print("Hard");
-                sounds[3].Pause();
+                sounds[3].Stop();
                 if (!sounds[4].isPlaying) {
                     //Hardスタート
                     sounds[4].Play();
