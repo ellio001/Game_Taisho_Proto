@@ -149,7 +149,7 @@ public class BGM_Manager : MonoBehaviour {
 
     //サウンドの初期化
     void BGM_Stop() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             sounds[i].Stop();
         }
         Peakflag = false;
@@ -191,17 +191,30 @@ public class BGM_Manager : MonoBehaviour {
         //流れているBGMを止める
         switch (SceneFlag) {
             case 1:
+                print("Easy");
                 sounds[1].Pause();
+                if (!sounds[4].isPlaying) {
+                    //Hardスタート
+                    sounds[4].Play();
+                }
                 break;
             case 2:
+                print("Nomal");
                 sounds[2].Pause();
+                if (!sounds[4].isPlaying) {
+                    //Hardスタート
+                    sounds[4].Play();
+                }
                 break;
             case 3:
+                print("Hard");
                 sounds[3].Pause();
+                if (!sounds[4].isPlaying) {
+                    //Hardスタート
+                    sounds[4].Play();
+                }
                 break;
         }
-        //BGM_Peakスタート
-        sounds[4].Play();
     }
 
 
