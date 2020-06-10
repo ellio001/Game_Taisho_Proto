@@ -1905,7 +1905,7 @@ GameObject:
   - component: {fileID: 318937449}
   m_Layer: 0
   m_Name: Batu_Easy
-  m_TagString: Untagged
+  m_TagString: BATU
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13491,7 +13491,7 @@ GameObject:
   - component: {fileID: 2052173323}
   m_Layer: 0
   m_Name: Batu_Normal
-  m_TagString: Untagged
+  m_TagString: BATU
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
