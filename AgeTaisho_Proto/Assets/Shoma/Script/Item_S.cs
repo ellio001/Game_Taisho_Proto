@@ -161,11 +161,8 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Potato");   //Resourceフォルダのプレハブを読み込む
                 }
                 //触れると焦げる
-                if (other.gameObject.tag == "Sara") {
+                if (other.gameObject.tag != "kona"&& other.gameObject.tag != "Click"&& other.gameObject.tag != "tenpuranabe") {
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");//皿
-                }
-                if (other.gameObject.tag == "karaagenabe") {
-                    Resource = (GameObject)Resources.Load("R_Resources/Burn_Potato");//鍋
                 }
                 if (other.gameObject.tag == "tenpuranabe") {
                     H_Controller_Script.AgeCount += 1;
@@ -264,17 +261,13 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Fish");   //Resourceフォルダのプレハブを読み込む
                 }
                 //触れると焦げる
-                if (other.gameObject.tag == "Sara") {
+                if (other.gameObject.tag != "kona"&&other.gameObject.tag != "Click"&&other.gameObject.tag != "tenpuranabe") {
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//皿
-                }
-                if (other.gameObject.tag == "karaagenabe") {
-                    Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//鍋
                 }
                 if (other.gameObject.tag == "tenpuranabe") {
                     H_Controller_Script.AgeCount += 1;
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//鍋
                 }
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Fish");//ゴミ場
                 break;
 
             case "Powder_Fish":
@@ -367,17 +360,13 @@ public class Item_S : MonoBehaviour {
                     Resource = (GameObject)Resources.Load("R_Resources/Powder_Shrimp");   //Resourceフォルダのプレハブを読み込む
                 }
                 //触れると焦げる
-                if (other.gameObject.tag == "Sara") {
+                if (other.gameObject.tag != "kona" && other.gameObject.tag != "Click"&& other.gameObject.tag != "tenpuranabe") {
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");//皿
-                }
-                if (other.gameObject.tag == "karaagenabe") {
-                    Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");//鍋
                 }
                 if (other.gameObject.tag == "tenpuranabe") {
                     H_Controller_Script.AgeCount += 1;
                     Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");//鍋
                 }
-                if (other.gameObject.tag == "Garbage can") Resource = (GameObject)Resources.Load("R_Resources/Burn_Shrimp");//ゴミ場
                 break;
 
             case "Powder_Shrimp":
