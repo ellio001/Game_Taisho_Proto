@@ -9,7 +9,6 @@ public class BGM_Manager : MonoBehaviour {
     public static BGM_Manager instance = null;
 
     int SceneFlag;
-    bool Stopflag;
     bool Peakflag;
     bool SceneLoadflag;
 
@@ -32,7 +31,6 @@ public class BGM_Manager : MonoBehaviour {
     // Use this for initialization
     void Start() {
         //初期化
-        Stopflag = false;
         Peakflag = false;
         SceneLoadflag = false;
         SceneFlag = 0;
@@ -88,20 +86,16 @@ public class BGM_Manager : MonoBehaviour {
     //シーンをロードしたら呼ばれる
     void OnSceneLoaded(Scene nextScene, LoadSceneMode mode) {
         Scene_switch();
-        Stopflag = false;
     }
 
     // Update is called once per frame
     void Update() {
-
         SceneManager.sceneLoaded += OnSceneLoaded;
         switch (SceneFlag) {
 
             //Title_Scene＆Difficulty_Scene
             case 0:
                 if (!sounds[0].isPlaying) {
-                    //BGM初期化
-                    BGM_Stop();
                     //BGM_Titoleスタート
                     sounds[0].Play();
                 }
@@ -109,22 +103,20 @@ public class BGM_Manager : MonoBehaviour {
 
             //Easy_Scene
             case 1:
+                //フィーバーじゃない
                 if (!script.FiverFlag) {
                     if (!sounds[1].isPlaying) {
-                        if (!Stopflag) {
-                            //BGM初期化
-                            BGM_Stop();
-                        }
                         //BGM_Easyスタート
                         sounds[1].Play();
+                        //BGM_Peakストップ
+                        sounds[4].Stop();
                     }
-                    //BGM_Titoleスタート
-                    sounds[4].Stop();
                 }
-                else if (script.FiverFlag) {
-                    //BGM_Easyスタート
+                //フィーバーでよ
+                else {
+                    //BGM_Easyストップ
                     sounds[1].Stop();
-                    //フィーバーかどうか判定
+                    //音鳴らすかどうか判定
                     BGM_Peak_Judg();
                 }
                 break;
@@ -133,20 +125,16 @@ public class BGM_Manager : MonoBehaviour {
             case 2:
                 if (!script.FiverFlag) {
                     if (!sounds[2].isPlaying) {
-                        if (!Stopflag) {
-                            //BGM初期化
-                            BGM_Stop();
-                        }
                         //BGM_Normalスタート
                         sounds[2].Play();
+                        //BGM_Peakストップ
+                        sounds[4].Stop();
                     }
-                    //BGM_Titoleスタート
-                    sounds[4].Stop();
                 }
-                else if (script.FiverFlag) {
-                    //BGM_Easyスタート
+                else {
+                    //BGM_Normalストップ
                     sounds[2].Stop();
-                    //フィーバーかどうか判定
+                    //音鳴らすかどうか判定
                     BGM_Peak_Judg();
                 }
                 //フィーバーかどうか判定
@@ -155,26 +143,24 @@ public class BGM_Manager : MonoBehaviour {
 
             //Hard_Scene
             case 3:
+                //フィーバーじゃない
                 if (!script.FiverFlag) {
                     if (!sounds[3].isPlaying) {
-                        if (!Stopflag) {
-                            //BGM初期化
-                            BGM_Stop();
-                        }
                         //Hardスタート
                         sounds[3].Play();
+                        //BGM_Peakストップ
+                        sounds[4].Stop();
                     }
-                    //BGM_Titoleスタート
-                    sounds[4].Stop();
                 }
-                else if (script.FiverFlag) {
-                    //BGM_Easyスタート
-                    sounds[3].Stop();
-                    //フィーバーかどうか判定
+                //フィーバーです
+                else {
+                    if (sounds[3].isPlaying) {
+                        //BGM_Hardストップ
+                        sounds[3].Stop();
+                    }
+                    //音鳴らすかどうか判定
                     BGM_Peak_Judg();
                 }
-                //フィーバーかどうか判定
-                BGM_Peak_Judg();
                 break;
 
         }
@@ -186,7 +172,6 @@ public class BGM_Manager : MonoBehaviour {
             sounds[i].Stop();
         }
         Peakflag = false;
-        Stopflag = true;
     }
 
     //ピーク時かどうか判定
@@ -198,28 +183,13 @@ public class BGM_Manager : MonoBehaviour {
             if (script.FiverFlag) {
                 //ピーク再生
                 BGM_Peak();
-                Peakflag = true;
             }
+            Peakflag = true;
         }
 
         //二度読み防止
-        else if (Peakflag) {
-            //フィーバータイムじゃないとき
-            if (!script.FiverFlag) {
-                //止めているBGMを再生
-                switch (SceneFlag) {
-                    case 1:
-                        sounds[1].UnPause();
-                        break;
-                    case 2:
-                        sounds[2].UnPause();
-                        break;
-                    case 3:
-                        sounds[3].UnPause();
-                        break;
-                }
-                Peakflag = false;
-            }
+        else {
+            Peakflag = false;
         }
     }
 
@@ -228,24 +198,18 @@ public class BGM_Manager : MonoBehaviour {
         //流れているBGMを止める
         switch (SceneFlag) {
             case 1:
-                print("Easy");
-                sounds[1].Stop();
                 if (!sounds[4].isPlaying) {
                     //Hardスタート
                     sounds[4].Play();
                 }
                 break;
             case 2:
-                print("Nomal");
-                sounds[2].Stop();
                 if (!sounds[4].isPlaying) {
                     //Hardスタート
                     sounds[4].Play();
                 }
                 break;
             case 3:
-                print("Hard");
-                sounds[3].Stop();
                 if (!sounds[4].isPlaying) {
                     //Hardスタート
                     sounds[4].Play();
