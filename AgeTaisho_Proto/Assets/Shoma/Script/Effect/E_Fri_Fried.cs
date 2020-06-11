@@ -108,7 +108,8 @@ public class E_Fri_Fried : MonoBehaviour
 
     private void OnDestroy()
     {
-
-        Destroy(GameObject.Find("E_Frying(Clone)"));
+        // 自分が焦げじゃなければエフェクトを消す
+        if (!this.gameObject.name.Contains("Burn"))
+            Destroy(GameObject.Find("E_Frying(Clone)"));
     }
 }
