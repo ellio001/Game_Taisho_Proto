@@ -1334,6 +1334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameTime: 0
+  FiverTime: 0
   FiverFlag: 0
   Taihi: 0
   TaihiFlag: 0
@@ -2499,8 +2500,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.08666597, y: 0.04763779, z: 0.047036912}
-  m_Center: {x: -0.01939467, y: -0.0044304314, z: 0.01060919}
+  m_Size: {x: 0.08666597, y: 0.043626525, z: 0.047036916}
+  m_Center: {x: -0.01939467, y: -0.00643609, z: 0.010609192}
 --- !u!1 &339430242
 GameObject:
   m_ObjectHideFlags: 0
@@ -2530,7 +2531,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339430242}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.467, y: -0.14, z: 2.825}
+  m_LocalPosition: {x: -1.467, y: -0.196, z: 2.825}
   m_LocalScale: {x: 0.51610523, y: 0.02, z: 2.1104}
   m_Children: []
   m_Father: {fileID: 1273701470}
@@ -2565,7 +2566,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.1, z: 1}
+  m_Size: {x: 1, y: 5, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &339430246
 BoxCollider:
@@ -10431,7 +10432,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533789027}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.08, y: 0, z: -0.005}
+  m_LocalPosition: {x: 0.08, y: -0.056, z: -0.005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1494705641}
