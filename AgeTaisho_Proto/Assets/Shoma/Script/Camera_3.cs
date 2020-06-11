@@ -32,6 +32,7 @@ public class Camera_3 : MonoBehaviour
     bool AutPSelect_flg = true; // 自動選択をするときにtrue
     [System.NonSerialized] public bool StockEX_flg = false;  // ストックに物がある時はtrue
     [System.NonSerialized] public bool PotEX_flg = false;  // 鍋に物がある時はtrue  
+    bool PotSelect_flg = false; // 鍋を自動選択された後自由に動けるようにするフラグ
     /*----------------------------------------------------------------------------------------------------*/
 
     int AutCount = 0;
@@ -59,7 +60,6 @@ public class Camera_3 : MonoBehaviour
     HandControllerButton_S2 HCBscript;
 
     int tmp_Pcursor = -1;
-    bool potLight_Flg = false;
     string SceneName; // sceneの名前を記憶する変数
     Vector3 old_direction;
 
@@ -98,6 +98,10 @@ public class Camera_3 : MonoBehaviour
 
     void Update()
     {
+        // Trueになったら自動選択されないようにしている
+        if (HCBscript.TargetTag == "tenpuranabe" || HCBscript.TargetTag == "karaagenabe") PotSelect_flg = true;
+        else if(!pot_flg)PotSelect_flg = false;
+
         // 手に持っている物が「焦げ」ならgomi_flgを立てる
         if (HCBscript.HoldingFlg && ClickObj.transform.GetChild(0).gameObject.name.Contains("Burn"))
             gomi_flg = true;
@@ -388,18 +392,12 @@ public class Camera_3 : MonoBehaviour
             }
 
         }
-
         //Tag=Powderを持っている && 見ているところに食材があったら
-        if (HCBscript.ItemPowder && HCBscript.TargetTag == "Item")
+        if (!PotSelect_flg && HCBscript.ItemPowder && HCBscript.TargetTag == "Item")
         {
-            if (HCBscript.TargetTag != "Item")// おける場所が見つかった時
-                tmp_Pcursor = -1;
-            else
-            {
-                if (tmp_Pcursor == -1) tmp_Pcursor = Pcursor;
-                Pcursor += 1;
-            }
-
+            if (tmp_Pcursor == -1) tmp_Pcursor = Pcursor;
+            Pcursor += 1;
+            
             if (cursor == 1 && Pcursor == 4) Pcursor = 0;
             else if (cursor == 13 && Pcursor == 8) Pcursor = 5;
             if (tmp_Pcursor == Pcursor)
@@ -410,6 +408,7 @@ public class Camera_3 : MonoBehaviour
                 pot_flg = false;
             }
         }
+        // 何も持っていない時に鍋の中から自動選択する処理
         else if (PotEX_flg && AutPSelect_flg &&
                 !HCBscript.HoldingFlg && HCBscript.TargetTag != "Item")
         {
