@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Time_limit : MonoBehaviour {
 
-    float time;         //時間
+    public float time;         //時間
     float gaugeMax;       //ゲージの最大
 
     //Sliderを入れる
