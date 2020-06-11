@@ -66,6 +66,10 @@ public class HandControllerButton_S2 : MonoBehaviour {
     bool[,] OrderCount= new bool[3, 5]; // [席番号, 0=エビ・1=サカナ・2=イモ・3=唐揚げ・4=うずら]
     [SerializeField] List<GameObject> Arrow_List = new List<GameObject>(); // 矢印の場所を入れるリスト
 
+    /****************親子付け変数******************/
+
+    Vector3 IntScale = new Vector3(8.0f, 8.0f, 8.0f);
+
     string SceneName; // 現在のscene名を入れる
 
     //オーディオ
@@ -375,6 +379,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
                         if (hit.collider.gameObject.tag == "Item") {
                             clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                             clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
+                            
+                            clickedGameObject.transform.localScale = IntScale;                       //scaleの設定
                             HoldingFlg = true;
 
                             if (hit.collider.gameObject.name.Contains("Dish"))
