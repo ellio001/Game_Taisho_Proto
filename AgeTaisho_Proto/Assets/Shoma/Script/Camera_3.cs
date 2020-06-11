@@ -233,8 +233,8 @@ public class Camera_3 : MonoBehaviour
             button_flg = true;
             /* ・盛り付け場を見ているときに下を押した時,ゴミ箱を向く  */
             //(HCBscript.HoldingFlg && ClickObj.transform.GetChild(0).gameObject.name.Contains("Burn"))
-                 if (cursor == 15)　cursor = 22;
-            else if (cursor == 14)　cursor = 23;
+                 if (gomi_flg && cursor == 15)　cursor = 22;
+            else if (gomi_flg && cursor == 14)　cursor = 23;
             
             else
             {
