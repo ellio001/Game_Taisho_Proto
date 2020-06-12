@@ -1244,6 +1244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Update_object: {fileID: 132669261}
+  DebugFlg: 1
 --- !u!82 &759319695
 AudioSource:
   m_ObjectHideFlags: 0
