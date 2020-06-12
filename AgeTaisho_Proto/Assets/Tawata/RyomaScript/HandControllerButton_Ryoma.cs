@@ -22,7 +22,6 @@ public class HandControllerButton_Ryoma : MonoBehaviour {
     private GameObject TmpObj; // レイで当たっているObjを入れる
 
     GameObject C2;    // Camera_2を入れる変数
-    Camera_2 C2_script; // Camera_2のscriptを入れる変数
     Control control_script; // Camera_3のscriptを入れる変数
 
     [SerializeField] GameObject Player; // プレイヤーの位置を保存
@@ -47,7 +46,6 @@ public class HandControllerButton_Ryoma : MonoBehaviour {
         ColliderFlag = 0;
 
         C2 = GameObject.Find("Main Camera");
-        C2_script = C2.GetComponent<Camera_2>();
         control_script = C2.GetComponent<Control>();
 
         // プレイヤーの座標をVector3に変換

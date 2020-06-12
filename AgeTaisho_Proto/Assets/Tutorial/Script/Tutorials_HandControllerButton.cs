@@ -15,7 +15,6 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
     public Transform ClickObj2;
 
     GameObject C2;    // Camera_2を入れる変数
-    Camera_2 C2_script; // Camera_2のscriptを入れる変数
     Tutorial_Camera_3 TC3_script; // Camera_3のscriptを入れる変数
 
     [SerializeField] GameObject Player; // プレイヤーの位置を保存
@@ -60,7 +59,6 @@ public class Tutorials_HandControllerButton : MonoBehaviour {
         HoldingFlg = false;
 
         C2 = GameObject.Find("Main Camera");
-        C2_script = C2.GetComponent<Camera_2>();
         TC3_script = C2.GetComponent<Tutorial_Camera_3>();
 
         // プレイヤーの座標をVector3に変換
