@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Title : MonoBehaviour
 {
+
     int SelectNum; // 0=スタートを選択中,1=おわるを選択中
 
     GameObject Start_Text = null;
@@ -25,7 +26,9 @@ public class Title : MonoBehaviour
 
     //オーディオ
     AudioSource sounds;
-    
+
+    [SerializeField] bool DebugFlg;
+
     void Start()
     {
         // ファイル名を取得
@@ -51,6 +54,11 @@ public class Title : MonoBehaviour
         Start_UI.SetActive(false);
         End_Text.SetActive(false);
         End_UI.SetActive(false);
+
+        if (DebugFlg)
+        {
+            Update_object.SetActive(false);
+        }
     }
 
     void Update()
