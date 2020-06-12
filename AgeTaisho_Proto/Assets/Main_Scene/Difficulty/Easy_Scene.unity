@@ -6992,7 +6992,6 @@ GameObject:
   - component: {fileID: 1105242998}
   - component: {fileID: 1105242997}
   - component: {fileID: 1105242996}
-  - component: {fileID: 1105242995}
   - component: {fileID: 1105242994}
   - component: {fileID: 1105242993}
   - component: {fileID: 1105242992}
@@ -7158,18 +7157,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &1105242995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1105242989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad78fea6e3127649aef92ac67f443a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1105242996
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11234,7 +11221,6 @@ GameObject:
   - component: {fileID: 1822667577}
   - component: {fileID: 1822667576}
   - component: {fileID: 1822667575}
-  - component: {fileID: 1822667574}
   - component: {fileID: 1822667573}
   - component: {fileID: 1822667572}
   - component: {fileID: 1822667571}
@@ -11400,18 +11386,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &1822667574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1822667568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e40f994001fbd4e821083f5b5c92ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1822667575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11783,7 +11757,6 @@ GameObject:
   - component: {fileID: 1879518084}
   - component: {fileID: 1879518083}
   - component: {fileID: 1879518082}
-  - component: {fileID: 1879518081}
   - component: {fileID: 1879518080}
   - component: {fileID: 1879518079}
   - component: {fileID: 1879518078}
@@ -11949,18 +11922,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &1879518081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879518075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5200e56da849ca74aad826a07087a1e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1879518082
 BoxCollider:
   m_ObjectHideFlags: 0

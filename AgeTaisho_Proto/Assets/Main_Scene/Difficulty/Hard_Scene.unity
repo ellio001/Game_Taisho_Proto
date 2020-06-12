@@ -7013,7 +7013,6 @@ GameObject:
   - component: {fileID: 1097400516}
   - component: {fileID: 1097400515}
   - component: {fileID: 1097400514}
-  - component: {fileID: 1097400513}
   - component: {fileID: 1097400512}
   - component: {fileID: 1097400511}
   - component: {fileID: 1097400510}
@@ -7179,18 +7178,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &1097400513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1097400507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5200e56da849ca74aad826a07087a1e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1097400514
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8805,7 +8792,6 @@ GameObject:
   - component: {fileID: 1233270066}
   - component: {fileID: 1233270065}
   - component: {fileID: 1233270064}
-  - component: {fileID: 1233270063}
   - component: {fileID: 1233270062}
   - component: {fileID: 1233270061}
   - component: {fileID: 1233270060}
@@ -8971,18 +8957,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &1233270063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1233270057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad78fea6e3127649aef92ac67f443a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1233270064
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12428,6 +12402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 869f51cb1fcd7b04b8917de046ad5d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time: 0
 --- !u!114 &1888131829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13074,7 +13049,6 @@ GameObject:
   - component: {fileID: 1990466678}
   - component: {fileID: 1990466677}
   - component: {fileID: 1990466676}
-  - component: {fileID: 1990466675}
   - component: {fileID: 1990466674}
   - component: {fileID: 1990466673}
   - component: {fileID: 1990466672}
@@ -13240,18 +13214,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &1990466675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1990466669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e40f994001fbd4e821083f5b5c92ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1990466676
 BoxCollider:
   m_ObjectHideFlags: 0
