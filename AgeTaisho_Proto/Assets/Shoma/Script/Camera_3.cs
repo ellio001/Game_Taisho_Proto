@@ -175,7 +175,13 @@ public class Camera_3 : MonoBehaviour
                 // ストックを内で←を押した時の処理
                 if (stock_flg)
                 {
-                    if (cursor + 1 != 22 && cursor + 1 != 19) cursor += 1;
+                    //if (cursor + 1 != 22 && cursor + 1 != 19) cursor += 1;
+                    //else if (cursor == 18) cursor = 13;
+                    //else if (cursor == 21) cursor = 6;
+                    if (cursor == 18) cursor = 13;
+                    else if (cursor == 21) cursor = 6;
+                    else cursor += 1;
+
                 }
                 else
                 {
@@ -213,7 +219,12 @@ public class Camera_3 : MonoBehaviour
             {
                 if (stock_flg)
                 {
-                    if (cursor - 1 != 18 && cursor - 1 != 15) cursor -= 1;
+                    //if (cursor - 1 != 18 && cursor - 1 != 15) cursor -= 1;
+                    //else if (cursor == 19) cursor = 1;
+                    //else if (cursor == 16) cursor = 8;
+                    if (cursor == 19) cursor = 1;
+                    else if (cursor == 16) cursor = 8;
+                    else cursor -= 1;
                 }
                 else
                 {

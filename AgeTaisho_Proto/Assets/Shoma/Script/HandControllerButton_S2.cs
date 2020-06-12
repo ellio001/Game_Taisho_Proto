@@ -377,14 +377,39 @@ public class HandControllerButton_S2 : MonoBehaviour {
                         }
 
                         if (hit.collider.gameObject.tag == "Item") {
+                            //
                             clickedGameObject = hit.collider.gameObject;                              //タグがなければオブジェクトをclickedGameObjectにいれる
                             clickedGameObject.transform.position = ClickObj.gameObject.transform.position;  //オブジェクトを目の前に持ってくる
                             
-                            clickedGameObject.transform.localScale = IntScale;                       //scaleの設定
                             HoldingFlg = true;
 
+                            switch (hit.collider.gameObject.name)
+                            {
+                                case "Powder_Shrimp":
+                                case "Fried_T_Shrimp":
+                                case "Powder_Potato":
+                                case "Fried_K_Potato":
+                                case "Item_Chicken":
+                                case "Fried_K_Chicken":
+                                    IntScale = new Vector3(10.0f, 10.0f, 10.0f);
+                                    clickedGameObject.transform.localScale = IntScale;
+                                    break;
+                                case "Powder_Quail4":
+                                case "Fried_K_Quail":
+                                    IntScale = new Vector3(8.0f, 8.0f, 8.0f);
+                                    clickedGameObject.transform.localScale = IntScale;
+                                    break;
+                                case "Powder_Fish":
+                                case "Fried_T_Fish":
+                                    IntScale = new Vector3(13.0f, 13.0f, 13.0f);
+                                    clickedGameObject.transform.localScale = IntScale;
+                                    break;
+                            }
                             if (hit.collider.gameObject.name.Contains("Dish"))
+                            {
                                 ItemSara = hit.collider.gameObject.name.Contains("Dish");
+                                clickedGameObject.transform.localScale = IntScale;                       //scaleの設定
+                            }
                             else ItemSara = false;
 
 
@@ -411,6 +436,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
                         ColliderIn();
                         ClickObj2.GetChild(0).gameObject.transform.position = hit.point; // 見ているところに置く
                         clickedGameObject.transform.parent = null;              //手との親子付けを解除
+
 
                         clickedGameObject.GetComponent<Rigidbody>().isKinematic = false;    //重力を有効
 

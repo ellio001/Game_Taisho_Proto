@@ -5,7 +5,6 @@ using UnityEngine;
 public class Movement_Fried : MonoBehaviour
 {
     Vector3 nowPosi; // スクリプトがついているObjの座標を記憶させる
-    float UpDownSpeed = 0.2f;   // 上下の移動幅の値
     float RotationSpeed = 70f;// 回転させる速さ
 
     int count = 0;
