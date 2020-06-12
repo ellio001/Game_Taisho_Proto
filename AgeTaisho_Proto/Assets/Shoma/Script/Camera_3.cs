@@ -246,13 +246,13 @@ public class Camera_3 : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.DownArrow) || (0 > Input.GetAxisRaw("XBox_Pad_V") && !button_flg))
         {
             button_flg = true;
-            /* ・盛り付け場を見ているときに下を押した時,ゴミ箱を向く  */
-            //(HCBscript.HoldingFlg && ClickObj.transform.GetChild(0).gameObject.name.Contains("Burn"))
-                 if (gomi_flg && cursor == 15)　cursor = 22;
-            else if (gomi_flg && cursor == 14)　cursor = 23;
+            ///* ・盛り付け場を見ているときに下を押した時,ゴミ箱を向く  */
+            ////(HCBscript.HoldingFlg && ClickObj.transform.GetChild(0).gameObject.name.Contains("Burn"))
+            //     if (gomi_flg && cursor == 15)　cursor = 22;
+            //else if (gomi_flg && cursor == 14)　cursor = 23;
             
-            else
-            {
+            //else
+            //{
                 // ストックを見ている時に↓を押したらストックの直前の場所を向く
                 if (stock_flg)
                 {
@@ -276,7 +276,7 @@ public class Camera_3 : MonoBehaviour
                     }
 
                 }
-            }
+            //}
         }
 
         // ↑押したとき
@@ -302,14 +302,16 @@ public class Camera_3 : MonoBehaviour
                 {
                     tmp_cursor = cursor;
                     cursor = 21;
+                    stock_flg = true;
                 }
                 //ストックする場所を見る(揚げ物側)
-                if (cursor >= 9 && cursor <= 13)
+                else if (cursor >= 9 && cursor <= 13)
                 {
                     tmp_cursor = cursor;
                     cursor = 18;
+                    stock_flg = true;
                 }
-                stock_flg = true;
+                
             }
         }
 
