@@ -24,8 +24,7 @@ public class HandControllerButton_S2 : MonoBehaviour {
     [System.NonSerialized] public string TmpFood; // 手に持っている物の名前を記憶
     private GameObject TmpObj; // レイで当たっているObjを入れる
 
-    GameObject C2;    // Camera_2を入れる変数
-    Camera_2 C2_script; // Camera_2のscriptを入れる変数
+    GameObject C3;    // Camera_2を入れる変数
     Camera_3 C3_script; // Camera_3のscriptを入れる変数
 
     [SerializeField] GameObject Player; // プレイヤーの位置を保存
@@ -83,9 +82,8 @@ public class HandControllerButton_S2 : MonoBehaviour {
         HoldingFlg = false;
         ColliderFlag = 0;
 
-        C2 = GameObject.Find("Main Camera");
-        C2_script = C2.GetComponent<Camera_2>();
-        C3_script = C2.GetComponent<Camera_3>();
+        C3 = GameObject.Find("Main Camera");
+        C3_script = C3.GetComponent<Camera_3>();
 
         // プレイヤーの座標をVector3に変換
         Player_V.x = Player.transform.position.x;

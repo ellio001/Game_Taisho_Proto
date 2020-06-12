@@ -13,9 +13,6 @@ public class UIFollowTarget : MonoBehaviour
     GameObject C3;
     Camera_3 C3_script;
 
-    GameObject TC3;
-    Tutorial_Camera_3 TC3_script;
-
     [SerializeField] Vector3 _maxScale; // 鍋以外でのUIカーソルのScale
     Vector3 _PmaxScale;     // 鍋でのUIカーソルのScale
     Vector3 _FinScale; // 最終的に決まったスケールを入れる
@@ -28,18 +25,9 @@ public class UIFollowTarget : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponent<Graphic>().canvas;
-        if (SceneManager.GetActiveScene().name.Contains("Tutorial"))
-        {
-            TC3 = GameObject.Find("Main Camera");
-            TC3_script = TC3.GetComponent<Tutorial_Camera_3>();
-            Tuto_flg = true;
-        }
-        else
-        {
-            C3 = GameObject.Find("Main Camera");
-            C3_script = C3.GetComponent<Camera_3>();
-            Tuto_flg = false;
-        }
+        C3 = GameObject.Find("Main Camera");
+        C3_script = C3.GetComponent<Camera_3>();
+        Tuto_flg = false;
 
         _PmaxScale = new Vector3(_maxScale.x - 0.0002f, _maxScale.y - 0.0002f, _maxScale.z);
     }
@@ -67,32 +55,18 @@ public class UIFollowTarget : MonoBehaviour
 
     void TargetSelect()
     {
-        if (Tuto_flg)
+
+        if (C3_script.pot_flg)
         {
-            if (TC3_script.pot_flg)
-            {
-                target = TC3_script.PCS_List[TC3_script.Pcursor].transform;
-                _FinScale = new Vector3(_PmaxScale.x, _PmaxScale.y, _PmaxScale.z);
-            }
-            else
-            {
-                target = TC3_script.Cursor_List[TC3_script.cursor].transform;
-                _FinScale = new Vector3(_maxScale.x, _maxScale.y, _maxScale.z);
-            }
+            target = C3_script.PCS_List[C3_script.Pcursor].transform;
+            _FinScale = new Vector3(_PmaxScale.x, _PmaxScale.y, _PmaxScale.z);
         }
         else
         {
-            if (C3_script.pot_flg)
-            {
-                target = C3_script.PCS_List[C3_script.Pcursor].transform;
-                _FinScale = new Vector3(_PmaxScale.x, _PmaxScale.y, _PmaxScale.z);
-            }
-            else
-            {
-                target = C3_script.Cursor_List[C3_script.cursor].transform;
-                _FinScale = new Vector3(_maxScale.x, _maxScale.y, _maxScale.z);
-            }
+            target = C3_script.Cursor_List[C3_script.cursor].transform;
+            _FinScale = new Vector3(_maxScale.x, _maxScale.y, _maxScale.z);
         }
+        
     }
 
 }
